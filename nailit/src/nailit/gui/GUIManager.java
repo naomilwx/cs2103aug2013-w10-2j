@@ -13,11 +13,15 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
+import nailit.logic.LogicManager;;
+
 public class GUIManager {
 
 	private JFrame frame;
 	private static String APPLICATION_NAME = "NailIt!";
 	private CommandBar commandBar;
+	
+	private LogicManager logicExecutor;
 	
 	private final WindowListener windowClosePressed =  new WindowAdapter(){
 		public void windowClosing(WindowEvent event){
@@ -47,6 +51,7 @@ public class GUIManager {
 		initialize();
 		//stub to be modified later
 		
+		logicExecutor = new LogicManager();
 	}
 	
 	private void addListenersToMainFrame(){
