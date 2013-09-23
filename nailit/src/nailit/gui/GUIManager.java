@@ -1,5 +1,7 @@
 package nailit.gui;
 
+import nailit.AppLauncher;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,8 +21,9 @@ public class GUIManager {
 
 	private JFrame frame;
 	private static String APPLICATION_NAME = "NailIt!";
-	private CommandBar commandBar;
 	
+	private AppLauncher launcher;
+	private CommandBar commandBar;
 	private LogicManager logicExecutor;
 	
 	private final WindowListener windowClosePressed =  new WindowAdapter(){
@@ -28,29 +31,17 @@ public class GUIManager {
 			frame.setVisible(false);
 		}
 	};
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIManager window = new GUIManager();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
+	public void setVisible(boolean isVisible){
+		frame.setVisible(isVisible);
+	}
 	/**
 	 * Create the application.
 	 */
-	public GUIManager() {
+	public GUIManager(final AppLauncher launcher) {
 		initialize();
 		//stub to be modified later
-		
+		this.launcher = launcher;
 		logicExecutor = new LogicManager();
 	}
 	
