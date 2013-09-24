@@ -44,14 +44,14 @@ public class Parser {
 
 		if (commandTypeString.equalsIgnoreCase("add")) {
 			return COMMAND_TYPE.ADD;
+		} else if (commandTypeString.equalsIgnoreCase("complete")) {
+			return COMMAND_TYPE.COMPLETE;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
 			return COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("display")){
-			return COMMAND_TYPE.DISPLAY;
-		} else if (commandTypeString.equalsIgnoreCase("sort")){
-			return COMMAND_TYPE.SORT;
 		} else if (commandTypeString.equalsIgnoreCase("search")){
 			return COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("update")) {
+			return COMMAND_TYPE.UPDATE;
 		} else {
 			return COMMAND_TYPE.INVALID;
 		}
