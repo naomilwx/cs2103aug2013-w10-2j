@@ -11,6 +11,12 @@ public class LogicManager {
 	protected Parser ParserInstance;
 	protected Command CommandInstance;
 	
-	
+	protected Result executeCommand(String OriginalCommand)
+	{
+		Result executeCommandResult = new Result();
+		ParserInstance = new Parser(OriginalCommand);
+		
+		return  executeCommandResult;
+	}
 	
 }
