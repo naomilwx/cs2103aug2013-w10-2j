@@ -10,6 +10,7 @@ public class Task {
 	//private DateTime startTime;
 	//private DateTime endTime;
 	private String tag;
+	private boolean added = false;
 	private boolean isCompleted;
 	private int priority; //takes values 0,1,2,3
 	public Task(){
@@ -29,7 +30,7 @@ public class Task {
 //		endTime = null;
 		tag = "";
 		isCompleted = false;
-		
+		added = true;
 	}
 //	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag){
 //		ID = TASKID_NULL;
@@ -40,6 +41,10 @@ public class Task {
 //		tag = "";
 //		isDone = false;
 //	}
+	
+	public boolean isAdded(){
+		return added;
+	}
 	//getters
 	public int getID(){
 		return ID;
