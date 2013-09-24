@@ -6,11 +6,17 @@ public class ParserResult
 {
 	//ArrayList<String> command = new ArrayList<String> ();
 	
+	private static String Command;
 	private static String Name;
 	private static Date StartTime;
 	private static Date EndTime;
 	private static Integer Priority;
 	private static String Tag;
+	
+	public String getCommand()
+	{
+		return Command;
+	}
 	
 	public String getName()
 	{
