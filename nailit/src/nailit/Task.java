@@ -117,6 +117,11 @@ public class Task {
 		String formattedTag = "Tag: " + tag;
 		return formattedTag;
 	}
+	public String formatDateDetails(){
+		String formattedDateDetails = "";
+		return formattedDateDetails;
+	}
+	
 	//method to create copy of Task object
 	public Task copy(){
 		Task newTask = new Task(name,description, startTime, endTime, tag, priority);
