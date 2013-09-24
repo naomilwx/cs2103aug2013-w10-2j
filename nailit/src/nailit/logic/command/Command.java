@@ -1,6 +1,5 @@
 package nailit.logic.command;
 import nailit.logic.*;
-import nailit.storage.StorageManager;
 
 public class Command {
 	
