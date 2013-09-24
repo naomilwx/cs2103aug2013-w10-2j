@@ -20,7 +20,7 @@ public class Parser {
 		case ADD:
 		{
 			AddParser addParserManager = new AddParser();
-			return AddParser.execute(CommandToExecute);
+			return addParserManager.execute();
 		}
 		case COMPLETE:
 		{
