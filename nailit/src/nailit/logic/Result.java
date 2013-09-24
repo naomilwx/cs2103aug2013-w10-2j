@@ -1,5 +1,5 @@
 package nailit.logic;
 
-class Result {
+public class Result {
 
 }
