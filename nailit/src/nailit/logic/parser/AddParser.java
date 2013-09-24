@@ -9,5 +9,9 @@ public class AddParser extends ParserManager {
 		
 	}
 	
-	public ParserResult execute(){};
+	public ParserResult execute()
+	{
+		ParserResult resultExecution = new ParserResult();
+		return resultExecution;
+	}
 }

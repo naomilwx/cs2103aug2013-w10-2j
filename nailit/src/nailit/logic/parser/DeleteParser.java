@@ -1,5 +1,11 @@
 package nailit.logic.parser;
 
-public class DeleteParser extends ParserManager {
+import nailit.logic.ParserResult;
 
+public class DeleteParser extends ParserManager {
+	public ParserResult execute()
+	{
+		ParserResult resultExecution = new ParserResult();
+		return resultExecution;
+	}
 }
