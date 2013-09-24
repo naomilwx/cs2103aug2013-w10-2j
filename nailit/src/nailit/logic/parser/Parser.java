@@ -2,14 +2,12 @@ package nailit.logic.parser;
 
 public abstract class Parser {
 
-	/*public abstract void execute()
+	public static String executeCommand;
+	
+	public Parser (String command)
 	{
-		//
+		executeCommand = command;
 	}
-	public abstract void 
-	public abstract void
-	public abstract void
-	public abstract void*/
 	
 	
 }
