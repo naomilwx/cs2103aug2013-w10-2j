@@ -4,6 +4,13 @@ import nailit.logic.ParserResult;
 
 public class SearchParser extends ParserManager {
 
+	private String userCommand;
+	
+	public SearchParser (String command)
+	{
+		userCommand = command;
+	}
+	
 	public ParserResult execute()
 	{
 		ParserResult resultExecution = new ParserResult();

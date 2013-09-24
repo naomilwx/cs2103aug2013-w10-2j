@@ -19,27 +19,27 @@ public class Parser {
 		switch (commandType) {
 		case ADD:
 		{
-			AddParser addParserManager = new AddParser();
+			AddParser addParserManager = new AddParser(CommandToExecute);
 			return addParserManager.execute();
 		}
 		case COMPLETE:
 		{
-			CompleteParser completeParserManager = new CompleteParser();
+			CompleteParser completeParserManager = new CompleteParser(CommandToExecute);
 			return completeParserManager.execute();
 		}
 		case DELETE:
 		{
-			DeleteParser deleteParserManager = new DeleteParser();
+			DeleteParser deleteParserManager = new DeleteParser(CommandToExecute);
 			return deleteParserManager.execute();
 		}
 		case SEARCH:
 		{
-			SearchParser searchParserManager = new SearchParser();
+			SearchParser searchParserManager = new SearchParser(CommandToExecute);
 			return searchParserManager.execute();
 		}
 		case UPDATE:
 		{
-			UpdateParser updateParserManager = new UpdateParser();
+			UpdateParser updateParserManager = new UpdateParser(CommandToExecute);
 			return updateParserManager.execute();
 		}
 		default:
