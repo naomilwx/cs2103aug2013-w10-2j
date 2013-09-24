@@ -1,5 +1,6 @@
 package nailit;
 
+import org.joda.time.DateTime;
 public class Task {
 	private static int TASKID_NULL = -1;
 	private static final String PRINTOUT_FORMAT = "ID: %1d\n"
@@ -7,8 +8,8 @@ public class Task {
 	private int ID;
 	private String name;
 	private String description;
-	//private DateTime startTime;
-	//private DateTime endTime;
+	private DateTime startTime;
+	private DateTime endTime;
 	private String tag;
 	private boolean added = false;
 	private boolean isCompleted;
@@ -17,8 +18,8 @@ public class Task {
 		ID = TASKID_NULL;
 		name = "";
 		description = ""; //TODO: replace with constant
-//		startTime = null;
-//		endTime = null;
+		startTime = null;
+		endTime = null;
 		tag = "";
 		isCompleted = false;
 	}
@@ -26,21 +27,21 @@ public class Task {
 		ID = TASKID_NULL;
 		name = taskName;
 		description = ""; //TODO: replace with constant
-//		startTime = null;
-//		endTime = null;
+		startTime = null;
+		endTime = null;
 		tag = "";
 		isCompleted = false;
 		added = true;
 	}
-//	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag){
-//		ID = TASKID_NULL;
-//		name = taskName;
-//		description = ""; //TODO: replace with constant
-//		startTime = null;
-//		endTime = null;
-//		tag = "";
-//		isDone = false;
-//	}
+	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag){
+		ID = TASKID_NULL;
+		name = taskName;
+		description = ""; //TODO: replace with constant
+		startTime = null;
+		endTime = null;
+		tag = "";
+		isCompleted = false;
+	}
 	
 	public boolean isAdded(){
 		return added;
@@ -55,13 +56,7 @@ public class Task {
 	public String getName(){
 		return name;
 	}
-	public String getStartTime(){
-		return "";
-	}
 	
-	public String getEndTime(){
-		return "";
-	}
 	public String getDescription(){
 		return description;
 	}
@@ -71,12 +66,12 @@ public class Task {
 	public boolean checkCompleted(){
 		return isCompleted;
 	}
-//	public DateTime getStartTime(){
-//		return startTime;
-//	}
-//	public DateTime getEndTime(){
-//		return endTime;
-//	}
+	public DateTime getStartTime(){
+		return startTime;
+	}
+	public DateTime getEndTime(){
+		return endTime;
+	}
 	//setters
 	public boolean setID(int ID){
 		if(ID==Task.TASKID_NULL){
@@ -101,17 +96,16 @@ public class Task {
 	public void setPriority(int taskPriority){
 		priority = taskPriority;
 	}
-//	public void setStartTime(DateTime start){
-//		startTime = start;
-//	}
-//	public void setEndTime(DateTime end){
-//		endTime = end;
-//	}
+	public void setStartTime(DateTime start){
+		startTime = start;
+	}
+	public void setEndTime(DateTime end){
+		endTime = end;
+	}
 	
 	//method to create copy of Task object
 	public Task copy(){
-		Task newTask = new Task(name);
-//		Task newTask = new Task(name,description, startTime, endTime, tag); actual object
+		Task newTask = new Task(name,description, startTime, endTime, tag);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;
