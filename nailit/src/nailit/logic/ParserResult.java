@@ -12,12 +12,12 @@ public class ParserResult
 	private static Integer Priority;
 	private static String Tag;
 	
-	public String get_Name()
+	public String getName()
 	{
 		return Name;
 	}
 	
-	public boolean isNull_Name()
+	public boolean isNullName()
 	{
 		if (Name == "")
 			return true;
@@ -25,7 +25,44 @@ public class ParserResult
 			return false;
 	}
 	
+	public Date getStartTime()
+	{
+		return StartTime;
+	}
 	
+	/*public boolean isNull_StartTime()
+	{
+		if (StartTime == )
+	}*/
 	
+	public Date getEndTime()
+	{
+		return EndTime;
+	}
 	
+	public Integer getPriority()
+	{
+		return Priority;
+	}
+	
+	public boolean isNullPriority()
+	{
+		if (Priority == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public String getTag()
+	{
+		return Tag;
+	}
+	
+	public boolean isNullTag()
+	{
+		if (Tag == "")
+			return true;
+		else
+			return false;
+	}
 }
