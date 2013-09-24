@@ -4,11 +4,9 @@ import nailit.Task;
 
 public class StorageManager {
 	private DataManager inMemory;
-	private FileManager hardDisk;
 	
 	public StorageManager(){
 		inMemory = new DataManager();
-		hardDisk = new FileManager();
 	}
 	
 	public int add(Task task){
@@ -22,7 +20,6 @@ public class StorageManager {
 		String tag = task.getTag();
 		
 		ID = inMemory.add(ID,name,priority,startDate,endDate,desc,tag);
-		hardDisk.add(ID,name,priority,startDate,endDate,desc,tag);
 		return ID;
 	}
 	//update stub
