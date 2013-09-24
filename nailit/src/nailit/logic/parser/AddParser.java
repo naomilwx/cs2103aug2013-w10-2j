@@ -1,13 +1,17 @@
 package nailit.logic.parser;
 
-public class AddParser {
+import nailit.logic.ParserResult;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+public class AddParser extends ParserManager {
 
+	public void parser()
+	{
+		
 	}
-
+	
+	public ParserResult execute()
+	{
+		ParserResult resultExecution = new ParserResult();
+		return resultExecution;
+	}
 }
