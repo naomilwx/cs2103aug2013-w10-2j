@@ -1,4 +1,5 @@
 package nailit.logic.parser;
+import nailit.logic.*;
 
 public class Parser {
 
@@ -9,6 +10,11 @@ public class Parser {
 		executeCommand = command;
 	}
 	
+	public ParserResult execute()
+	{
+		ParserResult ParserResultInstance = new ParserResult();
+		return ParserResultInstance;
+	}
 	
 	
 }
