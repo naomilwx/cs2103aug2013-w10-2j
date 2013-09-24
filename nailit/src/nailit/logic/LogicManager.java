@@ -7,15 +7,15 @@ import java.util.*;
 
 public class LogicManager {
 	
-	protected ParserResult ParserResultInstance;
-	protected Parser ParserInstance;
-	protected Command CommandInstance;
+	private ParserResult ParserResultInstance;
+	private Parser ParserInstance;
+	private Command CommandInstance;
 	
 	protected Result executeCommand(String OriginalCommand)
 	{
 		Result executeCommandResult = new Result();
 		ParserInstance = new Parser(OriginalCommand);
-		
+		CommandInstance = new Command();
 		return  executeCommandResult;
 	}
 	

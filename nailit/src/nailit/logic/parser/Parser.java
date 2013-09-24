@@ -1,6 +1,6 @@
 package nailit.logic.parser;
 
-public abstract class Parser {
+public class Parser {
 
 	public static String executeCommand;
 	
@@ -8,6 +8,7 @@ public abstract class Parser {
 	{
 		executeCommand = command;
 	}
+	
 	
 	
 }
