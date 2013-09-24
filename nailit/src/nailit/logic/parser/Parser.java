@@ -24,19 +24,23 @@ public class Parser {
 		}
 		case COMPLETE:
 		{
-			//return completeCommand(CommandToExecute);
+			CompleteParser completeParserManager = new CompleteParser();
+			return completeParserManager.execute();
 		}
 		case DELETE:
 		{
-			//return deleteCommand(CommandToExecute);
+			DeleteParser deleteParserManager = new DeleteParser();
+			return deleteParserManager.execute();
 		}
 		case SEARCH:
 		{
-			//return searchCommand(uCommandToExecute);
+			SearchParser searchParserManager = new SearchParser();
+			return searchParserManager.execute();
 		}
 		case UPDATE:
 		{
-			
+			UpdateParser updateParserManager = new UpdateParser();
+			return updateParserManager.execute();
 		}
 		default:
 			//throw an error if the command is not recognized
