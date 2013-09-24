@@ -8,7 +8,7 @@ public class Command {
 	
 	private static ParserResult parserResultInstance;
 	private static StorageManager storer;
-	private static Result excutedResult;
+	private static Result executedResult;
 	
 	public Command (ParserResult ResultInstance) // constructor
 	{
@@ -23,7 +23,7 @@ public class Command {
 		doExecution();
 
 		
-		return executeResult;
+		return executedResult;
 	}
 
 	private void doExecution() {
