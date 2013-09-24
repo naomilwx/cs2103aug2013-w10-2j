@@ -1,23 +1,36 @@
 package nailit.logic.command;
+import nailit.Result;
 import nailit.logic.*;
 import nailit.storage.StorageManager;
 
 public class Command {
 	
-	public static ParserResult ParserResultInstance;
+	private static ParserResult parserResultInstance;
+	private static StorageManager storer;
+	private static Result excutedResult;
 	
 	public Command (ParserResult ResultInstance) // constructor
 	{
-		ParserResultInstance = ResultInstance;
+		parserResultInstance = ResultInstance;
+		storer = new StorageManager();
 	}
 	
 	public CommandResult executeCommand()
 	{
 
 		CommandResult executeResult = new CommandResult();
-		StorageManager storer = new StorageManager();
+		doExecution();
 		
 		return executeResult;
 	}
+
+	private void doExecution() {
+		String commandType = parserResultInstance.getCommand();
+		Switch(commandType) {
+			case 
+		}
+	}
+	
+	private void
 	
 }
