@@ -1,8 +1,9 @@
 package nailit.logic;
 
-import nailit.logic.command.Command;
-import nailit.logic.parser.Parser;
-import java.util.*;
+import nailit.logic.*;
+import nailit.logic.command.*;
+import nailit.logic.parser.*;
+
 
 
 public class LogicManager {
@@ -11,9 +12,9 @@ public class LogicManager {
 	private Parser ParserInstance;
 	private Command CommandInstance;
 	
-	protected Result executeCommand(String OriginalCommand)
+	protected CommandResult executeCommand(String OriginalCommand)
 	{
-		Result executeCommandResult = new Result();
+		CommandResult executeCommandResult = new CommandResult();
 		ParserInstance = new Parser(OriginalCommand);
 		ParserResultInstance = ParserInstance.execute();
 		CommandInstance = new Command(ParserResultInstance);

@@ -10,9 +10,9 @@ public class Command {
 		ParserResultInstance = ResultInstance;
 	}
 	
-	public Result executeCommand()
+	public CommandResult executeCommand()
 	{
-		Result executeResult = new Result();
+		CommandResult executeResult = new CommandResult();
 		// add the method
 		
 		return executeResult;
