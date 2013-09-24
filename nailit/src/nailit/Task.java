@@ -103,4 +103,21 @@ public class Task {
 		newTask.setCompleted(isCompleted);
 		return newTask;
 	}
+	@Override
+	public String toString(){
+		return "";
+	}
+	@Override
+	public boolean equals(Object otherTask){
+		if(otherTask instanceof Task){
+			int otherTaskID = ((Task) otherTask).getID();
+			if(otherTaskID == Task.TASKID_NULL){
+				return false;
+			}else{
+				return otherTaskID == ID;
+			}
+		}else{
+			return false;
+		}
+	}
 }
