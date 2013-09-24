@@ -5,7 +5,6 @@ import nailit.logic.command.*;
 import nailit.logic.parser.*;
 
 
-
 public class LogicManager {
 	
 	private ParserResult ParserResultInstance;
