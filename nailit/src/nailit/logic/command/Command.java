@@ -13,9 +13,9 @@ public class Command {
 	
 	public CommandResult executeCommand()
 	{
+
 		CommandResult executeResult = new CommandResult();
 		StorageManager storer = new StorageManager();
-		
 		
 		return executeResult;
 	}

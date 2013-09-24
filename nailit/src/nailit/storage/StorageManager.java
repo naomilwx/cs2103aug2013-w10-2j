@@ -4,7 +4,7 @@ public class StorageManager {
 	private DataManager inMemory;
 	private FileManager hardDisk;
 	
-	StorageManager(){
+	public StorageManager(){
 		inMemory = new DataManager();
 		hardDisk = new FileManager();
 	}
@@ -13,10 +13,10 @@ public class StorageManager {
 		return 0;
 	}
 	//update stub
-	public boolean retrieve(){
+	public boolean retrieve(int ID){
 		return true;
 	}
-	public boolean remove(){
+	public boolean remove(int ID){
 		return true;
 	}
 }
