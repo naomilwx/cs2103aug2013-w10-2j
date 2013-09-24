@@ -1,5 +1,6 @@
 package nailit.logic.command;
 import nailit.logic.*;
+import nailit.storage.StorageManager;
 
 public class Command {
 	
@@ -12,8 +13,8 @@ public class Command {
 	
 	public CommandResult executeCommand()
 	{
-		CommandResult executeResult = new CommandResult();
-		// add the method
+		Result executeResult = new Result();
+		StorageManagerStub storer = new StorageManagerStub();
 		
 		return executeResult;
 	}
