@@ -24,27 +24,27 @@ public class Command {
 		return executedResult;
 	}
 
-	private void doExecution() {
+	protected void doExecution() {
 		COMMAND_TYPE commandType = parserResultInstance.getCommand();
 		switch(commandType) {
 			case ADD: {
-				add();
+				executedResult = add();
 				break;
 			}
 			case COMPLETE: {
-				complete();
+				executedResult = complete();
 				break;
 			} 
 			case DELETE: {
-				delete();
+				executedResult = delete();
 				break;
 			}
 			case SEARCH: {
-				search();
+				executedResult = search();
 				break;
 			}
 			case UPDATE: {
-				update();
+				executedResult = update();
 				break;
 			}
 			case INVALID: {
@@ -56,30 +56,31 @@ public class Command {
 		}
 	}
 
-	private void update() {
+	private Result update() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void search() {
+	private Result search() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void delete() {
+	private Result delete() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void complete() {
+	private Result complete() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void add() {
+	private Result add() {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	
 	
 }
