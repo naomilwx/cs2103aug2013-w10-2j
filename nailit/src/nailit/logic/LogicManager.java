@@ -4,7 +4,9 @@ import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
 
-
+public enum COMMAND_TYPE {
+	ADD, COMPLETE, DELETE, SEARCH, UPDATE
+}
 
 public class LogicManager {
 	
