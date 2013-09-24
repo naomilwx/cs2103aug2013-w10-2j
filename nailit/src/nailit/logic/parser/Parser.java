@@ -18,16 +18,13 @@ public class Parser {
 		switch (commandType) {
 		case ADD:
 			return addCommand(CommandToExecute);
-		case CLEAR:
-			return clearCommand(CommandToExecute);
+		case COMPLETE:
+			return completeCommand(CommandToExecute);
 		case DELETE:
 			return deleteCommand(CommandToExecute);
-		case DISPLAY:
-			return displayCommand(CommandToExecute);
-		case SORT:
-			return sortCommand(CommandToExecute);
 		case SEARCH:
 			return searchCommand(uCommandToExecute);
+		case 
 		default:
 			//throw an error if the command is not recognized
 			throw new Error("Unrecognized command type");
@@ -48,8 +45,6 @@ public class Parser {
 			return COMMAND_TYPE.ADD;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
 			return COMMAND_TYPE.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("clear")){
-			return COMMAND_TYPE.CLEAR;
 		} else if (commandTypeString.equalsIgnoreCase("display")){
 			return COMMAND_TYPE.DISPLAY;
 		} else if (commandTypeString.equalsIgnoreCase("sort")){
