@@ -55,6 +55,13 @@ public class Task {
 	public String getName(){
 		return name;
 	}
+	public String getStartTime(){
+		return "";
+	}
+	
+	public String getEndTime(){
+		return "";
+	}
 	public String getDescription(){
 		return description;
 	}
