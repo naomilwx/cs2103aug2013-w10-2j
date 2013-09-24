@@ -11,6 +11,7 @@ public class SearchParser extends ParserManager {
 		userCommand = command;
 	}
 	
+	@Override
 	public ParserResult execute()
 	{
 		ParserResult resultExecution = new ParserResult();
