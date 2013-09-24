@@ -1,6 +1,7 @@
 package nailit.logic.parser;
-import TextBuddy.COMMAND_TYPE;
-import nailit.logic.*;
+import nailit.logic.COMMAND_TYPE;
+import nailit.logic.command.*;
+import nailit.logic.ParserResult;
 
 public class Parser {
 
@@ -17,17 +18,17 @@ public class Parser {
 		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
-			return addCommand(CommandToExecute);
+			//return addCommand(CommandToExecute);
 		case COMPLETE:
-			return completeCommand(CommandToExecute);
+			//return completeCommand(CommandToExecute);
 		case DELETE:
-			return deleteCommand(CommandToExecute);
+			//return deleteCommand(CommandToExecute);
 		case SEARCH:
-			return searchCommand(uCommandToExecute);
-		case 
+			//return searchCommand(uCommandToExecute);
+		case UPDATE:
 		default:
 			//throw an error if the command is not recognized
-			throw new Error("Unrecognized command type");
+			//throw new Error("Unrecognized command type");
 		}
 		return ParserResultInstance;
 	}
