@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ParserResult
 {
-	ArrayList<String> command = new ArrayList<String> ();
+	//ArrayList<String> command = new ArrayList<String> ();
 	
 	private static String Name;
 	private static Date StartTime;
