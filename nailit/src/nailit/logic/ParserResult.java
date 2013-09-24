@@ -12,5 +12,20 @@ public class ParserResult
 	private static Integer Priority;
 	private static String Tag;
 	
+	public String get_Name()
+	{
+		return Name;
+	}
+	
+	public boolean isNull_Name()
+	{
+		if (Name == "")
+			return true;
+		else 
+			return false;
+	}
+	
+	
+	
 	
 }
