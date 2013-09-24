@@ -1,8 +1,9 @@
 package nailit.logic.command;
 import nailit.Result;
-import nailit.logic.*;
 import nailit.storage.StorageManager;
-import nailit.Result;
+import nailit.logic.COMMAND_TYPE;
+import nailit.logic.ParserResult;
+
 
 public class Command {
 	
@@ -14,23 +15,70 @@ public class Command {
 	{
 		parserResultInstance = ResultInstance;
 		storer = new StorageManager();
+		executedResult = new Result();
 	}
 	
 	public Result executeCommand()
 	{
-
-		CommandResult executeResult = new CommandResult();
 		doExecution();
-
-		
 		return executedResult;
 	}
 
 	private void doExecution() {
-		String commandType = parserResultInstance.getCommand();
-		Switch(commandType) {
-			case 
+		COMMAND_TYPE commandType = parserResultInstance.getCommand();
+		switch(commandType) {
+			case ADD: {
+				add();
+				break;
+			}
+			case COMPLETE: {
+				complete();
+				break;
+			} 
+			case DELETE: {
+				delete();
+				break;
+			}
+			case SEARCH: {
+				search();
+				break;
+			}
+			case UPDATE: {
+				update();
+				break;
+			}
+			case INVALID: {
+				break;
+			}
+			default: {
+				
+			}
 		}
+	}
+
+	private void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void search() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void complete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void add() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
