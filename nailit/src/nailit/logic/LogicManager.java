@@ -15,7 +15,8 @@ public class LogicManager {
 	{
 		Result executeCommandResult = new Result();
 		ParserInstance = new Parser(OriginalCommand);
-		CommandInstance = new Command(ParserInstance.execute());
+		ParserResultInstance = ParserInstance.execute();
+		CommandInstance = new Command(ParserResultInstance);
 		executeCommandResult = CommandInstance.executeCommand();
 		return  executeCommandResult;
 	}
