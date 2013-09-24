@@ -12,7 +12,7 @@ public class Task {
 	private String tag;
 	private boolean added = false;
 	private boolean isCompleted;
-	private int priority; //takes values 0,1,2,3
+	private TASK_PRIORITY priority;
 	public Task(){
 		ID = TASKID_NULL;
 		name = "";
@@ -21,6 +21,7 @@ public class Task {
 		endTime = null;
 		tag = "";
 		isCompleted = false;
+		priority = null;
 	}
 	public Task(String taskName){
 		ID = TASKID_NULL;
@@ -31,8 +32,9 @@ public class Task {
 		tag = "";
 		isCompleted = false;
 		added = true;
+		priority = null;
 	}
-	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag){
+	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag, TASK_PRIORITY priority){
 		ID = TASKID_NULL;
 		name = taskName;
 		description = ""; //TODO: replace with constant
@@ -40,6 +42,7 @@ public class Task {
 		endTime = null;
 		tag = "";
 		isCompleted = false;
+		this.priority = priority;
 	}
 	
 	public boolean isAdded(){
@@ -49,7 +52,7 @@ public class Task {
 	public int getID(){
 		return ID;
 	}
-	public int getPriority(){
+	public TASK_PRIORITY getPriority(){
 		return priority;
 	}
 	public String getName(){
@@ -92,7 +95,7 @@ public class Task {
 	public void setCompleted(boolean isCompleted){
 		this.isCompleted = isCompleted;
 	}
-	public void setPriority(int taskPriority){
+	public void setPriority(TASK_PRIORITY taskPriority){
 		priority = taskPriority;
 	}
 	public void setStartTime(DateTime start){
@@ -101,10 +104,22 @@ public class Task {
 	public void setEndTime(DateTime end){
 		endTime = end;
 	}
-	
+	//Functions to format Task details for printout
+	public String formatID(){
+		String formattedID = "ID: "+ ID;
+		return formattedID;
+	}
+	public String formatName(){
+		String formattedName = "Name: " + name;
+		return formattedName;
+	}
+	public String formatTag(){
+		String formattedTag = "Tag: " + tag;
+		return formattedTag;
+	}
 	//method to create copy of Task object
 	public Task copy(){
-		Task newTask = new Task(name,description, startTime, endTime, tag);
+		Task newTask = new Task(name,description, startTime, endTime, tag, priority);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;
