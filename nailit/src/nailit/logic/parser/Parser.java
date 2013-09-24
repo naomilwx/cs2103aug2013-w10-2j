@@ -9,11 +9,9 @@ public class Parser {
 	{
 		CommandToExecute = command;
 	}
-	
-	public ParserResult execute()
-	{
+
+	public ParserResult execute() {
 		ParserResult ParserResultInstance = new ParserResult();
-		
 		return ParserResultInstance;
 	}
 	
