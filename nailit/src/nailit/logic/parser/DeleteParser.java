@@ -1,13 +1,5 @@
 package nailit.logic.parser;
 
-public class DeleteParser {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+public class DeleteParser extends ParserManager {
 
 }

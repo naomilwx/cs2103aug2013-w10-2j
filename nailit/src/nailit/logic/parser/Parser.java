@@ -18,14 +18,26 @@ public class Parser {
 		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
-			//return addCommand(CommandToExecute);
+		{
+			AddParser addParserManager = new AddParser();
+			return AddParser.execute(CommandToExecute);
+		}
 		case COMPLETE:
+		{
 			//return completeCommand(CommandToExecute);
+		}
 		case DELETE:
+		{
 			//return deleteCommand(CommandToExecute);
+		}
 		case SEARCH:
+		{
 			//return searchCommand(uCommandToExecute);
+		}
 		case UPDATE:
+		{
+			
+		}
 		default:
 			//throw an error if the command is not recognized
 			//throw new Error("Unrecognized command type");
