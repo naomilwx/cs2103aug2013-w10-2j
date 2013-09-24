@@ -17,9 +17,13 @@ public class StorageManager {
 		int priority = task.getPriority();
 		String name = task.getName();
 		String startDate = task.getStartTime();
-		String engDate = task.getEndTime();
+		String endDate = task.getEndTime();
 		String desc = task.getDescription();
 		String tag = task.getTag();
+		
+		ID = inMemory.add(ID,name,priority,startDate,endDate,desc,tag);
+		hardDisk.add(ID,name,priority,startDate,endDate,desc,tag);
+		return ID;
 	}
 	//update stub
 	public boolean retrieve(int ID){
