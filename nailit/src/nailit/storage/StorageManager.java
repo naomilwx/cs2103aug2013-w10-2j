@@ -1,5 +1,7 @@
 package nailit.storage;
 
+import nailit.Task;
+
 public class StorageManager {
 	private DataManager inMemory;
 	private FileManager hardDisk;
@@ -9,7 +11,7 @@ public class StorageManager {
 		hardDisk = new FileManager();
 	}
 	
-	public int add(){
+	public int add(Task task){
 		return 0;
 	}
 	//update stub
