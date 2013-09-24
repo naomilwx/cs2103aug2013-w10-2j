@@ -6,14 +6,14 @@ public class ParserResult
 {
 	//ArrayList<String> command = new ArrayList<String> ();
 	
-	private static String Command;
+	private static COMMAND_TYPE Command;
 	private static String Name;
 	private static Date StartTime;
 	private static Date EndTime;
 	private static Integer Priority;
 	private static String Tag;
 	
-	public String getCommand()
+	public COMMAND_TYPE getCommand()
 	{
 		return Command;
 	}
