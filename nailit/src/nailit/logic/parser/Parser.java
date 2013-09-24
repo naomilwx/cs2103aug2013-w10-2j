@@ -3,15 +3,14 @@ import nailit.logic.*;
 
 public class Parser {
 
-	public static String executeCommand;
+	public static String CommandToExecute;
 	
 	public Parser (String command)
 	{
-		executeCommand = command;
+		CommandToExecute = command;
 	}
-	
-	public ParserResult execute()
-	{
+
+	public ParserResult execute() {
 		ParserResult ParserResultInstance = new ParserResult();
 		return ParserResultInstance;
 	}

@@ -1,5 +1,6 @@
 package nailit.logic.command;
 import nailit.logic.*;
+import nailit.storage.StorageManager;
 
 public class Command {
 	
@@ -10,10 +11,11 @@ public class Command {
 		ParserResultInstance = ResultInstance;
 	}
 	
-	public Result executeCommand()
+	public CommandResult executeCommand()
 	{
 		Result executeResult = new Result();
-		// add the method
+		StorageManagerStub storer = new StorageManagerStub();
+		
 		return executeResult;
 	}
 	
