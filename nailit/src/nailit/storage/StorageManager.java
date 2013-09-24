@@ -4,7 +4,7 @@ public class StorageManager {
 	private DataManager inMemory;
 	private FileManager hardDisk;
 	
-	StorageManager(){
+	public StorageManager(){
 		inMemory = new DataManager();
 		hardDisk = new FileManager();
 	}
