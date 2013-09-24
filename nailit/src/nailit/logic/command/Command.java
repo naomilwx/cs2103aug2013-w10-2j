@@ -2,6 +2,7 @@ package nailit.logic.command;
 import nailit.Result;
 import nailit.logic.*;
 import nailit.storage.StorageManager;
+import nailit.Result;
 
 public class Command {
 	
@@ -15,11 +16,12 @@ public class Command {
 		storer = new StorageManager();
 	}
 	
-	public CommandResult executeCommand()
+	public Result executeCommand()
 	{
 
 		CommandResult executeResult = new CommandResult();
 		doExecution();
+
 		
 		return executeResult;
 	}
@@ -31,6 +33,5 @@ public class Command {
 		}
 	}
 	
-	private void
 	
 }
