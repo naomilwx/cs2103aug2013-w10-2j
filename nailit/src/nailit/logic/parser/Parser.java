@@ -13,7 +13,6 @@ public class Parser {
 	}
 
 	public ParserResult execute() {
-		ParserResult ParserResultInstance = new ParserResult();
 		String commandTypeString = getFirstWord(CommandToExecute);
 		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
@@ -44,9 +43,8 @@ public class Parser {
 		}
 		default:
 			//throw an error if the command is not recognized
-			//throw new Error("Unrecognized command type");
+			throw new Error("Unrecognized command type");
 		}
-		return ParserResultInstance;
 	}
 	
 	private static String getFirstWord(String userCommand) {
