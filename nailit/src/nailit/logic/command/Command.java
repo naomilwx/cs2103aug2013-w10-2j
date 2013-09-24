@@ -1,6 +1,13 @@
 package nailit.logic.command;
+import nailit.logic.*;
 
 public class Command {
-	//public abstract void execute();
-	//public abstract void undo();
+	
+	public static ParserResult ParserResultInstance;
+	
+	public Command (ParserResult ResultInstance)
+	{
+		ParserResultInstance = ResultInstance;
+	}
+	
 }
