@@ -6,7 +6,6 @@ public abstract class Parser {
 	{
 		//
 	}
-	
 	public abstract void 
 	public abstract void
 	public abstract void
