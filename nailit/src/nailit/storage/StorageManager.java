@@ -12,7 +12,14 @@ public class StorageManager {
 	}
 	
 	public int add(Task task){
-		return 0;
+		
+		int ID = task.getID();
+		int priority = task.getPriority();
+		String name = task.getName();
+		String startDate = task.getStartTime();
+		String engDate = task.getEndTime();
+		String desc = task.getDescription();
+		String tag = task.getTag();
 	}
 	//update stub
 	public boolean retrieve(int ID){
