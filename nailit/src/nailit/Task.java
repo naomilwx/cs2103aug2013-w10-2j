@@ -2,7 +2,8 @@ package nailit;
 
 public class Task {
 	private static int TASKID_NULL = -1;
-	
+	private static final String PRINTOUT_FORMAT = "ID: %1d\n"
+												+ "name: ";
 	private int ID;
 	private String name;
 	private String description;
