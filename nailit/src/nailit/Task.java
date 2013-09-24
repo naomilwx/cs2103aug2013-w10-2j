@@ -3,8 +3,7 @@ package nailit;
 import org.joda.time.DateTime;
 public class Task {
 	private static int TASKID_NULL = -1;
-	private static final String PRINTOUT_FORMAT = "ID: %1d\n"
-												+ "name: ";
+	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	private int ID;
 	private String name;
 	private String description;
@@ -109,6 +108,9 @@ public class Task {
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;
+	}
+	public String printNameAndID(){
+		return String.format(BASIC_PRINTOUT_FORMAT, ID, name);
 	}
 	@Override
 	public String toString(){
