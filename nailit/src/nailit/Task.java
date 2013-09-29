@@ -2,7 +2,7 @@ package nailit;
 
 import org.joda.time.DateTime;
 public class Task {
-	private static int TASKID_NULL = -1;
+	public static final int TASKID_NULL = -1;
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	private int ID;
 	private String name;
