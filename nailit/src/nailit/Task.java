@@ -10,7 +10,7 @@ public class Task {
 	private DateTime startTime;
 	private DateTime endTime;
 	private String tag;
-	private boolean added = false;
+	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted;
 	private TASK_PRIORITY priority;
 	public Task(){
@@ -32,7 +32,7 @@ public class Task {
 		tag = "";
 		isCompleted = false;
 		added = true;
-		priority = null;
+		priority = TASK_PRIORITY.MEDIUM;
 	}
 	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag, TASK_PRIORITY priority){
 		ID = TASKID_NULL;
@@ -74,6 +74,21 @@ public class Task {
 	public DateTime getEndTime(){
 		return endTime;
 	}
+	public boolean isFloatingTask(){
+		if(startTime==null && endTime==null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	//Checks if task is an event. returns true if both startTime and endTime are not null
+	public boolean isEvent(){
+		if(startTime != null && endTime != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	//setters
 	public boolean setID(int ID){
 		if(ID==Task.TASKID_NULL){
@@ -114,14 +129,35 @@ public class Task {
 		return formattedName;
 	}
 	public String formatTag(){
-		String formattedTag = "Tag: " + tag;
+		String formattedTag = "";
+		if(!tag.isEmpty()){
+			formattedTag = "Tag: " + tag;
+		}
 		return formattedTag;
+	}
+	public String formatPriority(){
+		String formattedPriority = "Priority: " + priority.toString();
+		return formattedPriority;
 	}
 	public String formatDateDetails(){
 		String formattedDateDetails = "";
+		if(isEvent()){
+			formattedDateDetails = "Start Time: " + startTime + "\n"
+									+"End Time: " + endTime;
+		}else{
+			formattedDateDetails = "Due: " + startTime;
+		}
 		return formattedDateDetails;
 	}
-	
+	public String formatStatus(){
+		String formattedStatus = "Status: ";
+		if(isCompleted){
+			formattedStatus += "Completed";
+		}else{
+			formattedStatus += "Not Completed";
+		}
+		return formattedStatus;
+	}
 	//method to create copy of Task object
 	public Task copy(){
 		Task newTask = new Task(name,description, startTime, endTime, tag, priority);
@@ -133,8 +169,18 @@ public class Task {
 		return String.format(BASIC_PRINTOUT_FORMAT, ID, name);
 	}
 	@Override
-	public String toString(){
-		return "";
+	public String toString(){ //TODO: figure out whether to include description
+		String output = formatID()+"\n"
+						+formatName() +"\n";
+		if(!isFloatingTask()){
+			output += formatDateDetails() + "\n";
+		}
+		output += formatPriority() +"\n"
+				 + formatStatus() + "\n";
+		if(!tag.isEmpty()){
+			output += formatTag() + "\n";
+		}
+		return output;
 	}
 	@Override
 	public boolean equals(Object otherTask){
