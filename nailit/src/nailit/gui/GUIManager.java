@@ -20,8 +20,9 @@ import nailit.logic.LogicManager;;
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
 	
-	private MainWindow frame;
+	private MainWindow mainWindow;
 	private CommandBar commandBar;
+	private DisplayArea displayArea;
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
 	
@@ -31,14 +32,15 @@ public class GUIManager {
 	public GUIManager(final AppLauncher launcher) {
 		this.launcher = launcher;
 		logicExecutor = new LogicManager();
-		frame = new MainWindow(this);
+		mainWindow = new MainWindow(this);
 		commandBar = new CommandBar(this);
+		displayArea = new DisplayArea(this);
 		loadComponentsUntoMainFrame();
 		//stub to be modified later
 	}
 	
 	public void setVisible(boolean isVisible){
-		frame.setVisible(isVisible);
+		mainWindow.setVisible(isVisible);
 	}
 	/**
 	 * Executes command entered by user
@@ -53,6 +55,6 @@ public class GUIManager {
 		launcher.exit();
 	}
 	private void loadComponentsUntoMainFrame(){
-		frame.getContentPane().add(commandBar,BorderLayout.SOUTH);
+		mainWindow.getContentPane().add(commandBar,BorderLayout.SOUTH);
 	}
 }
