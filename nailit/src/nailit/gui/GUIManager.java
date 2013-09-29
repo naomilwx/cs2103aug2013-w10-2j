@@ -17,52 +17,29 @@ import javax.swing.border.LineBorder;
 
 import nailit.logic.LogicManager;;
 
-public class GUIManager {
-
-	private JFrame frame;
-	private static String APPLICATION_NAME = "NailIt!";
+public class GUIManager {	
+	public static final String APPLICATION_NAME = "NailIt!";
 	
-	private AppLauncher launcher;
+	private MainWindow frame;
 	private CommandBar commandBar;
+	private AppLauncher launcher;
 	private LogicManager logicExecutor;
 	
-	private final WindowListener windowClosePressed =  new WindowAdapter(){
-		public void windowClosing(WindowEvent event){
-			frame.setVisible(false);
-		}
-	};
-
-	public void setVisible(boolean isVisible){
-		frame.setVisible(isVisible);
-	}
 	/**
 	 * Create the application.
 	 */
 	public GUIManager(final AppLauncher launcher) {
-		initialize();
-		//stub to be modified later
 		this.launcher = launcher;
 		logicExecutor = new LogicManager();
-	}
-	
-	private void addListenersToMainFrame(){
-		frame.addWindowListener(windowClosePressed);
-	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+		frame = new MainWindow(this);
 		commandBar = new CommandBar(this);
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300); //temp to be replaced by constants later
-		frame.setTitle(APPLICATION_NAME);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
-		frame.getContentPane().add(commandBar,BorderLayout.SOUTH);
-		
-		addListenersToMainFrame();
+		loadComponentsUntoMainFrame();
+		//stub to be modified later
 	}
 	
+	public void setVisible(boolean isVisible){
+		frame.setVisible(isVisible);
+	}
 	/**
 	 * Executes command entered by user
 	 * @param input
@@ -71,5 +48,11 @@ public class GUIManager {
 		System.out.println(input);
 		commandBar.clearUserInput();
 	}
-
+	
+	private void exit(){
+		launcher.exit();
+	}
+	private void loadComponentsUntoMainFrame(){
+		frame.getContentPane().add(commandBar,BorderLayout.SOUTH);
+	}
 }
