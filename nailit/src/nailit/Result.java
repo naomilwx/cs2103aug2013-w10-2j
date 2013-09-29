@@ -5,29 +5,45 @@ import java.util.ArrayList;
 public class Result {
 	private boolean isExit;
 	private boolean isSuccessful;
-	private String commandType;
-	private String executionPrintOut;
+	private String displayType;
+	private String notificationPrintOut;
 	private ArrayList<Task> taskList;
 	//initialise "empty" Result object
 	public Result(){
 		isExit = false;
 		isSuccessful = false;
-		commandType = null;
-		executionPrintOut = "";
+		displayType = null;
+		notificationPrintOut = "";
 		taskList = null;
 	}
-	public Result(boolean isExitCommand, boolean isSuccess, String commandType, String printOut){
+	public Result(boolean isExitCommand, boolean isSuccess, String displayType, String printOut){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
-		this.commandType = commandType;
-		executionPrintOut = printOut;
+		this.displayType = displayType;
+		notificationPrintOut = printOut;
 		taskList = null;
 	}
-	public Result(boolean isExitCommand, boolean isSuccess, String commandType, String printOut, ArrayList<Task> taskList){
+	public Result(boolean isExitCommand, boolean isSuccess, String displayType, String printOut, ArrayList<Task> taskList){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
-		this.commandType = commandType;
-		executionPrintOut = printOut;
+		this.displayType = displayType;
+		notificationPrintOut = printOut;
+		this.taskList = taskList;
+	}
+	//setters
+	public void setNotification(String printOut){
+		notificationPrintOut = printOut;
+	}
+	public void setIsSuccessful(boolean isSuccess){
+		isSuccessful = isSuccess;
+	}
+	public void setDisplayType(String displayType){
+		this.displayType = displayType;
+	}
+	public void setExitStatus(boolean isExitCommand){
+		isExit = isExitCommand;
+	}
+	public void setTaskList(ArrayList<Task> taskList){
 		this.taskList = taskList;
 	}
 	//getters
@@ -38,10 +54,10 @@ public class Result {
 		return isSuccessful;
 	}
 	public String getCommandType(){
-		return commandType;
+		return displayType;
 	}
 	public String getPrintOut(){
-		return executionPrintOut;
+		return notificationPrintOut;
 	}
 	public ArrayList<Task> getTaskList(){
 		return taskList;
