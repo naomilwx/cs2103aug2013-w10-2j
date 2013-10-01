@@ -3,6 +3,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
+import nailit.TASK_PRIORITY;
 import nailit.Task;
 
 public class DataManager {
@@ -25,7 +26,7 @@ public class DataManager {
 	public int add(Task task){
 		
 		int ID = task.getID();
-		int priority = task.getPriority();
+		TASK_PRIORITY priority = task.getPriority();
 		String name = task.getName();
 		DateTime startDate = task.getStartTime();
 		DateTime endDate = task.getEndTime();
