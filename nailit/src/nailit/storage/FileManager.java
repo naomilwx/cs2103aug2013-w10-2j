@@ -1,8 +1,8 @@
 package nailit.storage;
 import java.util.ArrayList;
 
-import nailit.TASK_PRIORITY;
-import nailit.Task;
+import nailit.common.TASK_PRIORITY;
+import nailit.common.Task;
 
 import org.joda.time.DateTime;
 

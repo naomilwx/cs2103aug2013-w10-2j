@@ -1,4 +1,4 @@
-package nailit;
+package nailit.common;
 
 import java.util.ArrayList;
 

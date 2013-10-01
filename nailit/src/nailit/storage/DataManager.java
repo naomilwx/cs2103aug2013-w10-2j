@@ -3,8 +3,8 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
-import nailit.TASK_PRIORITY;
-import nailit.Task;
+import nailit.common.TASK_PRIORITY;
+import nailit.common.Task;
 
 public class DataManager {
 	private final int TASKID_NULL = -1;

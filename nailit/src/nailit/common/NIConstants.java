@@ -1,4 +1,4 @@
-package nailit;
+package nailit.common;
 /**************************
  * This class is used to store all the constants.
  ************************* */

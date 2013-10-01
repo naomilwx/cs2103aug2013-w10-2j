@@ -1,9 +1,9 @@
 package nailit.logic;
 
+import nailit.common.Result;
 import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
-import nailit.Result;
 
 
 public class LogicManager {

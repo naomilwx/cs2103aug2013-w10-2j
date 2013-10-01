@@ -1,7 +1,7 @@
 package nailit.logic.command;
+import nailit.common.Result;
 import nailit.logic.*;
 import nailit.storage.StorageManager;
-import nailit.Result;
 
 public class Command {
 	
