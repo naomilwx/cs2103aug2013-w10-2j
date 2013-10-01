@@ -16,15 +16,12 @@ public class FileManager {
 	public FileManager(String path){
 		dataList = new ArrayList<String>();
 	}
-<<<<<<< local
 	
 	/**
 	 * Public Methods
 	 * */
-	public int add(int ID, String name,DateTime startDate,DateTime endDate,int priority,String tag,String desc){
-=======
 	public int add(int ID, String name,DateTime startDate,DateTime endDate,TASK_PRIORITY priority,String tag,String desc){
->>>>>>> other
+
 		return -2;
 	}
 	

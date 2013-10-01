@@ -20,6 +20,8 @@ public class StorageManager {
 		
 		int ID = task.getID();
 		int priority = task.getPriority();
+		TASK_PRIORITY priority = task.getPriority();
+
 		String name = task.getName();
 		DateTime startDate = task.getStartTime();
 		DateTime endDate = task.getEndTime();
