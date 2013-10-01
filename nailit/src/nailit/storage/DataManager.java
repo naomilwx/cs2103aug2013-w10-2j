@@ -7,15 +7,26 @@ import nailit.common.TASK_PRIORITY;
 import nailit.common.Task;
 
 public class DataManager {
-	private final int TASKID_NULL = -1;
-	private FileManager hardDisk;
-	private ArrayList<Task> tasks = new ArrayList<Task>();
-	private String hardDiskPath = "";
 	
+	/**
+	 * Private Fields
+	 * */
+	private final int TASKID_NULL = -1;
+	private ArrayList<String> dataList = new ArrayList<String>();
+	
+	/**
+	 * Constructor
+	 * */
 	public DataManager(){
-		setUpHardDisk();
-		initialiseInMeomoryTasks();
+	
 	}
+<<<<<<< local
+
+	/**
+	 * Public Methods
+	 * */
+	public int add(int ID, String name,DateTime startDate,DateTime endDate,int priority,String tag,String desc){
+=======
 	public void setUpHardDisk(){
 		hardDisk = new FileManager(hardDiskPath);
 	}
@@ -32,23 +43,42 @@ public class DataManager {
 		DateTime endDate = task.getEndTime();
 		String desc = task.getDescription();
 		String tag = task.getTag();
+>>>>>>> other
 		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
 		}
-		hardDisk.add(ID,name,startDate,endDate,priority,desc,tag);
-		return ID;
+		return -2;
 	}
 	
-	public void saveToFile(){
-		hardDisk.save(tasks);
+	public String retrieve(int lineNum){
+		return null;
 	}
-	public boolean addedBefore(int ID){
-		return ID != TASKID_NULL;
+	
+	public String remove(int lineNum){
+		return null;
 	}
-	public int generateNewID(){
+	
+	public ArrayList<String> getDataList(){
+		return null;
+	}
+	
+	public void setDataList(ArrayList<String> d){
+		
+	}
+	
+	public DataManager clone(){
+		return null;
+	}
+	
+	/**
+	 * Private Methods
+	 * */
+	private int generateNewID(){
 		return -1;
 	}
-	//Constructor
-
+	
+	private boolean addedBefore(int ID){
+		return ID != TASKID_NULL;
+	}
 }
