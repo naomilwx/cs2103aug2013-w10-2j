@@ -2,20 +2,19 @@ package nailit.gui;
 
 import nailit.AppLauncher;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+
 import javax.swing.JPanel;
+
 import java.awt.Color;
+
 import javax.swing.border.LineBorder;
 
-import nailit.logic.LogicManager;;
+import nailit.logic.LogicManager;
 
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
@@ -49,6 +48,7 @@ public class GUIManager {
 	protected void executeUserInputCommand(String input){
 		System.out.println(input);
 		commandBar.clearUserInput();
+//		logicExecutor.executeCommand(input);
 	}
 	
 	private void exit(){
