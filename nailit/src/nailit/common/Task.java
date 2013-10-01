@@ -1,4 +1,4 @@
-package nailit;
+package nailit.common;
 
 import org.joda.time.DateTime;
 public class Task {

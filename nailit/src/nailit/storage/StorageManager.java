@@ -2,7 +2,7 @@ package nailit.storage;
 
 import org.joda.time.DateTime;
 
-import nailit.Task;
+import nailit.common.Task;
 
 public class StorageManager {
 	private DataManager inMemory;
