@@ -20,31 +20,12 @@ public class DataManager {
 	public DataManager(){
 	
 	}
-<<<<<<< local
 
 	/**
 	 * Public Methods
 	 * */
 	public int add(int ID, String name,DateTime startDate,DateTime endDate,int priority,String tag,String desc){
-=======
-	public void setUpHardDisk(){
-		hardDisk = new FileManager(hardDiskPath);
-	}
-	public void initialiseInMeomoryTasks(){
-		hardDisk.read(tasks);
-	}
 	
-	public int add(Task task){
-		
-		int ID = task.getID();
-		TASK_PRIORITY priority = task.getPriority();
-		String name = task.getName();
-		DateTime startDate = task.getStartTime();
-		DateTime endDate = task.getEndTime();
-		String desc = task.getDescription();
-		String tag = task.getTag();
->>>>>>> other
-		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
 		}
