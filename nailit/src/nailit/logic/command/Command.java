@@ -27,7 +27,7 @@ public class Command {
 		return executedResult;
 	}
 
-	protected void doExecution() {
+	private void doExecution() {
 		COMMAND_TYPE commandType = parserResultInstance.getCommand();
 		switch(commandType) {
 			case ADD: {
