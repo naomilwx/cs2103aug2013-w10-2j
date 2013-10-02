@@ -13,36 +13,38 @@ public class Parser {
 	}
 
 	public ParserResult execute() {
-		ParserResult ParserResultInstance = new ParserResult();
 		String commandTypeString = getFirstWord(CommandToExecute);
 		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
 		{
-			AddParser addParserManager = new AddParser();
+			AddParser addParserManager = new AddParser(CommandToExecute);
 			return addParserManager.execute();
 		}
 		case COMPLETE:
 		{
-			//return completeCommand(CommandToExecute);
+			CompleteParser completeParserManager = new CompleteParser(CommandToExecute);
+			return completeParserManager.execute();
 		}
 		case DELETE:
 		{
-			//return deleteCommand(CommandToExecute);
+			DeleteParser deleteParserManager = new DeleteParser(CommandToExecute);
+			return deleteParserManager.execute();
 		}
 		case SEARCH:
 		{
-			//return searchCommand(uCommandToExecute);
+			SearchParser searchParserManager = new SearchParser(CommandToExecute);
+			return searchParserManager.execute();
 		}
 		case UPDATE:
 		{
-			
+			UpdateParser updateParserManager = new UpdateParser(CommandToExecute);
+			return updateParserManager.execute();
 		}
 		default:
 			//throw an error if the command is not recognized
-			//throw new Error("Unrecognized command type");
+			throw new Error("Unrecognized command type");
 		}
-		return ParserResultInstance;
 	}
 	
 	private static String getFirstWord(String userCommand) {
