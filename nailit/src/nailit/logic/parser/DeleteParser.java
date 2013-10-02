@@ -6,14 +6,12 @@ public class DeleteParser extends ParserManager {
 	
 	private String userCommand;
 	
-	public DeleteParser (String command)
-	{
+	public DeleteParser (String command){
 		userCommand = command;
 	}
 	
 	@Override
-	public ParserResult execute()
-	{
+	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
 		return resultExecution;
 	}

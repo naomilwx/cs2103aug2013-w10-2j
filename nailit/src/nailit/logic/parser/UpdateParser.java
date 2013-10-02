@@ -6,14 +6,12 @@ public class UpdateParser extends ParserManager {
 
 	private String userCommand;
 	
-	public UpdateParser (String command)
-	{
+	public UpdateParser (String command){
 		userCommand = command;
 	}
 	
 	@Override
-	public ParserResult execute()
-	{
+	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
 		return resultExecution;
 	}
