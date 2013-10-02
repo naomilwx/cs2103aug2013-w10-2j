@@ -6,14 +6,12 @@ public class CompleteParser extends ParserManager{
 
 private String userCommand;
 	
-	public CompleteParser (String command)
-	{
+	public CompleteParser (String command){
 		userCommand = command;
 	}
 	
 	@Override
-	public ParserResult execute()
-	{
+	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
 		return resultExecution;
 	}
