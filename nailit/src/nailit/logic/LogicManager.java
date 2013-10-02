@@ -1,9 +1,9 @@
 package nailit.logic;
 
+import nailit.common.Result;
 import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
-import nailit.Result;
 
 
 public class LogicManager {
@@ -12,7 +12,7 @@ public class LogicManager {
 	private Parser ParserInstance;
 	private Command CommandInstance;
 	
-	protected Result executeCommand(String OriginalCommand)
+	public Result executeCommand(String OriginalCommand)
 	{
 		Result executeCommandResult = new Result();
 		ParserInstance = new Parser(OriginalCommand);

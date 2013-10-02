@@ -1,5 +1,8 @@
 package nailit.logic.command;
-import nailit.Result;
+
+import nailit.common.Result;
+import nailit.logic.*;
+
 import nailit.storage.StorageManager;
 import nailit.logic.COMMAND_TYPE;
 import nailit.logic.ParserResult;

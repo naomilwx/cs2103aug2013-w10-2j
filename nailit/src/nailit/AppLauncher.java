@@ -12,19 +12,20 @@ public class AppLauncher {
 	}
 	
 	public void run(){
-		initialiseAndRunGUI();
-	}
-	private void initialiseAndRunGUI(){
-		GUI = new GUIManager(this);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI.setVisible(true);
+					initialiseAndRunGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
+	}
+	private void initialiseAndRunGUI(){
+		GUI = new GUIManager(this);
+		GUI.setVisible(true);
 	}
 	public void exit(){
 		System.exit(0);
