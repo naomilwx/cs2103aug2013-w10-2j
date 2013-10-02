@@ -4,7 +4,7 @@ import nailit.common.Result;
 import nailit.logic.*;
 
 import nailit.storage.StorageManager;
-import nailit.logic.COMMAND_TYPE;
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
 
@@ -28,7 +28,7 @@ public class Command {
 	}
 
 	private void doExecution() {
-		COMMAND_TYPE commandType = parserResultInstance.getCommand();
+		CommandType commandType = parserResultInstance.getCommand();
 		switch(commandType) {
 			case ADD: {
 				executedResult = add();
@@ -84,8 +84,4 @@ public class Command {
 		return null;
 	}
 
-	
-	
-	
-	
 }
