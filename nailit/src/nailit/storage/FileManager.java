@@ -1,4 +1,6 @@
 package nailit.storage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 import nailit.common.TASK_PRIORITY;
@@ -8,13 +10,15 @@ import org.joda.time.DateTime;
 
 public class FileManager {
 	private ArrayList<String> dataList;
-	
+	private BufferedReader reader;
+	private BufferedWriter writer;
 	
 	/**
 	 * Constructor
 	 * */
 	public FileManager(String path){
 		dataList = new ArrayList<String>();
+		reader = new BufferedReader(new FileReader(File(path)));
 	}
 	
 	/**
