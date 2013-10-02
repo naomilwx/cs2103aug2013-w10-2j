@@ -1,5 +1,5 @@
 package nailit.logic.parser;
-import nailit.logic.COMMAND_TYPE;
+import nailit.logic.CommandType;
 import nailit.logic.command.*;
 import nailit.logic.ParserResult;
 
@@ -14,7 +14,7 @@ public class Parser {
 
 	public ParserResult execute() {
 		String commandTypeString = getFirstWord(CommandToExecute);
-		COMMAND_TYPE commandType = determineCommandType(commandTypeString);
+		CommandType commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
 		{
@@ -52,22 +52,22 @@ public class Parser {
 		return commandTypeString;
 	}
 	
-	private static COMMAND_TYPE determineCommandType(String commandTypeString) {
+	private static CommandType determineCommandType(String commandTypeString) {
 		if (commandTypeString == null)
 			throw new Error("command type string cannot be null!");
 
 		if (commandTypeString.equalsIgnoreCase("add")) {
-			return COMMAND_TYPE.ADD;
+			return CommandType.ADD;
 		} else if (commandTypeString.equalsIgnoreCase("complete")) {
-			return COMMAND_TYPE.COMPLETE;
+			return CommandType.COMPLETE;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
-			return COMMAND_TYPE.DELETE;
+			return CommandType.DELETE;
 		} else if (commandTypeString.equalsIgnoreCase("search")){
-			return COMMAND_TYPE.SEARCH;
+			return CommandType.SEARCH;
 		} else if (commandTypeString.equalsIgnoreCase("update")) {
-			return COMMAND_TYPE.UPDATE;
+			return CommandType.UPDATE;
 		} else {
-			return COMMAND_TYPE.INVALID;
+			return CommandType.INVALID;
 		}
 	}
 	
