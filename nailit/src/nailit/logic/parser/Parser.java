@@ -7,8 +7,7 @@ public class Parser {
 
 	public static String CommandToExecute;
 	
-	public Parser (String command)
-	{
+	public Parser (String command){
 		CommandToExecute = command;
 	}
 
@@ -17,30 +16,20 @@ public class Parser {
 		CommandType commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
-		{
 			AddParser addParserManager = new AddParser(CommandToExecute);
 			return addParserManager.execute();
-		}
 		case COMPLETE:
-		{
 			CompleteParser completeParserManager = new CompleteParser(CommandToExecute);
 			return completeParserManager.execute();
-		}
 		case DELETE:
-		{
 			DeleteParser deleteParserManager = new DeleteParser(CommandToExecute);
 			return deleteParserManager.execute();
-		}
 		case SEARCH:
-		{
 			SearchParser searchParserManager = new SearchParser(CommandToExecute);
 			return searchParserManager.execute();
-		}
 		case UPDATE:
-		{
 			UpdateParser updateParserManager = new UpdateParser(CommandToExecute);
 			return updateParserManager.execute();
-		}
 		default:
 			//throw an error if the command is not recognized
 			throw new Error("Unrecognized command type");

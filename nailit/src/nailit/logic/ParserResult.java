@@ -2,8 +2,7 @@ package nailit.logic;
 
 import java.util.*;
 
-public class ParserResult
-{
+public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 	
 	private static CommandType Command;
@@ -13,22 +12,20 @@ public class ParserResult
 	private static Integer Priority;
 	private static String Tag;
 	
-	public CommandType getCommand()
-	{
+	public CommandType getCommand(){
 		return Command;
 	}
 	
-	public String getName()
-	{
+	public String getName(){
 		return Name;
 	}
 	
-	public boolean isNullName()
-	{
-		if (Name == "")
+	public boolean isNullName(){
+		if (Name == ""){
 			return true;
-		else 
+		}else{ 
 			return false;
+		}
 	}
 	
 	public Date getStartTime()
@@ -53,10 +50,11 @@ public class ParserResult
 	
 	public boolean isNullPriority()
 	{
-		if (Priority == 0)
+		if (Priority == 0){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 	
 	public String getTag()
@@ -66,9 +64,10 @@ public class ParserResult
 	
 	public boolean isNullTag()
 	{
-		if (Tag == "")
+		if (Tag == ""){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 }

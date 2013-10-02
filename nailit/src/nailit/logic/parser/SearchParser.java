@@ -6,14 +6,12 @@ public class SearchParser extends ParserManager {
 
 	private String userCommand;
 	
-	public SearchParser (String command)
-	{
+	public SearchParser (String command){
 		userCommand = command;
 	}
 	
 	@Override
-	public ParserResult execute()
-	{
+	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
 		return resultExecution;
 	}
