@@ -1,6 +1,8 @@
 package nailit.storage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 import nailit.common.TASK_PRIORITY;
@@ -18,7 +20,12 @@ public class FileManager {
 	 * */
 	public FileManager(String path){
 		dataList = new ArrayList<String>();
-		reader = new BufferedReader(new FileReader(File(path)));
+		try {
+			reader = new BufferedReader(new FileReader(path));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
