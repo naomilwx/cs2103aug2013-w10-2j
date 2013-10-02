@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 
 import nailit.common.Task;
 
+import nailit.common.TASK_PRIORITY;
+
 public class StorageManager {
 	private FileManager hardDisk;
 	private DataManager origInMemory;
@@ -19,7 +21,6 @@ public class StorageManager {
 	public int add(Task task){
 		
 		int ID = task.getID();
-		int priority = task.getPriority();
 		TASK_PRIORITY priority = task.getPriority();
 
 		String name = task.getName();
