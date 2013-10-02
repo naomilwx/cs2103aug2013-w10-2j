@@ -61,28 +61,30 @@ public class Command {
 
 	private Result update() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	private Result search() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	private Result delete() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	private Result complete() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	private Result add() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
+
+	
 	
 	
 	
