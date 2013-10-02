@@ -1,5 +1,5 @@
 package nailit.logic;
 
-public enum COMMAND_TYPE {
+public enum CommandType {
 	ADD, COMPLETE, DELETE, SEARCH, UPDATE, INVALID
 }
