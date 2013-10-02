@@ -6,14 +6,13 @@ import nailit.logic.command.*;
 import nailit.logic.parser.*;
 
 
-public class LogicManager {
+public class LogicManager{
 	
 	private ParserResult ParserResultInstance;
 	private Parser ParserInstance;
 	private Command CommandInstance;
 	
-	public Result executeCommand(String OriginalCommand)
-	{
+	public Result executeCommand(String OriginalCommand){
 		Result executeCommandResult = new Result();
 		ParserInstance = new Parser(OriginalCommand);
 		ParserResultInstance = ParserInstance.execute();
