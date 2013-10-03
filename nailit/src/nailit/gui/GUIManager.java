@@ -71,6 +71,9 @@ public class GUIManager {
 	 * @param input
 	 */
 	protected void executeUserInputCommand(String input){
+		TextDisplay testpane = new TextDisplay();
+		testpane.display(input);
+		displayArea.addContent(testpane, true);
 		System.out.println(input);
 		commandBar.clearUserInput();
 //		logicExecutor.executeCommand(input);
