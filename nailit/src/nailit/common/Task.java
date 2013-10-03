@@ -34,15 +34,15 @@ public class Task {
 		added = true;
 		priority = TASK_PRIORITY.MEDIUM;
 	}
-	public Task(String taskName,String desc, DateTime startTime, DateTime endTime, String tag, TASK_PRIORITY priority){
+	public Task(String taskName,String desc, DateTime start, DateTime end, String t, TASK_PRIORITY p){
 		ID = TASKID_NULL;
 		name = taskName;
-		description = ""; //TODO: replace with constant
-		startTime = null;
-		endTime = null;
-		tag = "";
+		description = desc;
+		startTime = start;
+		endTime = end;
+		tag = t;
 		isCompleted = false;
-		this.priority = priority;
+		priority = p;
 	}
 	
 	public boolean isAdded(){
@@ -90,9 +90,9 @@ public class Task {
 		}
 	}
 	//setters
-	public boolean setID(int ID){
-		if(this.ID==Task.TASKID_NULL){
-			this.ID = ID;
+	public boolean setID(int newID){
+		if(ID==Task.TASKID_NULL){
+			ID = newID;
 			return true;
 		}else{
 			return false;
@@ -107,8 +107,8 @@ public class Task {
 	public void setTag(String taskTag){
 		tag = taskTag;
 	}
-	public void setCompleted(boolean isCompleted){
-		this.isCompleted = isCompleted;
+	public void setCompleted(boolean completed){
+		isCompleted = completed;
 	}
 	public void setPriority(TASK_PRIORITY taskPriority){
 		priority = taskPriority;
@@ -206,6 +206,14 @@ public class Task {
 			}else{
 				return otherTaskID == ID;
 			}
+		}else{
+			return false;
+		}
+	}
+	public boolean isClone(Object otherTask){
+		if(this.equals(otherTask)){
+			String otherTaskString = otherTask.toString();
+			return otherTaskString.equals(this.toString());
 		}else{
 			return false;
 		}
