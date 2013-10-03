@@ -34,7 +34,7 @@ public class CommandBar extends JPanel {
 	private void createAndConfigureTextInputField(){
 		textBar = new JTextField();
 		resizeAndpositionTextInputField();
-		textBar.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textBar.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		addListenersToTextInputField();
 	}
 	
