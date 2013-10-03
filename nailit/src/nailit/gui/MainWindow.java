@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class MainWindow extends JFrame {
+	protected static final int WINDOW_HEIGHT = 500;
+	protected static final int WINDOW_WIDTH = 450;
+	
 	private GUIManager GUIBoss;
 	
 	
@@ -30,9 +33,13 @@ public class MainWindow extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.setBounds(100, 100, 450, 300); //temp to be replaced by constants later
-		this.setTitle(GUIManager.APPLICATION_NAME);
+		configureMainWindowDisplay();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addListenersToMainFrame();
+	}
+	
+	private void configureMainWindowDisplay(){
+		this.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT); //temp to be replaced by constants later
+		this.setTitle(GUIManager.APPLICATION_NAME);
 	}
 }

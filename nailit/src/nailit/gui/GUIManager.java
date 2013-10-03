@@ -18,6 +18,7 @@ import nailit.logic.LogicManager;
 
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
+	protected static final Color BORDER_COLOR = Color.black;
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
@@ -56,5 +57,6 @@ public class GUIManager {
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.getContentPane().add(commandBar,BorderLayout.SOUTH);
+		mainWindow.getContentPane().add(displayArea,BorderLayout.CENTER);
 	}
 }
