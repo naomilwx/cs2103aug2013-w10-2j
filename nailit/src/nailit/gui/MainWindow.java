@@ -1,6 +1,7 @@
 package nailit.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,12 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.sun.xml.internal.ws.api.server.Container;
+
 public class MainWindow extends JFrame {
 	protected static final int WINDOW_HEIGHT = 500;
 	protected static final int WINDOW_WIDTH = 450;
 	
 	private GUIManager GUIBoss;
-	
+	private JPanel contentPane;
 	
 	public MainWindow(final GUIManager GUIMain){
 		GUIBoss = GUIMain;
@@ -33,13 +36,22 @@ public class MainWindow extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		createAndConfigureContentPane();
 		configureMainWindowDisplay();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addListenersToMainFrame();
 	}
-	
+	private void createAndConfigureContentPane(){
+		contentPane = new JPanel();
+		contentPane.setLayout(null);
+		setContentPane(contentPane);
+	}
 	private void configureMainWindowDisplay(){
 		this.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT); //temp to be replaced by constants later
 		this.setTitle(GUIManager.APPLICATION_NAME);
 	}
+	protected void addItem(Component component) {
+		contentPane.add(component);
+	}
+	
 }
