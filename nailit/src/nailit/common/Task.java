@@ -168,6 +168,21 @@ public class Task {
 	public String printNameAndID(){
 		return String.format(BASIC_PRINTOUT_FORMAT, ID, name);
 	}
+	public boolean isAtSameStartTime(Task other){
+		if(startTime == null || other.startTime == null){
+			return ((startTime == null) && (other.startTime ==null));
+		}
+		return startTime.equals(other.startTime);
+	}
+	public boolean isAtSameEndTime(Task other){
+		if(endTime == null || other.endTime == null){
+			return ((endTime == null) && (other.endTime ==null));
+		}
+		return endTime.equals(other.endTime);
+	}
+	public boolean isAtSameTime(Task other){
+		return (isAtSameStartTime(other) && isAtSameEndTime(other));
+	}
 	@Override
 	public String toString(){ //TODO: figure out whether to include description
 		String output = formatID()+"\n"
