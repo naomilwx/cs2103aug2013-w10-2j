@@ -91,7 +91,7 @@ public class Task {
 	}
 	//setters
 	public boolean setID(int ID){
-		if(ID==Task.TASKID_NULL){
+		if(this.ID==Task.TASKID_NULL){
 			this.ID = ID;
 			return true;
 		}else{

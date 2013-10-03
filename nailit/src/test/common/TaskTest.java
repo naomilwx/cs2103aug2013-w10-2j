@@ -19,5 +19,8 @@ public class TaskTest {
 	public void TaskIDTest(){
 		Task task1 = new Task("Test Task!");
 		assertEquals(task1.getID(),Task.TASKID_NULL);
+		boolean IDAddSuccess = task1.setID(1);
+		assertTrue(IDAddSuccess);
+		assertEquals(task1.getID(),1);
 	}
 }
