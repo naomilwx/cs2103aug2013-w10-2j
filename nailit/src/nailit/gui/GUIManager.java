@@ -19,6 +19,10 @@ import nailit.logic.LogicManager;
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
 	protected static final Color BORDER_COLOR = Color.black;
+	protected static final int Y_BUFFER_HEIGHT = 10;
+	protected static final int X_BUFFER_WIDTH = 5;
+	protected static final int WINDOW_RIGHT_BUFFER = 22;
+	protected static final int WINDOW_BOTTOM_BUFFER = 40;
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
@@ -33,8 +37,8 @@ public class GUIManager {
 		this.launcher = launcher;
 		logicExecutor = new LogicManager();
 		mainWindow = new MainWindow(this);
-		commandBar = new CommandBar(this);
-		displayArea = new DisplayArea(this);
+		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight());
 		loadComponentsUntoMainFrame();
 		//stub to be modified later
 	}
@@ -56,7 +60,7 @@ public class GUIManager {
 		launcher.exit();
 	}
 	private void loadComponentsUntoMainFrame(){
-		mainWindow.getContentPane().add(commandBar,BorderLayout.SOUTH);
-		mainWindow.getContentPane().add(displayArea,BorderLayout.CENTER);
+		mainWindow.addItem(commandBar);
+		mainWindow.addItem(displayArea);
 	}
 }

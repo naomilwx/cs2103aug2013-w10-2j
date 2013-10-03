@@ -12,23 +12,34 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
+	private static final int COMMANDBAR_HEIGHT = 20;
+	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
+	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
+	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
+	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
 	private JTextField textBar;
-	
+	private int frameHeight;
+	private int frameWidth;
 	/**
 	 * Create the panel.
 	 */
-	public CommandBar(final GUIManager GUIMain) {
+	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
 		
-		configureCommandFrame();
+		configureCommandFrame(containerWidth, containerHeight);
 		createAndConfigureTextInputField();
 		add(textBar);
 	}
 	
-	private void configureCommandFrame(){
-		this.setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
+	private void configureCommandFrame(int containerWidth, int containerHeight){
+		frameWidth = containerWidth-X_BUFFER_WIDTH-WINDOW_RIGHT_BUFFER;
+		frameHeight = COMMANDBAR_HEIGHT+2*Y_BUFFER_HEIGHT;
+		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
+		this.setLocation(X_BUFFER_WIDTH, containerHeight-frameHeight-WINDOW_BOTTOM_BUFFER);
+		this.setSize(frameWidth, frameHeight);
+		this.setLayout(null);
 	}
 	
 	private void createAndConfigureTextInputField(){
@@ -39,7 +50,9 @@ public class CommandBar extends JPanel {
 	}
 	
 	private void resizeAndpositionTextInputField(){
-		
+		int width = frameWidth - 2* X_BUFFER_WIDTH;
+		textBar.setLocation(X_BUFFER_WIDTH,Y_BUFFER_HEIGHT);
+		textBar.setSize(width,COMMANDBAR_HEIGHT);
 	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
