@@ -1,7 +1,6 @@
 package nailit.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;

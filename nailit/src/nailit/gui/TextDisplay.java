@@ -13,7 +13,10 @@ public class TextDisplay extends JScrollPane{
 		textPane = new JTextPane();
 		textPane.setEditable(false);
 	}
-	protected void display(String text){
+	protected void basicDisplay(String text){
 		textPane.setText(text);
+	}
+	protected JTextPane getTextPane(){
+		return textPane;
 	}
 }
