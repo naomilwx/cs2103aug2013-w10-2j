@@ -28,12 +28,11 @@ public class CommandBar extends JPanel {
 	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
 		
-		configureCommandFrame(containerWidth, containerHeight);
-		createAndConfigureTextInputField();
-		add(textBar);
+		positionAndResizeCommandFrame(containerWidth, containerHeight);
+		createConfigureAndAddInputField();
 	}
 	
-	private void configureCommandFrame(int containerWidth, int containerHeight){
+	private void positionAndResizeCommandFrame(int containerWidth, int containerHeight){
 		frameWidth = containerWidth-X_BUFFER_WIDTH-WINDOW_RIGHT_BUFFER;
 		frameHeight = COMMANDBAR_HEIGHT+2*Y_BUFFER_HEIGHT;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -42,11 +41,12 @@ public class CommandBar extends JPanel {
 		this.setLayout(null);
 	}
 	
-	private void createAndConfigureTextInputField(){
+	private void createConfigureAndAddInputField(){
 		textBar = new JTextField();
 		resizeAndpositionTextInputField();
 		textBar.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		addListenersToTextInputField();
+		add(textBar);
 	}
 	
 	private void resizeAndpositionTextInputField(){
@@ -58,11 +58,17 @@ public class CommandBar extends JPanel {
 		textBar.addKeyListener(new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
-				if(keyStroke.getKeyCode() == KeyEvent.VK_ENTER){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
+				}else if(keyCode == KeyEvent.VK_UP){
+					GUIBoss.setFocusOnDisplay();
 				}
 			}
 		});
+	}
+	protected void setFocus(){
+		textBar.requestFocus();
 	}
 	protected String getUserInput(){
 		return textBar.getText();

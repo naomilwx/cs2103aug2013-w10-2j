@@ -40,6 +40,7 @@ public class MainWindow extends JFrame {
 		configureMainWindowDisplay();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addListenersToMainFrame();
+		this.setResizable(false);
 	}
 	private void createAndConfigureContentPane(){
 		contentPane = new JPanel();
@@ -47,7 +48,7 @@ public class MainWindow extends JFrame {
 		setContentPane(contentPane);
 	}
 	private void configureMainWindowDisplay(){
-		this.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT); //temp to be replaced by constants later
+		this.setBounds(GUIManager.MAIN_WINDOW_X_POS, GUIManager.MAIN_WINDOW_Y_POS, WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setTitle(GUIManager.APPLICATION_NAME);
 	}
 	protected void addItem(Component component) {
