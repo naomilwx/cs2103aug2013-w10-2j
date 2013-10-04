@@ -20,5 +20,11 @@ public class CommandAdd extends Command{
 	private void doExecution() {
 		
 	}
+
+	@Override
+	public Result executeCommand(ParserResult parserResultInstance) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

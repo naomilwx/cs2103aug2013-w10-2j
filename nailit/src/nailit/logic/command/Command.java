@@ -4,7 +4,7 @@ import nailit.common.Result;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
-public class Command {
+public abstract class Command {
 
 	private static ParserResult parserResultInstance;
 	
@@ -16,5 +16,7 @@ public class Command {
 		parserResultInstance =  resultInstance;
 		this.storer = storerToUse;
 	}
+	
+	public abstract Result executeCommand(ParserResult parserResultInstance);
 	
 }
