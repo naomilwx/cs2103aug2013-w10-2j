@@ -6,8 +6,6 @@ import java.awt.Component;
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -17,6 +15,7 @@ public class DisplayArea extends JLayeredPane {
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
+	private static final double DISPLAY_AREA_SCALE = 0.8;
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
@@ -29,7 +28,9 @@ public class DisplayArea extends JLayeredPane {
 	 */
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
 		GUIBoss = GUIMain;
-		configureDisplayArea(containerWidth, containerHeight);
+		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
+		configureDisplayArea();
 		initialiseLayers();
 	}
 	private void initialiseLayers() {
@@ -44,13 +45,11 @@ public class DisplayArea extends JLayeredPane {
 		add(popupPane, JLayeredPane.POPUP_LAYER);
 	}
 	private void setLayerToDefaultSettings(JPanel layer){
-		layer.setSize(this.getSize());
+		layer.setSize(displayWidth, displayHeight);
 		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		layer.setOpaque(false);
 	}
-	private void configureDisplayArea(int containerWidth, int containerHeight){
-		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		displayHeight = containerHeight*4/5;
+	private void configureDisplayArea(){
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		this.setBackground(DISPLAYAREA_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
@@ -73,6 +72,6 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.add(component);
 	}
 	protected void setFocus(){
-		requestFocus();
+		defaultPane.requestFocus();
 	}
 }
