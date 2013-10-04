@@ -11,19 +11,21 @@ import nailit.logic.ParserResult;
 
 
 public class CommandManager {
-	
+	// the storage object that the commandManager works with 
 	private StorageManager storer;
 	
+	// the Result to pass back to the GUI component
 	private Result executedResult;
 	
+	// the parserResult to use in the commandExcute
 	private ParserResult parserResultInstance;
 	
 	// the vector object is used to store the done operations
 	private Vector<Command> operationsHistory;
 	
-	public CommandManager () // constructor
+	// constructor
+	public CommandManager () 
 	{
-//		parserResultInstance = resultInstance;
 		storer = new StorageManager();
 		executedResult = new Result();
 		operationsHistory = new Vector<Command>();
