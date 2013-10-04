@@ -23,9 +23,7 @@ public class DisplayArea extends JLayeredPane {
 	
 	private int displayWidth;
 	private int displayHeight;
-	/**
-	 * Create the panel.
-	 */
+	
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
 		GUIBoss = GUIMain;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
@@ -33,6 +31,11 @@ public class DisplayArea extends JLayeredPane {
 		configureDisplayArea();
 		initialiseLayers();
 	}
+	/**
+	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
+	 * the result of user commands are displayed
+	 * This method initialises and adds the 2 layers to the DisplayArea instance
+	 */
 	private void initialiseLayers() {
 		defaultPane = new JPanel();
 		defaultPane.setLayout(new BoxLayout(defaultPane,BoxLayout.Y_AXIS));
@@ -44,10 +47,17 @@ public class DisplayArea extends JLayeredPane {
 		setLayerToDefaultSettings(popupPane);
 		add(popupPane, JLayeredPane.POPUP_LAYER);
 	}
+	/**
+	 * Sets given JPanel to span the whole container (DisplayArea)
+	 * @param JPanel layer
+	 */
 	private void setLayerToDefaultSettings(JPanel layer){
 		layer.setSize(displayWidth, displayHeight);
 		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		layer.setOpaque(false);
+	}
+	private void shiftLayer(JPanel layer, int xpos, int ypos){
+		layer.setLocation(xpos, ypos);
 	}
 	private void configureDisplayArea(){
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -62,6 +72,9 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.setVisible(true);
 	}
 	protected void addContent(Component component, boolean replace){
+		if(popupPane.isVisible()){
+			shiftLayer(defaultPane, defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+		}
 		if(replace){
 			defaultPane.removeAll();
 		}

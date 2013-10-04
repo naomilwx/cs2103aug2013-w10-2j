@@ -8,11 +8,10 @@ import javax.swing.border.LineBorder;
 public class NotificationArea extends TextDisplay{
 	private static final Color SUCCESS_COLOR = Color.green;
 	private static final Color FAILURE_COLOR = Color.red;
-	private static final int NOTIFICATION_HEIGHT = 30;
+	protected static final int NOTIFICATION_HEIGHT = 50;
 	
 	public NotificationArea(int width){
 		super(width, NOTIFICATION_HEIGHT);
-		resizeArea(width, NOTIFICATION_HEIGHT);
 	}
 	
 	protected void displayNotification(String notification, boolean isSuccess){

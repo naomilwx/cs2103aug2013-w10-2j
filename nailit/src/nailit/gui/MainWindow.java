@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.xml.internal.ws.api.server.Container;
-
 public class MainWindow extends JFrame {
 	protected static final int WINDOW_HEIGHT = 500;
 	protected static final int WINDOW_WIDTH = 450;
