@@ -19,6 +19,8 @@ public class DisplayArea extends JLayeredPane {
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	
 	private GUIManager GUIBoss;
+	private JPanel defaultPane;
+	private JPanel popupPane;
 	
 	private int displayWidth;
 	private int displayHeight;
@@ -28,23 +30,47 @@ public class DisplayArea extends JLayeredPane {
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
 		GUIBoss = GUIMain;
 		configureDisplayArea(containerWidth, containerHeight);
+		initialiseLayers();
+	}
+	private void initialiseLayers() {
+		defaultPane = new JPanel();
+		defaultPane.setLayout(new BoxLayout(defaultPane,BoxLayout.Y_AXIS));
+		setLayerToDefaultSettings(defaultPane);
+		this.add(defaultPane,JLayeredPane.DEFAULT_LAYER);
 		
+		popupPane = new JPanel();
+		popupPane.setLayout(null);
+		setLayerToDefaultSettings(popupPane);
+		add(popupPane, JLayeredPane.POPUP_LAYER);
+	}
+	private void setLayerToDefaultSettings(JPanel layer){
+		layer.setSize(this.getSize());
+		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
+		layer.setOpaque(false);
 	}
 	private void configureDisplayArea(int containerWidth, int containerHeight){
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		displayHeight = containerHeight*4/5;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
-//		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.setBackground(DISPLAYAREA_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
 	}
+	protected void hideNotifications(){
+		popupPane.setVisible(false);
+	}
+	protected void showNotifications(){
+		popupPane.setVisible(true);
+	}
 	protected void addContent(Component component, boolean replace){
 		if(replace){
-			removeAll();
+			defaultPane.removeAll();
 		}
-		add(component,JLayeredPane.DEFAULT_LAYER);
+		defaultPane.add(component);
 		revalidate();
+	}
+	protected void addPopup(Component component){
+		popupPane.add(component);
 	}
 	protected void setFocus(){
 		requestFocus();
