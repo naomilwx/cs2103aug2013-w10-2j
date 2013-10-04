@@ -3,6 +3,7 @@ package nailit.gui;
 import nailit.AppLauncher;
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -32,6 +33,8 @@ public class GUIManager {
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
 	private DisplayArea displayArea;
+	private NotificationArea notificationArea;
+	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
 	
@@ -50,6 +53,9 @@ public class GUIManager {
 		mainWindow = new MainWindow(this);
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight());
+		notificationArea = new NotificationArea(displayArea.getWidth());
+		notificationArea.displayNotification("hello", true);
+		displayArea.add(notificationArea,JLayeredPane.POPUP_LAYER);
 		loadComponentsUntoMainFrame();
 	}
 	private void loadComponentsUntoMainFrame(){
@@ -71,8 +77,8 @@ public class GUIManager {
 	 * @param input
 	 */
 	protected void executeUserInputCommand(String input){
-		NotificationArea testpane = new NotificationArea();
-		testpane.displayNotification(input,false);
+		TextDisplay testpane = new TextDisplay(displayArea.getWidth(),displayArea.getHeight());
+		testpane.basicDisplay(input);
 		displayArea.addContent(testpane, false);
 		System.out.println(input);
 		commandBar.clearUserInput();

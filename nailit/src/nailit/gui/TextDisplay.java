@@ -5,9 +5,13 @@ import javax.swing.JTextPane;
 
 public class TextDisplay extends JScrollPane{
 	private JTextPane textPane;
-	public TextDisplay(){
+	public TextDisplay(int width, int height){
+		resizeArea(width, height);
 		createAndConfigureTextPane();
 		setViewportView(textPane);
+	}
+	protected void resizeArea(int width, int height){
+		this.setSize(width, height);
 	}
 	private void createAndConfigureTextPane(){
 		textPane = new JTextPane();
