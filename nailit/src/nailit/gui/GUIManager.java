@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -29,6 +30,8 @@ public class GUIManager {
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 100;
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
+	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
@@ -52,11 +55,14 @@ public class GUIManager {
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
+		initialiseAndConfigureDisplayArea();
+		loadComponentsUntoMainFrame();
+	}
+	private void initialiseAndConfigureDisplayArea(){
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight());
 		notificationArea = new NotificationArea(displayArea.getWidth());
-		notificationArea.displayNotification("hello", true);
-		displayArea.add(notificationArea,JLayeredPane.POPUP_LAYER);
-		loadComponentsUntoMainFrame();
+		notificationArea.displayNotification(GUIManager.WELCOME_MESSAGE, true);
+		displayArea.addPopup(notificationArea);
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.addItem(commandBar);
@@ -77,7 +83,7 @@ public class GUIManager {
 	 * @param input
 	 */
 	protected void executeUserInputCommand(String input){
-		TextDisplay testpane = new TextDisplay(displayArea.getWidth(),displayArea.getHeight());
+		TextDisplay testpane = new TextDisplay(displayArea.getWidth(), displayArea.getHeight());
 		testpane.basicDisplay(input);
 		displayArea.addContent(testpane, false);
 		System.out.println(input);
