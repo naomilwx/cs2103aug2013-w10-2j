@@ -40,6 +40,9 @@ public class CommandManager {
 
 	private void doExecution() {
 		CommandType commandType = parserResultInstance.getCommand();
+		// in each command execute method like add(), we will create the 
+		// corresponding object and use them to execute the command.
+		// In addition, the command is added to operation History.
 		switch(commandType) {
 			case ADD: {
 				executedResult = add();
