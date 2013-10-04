@@ -2,6 +2,7 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
@@ -16,16 +17,20 @@ public class DisplayArea extends JLayeredPane {
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final double DISPLAY_AREA_SCALE = 0.8;
+	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
 	private JPanel popupPane;
+	
+	private LinkedList<Component> items;
 	
 	private int displayWidth;
 	private int displayHeight;
 	
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
 		GUIBoss = GUIMain;
+		items = new LinkedList<Component>();
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
 		configureDisplayArea();
@@ -75,11 +80,23 @@ public class DisplayArea extends JLayeredPane {
 		if(popupPane.isVisible()){
 			shiftLayer(defaultPane, defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
 		}
+		
 		if(replace){
 			defaultPane.removeAll();
+			items.clear();
+		}else{
+			//always keep number of items displayed to 2.
+			items.add(component);
+			removeExtraContent();
 		}
 		defaultPane.add(component);
 		revalidate();
+	}
+	private void removeExtraContent(){
+		while(items.size() > MAX_NUM_ITEMS_IN_DEFAULTPANE){
+			Component extra = items.removeFirst();
+			defaultPane.remove(extra);
+		}
 	}
 	protected void addPopup(Component component){
 		popupPane.add(component);
