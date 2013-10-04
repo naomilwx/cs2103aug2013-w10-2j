@@ -67,10 +67,18 @@ public class CommandManager {
 			case INVALID: {
 				break;
 			}
+			case DISPLAY: {
+				executedResult = display();
+			}
 			default: {
 				
 			}
 		}
+	}
+
+	private Result display() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private Result update() {
