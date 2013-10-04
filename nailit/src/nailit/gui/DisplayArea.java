@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-public class DisplayArea extends JPanel {
+public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
@@ -33,7 +34,7 @@ public class DisplayArea extends JPanel {
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		displayHeight = containerHeight*4/5;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
-		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+//		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.setBackground(DISPLAYAREA_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
@@ -42,7 +43,7 @@ public class DisplayArea extends JPanel {
 		if(replace){
 			removeAll();
 		}
-		add(component);
+		add(component,JLayeredPane.DEFAULT_LAYER);
 		revalidate();
 	}
 	protected void setFocus(){
