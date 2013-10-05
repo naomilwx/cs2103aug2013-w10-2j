@@ -8,15 +8,17 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDisplay extends Command{
+	private String commandType;
+	private String commandSummary;
 	private Result executedResult;
 	private Task taskRetrieved;
-	private String commandSummary;
 	private int taskToRetrieveID;
 
 //	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	public CommandDisplay(ParserResult resultInstance,
 			StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
+		commandType = "display";
 	}
 
 	@Override
