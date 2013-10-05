@@ -6,11 +6,11 @@ import nailit.storage.StorageManager;
 
 public abstract class Command {
 
-	private static ParserResult parserResultInstance;
+	protected ParserResult parserResultInstance;
 	
-	private static StorageManager storer;
+	protected StorageManager storer;
 	
-	private static Result executedResult;
+	private Result executedResult;
 	// constructor
 	public Command(ParserResult resultInstance, StorageManager storerToUse) {
 		parserResultInstance =  resultInstance;

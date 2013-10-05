@@ -34,10 +34,13 @@ public class Task {
 		added = true;
 		priority = TASK_PRIORITY.MEDIUM;
 	}
-	public Task(String taskName,String desc, DateTime start, DateTime end, String t, TASK_PRIORITY p){
+	// change from Shuzhi
+	// do not think that here should have desc, since desc is 
+	// added to it later. so delete ,String desc
+	public Task(String taskName, DateTime start, DateTime end, String t, TASK_PRIORITY p){
 		ID = TASKID_NULL;
 		name = taskName;
-		description = desc;
+//		description = desc;
 		startTime = start;
 		endTime = end;
 		tag = t;
@@ -160,7 +163,9 @@ public class Task {
 	}
 	//method to create copy of Task object
 	public Task copy(){
-		Task newTask = new Task(name,description, startTime, endTime, tag, priority);
+		// change from Shuzhi
+		// the same, delete description,
+		Task newTask = new Task(name, startTime, endTime, tag, priority);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;

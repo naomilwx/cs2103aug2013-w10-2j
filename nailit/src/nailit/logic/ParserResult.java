@@ -2,14 +2,25 @@ package nailit.logic;
 
 import java.util.*;
 
+import org.joda.time.DateTime;
+
+import nailit.common.TASK_PRIORITY;
+
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 	
 	private static CommandType Command;
 	private static String Name;
-	private static Date StartTime;
-	private static Date EndTime;
-	private static Integer Priority;
+	
+	// change from Shuzhi
+	// to be consistent with class Task, we use DateTime here
+	// can be changed back later after discussion
+	private static DateTime StartTime;
+	private static DateTime EndTime;
+	
+	// change from Shuzhi
+	// should use TASK_PRIORITY
+	private static TASK_PRIORITY Priority;
 	private static String Tag;
 	
 	public CommandType getCommand(){
@@ -28,7 +39,7 @@ public class ParserResult{
 		}
 	}
 	
-	public Date getStartTime()
+	public DateTime getStartTime()
 	{
 		return StartTime;
 	}
@@ -38,19 +49,19 @@ public class ParserResult{
 		if (StartTime == )
 	}*/
 	
-	public Date getEndTime()
+	public DateTime getEndTime()
 	{
 		return EndTime;
 	}
 	
-	public Integer getPriority()
+	public TASK_PRIORITY getPriority()
 	{
 		return Priority;
 	}
 	
 	public boolean isNullPriority()
 	{
-		if (Priority == 0){
+		if (Priority == null){
 			return true;
 		}else{
 			return false;
