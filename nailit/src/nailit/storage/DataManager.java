@@ -28,10 +28,10 @@ public class DataManager {
 		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
-			dataList.add(ID + NIConstants.FIELD_SPLITTER + taskString);
+			dataList.add(ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		else{
-			dataList.set(ID, ID + NIConstants.FIELD_SPLITTER + taskString);
+			dataList.set(ID, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		return ID;
 	}

@@ -41,7 +41,7 @@ public class StorageManager {
 		
 		String taskString;
 		taskString = currInMemory.retrieve(ID);
-		String[] result = taskString.split("\\"+NIConstants.FIELD_SPLITTER);
+		String[] result = taskString.split("\\"+NIConstants.NORMAL_FIELD_SPLITTER);
 		try{
 			int task_ID = Integer.parseInt(result[0]);
 			String name = result[1];
