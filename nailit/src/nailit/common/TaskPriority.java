@@ -6,6 +6,7 @@ public enum TaskPriority {
 	LOW(0), MEDIUM(1), HIGH(2);
 	
 	private int priorityCode;
+	public static final TaskPriority DEFAULT_TASK_PRIORITY  = MEDIUM;
 	
 	private TaskPriority(int code){
 		priorityCode = code;
