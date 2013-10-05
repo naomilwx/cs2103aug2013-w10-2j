@@ -40,8 +40,13 @@ public class CommandDelete extends Command{
 	}
 
 	private void removeTheTaskOnStorage() {
-		taskToDeleteID = parserResultInstance.getTaskID();
-		taskToRemove = storer.remove(taskToDeleteID);
+		try {
+			taskToDeleteID = parserResultInstance.getTaskID();
+			taskToRemove = storer.remove(taskToDeleteID);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }
