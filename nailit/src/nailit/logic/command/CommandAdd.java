@@ -1,9 +1,5 @@
 package nailit.logic.command;
-
-import java.util.Date;
-
 import org.joda.time.DateTime;
-
 import nailit.common.Result;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
@@ -31,7 +27,7 @@ public class CommandAdd extends Command{
 	}
 
 	@Override
-	public Result executeCommand(ParserResult parserResultInstance) {
+	public Result executeCommand() {
 		getContentFromParserResult();
 		createTaskObject();
 		int taskID = storer.add(taskPassedToStorer);
@@ -64,5 +60,4 @@ public class CommandAdd extends Command{
 		taskPriority = parserResultInstance.getPriority();
 		taskTag = parserResultInstance.getTag();
 	}
-	
 }

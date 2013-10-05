@@ -17,6 +17,6 @@ public abstract class Command {
 		this.storer = storerToUse;
 	}
 	
-	public abstract Result executeCommand(ParserResult parserResultInstance);
+	public abstract Result executeCommand();
 	
 }
