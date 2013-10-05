@@ -26,10 +26,20 @@ public class AddParser extends Parser {
 				resultExecution.setTag(listOfCommand[i]);
 			}else{
 				if (userCommand.toLowerCase().contains("at")){
+					int atIndex = userCommand.toLowerCase().indexOf("at");
+					int stringLength = userCommand.length();
 					
+					resultExecution.setName(userCommand.substring(0,atIndex));
+					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(atIndex,stringLength)));
 				}
 				if (userCommand.toLowerCase().contains("from") && userCommand.toLowerCase().contains("to")){
+					int fromIndex = userCommand.toLowerCase().indexOf("from");
+					int toIndex = userCommand.toLowerCase().indexOf("to");
+					int stringLength = userCommand.length();
 					
+					resultExecution.setName(userCommand.substring(0,fromIndex));
+					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(fromIndex+4, toIndex)));
+					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(toIndex+2, stringLength)));
 				}
 			}
 		}
