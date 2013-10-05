@@ -66,6 +66,8 @@ public class StorageManager {
 	public static void main(String[] args){
 		String s = "";
 		String[] results = s.split("\\,");
+		String str = null;
+		System.out.println(str == null);
 //		System.out.print(results[0]);
 	}
 }

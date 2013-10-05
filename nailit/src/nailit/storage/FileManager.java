@@ -52,12 +52,19 @@ public class FileManager {
 	/**
 	 * Privite Methods
 	 * */
-	private Vector<String> read(){
+	private void read(){
 		try {
 			String line = null;
-			int lastIndex = 0;
+			int lastIndex = -1;
 			while((line = reader.readLine()) != null){
 				String[] s = line.split("\\" + Task.FIELD_SPLITTER);
+				int ID = Integer.parseInt(s[0]);
+				String taskString = line.substring(s[0].length()+Task.FIELD_SPLITTER.length());
+				
+				for(int i=lastIndex+1;i<=ID-1;i++){
+					dataList.add(null);
+				}
+				lastIndex = ID;
 				dataList.add(line);
 			}
 		} catch (IOException e) {
