@@ -12,7 +12,7 @@ public class CommandUpdate extends Command{
 	}
 
 	@Override
-	public Result executeCommand(ParserResult parserResultInstance) {
+	public Result executeCommand() {
 		// TODO Auto-generated method stub
 		return null;
 	}
