@@ -27,7 +27,7 @@ public class StorageManager {
 		
 		int ID = task.getID();
 		
-		String taskString = combinedIntoString(task);
+		String taskString = task.changeToDiskFormat();
 				
 		ID = currInMemory.add(ID,taskString);
 		
@@ -60,34 +60,7 @@ public class StorageManager {
 	/**
 	 * Private Methods
 	 * */
-	private String combinedIntoString(Task task){
-		
-		int priority = parsePriority(task.getPriority());
-		assert(isValidPriority(priority));
-		
-		String name = task.getName();
-		String startDate = task.getStartTime().toString();
-		String endDate = task.getEndTime().toString();
-		String desc = task.getDescription();
-		String tag = task.getTag();
-		
-		String taskString = name + FIELD_SPLITTER + startDate + FIELD_SPLITTER + endDate + FIELD_SPLITTER + priority + FIELD_SPLITTER + tag + FIELD_SPLITTER +desc;
-		
-		return taskString;
-	}
-	
-	private int parsePriority(TASK_PRIORITY p){
-		switch(p){
-			case LOW: return 0;
-			case MEDIUM: return 1;
-			case HIGH: return 2;
-			default: return -1;
-		}
-	}
-	
-	private boolean isValidPriority(int p){
-		return p>=0&&p<=2;
-	}
+
 	
 	public static void main(String[] args){
 
