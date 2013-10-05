@@ -27,7 +27,7 @@ public class LogicManager{
 		// For the history of done operations, we store it in the only 
 		// instance of the CommandManager.
 		// This is why we need a constructor
-		ParserInstance = new ParserManager(OriginalCommand);
+		ParserInstance.passCommand(OriginalCommand);
 		ParserResult parserResultInstance = ParserInstance.execute();
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
