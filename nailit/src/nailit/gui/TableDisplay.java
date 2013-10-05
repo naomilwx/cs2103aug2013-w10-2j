@@ -8,11 +8,10 @@ import javax.swing.JTable;
 
 import nailit.common.Task;
 
-public class TableDisplay extends JPanel{
+public class TableDisplay extends JScrollPane{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 30;
 	
-	private JScrollPane tContainer;
 	private JTable tableHeader;
 	private JTable tableBody;
 	
@@ -30,9 +29,6 @@ public class TableDisplay extends JPanel{
 		this.setLayout(null);
 	}
 	private void createAndConfigureTable() {
-		tContainer = new JScrollPane();
-		tContainer.setSize(containerWidth, containerHeight);
-		tContainer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		createAndConfigureHeader();
 		createAndConfigureBody();
 	}
@@ -41,13 +37,13 @@ public class TableDisplay extends JPanel{
 		tableHeader = new JTable();
 		tableHeader.setSize(containerWidth, TABLE_HEADER_HEIGHT);
 		tableHeader.setRowHeight(TABLE_HEADER_HEIGHT);
-		tContainer.setRowHeaderView(tableHeader);
+		this.setRowHeaderView(tableHeader);
 	}
 	
 	private void createAndConfigureBody() {
 		tableBody = new JTable();
 		tableBody.setRowHeight(TABLE_ROW_HEIGHT);
-		tContainer.setViewportView(tableBody);
+		this.setViewportView(tableBody);
 	}
 	private void addRowToTable(){
 		
