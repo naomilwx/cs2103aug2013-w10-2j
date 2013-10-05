@@ -226,7 +226,7 @@ public class Task {
 		}
 	}
 	
-	public String changeToDiskFormat(Task task){
+	public String changeToDiskFormat(){
 		int priority = parsePriority(task.getPriority());
 		assert(isValidPriority(priority));
 		
