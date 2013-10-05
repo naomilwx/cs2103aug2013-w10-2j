@@ -68,9 +68,36 @@ public class FileManager {
 /***************************
  * Private Methods
  ***************************/
-	
 	/**
-	 * read
+	 * readFile
+	 * @throws FileCorruptionException
+	 * */
+	private void readFile() throws FileCorruptionException{
+		dataListForReading = new Vector<String>();
+		initializeReader();
+		read();
+		closeReader();
+	}
+		
+	/**
+	 * Initialize reader
+	 * */
+	private void initializeReader(){
+		try {
+		    File file = new File(path);
+		    		    
+		    if(!file.exists()){
+		    	file.createNewFile();
+		    }
+		    
+		    reader = new BufferedReader(new FileReader(file));
+		} catch (IOException e) {
+	        e.printStackTrace();
+		}
+
+	}
+	/**
+	 * read into vector
 	 * @throws FileCorruptionException 
 	 * */
 	private void read() throws FileCorruptionException{
@@ -91,34 +118,9 @@ public class FileManager {
 			throw new FileCorruptionException("The database is corrupted");
 		}
 	}
-	
-	/**
-	 * Initialize reader
-	 * */
-	private void initializeReader(){
-		try {
-		    File file = new File(path);
-		    		    
-		    if(!file.exists()){
-		    	file.createNewFile();
-		    }
-		    
-		    reader = new BufferedReader(new FileReader(file));
-		} catch (IOException e) {
-	        e.printStackTrace();
-		}
 
-	}
-	
 	private void setPath(String path){
 		this.path = path;
-	}
-	
-	private void readFile() throws FileCorruptionException{
-		dataListForReading = new Vector<String>();
-		initializeReader();
-		read();
-		closeReader();
 	}
 	
 	/**
