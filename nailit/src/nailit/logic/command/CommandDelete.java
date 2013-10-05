@@ -6,15 +6,17 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
+	private String commandType;
+	private String commandSummary;
 	private Result executedResult;
 	private Task taskToRemove;
 	private int taskToDeleteID;
-	private String commandSummary;
 
 	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
+		commandType = "delete";
 	}
 
 	@Override
@@ -38,8 +40,13 @@ public class CommandDelete extends Command{
 	}
 
 	private void removeTheTaskOnStorage() {
-		taskToDeleteID = parserResultInstance.getTaskID();
-		taskToRemove = storer.remove(taskToDeleteID);
+		try {
+			taskToDeleteID = parserResultInstance.getTaskID();
+			taskToRemove = storer.remove(taskToDeleteID);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }

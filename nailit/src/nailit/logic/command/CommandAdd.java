@@ -8,6 +8,7 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandAdd extends Command{
+	private String commandType;
 	private Result executedResult;
 	private Task taskPassedToStorer;
 	private CommandType command;
@@ -24,6 +25,7 @@ public class CommandAdd extends Command{
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
+		commandType = "add";
 	}
 
 	@Override

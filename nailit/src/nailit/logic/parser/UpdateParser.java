@@ -17,6 +17,13 @@ public class UpdateParser extends Parser {
 		
 		resultExecution.setCommand(CommandType.UPDATE);
 		
+		if (userCommand.equalsIgnoreCase("ALL")){
+			resultExecution.setDisplayAll(true);
+		}else if (Parser.isTaskID(userCommand)){
+			resultExecution.setTaskID(Integer.parseInt(userCommand));
+		}else if (Parser.isDateTime(userCommand)){
+			resultExecution.setStartTime(Parser.retrieveDateTime(userCommand));
+		}
 		return resultExecution;
 	}
 }
