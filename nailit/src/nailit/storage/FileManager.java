@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Vector;
 
 import nailit.common.TASK_PRIORITY;
 import nailit.common.Task;
@@ -12,7 +12,7 @@ import nailit.common.Task;
 import org.joda.time.DateTime;
 
 public class FileManager {
-	private ArrayList<String> dataList;
+	private Vector<String> dataList;
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	
@@ -20,7 +20,7 @@ public class FileManager {
 	 * Constructor
 	 * */
 	public FileManager(String path){
-		dataList = new ArrayList<String>();
+		dataList = new Vector<String>();
 		try {
 			reader = new BufferedReader(new FileReader(path));
 		} catch (FileNotFoundException e) {
@@ -41,22 +41,24 @@ public class FileManager {
 		
 	}
 	
-	public ArrayList<String> getDataList(){
+	public Vector<String> getDataList(){
 		return null; 
 	}
 	
-	public void setDataList(ArrayList<String> d){
+	public void setDataList(Vector<String> d){
 		
 	}
 	
 	/**
 	 * Privite Methods
 	 * */
-	private ArrayList<String> read(){
+	private Vector<String> read(){
 		try {
 			String line = null;
+			int lastIndex = 0;
 			while((line = reader.readLine()) != null){
-				
+				String[] s = line.split("\\" + Task.FIELD_SPLITTER);
+				dataList.add(line);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
