@@ -77,4 +77,7 @@ public class Result {
 	public Vector<String> getHistoryList(){
 		return historyList;
 	}
+	public int getDisplayType(){
+		return displayType;
+	}
 }

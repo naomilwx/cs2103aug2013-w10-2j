@@ -87,12 +87,26 @@ public class GUIManager {
 		TextDisplay testpane = new TextDisplay(displayArea.getWidth(), displayArea.getHeight());
 		testpane.basicDisplay(input);
 		displayArea.addContent(testpane, false);
+//		TableDisplay test = new TableDisplay(displayArea.getWidth(),displayArea.getHeight());
+//		displayArea.addContent(test, false);
 		System.out.println(input);
 		commandBar.clearUserInput();
 //		logicExecutor.executeCommand(input);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
-		
+		int displayType = result.getDisplayType();
+		switch (displayType){
+			case Result.NOTIFICATION_DISPLAY:
+				break;
+			case Result.LIST_DISPLAY:
+				break;
+			case Result.TASK_DISPLAY:
+				break;
+			case Result.HISTORY_DISPLAY:
+				break;
+			default:
+				break;
+		}
 	}
 	private void exit(){
 		launcher.exit();
