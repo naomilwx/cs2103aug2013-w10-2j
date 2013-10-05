@@ -30,18 +30,14 @@ public class Result {
 		taskList = null;
 		historyList = null;
 	}
-	public Result(boolean isExitCommand, boolean isSuccess, int displayType, String printOut, Vector list){
+	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
+			String printOut, Vector<Task> tasks, Vector<String> history){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
 		this.displayType = displayType;
 		notificationPrintOut = printOut;
-		if(displayType == TASK_DISPLAY){
-			taskList = (Vector<Task>) list;
-			historyList = null;
-		}else if(displayType == HISTORY_DISPLAY){
-			taskList = null;
-			historyList = (Vector<String>) list;
-		}
+		taskList = tasks;
+		historyList = history;
 	}
 	//setters
 	public void setNotification(String printOut){
