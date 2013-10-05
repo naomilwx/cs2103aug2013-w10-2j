@@ -3,6 +3,7 @@ package nailit.common;
 import org.joda.time.DateTime;
 public class Task {
 	public static final int TASKID_NULL = -1;
+	public static final String DEFAULT_TASK_DATETIME_PRINT_FORMAT = "dd-MM-YYYY h:m";
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	private int ID;
 	private String name;
@@ -157,10 +158,11 @@ public class Task {
 	public String formatDateDetails(){
 		String formattedDateDetails = "";
 		if(isEvent()){
-			formattedDateDetails = "Start Time: " + startTime.toString() + "\n"
-									+"End Time: " + endTime.toString();
+			formattedDateDetails = 
+					"Start Time: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT) + "\n"
+					+"End Time: " + endTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
 		}else if(!isFloatingTask()){
-			formattedDateDetails = "Due: " + startTime.toString();
+			formattedDateDetails = "Due: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
 		}
 		return formattedDateDetails;
 	}
