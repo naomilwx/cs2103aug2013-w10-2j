@@ -13,7 +13,8 @@ import nailit.common.Task;
 import org.joda.time.DateTime;
 
 public class FileManager {
-	private Vector<String> dataList;
+	private Vector<String> dataListForReading;
+	private Vector<String> dataListForWriting;
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	
@@ -21,7 +22,7 @@ public class FileManager {
 	 * Constructor
 	 * */
 	public FileManager(String path){
-		dataList = new Vector<String>();
+		dataListForReading = new Vector<String>();
 		try {
 			reader = new BufferedReader(new FileReader(path));
 		} catch (FileNotFoundException e) {
@@ -34,14 +35,16 @@ public class FileManager {
 	 * Public Methods
 	 * */
 	public void add(String stringToBeStored){
-		dataList.add(stringToBeStored);
+		dataListForWriting.add(stringToBeStored);
 	}
 	
-	
+	public void writingProcessInit(){
+		dataListForWriting = new Vector<String>();
+	}
 	public void save(){
 		try {
-			for(int i=0;i<dataList.size();i++){
-				String line = dataList.get(i);
+			for(int i=0;i<dataListForWriting.size();i++){
+				String line = dataListForWriting.get(i);
 				if(line != null){
 					writer.write(line);	
 				}
@@ -53,12 +56,10 @@ public class FileManager {
 	}
 	
 	public Vector<String> getDataList(){
-		return null; 
+		return dataListForReading; 
 	}
 	
-	public void setDataList(Vector<String> d){
-		
-	}
+
 	
 	/**
 	 * Privite Methods
@@ -76,10 +77,10 @@ public class FileManager {
 				String taskString = line.substring(s[0].length()+NIConstants.FIELD_SPLITTER.length());
 				
 				for(int i=lastIndex+1;i<=ID-1;i++){
-					dataList.add(null);
+					dataListForReading.add(null);
 				}
 				lastIndex = ID;
-				dataList.add(line);
+				dataListForReading.add(line);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
