@@ -21,11 +21,13 @@ public class CommandAdd extends Command{
 	private TaskPriority taskPriority;
 	private String taskTag;
 	
+	private String commandSummary;
+	
 	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
-	public CommandAdd(ParserResult ResultInstance, StorageManager storerToUse) {
-		super(ResultInstance, storerToUse);
+	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
+		super(resultInstance, storerToUse);
 	}
 
 	@Override
@@ -34,13 +36,20 @@ public class CommandAdd extends Command{
 		createTaskObject();
 		int taskID = storer.add(taskPassedToStorer);
 		createResultObject(taskID);
+		createCommandSummary();
 		return executedResult;
 	}
 
+	private void createCommandSummary() {
+		commandSummary = "add " + parserResultInstance.getName() + " " 
+				+ parserResultInstance.getStartTime() + " - " 
+				+ parserResultInstance.getEndTime() + " " 
+				+ parserResultInstance.getTag() 
+				+ parserResultInstance.getPriority();
+	}
+
 	private void createResultObject(int taskID) {
-		// Shuzhi: currently do not know what is displayType,
-		// so give a null first
-		executedResult = new Result(false, true, null, Success_Msg + taskID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, Success_Msg + taskID);
 	}
 
 	private void createTaskObject() {
