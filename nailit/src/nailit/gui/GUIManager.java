@@ -18,6 +18,7 @@ import java.awt.Color;
 
 import javax.swing.border.LineBorder;
 
+import nailit.common.Result;
 import nailit.logic.LogicManager;
 
 public class GUIManager {	
@@ -90,7 +91,9 @@ public class GUIManager {
 		commandBar.clearUserInput();
 //		logicExecutor.executeCommand(input);
 	}
-	
+	protected void processAndDisplayExecutionResult(Result result){
+		
+	}
 	private void exit(){
 		launcher.exit();
 	}
