@@ -39,34 +39,37 @@ public class CommandManager {
 		// in each command execute method like add(), we will create the 
 		// corresponding object and use them to execute the command.
 		// In addition, the command is added to operation History.
-		switch(commandType) {
-			case ADD: {
-				Result resultToReturn = add();
-				return resultToReturn;
-			}
-			case COMPLETE: {
-				Result resultToReturn = complete();
-				return resultToReturn;			} 
-			case DELETE: {
-				Result resultToReturn = delete();
-				return resultToReturn;			}
-			case SEARCH: {
-				Result resultToReturn = search();
-				return resultToReturn;			}
-			case UPDATE: {
-				Result resultToReturn = update();
-				return resultToReturn;
-			}
-			case INVALID: {
-				break;
-			}
-			case DISPLAY: {
-				Result resultToReturn = display();
-				return resultToReturn;
-			}
-			default: {
-				
-			}
+		switch (commandType) {
+		case ADD: {
+			Result resultToReturn = add();
+			return resultToReturn;
+		}
+		case COMPLETE: {
+			Result resultToReturn = complete();
+			return resultToReturn;
+		}
+		case DELETE: {
+			Result resultToReturn = delete();
+			return resultToReturn;
+		}
+		case SEARCH: {
+			Result resultToReturn = search();
+			return resultToReturn;
+		}
+		case UPDATE: {
+			Result resultToReturn = update();
+			return resultToReturn;
+		}
+		case INVALID: {
+			break;
+		}
+		case DISPLAY: {
+			Result resultToReturn = display();
+			return resultToReturn;
+		}
+		default: {
+
+		}
 		}
 		return null;
 	}
