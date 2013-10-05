@@ -13,6 +13,7 @@ public class Task {
 	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted;
 	private TASK_PRIORITY priority;
+	private final String FIELD_SPLITTER = ",";
 	public Task(){
 		ID = TASKID_NULL;
 		name = "";
@@ -224,4 +225,33 @@ public class Task {
 			return false;
 		}
 	}
+	
+	public String changeToDiskFormat(Task task){
+		int priority = parsePriority(task.getPriority());
+		assert(isValidPriority(priority));
+		
+		String name = task.getName();
+		String startDate = task.getStartTime().toString();
+		String endDate = task.getEndTime().toString();
+		String desc = task.getDescription();
+		String tag = task.getTag();
+		
+		String taskString = name + FIELD_SPLITTER + startDate + FIELD_SPLITTER + endDate + FIELD_SPLITTER + priority + FIELD_SPLITTER + tag + FIELD_SPLITTER +desc;
+		
+		return taskString;
+	}
+	
+	private int parsePriority(TASK_PRIORITY p){
+		switch(p){
+			case LOW: return 0;
+			case MEDIUM: return 1;
+			case HIGH: return 2;
+			default: return -1;
+		}
+	}
+	
+	private boolean isValidPriority(int p){
+		return p>=0&&p<=2;
+	}
+
 }
