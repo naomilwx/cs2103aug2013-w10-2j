@@ -9,11 +9,12 @@ public abstract class Parser {
 	public abstract ParserResult execute();
 	
 	public static boolean isDateTime(String p){
-		DateTime result;
 		return true;
 	}
 	
-	public static DataTime retrieveDateTime (String p){
+	public static DateTime retrieveDateTime (String p){
+		DateTime result;
 		
+		return result;
 	}
 }
