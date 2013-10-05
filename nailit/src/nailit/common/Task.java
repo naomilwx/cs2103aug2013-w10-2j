@@ -35,13 +35,10 @@ public class Task {
 		added = true;
 		priority = TASK_PRIORITY.MEDIUM;
 	}
-	// change from Shuzhi
-	// do not think that here should have desc, since desc is 
-	// added to it later. so delete ,String desc
+	
 	public Task(String taskName, DateTime start, DateTime end, String t, TASK_PRIORITY p){
 		ID = TASKID_NULL;
 		name = taskName;
-//		description = desc;
 		startTime = start;
 		endTime = end;
 		tag = t;
