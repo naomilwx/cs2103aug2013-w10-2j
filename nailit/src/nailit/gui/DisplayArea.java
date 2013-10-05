@@ -92,6 +92,11 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane.add(component);
 		revalidate();
 	}
+	protected void displayTaskDetails(String details){
+		TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
+		textDisplay.basicDisplay(details);
+		addContent(textDisplay, false);
+	}
 	private void removeExtraContent(){
 		while(items.size() > MAX_NUM_ITEMS_IN_DEFAULTPANE){
 			Component extra = items.removeFirst();
