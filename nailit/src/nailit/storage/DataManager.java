@@ -1,7 +1,7 @@
 package nailit.storage;
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import nailit.common.TASK_PRIORITY;
 import nailit.common.Task;
@@ -12,7 +12,7 @@ public class DataManager {
 	 * Private Fields
 	 * */
 	private final int TASKID_NULL = -1;
-	private ArrayList<String> dataList = new ArrayList<String>();
+	private Vector<String> dataList = new Vector<String>();
 	
 	/**
 	 * Constructor
@@ -24,12 +24,16 @@ public class DataManager {
 	/**
 	 * Public Methods
 	 * */
-	public int add(int ID, String name,DateTime startDate,DateTime endDate,TASK_PRIORITY priority,String tag,String desc){
-	
+	public int add(int ID, String taskString){
+		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
+			dataList.add(taskString);
 		}
-		return -2;
+		else{
+			dataList.set(ID, taskString);
+		}
+		return ID;
 	}
 	
 	public String retrieve(int lineNum){
@@ -40,11 +44,11 @@ public class DataManager {
 		return null;
 	}
 	
-	public ArrayList<String> getDataList(){
+	public Vector<String> getDataList(){
 		return null;
 	}
 	
-	public void setDataList(ArrayList<String> d){
+	public void setDataList(Vector<String> d){
 		
 	}
 	

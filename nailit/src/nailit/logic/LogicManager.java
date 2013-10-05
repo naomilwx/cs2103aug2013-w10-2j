@@ -8,13 +8,11 @@ import nailit.logic.parser.*;
 
 public class LogicManager{
 	
-//	private ParserResult ParserResultInstance;
-	private Parser ParserInstance;
+	private ParserManager ParserInstance;
 	private CommandManager commandInstance;
 	
-	// constructor
 	public LogicManager() {
-//		ParserInstance = new Parser();
+		ParserInstance = new ParserManager();
 		commandInstance = new CommandManager();
 	}
 	public Result executeCommand(String OriginalCommand){
@@ -29,7 +27,7 @@ public class LogicManager{
 		// For the history of done operations, we store it in the only 
 		// instance of the CommandManager.
 		// This is why we need a constructor
-		ParserInstance = new Parser(OriginalCommand);
+		ParserInstance.passCommand(OriginalCommand);
 		ParserResult parserResultInstance = ParserInstance.execute();
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;

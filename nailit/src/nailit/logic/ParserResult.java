@@ -8,74 +8,66 @@ import nailit.common.TASK_PRIORITY;
 
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
+
+	// added by Shuzhi
+	// in delete and addDescription command: need tasdID
+	private int taskID;
+	private static CommandType command;
+	private static String name;
 	
-	private static CommandType Command;
-	private static String Name;
+	private DateTime startTime;
+	private DateTime endTime;
 	
-	// change from Shuzhi
-	// to be consistent with class Task, we use DateTime here
-	// can be changed back later after discussion
-	private static DateTime StartTime;
-	private static DateTime EndTime;
-	
-	// change from Shuzhi
-	// should use TASK_PRIORITY
-	private static TASK_PRIORITY Priority;
-	private static String Tag;
+	private TASK_PRIORITY priority;
+	private String tag;
 	
 	public CommandType getCommand(){
-		return Command;
+		return command;
 	}
 	
 	public String getName(){
-		return Name;
+		return name;
 	}
 	
 	public boolean isNullName(){
-		if (Name == ""){
+		if (name == ""){
 			return true;
 		}else{ 
 			return false;
 		}
 	}
 	
-	public DateTime getStartTime()
-	{
-		return StartTime;
+
+	public int getTaskID() {
+		return taskID;
+	}
+
+	public DateTime getStartTime(){
+		return startTime;
 	}
 	
-	/*public boolean isNull_StartTime()
-	{
-		if (StartTime == )
-	}*/
-	
-	public DateTime getEndTime()
-	{
-		return EndTime;
+	public DateTime getEndTime(){
+		return endTime;
 	}
 	
-	public TASK_PRIORITY getPriority()
-	{
-		return Priority;
+	public TASK_PRIORITY getPriority(){
+		return priority;
 	}
 	
-	public boolean isNullPriority()
-	{
-		if (Priority == null){
+	public boolean isNullPriority(){
+		if (priority == null){
 			return true;
 		}else{
 			return false;
 		}
 	}
 	
-	public String getTag()
-	{
-		return Tag;
+	public String getTag(){
+		return tag;
 	}
 	
-	public boolean isNullTag()
-	{
-		if (Tag == ""){
+	public boolean isNullTag(){
+		if (tag == ""){
 			return true;
 		}else{
 			return false;
