@@ -1,5 +1,5 @@
 package nailit.common;
 
-public enum TASK_PRIORITY {
+public enum TaskPriority {
 	LOW, MEDIUM, HIGH;
 }
