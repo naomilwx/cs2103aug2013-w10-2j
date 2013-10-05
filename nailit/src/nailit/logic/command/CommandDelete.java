@@ -19,7 +19,7 @@ public class CommandDelete extends Command{
 
 	@Override
 	public Result executeCommand() {
-		removeTheTask();
+		removeTheTaskOnStorage();
 		createResultObject();
 		createCommandSummary();
 		return executedResult;
@@ -37,7 +37,7 @@ public class CommandDelete extends Command{
 				+ taskToRemove.getPriority();
 	}
 
-	private void removeTheTask() {
+	private void removeTheTaskOnStorage() {
 		taskToDeleteID = parserResultInstance.getTaskID();
 		taskToRemove = storer.remove(taskToDeleteID);
 	}
