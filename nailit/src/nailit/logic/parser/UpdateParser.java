@@ -21,7 +21,7 @@ public class UpdateParser extends Parser {
 			resultExecution.setDisplayAll(true);
 		}else if (Parser.isTaskID(userCommand)){
 			resultExecution.setTaskID(Integer.parseInt(userCommand));
-		}else if (Parser.isDateTime(userCommand)){
+		}else{
 			resultExecution.setStartTime(Parser.retrieveDateTime(userCommand));
 		}
 		return resultExecution;
