@@ -26,7 +26,7 @@ public class Task {
 		endTime = null;
 		tag = "";
 		isCompleted = false;
-		priority = null;
+		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	public Task(String taskName){
 		ID = TASKID_NULL;
@@ -37,7 +37,7 @@ public class Task {
 		tag = "";
 		isCompleted = false;
 		added = true;
-		priority = TaskPriority.MEDIUM;
+		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	
 	public Task(String taskName, DateTime start, DateTime end, String t, TaskPriority p){
@@ -157,10 +157,10 @@ public class Task {
 	public String formatDateDetails(){
 		String formattedDateDetails = "";
 		if(isEvent()){
-			formattedDateDetails = "Start Time: " + startTime + "\n"
-									+"End Time: " + endTime;
-		}else{
-			formattedDateDetails = "Due: " + startTime;
+			formattedDateDetails = "Start Time: " + startTime.toString() + "\n"
+									+"End Time: " + endTime.toString();
+		}else if(!isFloatingTask()){
+			formattedDateDetails = "Due: " + startTime.toString();
 		}
 		return formattedDateDetails;
 	}
