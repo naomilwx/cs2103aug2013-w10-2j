@@ -14,12 +14,13 @@ public class ParserResult{
 	private int taskID;
 	private static CommandType command;
 	private static String name;
+	private TaskPriority priority;
+	private String tag;
 	
 	private DateTime startTime;
 	private DateTime endTime;
 	
-	private TaskPriority priority;
-	private String tag;
+	private boolean isDisplayAll = false;
 	
 	public void setCommand(CommandType commandExternal){
 		command = commandExternal;
@@ -27,6 +28,14 @@ public class ParserResult{
 	
 	public CommandType getCommand(){
 		return command;
+	}
+	
+	public void setDisplayAll (boolean flag){
+		isDisplayAll = flag;
+	}
+	
+	public boolean getisDisplayAll(){
+		return isDisplayAll;
 	}
 	
 	public void setName(String nameExternal){

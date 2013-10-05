@@ -17,4 +17,15 @@ public abstract class Parser {
 		DateTime result = new DateTime();	
 		return result;
 	}
+	
+	public static boolean isTaskID(){
+		return true;
+	}
+	
+	public static boolean isTag(String p){
+		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#')
+			return true;
+		else
+			return false;
+	}
 }

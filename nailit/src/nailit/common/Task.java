@@ -50,6 +50,16 @@ public class Task {
 		priority = p;
 	}
 	
+	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String tag, String desc, boolean isCompleted){
+		this.ID = ID;
+		name = taskName;
+		startTime = start;
+		endTime = end;
+		priority = p;
+		this.tag = tag;
+		description = desc;
+		this.isCompleted = isCompleted;
+	}
 	public boolean isAdded(){
 		return added;
 	}
