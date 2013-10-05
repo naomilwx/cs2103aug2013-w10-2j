@@ -26,8 +26,8 @@ public class CommandAdd extends Command{
 	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
-	public CommandAdd(ParserResult ResultInstance, StorageManager storerToUse) {
-		super(ResultInstance, storerToUse);
+	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
+		super(resultInstance, storerToUse);
 	}
 
 	@Override
@@ -41,7 +41,11 @@ public class CommandAdd extends Command{
 	}
 
 	private void createCommandSummary() {
-		
+		commandSummary = "add " + parserResultInstance.getName() + " " 
+				+ parserResultInstance.getStartTime() + " - " 
+				+ parserResultInstance.getEndTime() + " " 
+				+ parserResultInstance.getTag() 
+				+ parserResultInstance.getPriority();
 	}
 
 	private void createResultObject(int taskID) {
