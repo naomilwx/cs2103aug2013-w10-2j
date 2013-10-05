@@ -82,8 +82,10 @@ public class CommandManager {
 	}
 
 	private Result update() {
-		return null;
-		// TODO Auto-generated method stub
+		CommandUpdate newUpdateCommandObj = new CommandUpdate(parserResultInstance, storer);
+		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
+		Result resultToPassToGUI = newUpdateCommandObj.executeCommand();
+		return resultToPassToGUI;
 	}
 
 	private Result search() {
@@ -113,5 +115,4 @@ public class CommandManager {
 	private void addNewCommandObjToOperationsHistory(Command commandObjToAdd) {
 		operationsHistory.add(commandObjToAdd);
 	}
-
 }
