@@ -1,11 +1,14 @@
 package nailit.gui;
 
+import java.awt.Color;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
 import nailit.common.Task;
@@ -36,7 +39,7 @@ public class TableDisplay extends JScrollPane{
 		containerWidth = width;
 		containerHeight = height;
 		this.setSize(containerWidth, containerHeight);
-		this.setLayout(null);
+		this.setBackground(Color.blue);
 	}
 	private void createAndConfigureTable() {
 		initialiseTableModels();
@@ -51,13 +54,23 @@ public class TableDisplay extends JScrollPane{
 		tableHeader = new JTable();
 		tableHeader.setSize(containerWidth, TABLE_HEADER_HEIGHT);
 		tableHeader.setRowHeight(TABLE_HEADER_HEIGHT);
-		this.setRowHeaderView(tableHeader);
+		setHeaderText();
+		setRowHeaderView(tableHeader);
 	}
-	
+	private void setHeaderText(){//TODO:
+		Vector<String> headerRow = 
+				new Vector<String>(Arrays.asList(ALL_TASKS_TABLE_HEADER));
+		Vector<Vector<String>> row = new Vector<Vector<String>>();
+		row.add(headerRow);
+		tableHeaderModel.setDataVector(row, headerRow);
+		tableHeader.setModel(tableHeaderModel);
+	}
 	private void createAndConfigureBody() {
 		tableBody = new JTable();
 		tableBody.setRowHeight(TABLE_ROW_HEIGHT);
-		this.setViewportView(tableBody);
+		tableBody.setTableHeader(null);
+		tableBody.setModel(tableBodyModel);
+		setViewportView(tableBody);
 	}
 	private void addRowToTable(Vector<Object> row){
 		
