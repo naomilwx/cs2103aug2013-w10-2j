@@ -12,14 +12,9 @@ public class ParserResult{
 	private CommandType command;
 	private String name;
 	
-	// change from Shuzhi
-	// to be consistent with class Task, we use DateTime here
-	// can be changed back later after discussion
 	private DateTime startTime;
 	private DateTime endTime;
 	
-	// change from Shuzhi
-	// should use TASK_PRIORITY
 	private TASK_PRIORITY priority;
 	private String tag;
 	
