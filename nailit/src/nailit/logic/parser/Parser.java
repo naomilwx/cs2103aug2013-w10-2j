@@ -21,6 +21,7 @@ public abstract class Parser {
 		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
 		
 		parseResult= nattyParser.parse(p);
+		result = parseResult.get(0);
 		
 		return result;
 	}
