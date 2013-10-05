@@ -49,8 +49,8 @@ public class DataManager {
 		}
 	}
 	
-	public String remove(int lineNum){
-		return null;
+	public void remove(int ID){
+		dataList.set(ID, null);
 	}
 	
 	public Vector<String> getDataList(){
