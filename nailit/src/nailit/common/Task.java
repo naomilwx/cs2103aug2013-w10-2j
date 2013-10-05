@@ -166,6 +166,7 @@ public class Task {
 		// change from Shuzhi
 		// the same, delete description,
 		Task newTask = new Task(name, startTime, endTime, tag, priority);
+		newTask.setDescription(description);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;
