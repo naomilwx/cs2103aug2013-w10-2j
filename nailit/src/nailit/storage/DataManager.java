@@ -24,12 +24,16 @@ public class DataManager {
 	/**
 	 * Public Methods
 	 * */
-	public int add(int ID, String name,DateTime startDate,DateTime endDate,TASK_PRIORITY priority,String tag,String desc){
-	
+	public int add(int ID, String taskString){
+		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
+			dataList.add(taskString);
 		}
-		return -2;
+		else{
+			dataList.set(ID, taskString);
+		}
+		return ID;
 	}
 	
 	public String retrieve(int lineNum){
