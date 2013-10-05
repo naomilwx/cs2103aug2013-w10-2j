@@ -20,7 +20,7 @@ public class ParserResult{
 	private DateTime startTime;
 	private DateTime endTime;
 	
-	private boolean isDisplayAll;
+	private boolean isDisplayAll = false;
 	
 	public void setCommand(CommandType commandExternal){
 		command = commandExternal;

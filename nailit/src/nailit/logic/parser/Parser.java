@@ -17,4 +17,8 @@ public abstract class Parser {
 		DateTime result = new DateTime();	
 		return result;
 	}
+	
+	public static boolean isTaskID(){
+		return true;
+	}
 }
