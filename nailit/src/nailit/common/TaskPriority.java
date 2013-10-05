@@ -6,6 +6,14 @@ public enum TaskPriority {
 	private TaskPriority(int code){
 		priorityCode = code;
 	}
+	public static boolean isTaskPriority(String p){
+		for(TaskPriority priority: TaskPriority.values()){
+			if(p.equalsIgnoreCase(priority.toString())){
+				return true;
+			}
+		}
+		return false;
+	}
 	public int getPriorityCode(){
 		return priorityCode;
 	}
