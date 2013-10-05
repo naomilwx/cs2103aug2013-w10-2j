@@ -1,29 +1,27 @@
 package nailit.common;
 import java.io.Serializable;
 
-public enum TaskPriority implements Serializable {
-    LOW,MEDIUM,HIGH;
 
-    public String toString(){
-        switch(this){
-        case LOW :
-            return "LOW";
-        case MEDIUM :
-            return "MEDIUM";
-        case HIGH :
-            return "HIGH";
-        }
-        return null;
-    }
-
-    public static TaskPriority valueOf(Class<TaskPriority> enumType, String value){
-        if(value.equalsIgnoreCase(LOW.toString()))
-            return TaskPriority.LOW;
-        else if(value.equalsIgnoreCase(HIGH.toString()))
-            return TaskPriority.HIGH;
-        else if(value.equalsIgnoreCase(MEDIUM.toString()))
-            return TaskPriority.MEDIUM;
-        else
-            return null;
-    }
+public enum TaskPriority {
+	LOW(0), MEDIUM(1), HIGH(2);
+	
+	private int priorityCode;
+	
+	private TaskPriority(int code){
+		priorityCode = code;
+	}
+	
+	public static boolean isTaskPriority(String p){
+		for(TaskPriority priority: TaskPriority.values()){
+			if(p.equalsIgnoreCase(priority.toString())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int getPriorityCode(){
+		return priorityCode;
+	}
 }
+

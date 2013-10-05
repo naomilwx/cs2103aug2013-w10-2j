@@ -20,7 +20,9 @@ public class AddParser extends Parser {
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
-			if (listOfCommand[i] == LOW)
+			if (TaskPriority.isTaskPriority(listOfCommand[i])){
+				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
+			}else
 		}
 		return resultExecution;
 	}

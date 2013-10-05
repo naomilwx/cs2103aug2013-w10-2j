@@ -15,10 +15,6 @@ public class Task {
 
 	private TaskPriority priority;
 
-	public static final int LOW_IN_HARDDISK = 0;
-	public static final int MEDIUM_IN_HARDDISK = 1;
-	public static final int HIGH_IN_HARDDISK =2;
-	public static final int INVALID_PRIORITY_IN_HARDDISK = -1;
 	public static final int COMPLETED_IN_HARDDISK = 1;
 	public static final int INCOMPLETE_IN_HARDDISK = 0;
 
@@ -232,7 +228,7 @@ public class Task {
 	}
 	
 	public String changeToDiskFormat(){
-		int priority = parsePriority(this.getPriority());
+		int priority = this.getPriority().getPriorityCode();
 		assert(isValidPriority(priority));
 		
 		String name = this.getName();
@@ -250,14 +246,6 @@ public class Task {
 		return taskString;
 	}
 	
-	private int parsePriority(TaskPriority p){
-		switch(p){
-			case LOW: return LOW_IN_HARDDISK;
-			case MEDIUM: return MEDIUM_IN_HARDDISK;
-			case HIGH: return HIGH_IN_HARDDISK;
-			default: return INVALID_PRIORITY_IN_HARDDISK;
-		}
-	}
 	private int parseCompleteStatus(boolean complete){
 		if(complete){
 			return COMPLETED_IN_HARDDISK;
@@ -267,7 +255,7 @@ public class Task {
 		}
 	}
 	private boolean isValidPriority(int p){
-		return p>=LOW_IN_HARDDISK&&p<=HIGH_IN_HARDDISK;
+		return (p>=TaskPriority.LOW.getPriorityCode()&&p<=TaskPriority.HIGH.getPriorityCode());
 	}
 	private boolean isValidCompleteStatus(int completeStatus){
 		return ((completeStatus == COMPLETED_IN_HARDDISK) || (completeStatus == INCOMPLETE_IN_HARDDISK));

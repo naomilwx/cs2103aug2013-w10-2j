@@ -14,9 +14,6 @@ public class CommandManager {
 	// the storage object that the commandManager works with 
 	private StorageManager storer;
 	
-	// the Result to pass back to the GUI component
-	private Result executedResult;
-	
 	// the parserResult to use in the commandExcute
 	private ParserResult parserResultInstance;
 	
@@ -27,83 +24,87 @@ public class CommandManager {
 	public CommandManager () 
 	{
 		storer = new StorageManager();
-		executedResult = new Result();
 		operationsHistory = new Vector<Command>();
 	}
 	
 	public Result executeCommand(ParserResult parserResultInstance)
 	{
 		this.parserResultInstance = parserResultInstance;
-		doExecution();
+		Result executedResult = doExecution();
 		return executedResult;
 	}
 
-	private void doExecution() {
+	private Result doExecution() {
 		CommandType commandType = parserResultInstance.getCommand();
 		// in each command execute method like add(), we will create the 
 		// corresponding object and use them to execute the command.
 		// In addition, the command is added to operation History.
 		switch(commandType) {
 			case ADD: {
-				executedResult = add();
-				break;
+				Result resultToReturn = add();
+				return resultToReturn;
 			}
 			case COMPLETE: {
-				executedResult = complete();
-				break;
-			} 
+				Result resultToReturn = complete();
+				return resultToReturn;			} 
 			case DELETE: {
-				executedResult = delete();
-				break;
-			}
+				Result resultToReturn = delete();
+				return resultToReturn;			}
 			case SEARCH: {
-				executedResult = search();
-				break;
-			}
+				Result resultToReturn = search();
+				return resultToReturn;			}
 			case UPDATE: {
-				executedResult = update();
-				break;
+				Result resultToReturn = update();
+				return resultToReturn;
 			}
 			case INVALID: {
 				break;
 			}
 			case DISPLAY: {
-				executedResult = display();
+				Result resultToReturn = display();
+				return resultToReturn;
 			}
 			default: {
 				
 			}
 		}
+		return null;
 	}
 
 	private Result display() {
-		// TODO Auto-generated method stub
 		return null;
+		// TODO Auto-generated method stub
 	}
 
 	private Result update() {
-		// TODO Auto-generated method stub
 		return null;
+		// TODO Auto-generated method stub
 	}
 
 	private Result search() {
-		// TODO Auto-generated method stub
 		return null;
+		// TODO Auto-generated method stub
 	}
 
 	private Result delete() {
-		// TODO Auto-generated method stub
-		return null;
+		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer);
+		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
+		return newDeleteCommandObj.executeCommand();
 	}
 
 	private Result complete() {
-		// TODO Auto-generated method stub
 		return null;
+		// TODO Auto-generated method stub
 	}
 
 	private Result add() {
-		// TODO Auto-generated method stub
-		return null;
+		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer);
+		addNewCommandObjToOperationsHistory(newAddCommandObj);
+		return newAddCommandObj.executeCommand();
+	}
+
+	private void addNewCommandObjToOperationsHistory(Command commandObjToAdd) {
+		operationsHistory.add(commandObjToAdd);
 	}
 
 }
