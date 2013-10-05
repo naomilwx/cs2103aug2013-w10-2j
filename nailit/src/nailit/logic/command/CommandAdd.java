@@ -2,6 +2,8 @@ package nailit.logic.command;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 import nailit.common.Result;
 import nailit.common.TASK_PRIORITY;
 import nailit.common.Task;
@@ -14,10 +16,12 @@ public class CommandAdd extends Command{
 	private Task taskPassedToStorer;
 	private CommandType command;
 	private String taskName;
-	private Date startTime;
-	private Date endTime;
+	private DateTime startTime;
+	private DateTime endTime;
 	private TASK_PRIORITY taskPriority;
 	private String taskTag;
+	
+	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
 	public CommandAdd(ParserResult ResultInstance, StorageManager storerToUse) {
@@ -28,7 +32,15 @@ public class CommandAdd extends Command{
 	public Result executeCommand(ParserResult parserResultInstance) {
 		getContentFromParserResult();
 		createTaskObject();
-		return null;
+		int taskID = storer.add(taskPassedToStorer);
+		createResultObject(taskID);
+		return executedResult;
+	}
+
+	private void createResultObject(int taskID) {
+		// Shuzhi: currently do not know what is displayType,
+		// so give a null first
+		executedResult = new Result(false, true, null, Success_Msg + taskID);
 	}
 
 	private void createTaskObject() {
