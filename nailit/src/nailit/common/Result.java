@@ -2,11 +2,11 @@ package nailit.common;
 import java.util.Vector;
 
 public class Result {
-	private static final int NULL_DISPLAY = -1;
-	private static final int NOTIFICATION_DISPLAY = 0;
-	private static final int TASK_DISPLAY = 1;
-	private static final int LIST_DISPLAY = 2;
-	private static final int HISTORY_DISPLAY = 3;
+	public static final int NULL_DISPLAY = -1;
+	public static final int NOTIFICATION_DISPLAY = 0;
+	public static final int TASK_DISPLAY = 1;
+	public static final int LIST_DISPLAY = 2;
+	public static final int HISTORY_DISPLAY = 3;
 	
 	private boolean isExit;
 	private boolean isSuccessful;
