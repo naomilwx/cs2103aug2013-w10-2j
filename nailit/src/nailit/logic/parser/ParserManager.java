@@ -5,30 +5,30 @@ import nailit.logic.ParserResult;
 
 public class ParserManager {
 
-	public static String CommandToExecute;
+	private String commandToExecute;
 	
-	public ParserManager (String command){
-		CommandToExecute = command;
+	public void passCommand(String command){
+		commandToExecute = command;
 	}
 
 	public ParserResult execute() {
-		String commandTypeString = getFirstWord(CommandToExecute);
+		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
 		switch (commandType) {
 		case ADD:
-			AddParser addParserManager = new AddParser(CommandToExecute);
+			AddParser addParserManager = new AddParser(commandToExecute);
 			return addParserManager.execute();
 		case COMPLETE:
-			CompleteParser completeParserManager = new CompleteParser(CommandToExecute);
+			CompleteParser completeParserManager = new CompleteParser(commandToExecute);
 			return completeParserManager.execute();
 		case DELETE:
-			DeleteParser deleteParserManager = new DeleteParser(CommandToExecute);
+			DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
 			return deleteParserManager.execute();
 		case SEARCH:
-			SearchParser searchParserManager = new SearchParser(CommandToExecute);
+			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
 		case UPDATE:
-			UpdateParser updateParserManager = new UpdateParser(CommandToExecute);
+			UpdateParser updateParserManager = new UpdateParser(commandToExecute);
 			return updateParserManager.execute();
 		default:
 			//throw an error if the command is not recognized
