@@ -3,6 +3,7 @@ package nailit.logic.command;
 import java.util.Date;
 
 import nailit.common.Result;
+import nailit.common.TASK_PRIORITY;
 import nailit.common.Task;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -15,7 +16,7 @@ public class CommandAdd extends Command{
 	private String taskName;
 	private Date startTime;
 	private Date endTime;
-	private Integer taskPriority;
+	private TASK_PRIORITY taskPriority;
 	private String taskTag;
 	
 	// constructor
