@@ -14,8 +14,7 @@ public abstract class Parser {
 	}
 	
 	public static DateTime retrieveDateTime (String p){
-		DateTime result;
-		
+		DateTime result = new DateTime();	
 		return result;
 	}
 }
