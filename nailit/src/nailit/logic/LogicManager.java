@@ -12,9 +12,9 @@ public class LogicManager{
 	private Parser ParserInstance;
 	private CommandManager commandInstance;
 	
-	// constructor
+// constructor
 	public LogicManager() {
-//		ParserInstance = new Parser();
+//	ParserInstance = new Parser();
 		commandInstance = new CommandManager();
 	}
 	public Result executeCommand(String OriginalCommand){

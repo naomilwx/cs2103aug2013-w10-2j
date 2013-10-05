@@ -9,14 +9,14 @@ import nailit.common.TASK_PRIORITY;
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 	
-	private static CommandType Command;
-	private static String Name;
+	private CommandType Command;
+	private String Name;
 	
 	// change from Shuzhi
 	// to be consistent with class Task, we use DateTime here
 	// can be changed back later after discussion
-	private static DateTime StartTime;
-	private static DateTime EndTime;
+	private DateTime StartTime;
+	private DateTime EndTime;
 	
 	// change from Shuzhi
 	// should use TASK_PRIORITY
