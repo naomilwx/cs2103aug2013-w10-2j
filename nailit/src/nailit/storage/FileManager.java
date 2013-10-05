@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Vector;
 
+import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
 
@@ -38,7 +39,17 @@ public class FileManager {
 	
 	
 	public void save(){
-		
+		try {
+			for(int i=0;i<dataList.size();i++){
+				String line = dataList.get(i);
+				if(line != null){
+					writer.write(line);	
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Vector<String> getDataList(){
@@ -57,9 +68,12 @@ public class FileManager {
 			String line = null;
 			int lastIndex = -1;
 			while((line = reader.readLine()) != null){
-				String[] s = line.split("\\" + Task.FIELD_SPLITTER);
+				String[] s = line.split("\\" + NIConstants.FIELD_SPLITTER);
 				int ID = Integer.parseInt(s[0]);
-				String taskString = line.substring(s[0].length()+Task.FIELD_SPLITTER.length());
+				if(line.length()<=s[0].length()+NIConstants.FIELD_SPLITTER.length()){
+					throw new Exception("Invalid content format");
+				}
+				String taskString = line.substring(s[0].length()+NIConstants.FIELD_SPLITTER.length());
 				
 				for(int i=lastIndex+1;i<=ID-1;i++){
 					dataList.add(null);
@@ -67,7 +81,7 @@ public class FileManager {
 				lastIndex = ID;
 				dataList.add(line);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

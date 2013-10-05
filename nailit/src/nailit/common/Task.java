@@ -19,7 +19,6 @@ public class Task {
 	public static final int MEDIUM_IN_HARDDISK = 1;
 	public static final int HIGH_IN_HARDDISK =2;
 	public static final int INVALID_PRIORITY_IN_HARDDISK = -1;
-	public static final String FIELD_SPLITTER = ",";
 	public static final int COMPLETED_IN_HARDDISK = 1;
 	public static final int INCOMPLETE_IN_HARDDISK = 0;
 
@@ -246,7 +245,7 @@ public class Task {
 		assert(isValidCompleteStatus(completeStatus));
 		
 		
-		String taskString = name + FIELD_SPLITTER + startDate + FIELD_SPLITTER + endDate + FIELD_SPLITTER + priority + FIELD_SPLITTER + tag + FIELD_SPLITTER +desc +FIELD_SPLITTER + completeStatus;
+		String taskString = name + NIConstants.FIELD_SPLITTER + startDate + NIConstants.FIELD_SPLITTER + endDate + NIConstants.FIELD_SPLITTER + priority + NIConstants.FIELD_SPLITTER + tag + NIConstants.FIELD_SPLITTER +desc +NIConstants.FIELD_SPLITTER + completeStatus;
 		
 		return taskString;
 	}
