@@ -2,6 +2,7 @@ package nailit.logic.parser;
 
 import nailit.logic.ParserResult;
 import nailit.common.Task;
+import
 
 public class AddParser extends Parser {
 
@@ -19,7 +20,7 @@ public class AddParser extends Parser {
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
-			
+			if (listOfCommand[i] == )
 		}
 		return resultExecution;
 	}
