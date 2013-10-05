@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
@@ -18,11 +18,19 @@ public class ParserResult{
 	private DateTime startTime;
 	private DateTime endTime;
 	
-	private TASK_PRIORITY priority;
+	private TaskPriority priority;
 	private String tag;
+	
+	public void setCommand(CommandType commandExternal){
+		command = commandExternal;
+	}
 	
 	public CommandType getCommand(){
 		return command;
+	}
+	
+	public void setName(String nameExternal){
+		name = nameExternal;
 	}
 	
 	public String getName(){
@@ -37,20 +45,35 @@ public class ParserResult{
 		}
 	}
 	
-
+	public void setTaskID(int taskIDExternal) {
+		taskID = taskIDExternal;
+	}
+	
 	public int getTaskID() {
 		return taskID;
 	}
 
+	public void setStartTime(DateTime startTimeExternal){
+		startTime = startTimeExternal;
+	}
+	
 	public DateTime getStartTime(){
 		return startTime;
+	}
+	
+	public void setEndTime(DateTime endTimeExternal){
+		endTime = endTimeExternal;
 	}
 	
 	public DateTime getEndTime(){
 		return endTime;
 	}
 	
-	public TASK_PRIORITY getPriority(){
+	public void setPriority(TaskPriority priorityExternal){
+		priority = priorityExternal;
+	}
+	
+	public TaskPriority getPriority(){
 		return priority;
 	}
 	
@@ -60,6 +83,10 @@ public class ParserResult{
 		}else{
 			return false;
 		}
+	}
+	
+	public void setTag(String tagExternal){
+		tag = tagExternal;
 	}
 	
 	public String getTag(){
