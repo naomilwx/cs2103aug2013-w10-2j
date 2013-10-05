@@ -9,30 +9,30 @@ import nailit.common.TASK_PRIORITY;
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 	
-	private CommandType Command;
-	private String Name;
+	private CommandType command;
+	private String name;
 	
 	// change from Shuzhi
 	// to be consistent with class Task, we use DateTime here
 	// can be changed back later after discussion
-	private DateTime StartTime;
-	private DateTime EndTime;
+	private DateTime startTime;
+	private DateTime endTime;
 	
 	// change from Shuzhi
 	// should use TASK_PRIORITY
-	private static TASK_PRIORITY Priority;
-	private static String Tag;
+	private TASK_PRIORITY priority;
+	private String tag;
 	
 	public CommandType getCommand(){
-		return Command;
+		return command;
 	}
 	
 	public String getName(){
-		return Name;
+		return name;
 	}
 	
 	public boolean isNullName(){
-		if (Name == ""){
+		if (name == ""){
 			return true;
 		}else{ 
 			return false;
@@ -41,7 +41,7 @@ public class ParserResult{
 	
 	public DateTime getStartTime()
 	{
-		return StartTime;
+		return startTime;
 	}
 	
 	/*public boolean isNull_StartTime()
@@ -51,17 +51,17 @@ public class ParserResult{
 	
 	public DateTime getEndTime()
 	{
-		return EndTime;
+		return endTime;
 	}
 	
 	public TASK_PRIORITY getPriority()
 	{
-		return Priority;
+		return priority;
 	}
 	
 	public boolean isNullPriority()
 	{
-		if (Priority == null){
+		if (priority == null){
 			return true;
 		}else{
 			return false;
@@ -70,12 +70,12 @@ public class ParserResult{
 	
 	public String getTag()
 	{
-		return Tag;
+		return tag;
 	}
 	
 	public boolean isNullTag()
 	{
-		if (Tag == ""){
+		if (tag == ""){
 			return true;
 		}else{
 			return false;
