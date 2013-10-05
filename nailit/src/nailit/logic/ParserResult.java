@@ -61,12 +61,28 @@ public class ParserResult{
 		return startTime;
 	}
 	
+	public boolean isNullStartTime(){
+		if (startTime == null){
+			return true;
+		}else{ 
+			return false;
+		}
+	}
+	
 	public void setEndTime(DateTime endTimeExternal){
 		endTime = endTimeExternal;
 	}
 	
 	public DateTime getEndTime(){
 		return endTime;
+	}
+	
+	public boolean isNullEndTime(){
+		if (endTime == null){
+			return true;
+		}else{ 
+			return false;
+		}
 	}
 	
 	public void setPriority(TaskPriority priorityExternal){
