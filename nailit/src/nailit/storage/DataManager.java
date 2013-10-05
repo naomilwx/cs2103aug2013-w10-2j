@@ -3,7 +3,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 import nailit.common.Task;
 
 public class DataManager {

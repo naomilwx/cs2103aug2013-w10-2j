@@ -12,7 +12,7 @@ public class Task {
 	private String tag;
 	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted;
-	private TASK_PRIORITY priority;
+	private TaskPriority priority;
 	private final String FIELD_SPLITTER = ",";
 	public Task(){
 		ID = TASKID_NULL;
@@ -33,10 +33,10 @@ public class Task {
 		tag = "";
 		isCompleted = false;
 		added = true;
-		priority = TASK_PRIORITY.MEDIUM;
+		priority = TaskPriority.MEDIUM;
 	}
 	
-	public Task(String taskName, DateTime start, DateTime end, String t, TASK_PRIORITY p){
+	public Task(String taskName, DateTime start, DateTime end, String t, TaskPriority p){
 		ID = TASKID_NULL;
 		name = taskName;
 		startTime = start;
@@ -53,7 +53,7 @@ public class Task {
 	public int getID(){
 		return ID;
 	}
-	public TASK_PRIORITY getPriority(){
+	public TaskPriority getPriority(){
 		return priority;
 	}
 	public String getName(){
@@ -111,7 +111,7 @@ public class Task {
 	public void setCompleted(boolean completed){
 		isCompleted = completed;
 	}
-	public void setPriority(TASK_PRIORITY taskPriority){
+	public void setPriority(TaskPriority taskPriority){
 		priority = taskPriority;
 	}
 	public void setStartTime(DateTime start){
@@ -238,7 +238,7 @@ public class Task {
 		return taskString;
 	}
 	
-	private int parsePriority(TASK_PRIORITY p){
+	private int parsePriority(TaskPriority p){
 		switch(p){
 			case LOW: return 0;
 			case MEDIUM: return 1;

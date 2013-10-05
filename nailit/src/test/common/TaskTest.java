@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import nailit.common.Task;
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 import org.joda.time.DateTime;
 public class TaskTest {
 	
@@ -49,7 +49,7 @@ public class TaskTest {
 	public void TaskCopyTest(){
 		DateTime start = new DateTime(2013, 9, 30, 10, 20);
 		DateTime end = new DateTime();
-		Task task = new Task("Test!",start,end,"School",TASK_PRIORITY.LOW);
+		Task task = new Task("Test!",start,end,"School",TaskPriority.LOW);
 		task.setDescription("y");
 		task.setID(1);
 		task.setCompleted(true);

@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 import nailit.common.Task;
 
 import org.joda.time.DateTime;

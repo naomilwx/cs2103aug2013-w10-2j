@@ -5,7 +5,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 
 import nailit.common.Result;
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 import nailit.common.Task;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -18,7 +18,7 @@ public class CommandAdd extends Command{
 	private String taskName;
 	private DateTime startTime;
 	private DateTime endTime;
-	private TASK_PRIORITY taskPriority;
+	private TaskPriority taskPriority;
 	private String taskTag;
 	
 	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";

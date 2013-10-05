@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 import nailit.common.Task;
 
-import nailit.common.TASK_PRIORITY;
+import nailit.common.TaskPriority;
 
 public class StorageManager {
 	private FileManager hardDisk;

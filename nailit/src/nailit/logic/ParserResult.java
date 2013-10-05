@@ -21,8 +21,16 @@ public class ParserResult{
 	private TASK_PRIORITY priority;
 	private String tag;
 	
+	public void setCommand(CommandType commandExternal){
+		command = commandExternal;
+	}
+	
 	public CommandType getCommand(){
 		return command;
+	}
+	
+	public void setName(String nameExternal){
+		name = nameExternal;
 	}
 	
 	public String getName(){
@@ -37,13 +45,24 @@ public class ParserResult{
 		}
 	}
 	
-
+	public void setTaskID(int taskIDExternal) {
+		taskID = taskIDExternal;
+	}
+	
 	public int getTaskID() {
 		return taskID;
 	}
 
+	public void setStartTime(DateTime startTimeExternal){
+		startTime = startTimeExternal;
+	}
+	
 	public DateTime getStartTime(){
 		return startTime;
+	}
+	
+	public void setEndTime(DateTime endTimeExternal){
+		endTime = endTimeExternal;
 	}
 	
 	public DateTime getEndTime(){
