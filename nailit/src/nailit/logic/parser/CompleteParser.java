@@ -2,7 +2,7 @@ package nailit.logic.parser;
 
 import nailit.logic.ParserResult;
 
-public class CompleteParser extends ParserManager{
+public class CompleteParser extends Parser{
 
 private String userCommand;
 	

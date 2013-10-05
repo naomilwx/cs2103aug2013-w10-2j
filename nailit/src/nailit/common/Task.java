@@ -13,6 +13,13 @@ public class Task {
 	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted;
 	private TASK_PRIORITY priority;
+	public static final int LOW_IN_HARDDISK = 0;
+	public static final int MEDIUM_IN_HARDDISK = 1;
+	public static final int HIGH_IN_HARDDISK =2;
+	public static final int INVALID_PRIORITY_IN_HARDDISK = -1;
+	public static final String FIELD_SPLITTER = ",";
+	public static final int COMPLETED_IN_HARDDISK = 1;
+	public static final int INCOMPLETE_IN_HARDDISK = 0;
 	public Task(){
 		ID = TASKID_NULL;
 		name = "";
@@ -34,13 +41,10 @@ public class Task {
 		added = true;
 		priority = TASK_PRIORITY.MEDIUM;
 	}
-	// change from Shuzhi
-	// do not think that here should have desc, since desc is 
-	// added to it later. so delete ,String desc
+	
 	public Task(String taskName, DateTime start, DateTime end, String t, TASK_PRIORITY p){
 		ID = TASKID_NULL;
 		name = taskName;
-//		description = desc;
 		startTime = start;
 		endTime = end;
 		tag = t;
@@ -224,4 +228,47 @@ public class Task {
 			return false;
 		}
 	}
+	
+	public String changeToDiskFormat(){
+		int priority = parsePriority(this.getPriority());
+		assert(isValidPriority(priority));
+		
+		String name = this.getName();
+		String startDate = this.getStartTime().toString();
+		String endDate = this.getEndTime().toString();
+		String desc = this.getDescription();
+		String tag = this.getTag();
+		
+		int completeStatus = parseCompleteStatus(this.isCompleted);
+		assert(isValidCompleteStatus(completeStatus));
+		
+		
+		String taskString = name + FIELD_SPLITTER + startDate + FIELD_SPLITTER + endDate + FIELD_SPLITTER + priority + FIELD_SPLITTER + tag + FIELD_SPLITTER +desc +FIELD_SPLITTER + completeStatus;
+		
+		return taskString;
+	}
+	
+	private int parsePriority(TASK_PRIORITY p){
+		switch(p){
+			case LOW: return LOW_IN_HARDDISK;
+			case MEDIUM: return MEDIUM_IN_HARDDISK;
+			case HIGH: return HIGH_IN_HARDDISK;
+			default: return INVALID_PRIORITY_IN_HARDDISK;
+		}
+	}
+	private int parseCompleteStatus(boolean complete){
+		if(complete){
+			return COMPLETED_IN_HARDDISK;
+		}
+		else{
+			return INCOMPLETE_IN_HARDDISK;
+		}
+	}
+	private boolean isValidPriority(int p){
+		return p>=LOW_IN_HARDDISK&&p<=HIGH_IN_HARDDISK;
+	}
+	private boolean isValidCompleteStatus(int completeStatus){
+		return ((completeStatus == COMPLETED_IN_HARDDISK) || (completeStatus == INCOMPLETE_IN_HARDDISK));
+	}
+
 }
