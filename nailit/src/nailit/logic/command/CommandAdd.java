@@ -21,6 +21,8 @@ public class CommandAdd extends Command{
 	private TASK_PRIORITY taskPriority;
 	private String taskTag;
 	
+	private String commandSummary;
+	
 	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
@@ -34,12 +36,15 @@ public class CommandAdd extends Command{
 		createTaskObject();
 		int taskID = storer.add(taskPassedToStorer);
 		createResultObject(taskID);
+		createCommandSummary();
 		return executedResult;
 	}
 
+	private void createCommandSummary() {
+		
+	}
+
 	private void createResultObject(int taskID) {
-		// Shuzhi: currently do not know what is displayType,
-		// so give a null first
 		executedResult = new Result(false, true, null, Success_Msg + taskID);
 	}
 
