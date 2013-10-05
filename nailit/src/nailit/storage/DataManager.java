@@ -12,7 +12,6 @@ public class DataManager {
 	/**
 	 * Private Fields
 	 * */
-	private final int TASKID_NULL = -1;
 	private Vector<String> dataList = new Vector<String>();
 	
 	/**
@@ -37,8 +36,17 @@ public class DataManager {
 		return ID;
 	}
 	
-	public String retrieve(int lineNum){
-		return null;
+	public String retrieve(int ID) throws NoTaskFoundException{
+		String line;
+		if(ID>=dataList.size()){
+			throw new NoTaskFoundException("The ID you typed in exceeds the maximum Index!");
+		}
+		else if((line = dataList.get(ID))==null){
+			throw new NoTaskFoundException("The task has been deleted before");
+		}
+		else{
+			return line;
+		}
 	}
 	
 	public String remove(int lineNum){
@@ -65,6 +73,6 @@ public class DataManager {
 	}
 	
 	private boolean addedBefore(int ID){
-		return ID != TASKID_NULL;
+		return ID != Task.TASKID_NULL;
 	}
 }
