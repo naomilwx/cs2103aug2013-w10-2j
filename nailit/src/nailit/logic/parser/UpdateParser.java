@@ -1,5 +1,6 @@
 package nailit.logic.parser;
 
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
 public class UpdateParser extends Parser {
@@ -13,6 +14,9 @@ public class UpdateParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
+		
+		resultExecution.setCommand(CommandType.UPDATE);
+		
 		return resultExecution;
 	}
 }
