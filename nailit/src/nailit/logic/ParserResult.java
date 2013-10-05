@@ -8,7 +8,9 @@ import nailit.common.TASK_PRIORITY;
 
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
-	
+	// added by Shuzhi
+	// in delete and addDescription command: need tasdID
+	private int taskID;
 	private static CommandType Command;
 	private static String Name;
 	
@@ -39,6 +41,10 @@ public class ParserResult{
 		}
 	}
 	
+	public int getTaskID() {
+		return taskID;
+	}
+
 	public DateTime getStartTime()
 	{
 		return StartTime;
