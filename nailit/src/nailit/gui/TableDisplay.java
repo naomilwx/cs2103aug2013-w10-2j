@@ -22,16 +22,15 @@ public class TableDisplay extends JScrollPane{
 	protected static final String[] COMMAND_HISTORY_HEADER =
 		{"ID", "Command"};
 	
-	private JTable tableHeader;
-	private JTable tableBody;
-	
+	private JTable table;
+	private Vector<Vector<String>> tableRows;
 	private int containerHeight;
 	private int containerWidth;
 	
-	private DefaultTableModel tableHeaderModel;
-	private DefaultTableModel tableBodyModel;
+	private DefaultTableModel tableModel;
 	
 	public TableDisplay(int width, int height){
+		tableRows = new Vector<Vector<String>>();
 		configureMainFrame(width, height);
 		createAndConfigureTable();
 	}
@@ -43,34 +42,25 @@ public class TableDisplay extends JScrollPane{
 	}
 	private void createAndConfigureTable() {
 		initialiseTableModels();
-		createAndConfigureHeader();
 		createAndConfigureBody();
 	}
 	private void initialiseTableModels(){
-		tableHeaderModel = new DefaultTableModel();
-		tableBodyModel = new DefaultTableModel();
+		tableModel = new DefaultTableModel();
 	}
-	private void createAndConfigureHeader() {
-		tableHeader = new JTable();
-		tableHeader.setSize(containerWidth, TABLE_HEADER_HEIGHT);
-		tableHeader.setRowHeight(TABLE_HEADER_HEIGHT);
-		setHeaderText();
-		setRowHeaderView(tableHeader);
-	}
+
 	private void setHeaderText(){//TODO:
 		Vector<String> headerRow = 
 				new Vector<String>(Arrays.asList(ALL_TASKS_TABLE_HEADER));
-		Vector<Vector<String>> row = new Vector<Vector<String>>();
-		row.add(headerRow);
-		tableHeaderModel.setDataVector(row, headerRow);
-		tableHeader.setModel(tableHeaderModel);
+		
+//		tableRows.add(headerRow);
+		tableModel.setDataVector(tableRows, headerRow);
 	}
 	private void createAndConfigureBody() {
-		tableBody = new JTable();
-		tableBody.setRowHeight(TABLE_ROW_HEIGHT);
-		tableBody.setTableHeader(null);
-		tableBody.setModel(tableBodyModel);
-		setViewportView(tableBody);
+		table = new JTable();
+		table.setRowHeight(TABLE_ROW_HEIGHT);
+		table.setModel(tableModel);
+		setHeaderText();
+		setViewportView(table);
 	}
 	private void addRowToTable(Vector<Object> row){
 		
