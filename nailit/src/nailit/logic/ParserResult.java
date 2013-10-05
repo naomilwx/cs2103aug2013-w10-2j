@@ -39,28 +39,19 @@ public class ParserResult{
 		}
 	}
 	
-	public DateTime getStartTime()
-	{
+	public DateTime getStartTime(){
 		return startTime;
 	}
 	
-	/*public boolean isNull_StartTime()
-	{
-		if (StartTime == )
-	}*/
-	
-	public DateTime getEndTime()
-	{
+	public DateTime getEndTime(){
 		return endTime;
 	}
 	
-	public TASK_PRIORITY getPriority()
-	{
+	public TASK_PRIORITY getPriority(){
 		return priority;
 	}
 	
-	public boolean isNullPriority()
-	{
+	public boolean isNullPriority(){
 		if (priority == null){
 			return true;
 		}else{
@@ -68,13 +59,11 @@ public class ParserResult{
 		}
 	}
 	
-	public String getTag()
-	{
+	public String getTag(){
 		return tag;
 	}
 	
-	public boolean isNullTag()
-	{
+	public boolean isNullTag(){
 		if (tag == ""){
 			return true;
 		}else{
