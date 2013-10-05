@@ -61,7 +61,7 @@ public class DataManager {
 	 * Private Methods
 	 * */
 	private int generateNewID(){
-		return -1;
+		return dataList.size();
 	}
 	
 	private boolean addedBefore(int ID){
