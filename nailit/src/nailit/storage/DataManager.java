@@ -3,6 +3,7 @@ import org.joda.time.DateTime;
 
 import java.util.Vector;
 
+import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
 
@@ -28,10 +29,10 @@ public class DataManager {
 		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
-			dataList.add(taskString);
+			dataList.add(ID + NIConstants.FIELD_SPLITTER + taskString);
 		}
 		else{
-			dataList.set(ID, taskString);
+			dataList.set(ID, ID + NIConstants.FIELD_SPLITTER + taskString);
 		}
 		return ID;
 	}

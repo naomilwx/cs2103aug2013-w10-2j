@@ -1,8 +1,8 @@
 package nailit.logic.parser;
 
 import nailit.logic.ParserResult;
-import nailit.common.Task;
-import
+import nailit.common.NIConstants;
+import nailit.common.TaskPriority;
 
 public class AddParser extends Parser {
 
@@ -16,11 +16,11 @@ public class AddParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(Task.FIELD_SPLITTER);
+		listOfCommand = userCommand.split(NIConstants.FIELD_SPLITTER);
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
-			if (listOfCommand[i] == )
+			if (listOfCommand[i] == LOW)
 		}
 		return resultExecution;
 	}
