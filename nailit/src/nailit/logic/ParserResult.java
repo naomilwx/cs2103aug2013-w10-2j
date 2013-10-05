@@ -2,6 +2,8 @@ package nailit.logic;
 
 import java.util.*;
 
+import nailit.common.TASK_PRIORITY;
+
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 	
@@ -9,7 +11,10 @@ public class ParserResult{
 	private static String Name;
 	private static Date StartTime;
 	private static Date EndTime;
-	private static Integer Priority;
+	
+	// change from Shuzhi
+	// should use TASK_PRIORITY
+	private static TASK_PRIORITY Priority;
 	private static String Tag;
 	
 	public CommandType getCommand(){
@@ -43,14 +48,14 @@ public class ParserResult{
 		return EndTime;
 	}
 	
-	public Integer getPriority()
+	public TASK_PRIORITY getPriority()
 	{
 		return Priority;
 	}
 	
 	public boolean isNullPriority()
 	{
-		if (Priority == 0){
+		if (Priority == null){
 			return true;
 		}else{
 			return false;
