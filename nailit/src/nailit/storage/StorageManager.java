@@ -46,11 +46,16 @@ public class StorageManager {
 	
 	//TO BE DECIDED WHETHER SET TO PUBLIC OR PRIVATE
 	public void saveToFile(){
+		
 		Vector<String> dataList = currInMemory.getDataList();
+		
+		hardDisk.writingProcessInit();
+		
 		for(int i=0;i<dataList.size();i++){
+			
 			String stringToBeStored = dataList.get(i);
+			
 			if(stringToBeStored != null){
-				
 				hardDisk.add(stringToBeStored);
 			}
 		}
