@@ -24,10 +24,14 @@ public class AddParser extends Parser {
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
 			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
-			}else if (Parser.isDateTime(listOfCommand[i])){
-				resultExecution.setStartTime(this.retrieveDateTime(listOfCommand[i]));
-			}else 
-				resultExecution.setName(listOfCommand[i]);
+			}else{
+				if (userCommand.toLowerCase().contains("at")){
+					
+				}
+				if (userCommand.toLowerCase().contains("from") && userCommand.toLowerCase().contains("to")){
+					
+				}
+			}
 		}
 		return resultExecution;
 	}
