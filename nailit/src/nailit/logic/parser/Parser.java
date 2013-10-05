@@ -21,4 +21,11 @@ public abstract class Parser {
 	public static boolean isTaskID(){
 		return true;
 	}
+	
+	public static boolean isTag(String p){
+		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#')
+			return true;
+		else
+			return false;
+	}
 }
