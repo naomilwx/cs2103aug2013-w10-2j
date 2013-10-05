@@ -16,8 +16,9 @@ public class StorageManager {
 
 	/**
 	 * Constructor
+	 * @throws FileCorruptionException 
 	 * */
-	public StorageManager(){
+	public StorageManager() throws FileCorruptionException{
 		hardDisk = new FileManager(DATAPATH);
 		origInMemory = new DataManager();
 		currInMemory = new DataManager();

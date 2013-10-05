@@ -1,9 +1,12 @@
 package nailit.storage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
@@ -16,18 +19,15 @@ public class FileManager {
 	private Vector<String> dataListForWriting;
 	private BufferedReader reader;
 	private BufferedWriter writer;
+	private String path;
 	
 	/**
 	 * Constructor
+	 * @throws FileCorruptionException 
 	 * */
-	public FileManager(String path){
-		dataListForReading = new Vector<String>();
-		try {
-			reader = new BufferedReader(new FileReader(path));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public FileManager(String path) throws FileCorruptionException{
+		setPath(path);
+		readFile();
 	}
 	
 	/**
@@ -42,38 +42,44 @@ public class FileManager {
 	}
 	public void save(){
 		try {
+			writer = new BufferedWriter(new FileWriter(path));
 			for(int i=0;i<dataListForWriting.size();i++){
 				String line = dataListForWriting.get(i);
 				if(line != null){
 					writer.write(line);	
 				}
 			}
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public Vector<String> getDataList(){
 		return dataListForReading; 
 	}
 	
-
+	public Vector<String> getDataListForWriting(){
+		return dataListForWriting;
+	}
+	
+/***************************
+ * Private Methods
+ ***************************/
 	
 	/**
-	 * Privite Methods
+	 * read
+	 * @throws FileCorruptionException 
 	 * */
-	private void read(){
+	private void read() throws FileCorruptionException{
 		try {
 			String line = null;
 			int lastIndex = -1;
 			while((line = reader.readLine()) != null){
-				String[] s = line.split("\\" + NIConstants.FIELD_SPLITTER);
+				String[] s = line.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);
 				int ID = Integer.parseInt(s[0]);
-				if(line.length()<=s[0].length()+NIConstants.FIELD_SPLITTER.length()){
-					throw new Exception("Invalid content format");
-				}
-				String taskString = line.substring(s[0].length()+NIConstants.FIELD_SPLITTER.length());
 				
 				for(int i=lastIndex+1;i<=ID-1;i++){
 					dataListForReading.add(null);
@@ -82,6 +88,47 @@ public class FileManager {
 				dataListForReading.add(line);
 			}
 		} catch (Exception e) {
+			throw new FileCorruptionException("The database is corrupted");
+		}
+	}
+	
+	/**
+	 * Initialize reader
+	 * */
+	private void initializeReader(){
+		try {
+		    File file = new File(path);
+		    		    
+		    if(!file.exists()){
+		    	file.createNewFile();
+		    }
+		    
+		    reader = new BufferedReader(new FileReader(file));
+		} catch (IOException e) {
+	        e.printStackTrace();
+		}
+
+	}
+	
+	private void setPath(String path){
+		this.path = path;
+	}
+	
+	private void readFile() throws FileCorruptionException{
+		dataListForReading = new Vector<String>();
+		initializeReader();
+		read();
+		closeReader();
+	}
+	
+	/**
+	 * Close Reader
+	 * */
+	
+	private void closeReader(){
+		try {
+			reader.close();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
