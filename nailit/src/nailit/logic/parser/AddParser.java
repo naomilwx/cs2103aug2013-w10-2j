@@ -26,7 +26,8 @@ public class AddParser extends Parser {
 				resultExecution.setTag(listOfCommand[i]);
 			}else if (Parser.isDateTime(listOfCommand[i])){
 				resultExecution.setStartTime(this.retrieveDateTime(listOfCommand[i]));
-			}
+			}else 
+				resultExecution.setName(listOfCommand[i]);
 		}
 		return resultExecution;
 	}
