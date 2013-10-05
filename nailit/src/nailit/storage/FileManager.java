@@ -31,9 +31,8 @@ public class FileManager {
 	/**
 	 * Public Methods
 	 * */
-	public int add(int ID, String name,DateTime startDate,DateTime endDate,TASK_PRIORITY priority,String tag,String desc){
-
-		return -2;
+	public void add(String stringToBeStored){
+		dataList.add(stringToBeStored);
 	}
 	
 	public ArrayList<String> read(){
