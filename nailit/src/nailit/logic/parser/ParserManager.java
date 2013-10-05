@@ -24,12 +24,18 @@ public class ParserManager {
 		case DELETE:
 			DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
 			return deleteParserManager.execute();
+		case DISPLAY:
+			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
+			return displayParserManager.execute();
 		case SEARCH:
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
 		case UPDATE:
 			UpdateParser updateParserManager = new UpdateParser(commandToExecute);
 			return updateParserManager.execute();
+		case EXIT:
+			ExitParser exitParserManager = new ExitParser(commandToExecute);
+			return exitParserManager.execute();
 		default:
 			//throw an error if the command is not recognized
 			throw new Error("Unrecognized command type");
