@@ -22,11 +22,12 @@ public class AddParser extends Parser {
 		{
 			if (TaskPriority.isTaskPriority(listOfCommand[i])){
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
-			}else if (listOfCommand[i].charAt(0)=='#' && listOfCommand[i].charAt(listOfCommand[i].length()-1) == '#'){
+			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
 			}else if (Parser.isDateTime(listOfCommand[i])){
 				resultExecution.setStartTime(this.retrieveDateTime(listOfCommand[i]));
-			}
+			}else 
+				resultExecution.setName(listOfCommand[i]);
 		}
 		return resultExecution;
 	}
