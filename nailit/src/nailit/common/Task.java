@@ -3,6 +3,7 @@ package nailit.common;
 import org.joda.time.DateTime;
 public class Task {
 	public static final int TASKID_NULL = -1;
+	public static final String DEFAULT_TASK_DATETIME_PRINT_FORMAT = "dd-MM-YYYY h:m";
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	private int ID;
 	private String name;
@@ -26,7 +27,7 @@ public class Task {
 		endTime = null;
 		tag = "";
 		isCompleted = false;
-		priority = null;
+		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	public Task(String taskName){
 		ID = TASKID_NULL;
@@ -37,7 +38,7 @@ public class Task {
 		tag = "";
 		isCompleted = false;
 		added = true;
-		priority = TaskPriority.MEDIUM;
+		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	
 	public Task(String taskName, DateTime start, DateTime end, String t, TaskPriority p){
@@ -157,10 +158,11 @@ public class Task {
 	public String formatDateDetails(){
 		String formattedDateDetails = "";
 		if(isEvent()){
-			formattedDateDetails = "Start Time: " + startTime + "\n"
-									+"End Time: " + endTime;
-		}else{
-			formattedDateDetails = "Due: " + startTime;
+			formattedDateDetails = 
+					"Start Time: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT) + "\n"
+					+"End Time: " + endTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
+		}else if(!isFloatingTask()){
+			formattedDateDetails = "Due: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
 		}
 		return formattedDateDetails;
 	}

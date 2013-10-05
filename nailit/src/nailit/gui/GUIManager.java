@@ -15,10 +15,12 @@ import java.awt.Point;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.util.Vector;
 
 import javax.swing.border.LineBorder;
 
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.logic.LogicManager;
 
 public class GUIManager {	
@@ -87,11 +89,44 @@ public class GUIManager {
 		TextDisplay testpane = new TextDisplay(displayArea.getWidth(), displayArea.getHeight());
 		testpane.basicDisplay(input);
 		displayArea.addContent(testpane, false);
+//		TableDisplay test = new TableDisplay(displayArea.getWidth(),displayArea.getHeight());
+//		displayArea.addContent(test, false);
 		System.out.println(input);
 		commandBar.clearUserInput();
 //		logicExecutor.executeCommand(input);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
+		int displayType = result.getDisplayType();
+		switch (displayType){
+			case Result.LIST_DISPLAY:
+				displayTaskDetails(result.getTaskList());
+				break;
+			case Result.TASK_DISPLAY:
+				displayTaskList(result.getTaskList());
+				break;
+			case Result.HISTORY_DISPLAY:
+				displayHistoryList(result.getHistoryList());
+				break;
+			default:
+				displayExecutionNotification(result);
+				break;
+		}
+	}
+	private void displayExecutionNotification(Result result){
+		String notificationStr = result.getPrintOut();
+		boolean isSuccess = result.getExecutionSuccess();
+		if(!notificationStr.isEmpty()){
+			notificationArea.displayNotification(notificationStr, isSuccess);
+		}
+	}
+	private void displayTaskDetails(Vector<Task> task){
+		String taskDisplay = task.toString();
+		displayArea.displayTaskDetails(taskDisplay);
+	}
+	private void displayTaskList(Vector<Task> tasks){
+		
+	}
+	private void displayHistoryList(Vector<String> list){
 		
 	}
 	private void exit(){
