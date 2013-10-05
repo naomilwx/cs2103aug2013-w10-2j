@@ -23,5 +23,14 @@ public enum TaskPriority {
 	public int getPriorityCode(){
 		return priorityCode;
 	}
+	
+	public static TaskPriority getPriority(int priorityCode) throws Exception{
+		switch(priorityCode){
+			case 0: return LOW;
+			case 1: return MEDIUM;
+			case 2: return HIGH;
+			default: throw new Exception("No such Priority!");
+		}
+	}
 }
 
