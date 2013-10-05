@@ -1,6 +1,6 @@
 package nailit.storage;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import org.joda.time.DateTime;
 
@@ -13,7 +13,7 @@ public class StorageManager {
 	private DataManager origInMemory;
 	private DataManager currInMemory;
 	private final String DATAPATH = "storage.txt";
-	private final String FIELD_SPLITTER = ",";
+
 	/**
 	 * Constructor
 	 * */
@@ -46,10 +46,11 @@ public class StorageManager {
 	
 	//TO BE DECIDED WHETHER SET TO PUBLIC OR PRIVATE
 	public void saveToFile(){
-		ArrayList<String> dataList = currInMemory.getDataList();
+		Vector<String> dataList = currInMemory.getDataList();
 		for(int i=0;i<dataList.size();i++){
 			String stringToBeStored = dataList.get(i);
 			if(stringToBeStored != null){
+				
 				hardDisk.add(stringToBeStored);
 			}
 		}
@@ -63,6 +64,10 @@ public class StorageManager {
 
 	
 	public static void main(String[] args){
-
+		String s = "";
+		String[] results = s.split("\\,");
+		String str = null;
+		System.out.println(str == null);
+//		System.out.print(results[0]);
 	}
 }
