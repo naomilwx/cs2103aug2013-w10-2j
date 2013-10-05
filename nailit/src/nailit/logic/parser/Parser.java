@@ -10,18 +10,11 @@ public abstract class Parser {
 
 	public abstract ParserResult execute();
 	
-	public static boolean isDateTime(String p){
-		return true;
-	}
-	
 	public static DateTime retrieveDateTime (String p){
-		DateTime result = new DateTime();
-		
-		List<DateGroup> parseResult;
+		DateTime result;
 		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
 		
-		parseResult= nattyParser.parse(p);
-		result = parseResult.get(0);
+		result = new DateTime(nattyParser.parse(p).get(0));
 		
 		return result;
 	}
