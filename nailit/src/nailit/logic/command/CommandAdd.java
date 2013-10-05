@@ -49,7 +49,7 @@ public class CommandAdd extends Command{
 	}
 
 	private void createResultObject(int taskID) {
-		executedResult = new Result(false, true, null, Success_Msg + taskID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, Success_Msg + taskID);
 	}
 
 	private void createTaskObject() {
