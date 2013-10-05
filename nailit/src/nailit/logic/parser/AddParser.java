@@ -16,7 +16,7 @@ public class AddParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(NIConstants.FIELD_SPLITTER);
+		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
