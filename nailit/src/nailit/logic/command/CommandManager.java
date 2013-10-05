@@ -75,8 +75,10 @@ public class CommandManager {
 	}
 
 	private Result display() {
-		return null;
-		// TODO Auto-generated method stub
+		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer);
+		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
+		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
+		return resultToPassToGUI;
 	}
 
 	private Result update() {
@@ -92,7 +94,8 @@ public class CommandManager {
 	private Result delete() {
 		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer);
 		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
-		return newDeleteCommandObj.executeCommand();
+		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
+		return resultToPassToGUI;
 	}
 
 	private Result complete() {
@@ -103,7 +106,8 @@ public class CommandManager {
 	private Result add() {
 		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer);
 		addNewCommandObjToOperationsHistory(newAddCommandObj);
-		return newAddCommandObj.executeCommand();
+		Result resultToPassToGUI = newAddCommandObj.executeCommand();
+		return resultToPassToGUI;
 	}
 
 	private void addNewCommandObjToOperationsHistory(Command commandObjToAdd) {

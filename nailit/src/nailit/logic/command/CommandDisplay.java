@@ -41,5 +41,4 @@ public class CommandDisplay extends Command{
 		taskToRetrieveID = parserResultInstance.getTaskID();
 		taskRetrieved = storer.retrieve(taskToRetrieveID);
 	}
-
 }
