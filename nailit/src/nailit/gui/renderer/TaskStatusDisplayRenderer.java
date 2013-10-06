@@ -11,7 +11,7 @@ public class TaskStatusDisplayRenderer extends DefaultTableCellRenderer{
 	protected void setValue(Object value){
 		setText((String) value);
 	}
-	protected static String formatStatusCellDisplay(Task task){
+	public static String formatStatusCellDisplay(Task task){
 		String formattedStr = "";
 		if(task.isEvent()){
 			if(task.checkCompleted()){
