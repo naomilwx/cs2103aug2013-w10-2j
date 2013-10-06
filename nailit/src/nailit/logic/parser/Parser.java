@@ -15,7 +15,7 @@ public abstract class Parser {
 		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
 		
 		result = new DateTime(nattyParser.parse(p).get(0));
-		
+	
 		return result;
 	}
 	
@@ -24,6 +24,15 @@ public abstract class Parser {
 			if (p.charAt(i)<'0' && p.charAt(i)>'9')
 				return false;
 		return true;
+	}
+	
+	public static boolean isDateTime(String p){
+		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
+		
+		if (nattyParser.parse(p).get(0).getText().equalsIgnoreCase(p))
+			return true;
+		else
+			return false;
 	}
 	
 	public static boolean isTag(String p){
