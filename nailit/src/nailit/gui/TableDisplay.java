@@ -17,17 +17,13 @@ public class TableDisplay extends JScrollPane{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 30;
 	
-	protected static final String[] ALL_TASKS_TABLE_HEADER = 
-		{"ID", "Name" ,"Start Time" , "End Time" , "Tag", "Status"};
-	protected static final String[] COMMAND_HISTORY_HEADER =
-		{"ID", "Command"};
-	
 	private JTable table;
 	private Vector<Vector<String>> tableRows;
 	private int containerHeight;
 	private int containerWidth;
 	
 	private DefaultTableModel tableModel;
+	private Vector<String> tableHeaderLabel;
 	
 	public TableDisplay(int width, int height){
 		tableRows = new Vector<Vector<String>>();
@@ -50,7 +46,7 @@ public class TableDisplay extends JScrollPane{
 
 	private void setHeaderText(){//TODO:
 		Vector<String> headerRow = 
-				new Vector<String>(Arrays.asList(ALL_TASKS_TABLE_HEADER));
+				new Vector<String>(Arrays.asList(GUIManager.ALL_TASKS_TABLE_HEADER));
 		
 //		tableRows.add(headerRow);
 		tableModel.setDataVector(tableRows, headerRow);
