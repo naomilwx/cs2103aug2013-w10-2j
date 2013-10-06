@@ -209,7 +209,9 @@ public class Task {
 		if(!isEvent()){
 			return false;
 		}else{
-			return false;
+			String startDay = startTime.toString(NIConstants.DISPLAY_DATE_FORMAT);
+			String endDay = startTime.toString(NIConstants.DISPLAY_DATE_FORMAT);
+			return startDay.equals(endDay);
 		}
 	}
 	@Override
