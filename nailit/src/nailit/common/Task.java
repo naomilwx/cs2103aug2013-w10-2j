@@ -1,9 +1,10 @@
 package nailit.common;
 
+import nailit.common.NIConstants;
+
 import org.joda.time.DateTime;
 public class Task {
 	public static final int TASKID_NULL = -1;
-	public static final String DEFAULT_TASK_DATETIME_PRINT_FORMAT = "dd-MM-YYYY h:m";
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	private int ID;
 	private String name;
@@ -159,10 +160,10 @@ public class Task {
 		String formattedDateDetails = "";
 		if(isEvent()){
 			formattedDateDetails = 
-					"Start Time: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT) + "\n"
-					+"End Time: " + endTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
+					"Start Time: " + startTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT) + "\n"
+					+"End Time: " + endTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT);
 		}else if(!isFloatingTask()){
-			formattedDateDetails = "Due: " + startTime.toString(DEFAULT_TASK_DATETIME_PRINT_FORMAT);
+			formattedDateDetails = "Due: " + startTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT);
 		}
 		return formattedDateDetails;
 	}
@@ -202,6 +203,14 @@ public class Task {
 	}
 	public boolean isAtSameTime(Task other){
 		return (isAtSameStartTime(other) && isAtSameEndTime(other));
+	}
+	//check if task is an event and startTime and endTime is on the same day
+	public boolean isOneDayEvent(){
+		if(!isEvent()){
+			return false;
+		}else{
+			return false;
+		}
 	}
 	@Override
 	public String toString(){ //TODO: figure out whether to include description
