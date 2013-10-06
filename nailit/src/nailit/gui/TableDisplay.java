@@ -88,8 +88,6 @@ public class TableDisplay extends JScrollPane{
 			column = columnModel.getColumn(i);
 			column.setWidth(widths[i]);
 			column.setPreferredWidth(widths[i]);
-			column.setMinWidth(widths[i]);
-//			System.out.println(widths[i]);
 		}
 	}
 	private void configureTable() {
@@ -112,6 +110,8 @@ public class TableDisplay extends JScrollPane{
 		addRowToTable(row);
 	}
 	protected void displayContentsInTable(List<Task> contents){
-		
+		for(int i = 0; i < contents.size(); i++){
+			addContentToTable(contents.get(i));
+		}
 	}
 }
