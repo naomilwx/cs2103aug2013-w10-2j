@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import nailit.common.Task;
 import nailit.common.NIConstants;
 
-public class TaskDateTimeRenderer extends DefaultTableCellRenderer{
+public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	protected static final String ONE_DAY_EVENT_DATETIME_DISPLAY_FORMAT = 
 			"<p>" + "Day: %1s" +"</p>"
 					+ "<p>" + "Start: %2s + End: %3s" + "</p>";
@@ -19,7 +19,7 @@ public class TaskDateTimeRenderer extends DefaultTableCellRenderer{
 			"<p>" + "Time: %2s" + "</p>";
 	protected static final String EMPTY_TIME_DISPLAY_FORMAT = "<p>" + "-" + "</p>";
 	
-	public TaskDateTimeRenderer(){
+	public TaskDateTimeDisplayRenderer(){
 		setHorizontalTextPosition(DefaultTableCellRenderer.CENTER);
 	}
 	@Override
