@@ -57,10 +57,15 @@ public class GUIManager {
 	
 //	protected static final String[] ALL_TASKS_TABLE_HEADER = 
 //		{"ID", "Task Name" ,"Time" , "Tag", "Status"};
+	protected static final String ID_COL_NAME = "ID";
+	protected static final String TASK_NAME_COL_NAME = "Task Name";
+	protected static final String TASK_TIME_DET_COL_NAME = "Time";
+	protected static final String TASK_STATUS_COL_NAME = "Status";
+	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
-		{"ID", "Task Name" ,"Time" , "Status"};
+		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_TIME_DET_COL_NAME, TASK_STATUS_COL_NAME};
 	protected static final String[] COMMAND_HISTORY_HEADER =
-		{"ID", "Command"};
+		{ID_COL_NAME, COMMAND_COL_NAME};
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;

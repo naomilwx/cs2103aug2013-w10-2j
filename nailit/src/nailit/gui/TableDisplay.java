@@ -10,11 +10,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.gui.renderer.StatusDisplayRenderer;
+import nailit.gui.renderer.TaskDateTimeRenderer;
+import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class TableDisplay extends JScrollPane{
 	private static final int TABLE_HEADER_HEIGHT = 40;
@@ -39,11 +43,13 @@ public class TableDisplay extends JScrollPane{
 		containerHeight = height;
 		this.setSize(containerWidth, containerHeight);
 	}
+	
 	private void createAndConfigureTable() {
 		initialiseTableStructures();
 		setHeaderText();
 		configureTable();
 	}
+	
 	private void initialiseTableStructures(){
 		tableModel = new DefaultTableModel(){
 			@Override
@@ -52,8 +58,33 @@ public class TableDisplay extends JScrollPane{
 			}
 		};
 		tableRows = new Vector<Vector<String>>();
-		table = new JTable();
+		table = new JTable(){
+			private final TaskNameDisplayRenderer taskNameRenderer = new TaskNameDisplayRenderer();
+			private final TaskDateTimeRenderer taskDateTimeRenderer = new TaskDateTimeRenderer();
+			private final StatusDisplayRenderer statusDisplayRenderer = new StatusDisplayRenderer();
+			@Override
+			public TableCellRenderer getCellRenderer(int row, int col){
+				switch(tableDisplayType){
+				case Result.HISTORY_DISPLAY:
+					return super.getCellRenderer(row, col);
+				case Result.LIST_DISPLAY:
+					String colName = GUIManager.ALL_TASKS_TABLE_HEADER[col];
+					if(colName.equals(GUIManager.TASK_NAME_COL_NAME)){
+						return taskNameRenderer;
+					}else if(colName.equals(GUIManager.TASK_TIME_DET_COL_NAME)){
+						return taskDateTimeRenderer;
+					}else if(colName.equals(GUIManager.TASK_STATUS_COL_NAME)){
+						return statusDisplayRenderer;
+					}else{
+						return super.getCellRenderer(row, col);
+					}
+				default:
+					return super.getCellRenderer(row, col);
+				}
+			}
+		};
 	}
+	
 	private void configureTable() {
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
@@ -70,6 +101,7 @@ public class TableDisplay extends JScrollPane{
 		tableRows.add(row);
 		setViewportView(table);
 	}
+	
 	private void setHeaderText(){
 		switch(tableDisplayType){
 			case Result.HISTORY_DISPLAY:
@@ -84,6 +116,7 @@ public class TableDisplay extends JScrollPane{
 		}
 		tableModel.setDataVector(tableRows, tableHeaderLabel);
 	}
+	
 	private void setRowWidths(){
 		switch(tableDisplayType){
 			case Result.HISTORY_DISPLAY:
@@ -96,6 +129,7 @@ public class TableDisplay extends JScrollPane{
 				break;
 		}
 	}
+	
 	private void setRowWidths(JTable tab, int[] widths){
 		TableColumnModel columnModel = tab.getColumnModel();
 		TableColumn column;
@@ -105,7 +139,7 @@ public class TableDisplay extends JScrollPane{
 			column.setPreferredWidth(widths[i]);
 		}
 	}
-
+	
 	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
 	}
