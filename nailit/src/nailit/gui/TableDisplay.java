@@ -10,23 +10,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
+import nailit.common.Result;
 import nailit.common.Task;
 
 public class TableDisplay extends JScrollPane{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 30;
 	
-	private JTable table;
-	private Vector<Vector<String>> tableRows;
 	private int containerHeight;
 	private int containerWidth;
+	private int tableDisplayType;
 	
+	private JTable table;
+	private Vector<Vector<String>> tableRows;
 	private DefaultTableModel tableModel;
 	private Vector<String> tableHeaderLabel;
 	
-	public TableDisplay(int width, int height){
-		tableRows = new Vector<Vector<String>>();
+	public TableDisplay(int width, int height, int displayType){
+		tableDisplayType = displayType;
 		configureMainFrame(width, height);
 		createAndConfigureTable();
 	}
@@ -34,28 +38,64 @@ public class TableDisplay extends JScrollPane{
 		containerWidth = width;
 		containerHeight = height;
 		this.setSize(containerWidth, containerHeight);
-		this.setBackground(Color.blue);
 	}
 	private void createAndConfigureTable() {
-		initialiseTableModels();
-		createAndConfigureBody();
+		initialiseTableStructures();
+		setHeaderText();
+		configureTable();
 	}
-	private void initialiseTableModels(){
-		tableModel = new DefaultTableModel();
+	private void initialiseTableStructures(){
+		tableModel = new DefaultTableModel(){
+			@Override
+			public boolean isCellEditable(int row, int col){
+				return false;
+			}
+		};
+		tableRows = new Vector<Vector<String>>();
+		table = new JTable();
 	}
 
 	private void setHeaderText(){//TODO:
-		Vector<String> headerRow = 
-				new Vector<String>(Arrays.asList(GUIManager.ALL_TASKS_TABLE_HEADER));
-		
-//		tableRows.add(headerRow);
-		tableModel.setDataVector(tableRows, headerRow);
+		switch(tableDisplayType){
+			case Result.HISTORY_DISPLAY:
+				tableHeaderLabel = new Vector<String>(Arrays.asList(GUIManager.COMMAND_HISTORY_HEADER));
+				break;
+			case Result.LIST_DISPLAY:
+				tableHeaderLabel = new Vector<String>(Arrays.asList(GUIManager.ALL_TASKS_TABLE_HEADER));
+				break;
+			default:
+				tableHeaderLabel = new Vector<String>();
+				break;
+		}
+		tableModel.setDataVector(tableRows, tableHeaderLabel);
 	}
-	private void createAndConfigureBody() {
-		table = new JTable();
-		table.setRowHeight(TABLE_ROW_HEIGHT);
+	private void setRowWidths(){
+		switch(tableDisplayType){
+			case Result.HISTORY_DISPLAY:
+				setRowWidths(table, GUIManager.COMMAND_HISTORY_COLUMN_WIDTH);
+				break;
+			case Result.LIST_DISPLAY:
+				setRowWidths(table, GUIManager.TASKS_TABLE_COLUMN_WIDTH);
+				break;
+			default:
+				break;
+		}
+	}
+	private void setRowWidths(JTable tab, int[] widths){
+		TableColumnModel columnModel = tab.getColumnModel();
+		TableColumn column;
+		for(int i = 0; i < widths.length; i++){
+			column = columnModel.getColumn(i);
+			column.setWidth(widths[i]);
+			column.setPreferredWidth(widths[i]);
+			column.setMinWidth(widths[i]);
+//			System.out.println(widths[i]);
+		}
+	}
+	private void configureTable() {
 		table.setModel(tableModel);
-		setHeaderText();
+		table.setRowHeight(TABLE_ROW_HEIGHT);
+		setRowWidths();
 		setViewportView(table);
 	}
 	private void addRowToTable(Vector<Object> row){

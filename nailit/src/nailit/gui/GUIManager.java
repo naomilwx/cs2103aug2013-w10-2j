@@ -37,15 +37,19 @@ public class GUIManager {
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	
-	protected static final int ID_COLUMN_WIDTH = 40;
+	protected static final int ID_COLUMN_WIDTH = 50;
 	protected static final int NAME_COLUMN_WIDTH = 300;
 	protected static final int TIME_COLUMN_WIDTH = 100;
 	protected static final int TAG_COLUMN_WIDTH = 80;
-	protected static final int STATUS_COLUMN_WIDTH = 30;
+	protected static final int STATUS_COLUMN_WIDTH = 50;
 	protected static final int TOTAL_TABLE_WIDTH
 		= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH 
 		+ TAG_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
 	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
+	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
+		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH, TAG_COLUMN_WIDTH, STATUS_COLUMN_WIDTH};
+	protected static final int[] COMMAND_HISTORY_COLUMN_WIDTH =
+		{ID_COLUMN_WIDTH, COMMAND_COLUMN_WIDTH};
 	
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
 		{"ID", "Name" ,"Time" , "Tag", "Status"};
@@ -105,7 +109,8 @@ public class GUIManager {
 		TextDisplay testpane = new TextDisplay(displayArea.getWidth(), displayArea.getHeight());
 		testpane.basicDisplay(input);
 		displayArea.addContent(testpane, false);
-		TableDisplay test = new TableDisplay(displayArea.getWidth(),displayArea.getHeight());
+		TableDisplay test = 
+				new TableDisplay(displayArea.getWidth(),displayArea.getHeight(), Result.LIST_DISPLAY);
 		displayArea.addContent(test, false);
 		System.out.println(input);
 		commandBar.clearUserInput();
