@@ -212,7 +212,7 @@ public class Task {
 			return false;
 		}else{
 			String startDay = startTime.toString(NIConstants.DISPLAY_DATE_FORMAT);
-			String endDay = startTime.toString(NIConstants.DISPLAY_DATE_FORMAT);
+			String endDay = endTime.toString(NIConstants.DISPLAY_DATE_FORMAT);
 			return startDay.equals(endDay);
 		}
 	}

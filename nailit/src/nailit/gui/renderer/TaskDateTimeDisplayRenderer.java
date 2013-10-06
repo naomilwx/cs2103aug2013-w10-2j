@@ -10,7 +10,7 @@ import nailit.common.NIConstants;
 public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	protected static final String ONE_DAY_EVENT_DATETIME_DISPLAY_FORMAT = 
 			"<p>" + "Day: %1s" +"</p>"
-					+ "<p>" + "Start: %2s + End: %3s" + "</p>";
+					+ "<p>" + "Start: %2s  End: %3s" + "</p>";
 	protected static final String EVENT_DATETIME_DISPLAY_FORMAT = 
 			"<p>" + "Start: %1s" + "</p>"
 			+"<p>" + "End: %2s" + "</p>";
