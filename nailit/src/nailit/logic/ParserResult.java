@@ -22,6 +22,17 @@ public class ParserResult{
 	
 	private boolean isDisplayAll = false;
 	
+	public ParserResult(){
+		taskID = 0;
+		command = CommandType.INVALID;
+		name = null;
+		priority = null;
+		tag = null;
+		startTime = null;
+		endTime = null;
+		isDisplayAll = false;
+	}
+	
 	public void setCommand(CommandType commandExternal){
 		command = commandExternal;
 	}
@@ -34,7 +45,7 @@ public class ParserResult{
 		isDisplayAll = flag;
 	}
 	
-	public boolean getisDisplayAll(){
+	public boolean isDisplayAll(){
 		return isDisplayAll;
 	}
 	
@@ -47,7 +58,7 @@ public class ParserResult{
 	}
 	
 	public boolean isNullName(){
-		if (name == ""){
+		if (name == null){
 			return true;
 		}else{ 
 			return false;
