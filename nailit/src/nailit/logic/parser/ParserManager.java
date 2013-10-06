@@ -65,6 +65,8 @@ public class ParserManager {
 			return CommandType.SEARCH;
 		} else if (commandTypeString.equalsIgnoreCase("showhistory")) {
 			return CommandType.SHOWHISTORY;
+		} else if (commandTypeString.equalsIgnoreCase("undo")) {
+			return CommandType.UNDO;
 		} else if (commandTypeString.equalsIgnoreCase("update")) {
 			return CommandType.UPDATE;
 		} else {
