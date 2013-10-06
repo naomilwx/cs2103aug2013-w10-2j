@@ -42,17 +42,23 @@ public class GUIManager {
 	protected static final int TIME_COLUMN_WIDTH = 180;
 	protected static final int TAG_COLUMN_WIDTH = 80;
 	protected static final int STATUS_COLUMN_WIDTH = 50;
+//	protected static final int TOTAL_TABLE_WIDTH
+//		= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH 
+//		+ TAG_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
 	protected static final int TOTAL_TABLE_WIDTH
-		= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH 
-		+ TAG_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
+	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
 	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
+//	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
+//		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH, TAG_COLUMN_WIDTH, STATUS_COLUMN_WIDTH};
 	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
-		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH, TAG_COLUMN_WIDTH, STATUS_COLUMN_WIDTH};
+		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH, STATUS_COLUMN_WIDTH};
 	protected static final int[] COMMAND_HISTORY_COLUMN_WIDTH =
 		{ID_COLUMN_WIDTH, COMMAND_COLUMN_WIDTH};
 	
+//	protected static final String[] ALL_TASKS_TABLE_HEADER = 
+//		{"ID", "Task Name" ,"Time" , "Tag", "Status"};
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
-		{"ID", "Name" ,"Time" , "Tag", "Status"};
+		{"ID", "Task Name" ,"Time" , "Status"};
 	protected static final String[] COMMAND_HISTORY_HEADER =
 		{"ID", "Command"};
 	
