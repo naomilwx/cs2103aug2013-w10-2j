@@ -54,8 +54,19 @@ public class TableDisplay extends JScrollPane{
 		tableRows = new Vector<Vector<String>>();
 		table = new JTable();
 	}
-
-	private void setHeaderText(){//TODO:
+	private void configureTable() {
+		table.setModel(tableModel);
+		table.setRowHeight(TABLE_ROW_HEIGHT);
+		setRowWidths();
+		String[] test = {"1", "test", "","","<html><p style = \"color: red\">"+"d"+"</p></html>"};
+		Vector<String> row = new Vector<String>();
+		for(int i = 0; i < test.length; i++){
+			row.add(test[i]);
+		}
+		tableRows.add(row);
+		setViewportView(table);
+	}
+	private void setHeaderText(){
 		switch(tableDisplayType){
 			case Result.HISTORY_DISPLAY:
 				tableHeaderLabel = new Vector<String>(Arrays.asList(GUIManager.COMMAND_HISTORY_HEADER));
@@ -90,28 +101,14 @@ public class TableDisplay extends JScrollPane{
 			column.setPreferredWidth(widths[i]);
 		}
 	}
-	private void configureTable() {
-		table.setModel(tableModel);
-		table.setRowHeight(TABLE_ROW_HEIGHT);
-		setRowWidths();
-		setViewportView(table);
-	}
-	private void addRowToTable(Vector<Object> row){
-		
-	}
-	protected void addContentToTable(Task task){
-		Vector<Object> row = new Vector<Object>();
-		//Insert code to convert task data to row
-		addRowToTable(row);
-	}
-	protected void addContentToTable(String str){
-		Vector<Object> row = new Vector<Object>();
-		//insert code to convert given string to row
-		addRowToTable(row);
+
+	protected void addContentToTable(Vector<String> row){
+		tableRows.add(row);
 	}
 	protected void displayContentsInTable(List<Task> contents){
+		Vector<String> row = new Vector<String>();
 		for(int i = 0; i < contents.size(); i++){
-			addContentToTable(contents.get(i));
+			addContentToTable(row);
 		}
 	}
 }

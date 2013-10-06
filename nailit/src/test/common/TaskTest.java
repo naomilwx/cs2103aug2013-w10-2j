@@ -37,6 +37,7 @@ public class TaskTest {
 		task1.setStartTime(start);
 		task2.setStartTime(start);
 		task2.setEndTime(end);
+		System.out.println(task1);
 		assertTrue(task1.isAtSameStartTime(task2));
 		assertFalse(task1.isAtSameTime(task2));
 		task1.setEndTime(end);

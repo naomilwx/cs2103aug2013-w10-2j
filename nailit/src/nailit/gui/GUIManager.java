@@ -70,7 +70,8 @@ public class GUIManager {
 	public GUIManager(final AppLauncher launcher) {
 		setWindowLookAndFeel();
 		this.launcher = launcher;
-		logicExecutor = new LogicManager();
+		//TODO:
+//		logicExecutor = new LogicManager();
 		createComponentsAndAddToMainFrame();
 		//stub to be modified later
 	}
