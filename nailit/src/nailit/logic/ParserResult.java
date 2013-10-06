@@ -72,6 +72,13 @@ public class ParserResult{
 	public int getTaskID() {
 		return taskID;
 	}
+	
+	public boolean isNullTaskID (){
+		if (taskID == 0)
+			return true;
+		else
+			return false;
+	}
 
 	public void setStartTime(DateTime startTimeExternal){
 		startTime = startTimeExternal;
