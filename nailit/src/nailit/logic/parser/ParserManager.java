@@ -57,8 +57,16 @@ public class ParserManager {
 			return CommandType.COMPLETE;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {
 			return CommandType.DELETE;
+		} else if (commandTypeString.equalsIgnoreCase("display")) {
+			return CommandType.DISPLAY;
+		} else if (commandTypeString.equalsIgnoreCase("exit")) {
+			return CommandType.EXIT;
 		} else if (commandTypeString.equalsIgnoreCase("search")){
 			return CommandType.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("showhistory")) {
+			return CommandType.SHOWHISTORY;
+		} else if (commandTypeString.equalsIgnoreCase("undo")) {
+			return CommandType.UNDO;
 		} else if (commandTypeString.equalsIgnoreCase("update")) {
 			return CommandType.UPDATE;
 		} else {
