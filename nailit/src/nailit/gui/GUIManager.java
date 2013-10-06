@@ -120,6 +120,13 @@ public class GUIManager {
 //		logicExecutor.executeCommand(input);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
+		if(result.getExitStatus()){
+			exit();
+		}else{
+			displayExecutionResult(result);
+		}
+	}
+	protected void displayExecutionResult(Result result){
 		int displayType = result.getDisplayType();
 		switch (displayType){
 			case Result.TASK_DISPLAY:
