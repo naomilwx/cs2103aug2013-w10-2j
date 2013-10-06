@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 public class Task {
 	public static final int TASKID_NULL = -1;
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
+	
 	private int ID;
 	private String name;
 	private String description;
@@ -160,10 +161,11 @@ public class Task {
 		String formattedDateDetails = "";
 		if(isEvent()){
 			formattedDateDetails = 
-					"Start Time: " + startTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT) + "\n"
-					+"End Time: " + endTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT);
+					"Start Time: " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n"
+					+"End Time: " + endTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
 		}else if(!isFloatingTask()){
-			formattedDateDetails = "Due: " + startTime.toString(NIConstants.DEFAULT_TASK_DATETIME_PRINT_FORMAT);
+			assert startTime != null;	//non floating tasks should not have null start time
+			formattedDateDetails = "Due: " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
 		}
 		return formattedDateDetails;
 	}

@@ -39,7 +39,7 @@ public class GUIManager {
 	
 	protected static final int ID_COLUMN_WIDTH = 50;
 	protected static final int NAME_COLUMN_WIDTH = 300;
-	protected static final int TIME_COLUMN_WIDTH = 100;
+	protected static final int TIME_COLUMN_WIDTH = 180;
 	protected static final int TAG_COLUMN_WIDTH = 80;
 	protected static final int STATUS_COLUMN_WIDTH = 50;
 	protected static final int TOTAL_TABLE_WIDTH

@@ -42,6 +42,7 @@ public class TaskTest {
 		assertFalse(task1.isAtSameTime(task2));
 		assertFalse(task1.isOneDayEvent());
 		assertTrue(task2.isOneDayEvent());
+		System.out.println(task2);
 		task1.setEndTime(end);
 		assertTrue(task1.isAtSameEndTime(task2));
 		assertTrue(task1.isAtSameTime(task2));
