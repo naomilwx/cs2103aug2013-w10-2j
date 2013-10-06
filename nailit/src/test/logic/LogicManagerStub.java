@@ -28,6 +28,9 @@ public class LogicManagerStub{//NOTE should extend LogicManager. standalone for 
 		res.setTaskList(taskList);
 		res.setDisplayType(displayType);
 		res.setNotification("test");
+		if(command.equals("exit")){
+			res.setExitStatus(true);
+		}
 		return res;
 	}
 }
