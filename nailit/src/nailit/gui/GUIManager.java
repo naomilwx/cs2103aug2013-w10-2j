@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
+import javax.swing.text.Utilities;
 
 import nailit.common.Result;
 import nailit.common.Task;
@@ -35,6 +36,21 @@ public class GUIManager {
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
+	
+	protected static final int ID_COLUMN_WIDTH = 40;
+	protected static final int NAME_COLUMN_WIDTH = 300;
+	protected static final int TIME_COLUMN_WIDTH = 100;
+	protected static final int TAG_COLUMN_WIDTH = 80;
+	protected static final int STATUS_COLUMN_WIDTH = 30;
+	protected static final int TOTAL_TABLE_WIDTH
+		= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH 
+		+ TAG_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
+	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
+	
+	protected static final String[] ALL_TASKS_TABLE_HEADER = 
+		{"ID", "Name" ,"Time" , "Tag", "Status"};
+	protected static final String[] COMMAND_HISTORY_HEADER =
+		{"ID", "Command"};
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
