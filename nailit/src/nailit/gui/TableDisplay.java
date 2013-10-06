@@ -16,8 +16,8 @@ import javax.swing.table.TableColumnModel;
 
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.gui.renderer.StatusDisplayRenderer;
-import nailit.gui.renderer.TaskDateTimeRenderer;
+import nailit.gui.renderer.TaskStatusDisplayRenderer;
+import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class TableDisplay extends JScrollPane{
@@ -60,8 +60,8 @@ public class TableDisplay extends JScrollPane{
 		tableRows = new Vector<Vector<String>>();
 		table = new JTable(){
 			private final TaskNameDisplayRenderer taskNameRenderer = new TaskNameDisplayRenderer();
-			private final TaskDateTimeRenderer taskDateTimeRenderer = new TaskDateTimeRenderer();
-			private final StatusDisplayRenderer statusDisplayRenderer = new StatusDisplayRenderer();
+			private final TaskDateTimeDisplayRenderer taskDateTimeRenderer = new TaskDateTimeDisplayRenderer();
+			private final TaskStatusDisplayRenderer statusDisplayRenderer = new TaskStatusDisplayRenderer();
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int col){
 				switch(tableDisplayType){
