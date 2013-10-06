@@ -9,15 +9,16 @@ public class TaskStatusDisplayRenderer extends DefaultTableCellRenderer{
 	
 	@Override
 	protected void setValue(Object value){
-		setText((String) value);
+		String output = "<html>" + (String) value + "<html>";
+		setText(output);
 	}
 	public static String formatStatusCellDisplay(Task task){
 		String formattedStr = "";
-		if(task.isEvent()){
+		if(!task.isEvent()){
 			if(task.checkCompleted()){
 				formattedStr = "<p>" + "Done" + "</p>";
 			}else{
-				formattedStr = "<p>" + "Not done" + "</p>";
+				formattedStr = "<p>" + "Undone" + "</p>";
 			}
 		}else{
 			formattedStr = NULL_STATUS_DISPLAY;

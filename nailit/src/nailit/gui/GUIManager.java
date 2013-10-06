@@ -20,6 +20,7 @@ import java.util.Vector;
 import javax.swing.border.LineBorder;
 import javax.swing.text.Utilities;
 
+import test.logic.LogicManagerStub;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
@@ -74,15 +75,15 @@ public class GUIManager {
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
+	//TODO:
+	private LogicManagerStub logicstub;
 	
-	/**
-	 * Create the application.
-	 */
 	public GUIManager(final AppLauncher launcher) {
 		setWindowLookAndFeel();
 		this.launcher = launcher;
 		//TODO:
 //		logicExecutor = new LogicManager();
+		logicstub = new LogicManagerStub(Result.LIST_DISPLAY);
 		createComponentsAndAddToMainFrame();
 		//stub to be modified later
 	}
@@ -118,23 +119,20 @@ public class GUIManager {
 	 * @param input
 	 */
 	protected void executeUserInputCommand(String input){
-		TextDisplay testpane = new TextDisplay(displayArea.getWidth(), displayArea.getHeight());
-		testpane.basicDisplay(input);
-		displayArea.addContent(testpane, false);
-		TableDisplay test = 
-				new TableDisplay(displayArea.getWidth(),displayArea.getHeight(), Result.LIST_DISPLAY);
-		displayArea.addContent(test, false);
 		System.out.println(input);
+		displayArea.hideNotifications();
+		Result executionResult = logicstub.executeCommand(input);
 		commandBar.clearUserInput();
+		processAndDisplayExecutionResult(executionResult);
 //		logicExecutor.executeCommand(input);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
 		int displayType = result.getDisplayType();
 		switch (displayType){
-			case Result.LIST_DISPLAY:
+			case Result.TASK_DISPLAY:
 				displayTaskDetails(result.getTaskList());
 				break;
-			case Result.TASK_DISPLAY:
+			case Result.LIST_DISPLAY:
 				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:
@@ -151,6 +149,7 @@ public class GUIManager {
 		if(!notificationStr.isEmpty()){
 			notificationArea.displayNotification(notificationStr, isSuccess);
 		}
+		displayArea.showNotifications();
 	}
 	private void displayTaskDetails(Vector<Task> tasklist){
 		Task task = tasklist.get(0);
