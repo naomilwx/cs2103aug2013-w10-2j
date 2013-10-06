@@ -1,4 +1,4 @@
-package nailit.gui;
+package nailit.gui.renderer;
 
 import javax.swing.table.DefaultTableCellRenderer;
 
