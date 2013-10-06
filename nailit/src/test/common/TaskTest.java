@@ -7,7 +7,6 @@ import nailit.common.Task;
 import nailit.common.TaskPriority;
 import org.joda.time.DateTime;
 public class TaskTest {
-	
 	@Test
 	public void emptyTaskTest() {
 		Task emptyTask = new Task();
@@ -31,23 +30,40 @@ public class TaskTest {
 	@Test
 	public void timeCompareFunctionsTest(){
 		DateTime start = new DateTime(2013,3,30,10,20);
-		DateTime end = new DateTime(2013,3,30,11,20);
+		DateTime end = new DateTime(2013,4,30,11,20);
 		Task task1 = new Task();
 		Task task2 = new Task();
 		task1.setStartTime(start);
 		task2.setStartTime(start);
 		task2.setEndTime(end);
+		
 		System.out.println(task1);
 		assertTrue(task1.isAtSameStartTime(task2));
 		assertFalse(task1.isAtSameTime(task2));
-		assertFalse(task1.isOneDayEvent());
-		assertTrue(task2.isOneDayEvent());
+		
 		System.out.println(task2);
 		task1.setEndTime(end);
 		assertTrue(task1.isAtSameEndTime(task2));
 		assertTrue(task1.isAtSameTime(task2));
 		task2.setEndTime(new DateTime());
 		assertFalse(task2.isAtSameEndTime(task1));
+	}
+	@Test
+	public void oneDayEventTest(){
+		DateTime start = new DateTime(2013,3,30,10,20);
+		DateTime end = new DateTime(2013,4,30,11,20);
+		Task task1 = new Task();
+		Task task2 = new Task();
+		task1.setStartTime(start);
+		task2.setStartTime(start);
+		task2.setEndTime(end);
+		
+		assertFalse(task1.isOneDayEvent());
+		assertFalse(task2.isOneDayEvent());
+		
+		end = new DateTime(2013,3,30,11,20);
+		task2.setEndTime(end);
+		assertTrue(task2.isOneDayEvent());
 	}
 	@Test
 	public void TaskCopyTest(){
