@@ -29,7 +29,7 @@ public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 		setText(outStr);
 	}
 	
-	protected static String formatTaskDateTimeCellDisplay(Task task){
+	public static String formatTaskDateTimeCellDisplay(Task task){
 		String formattedTime = "";
 		DateTime startTime = task.getStartTime();
 		DateTime endTime = task.getEndTime();

@@ -89,16 +89,6 @@ public class TableDisplay extends JScrollPane{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		setRowWidths();
-		String[] test = {"1", "test", "",
-				"<html>"
-				+ "<p style = \"color: red\">"+"d"+"</p>"
-						+ "<div style = \"text-align:center;\"><p>" + "h" +"</p></div>"
-						+ "</html>"};
-		Vector<String> row = new Vector<String>();
-		for(int i = 0; i < test.length; i++){
-			row.add(test[i]);
-		}
-		tableRows.add(row);
 		setViewportView(table);
 	}
 	
@@ -140,13 +130,22 @@ public class TableDisplay extends JScrollPane{
 		}
 	}
 	
-	protected void addContentToTable(Vector<String> row){
+	protected void addContentToTable(Task task){
+		Vector<String> row = new Vector<String>();
+		String ID = "" + task.getID();
+		row.add(ID);
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task.getName(), task.getTag());
+		row.add(nameAndTag);
+		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
+		row.add(timeDet);
+		String status = TaskStatusDisplayRenderer.formatStatusCellDisplay(task);
+		row.add(status);
 		tableRows.add(row);
 	}
-	protected void displayContentsInTable(List<Task> contents){
-		Vector<String> row = new Vector<String>();
-		for(int i = 0; i < contents.size(); i++){
-			addContentToTable(row);
-		}
+	protected void addContentToTable(Vector<String> list){
+		@SuppressWarnings("unchecked")
+		Vector<String> row = (Vector<String>) list.clone();
+		tableRows.add(row);
 	}
+
 }

@@ -135,10 +135,10 @@ public class GUIManager {
 				displayTaskDetails(result.getTaskList());
 				break;
 			case Result.TASK_DISPLAY:
-				displayTaskList(result.getTaskList());
+				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:
-				displayHistoryList(result.getHistoryList());
+				displayArea.displayHistoryList(result.getHistoryList());
 				break;
 			default:
 				displayExecutionNotification(result);
@@ -152,16 +152,12 @@ public class GUIManager {
 			notificationArea.displayNotification(notificationStr, isSuccess);
 		}
 	}
-	private void displayTaskDetails(Vector<Task> task){
+	private void displayTaskDetails(Vector<Task> tasklist){
+		Task task = tasklist.get(0);
 		String taskDisplay = task.toString();
 		displayArea.displayTaskDetails(taskDisplay);
 	}
-	private void displayTaskList(Vector<Task> tasks){
-		
-	}
-	private void displayHistoryList(Vector<String> list){
-		
-	}
+
 	private void exit(){
 		launcher.exit();
 	}

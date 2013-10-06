@@ -3,12 +3,16 @@ package nailit.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import nailit.common.Result;
+import nailit.common.Task;
 
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
@@ -96,6 +100,17 @@ public class DisplayArea extends JLayeredPane {
 		TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
 		textDisplay.basicDisplay(details);
 		addContent(textDisplay, false);
+	}
+	protected void displayTaskList(Vector<Task> tasks){
+		TableDisplay taskTable = 
+				new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		for(int i = 0; i < tasks.size(); i++){
+			taskTable.addContentToTable(tasks.get(i));	
+		}
+		addContent(taskTable, false);
+	}
+	protected void displayHistoryList(Vector<String> list){
+		//TODO
 	}
 	private void removeExtraContent(){
 		while(items.size() > MAX_NUM_ITEMS_IN_DEFAULTPANE){
