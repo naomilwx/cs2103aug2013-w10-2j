@@ -58,7 +58,7 @@ public class TableDisplay extends JScrollPane{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		setRowWidths();
-		String[] test = {"1", "test", "","",
+		String[] test = {"1", "test", "",
 				"<html>"
 				+ "<p style = \"color: red\">"+"d"+"</p>"
 						+ "<div style = \"text-align:center;\"><p>" + "h" +"</p></div>"
