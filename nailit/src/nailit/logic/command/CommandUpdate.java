@@ -39,10 +39,7 @@ public class CommandUpdate extends Command{
 			createUnsuccessfulResultObject();
 			return executedResult;
 		}
-		
-		//for test
-		setRetrievedTask();
-		
+
 		updateTheRetrievedTask();
 		addTheUpdatedTaskObjOnStorage();
 		createResultObject();
@@ -109,10 +106,4 @@ public class CommandUpdate extends Command{
 	public int getTaskID() {
 		return taskToRetrieveID;
 	}
-	
-	// for test
-	public void setRetrievedTask() {
-		taskRetrieved = new Task();
-	}
-
 }
