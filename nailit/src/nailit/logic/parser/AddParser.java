@@ -25,22 +25,21 @@ public class AddParser extends Parser {
 			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
 			}else{
-				if (userCommand.toLowerCase().contains("at")){
-					int atIndex = userCommand.toLowerCase().indexOf("at");
-					int stringLength = userCommand.length();
+				if (listOfCommand[i].toLowerCase().contains("at")){
+					int atIndex = listOfCommand[i].toLowerCase().indexOf("at");
+					int stringLength = listOfCommand[i].length();
 					
-					resultExecution.setName(userCommand.substring(0,atIndex));
-					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(atIndex,stringLength)));
-				}
-				if (userCommand.toLowerCase().contains("from") && userCommand.toLowerCase().contains("to")){
-					int fromIndex = userCommand.toLowerCase().indexOf("from");
-					int toIndex = userCommand.toLowerCase().indexOf("to");
-					int stringLength = userCommand.length();
-					
-					resultExecution.setName(userCommand.substring(0,fromIndex));
-					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(fromIndex+4, toIndex)));
-					resultExecution.setStartTime(Parser.retrieveDateTime(userCommand.substring(toIndex+2, stringLength)));
-				}
+					resultExecution.setName(listOfCommand[i].substring(0,atIndex));
+					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
+				}else if (listOfCommand[i].toLowerCase().contains("from") && listOfCommand[i].toLowerCase().contains("to")){
+					int fromIndex = listOfCommand[i].toLowerCase().indexOf("from");
+					int toIndex = listOfCommand[i].toLowerCase().indexOf("to");
+					int stringLength = listOfCommand[i].length();
+			
+					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
+					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
+				}else
+					resultExecution.setName(listOfCommand[i]);
 			}
 		}
 		return resultExecution;
