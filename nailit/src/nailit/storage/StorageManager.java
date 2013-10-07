@@ -22,6 +22,7 @@ public class StorageManager {
 		hardDisk = new FileManager(DATAPATH);
 		origInMemory = new DataManager();
 		currInMemory = new DataManager();
+		currInMemory.setDataList(hardDisk.getDataList());
 
 	}
 	public int add(Task task){
@@ -31,6 +32,8 @@ public class StorageManager {
 		String taskString = task.changeToDiskFormat();
 				
 		ID = currInMemory.add(ID,taskString);
+		
+		assert(ID>=0);
 		
 		saveToFile();
 		
@@ -98,6 +101,11 @@ public class StorageManager {
 		}
 		
 		return taskList;
+	}
+	
+	public void clear(){
+		currInMemory.setDataList(new Vector<String>());
+		saveToFile();
 	}
 	/**
 	 * Private Methods
