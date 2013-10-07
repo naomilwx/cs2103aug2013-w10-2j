@@ -9,25 +9,21 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-public class TextDisplay extends JScrollPane{
-	private final LineBorder FOCUS_LINE_BORDER = new LineBorder(GUIManager.FOCUSED_BORDER_COLOR);
-	private final LineBorder UNFOCUS_LINE_BORDER = new LineBorder(GUIManager.BORDER_COLOR);
-	private final FocusListener textDisplayFocusListener = new FocusListener(){
-		public void focusGained(FocusEvent event) {
-			setBorder(FOCUS_LINE_BORDER);
-		 }
-		public void focusLost(FocusEvent event){
-			setBorder(UNFOCUS_LINE_BORDER);
-		}
-	};
-	
+public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
+	private int containerWidth;
+	private int containerHeight;
 	
 	public TextDisplay(int width, int height){
-		setSize(width, height);
-		setBorder(UNFOCUS_LINE_BORDER);
-		addFocusListener(textDisplayFocusListener);
+		configureMainFrame(width, height);
 		createAndConfigureTextPane();
+	}
+	private void configureMainFrame(int width, int height){
+		containerWidth = width;
+		containerHeight = height;
+		setSize(containerWidth, containerHeight);
+		setBorder(UNFOCUS_LINE_BORDER);
+		addFocusListener(displayFocusListener);		
 	}
 	private void createAndConfigureTextPane(){
 		textPane = new JTextPane();
