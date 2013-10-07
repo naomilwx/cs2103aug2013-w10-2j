@@ -50,6 +50,7 @@ public class DataManager {
 	}
 	
 	public void remove(int ID){
+		assert(ID<=dataList.size()-1);
 		dataList.set(ID, null);
 	}
 	
