@@ -26,6 +26,7 @@ public class AppLauncher {
 	private void initialiseAndRunGUI(){
 		GUI = new GUIManager(this);
 		GUI.setVisible(true);
+		GUI.setFocusOnCommandBar();
 	}
 	public void exit(){
 		System.exit(0);

@@ -19,16 +19,17 @@ public class MainWindow extends JFrame {
 	
 	private GUIManager GUIBoss;
 	private JPanel contentPane;
-	
-	public MainWindow(final GUIManager GUIMain){
-		GUIBoss = GUIMain;
-		this.initialize();
-	}
 	private final WindowListener windowClosePressed =  new WindowAdapter(){
 		public void windowClosing(WindowEvent event){
 			setVisible(false);
 		}
 	};
+	
+	public MainWindow(final GUIManager GUIMain){
+		GUIBoss = GUIMain;
+		this.initialize();
+	}
+	
 	protected void addListenersToMainFrame(){
 		addWindowListener(windowClosePressed);
 	}
