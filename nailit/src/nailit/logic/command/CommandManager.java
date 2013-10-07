@@ -75,11 +75,21 @@ public class CommandManager {
 			Result resultToReturn = display();
 			return resultToReturn;
 		}
+		case EXIT: {
+			Result resultToReturn = exit();
+			return resultToReturn;
+		}
 		default: {
 
 		}
 		}
 		return null;
+	}
+
+	private Result exit() {
+		CommandExit newExitCommandObj = new CommandExit(parserResultInstance, storer);
+		Result resultToPassToGUI = newExitCommandObj.executeCommand();
+		return resultToPassToGUI;
 	}
 
 	private Result display() {

@@ -19,7 +19,6 @@ public class ExitParser extends Parser {
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 	
 		resultExecution.setCommand(CommandType.EXIT);
-		resultExecution.setTaskID(Integer.parseInt(userCommand));
 		
 		return resultExecution;
 	}
