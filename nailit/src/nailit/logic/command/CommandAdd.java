@@ -17,7 +17,9 @@ public class CommandAdd extends Command{
 	private DateTime endTime;
 	private TaskPriority taskPriority;
 	private String taskTag;
+	private int taskID;
 	
+	// this is used for the command history
 	private String commandSummary;
 	
 	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
@@ -32,8 +34,8 @@ public class CommandAdd extends Command{
 	public Result executeCommand() {
 		getContentFromParserResult();
 		createTaskObject();
-		int taskID = storer.add(taskPassedToStorer);
-		createResultObject(taskID);
+		taskID = storer.add(taskPassedToStorer);
+		createResultObject();
 		createCommandSummary();
 		return executedResult;
 	}
@@ -46,7 +48,7 @@ public class CommandAdd extends Command{
 				+ parserResultInstance.getPriority();
 	}
 
-	private void createResultObject(int taskID) {
+	private void createResultObject() {
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, Success_Msg + taskID);
 	}
 

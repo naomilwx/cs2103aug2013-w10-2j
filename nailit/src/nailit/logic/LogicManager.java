@@ -23,5 +23,4 @@ public class LogicManager{
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
 	}
-	
 }
