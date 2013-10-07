@@ -2,6 +2,8 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
+import test.storage.StorageStub;
+
 import nailit.common.Result;
 import nailit.logic.*;
 
@@ -13,7 +15,10 @@ import nailit.logic.ParserResult;
 
 public class CommandManager {
 	// the storage object that the commandManager works with 
-	private StorageManager storer;
+	
+	// for testing
+	private StorageStub storer;
+//	private StorageManager storer;
 	
 	// the parserResult to use in the commandExcute
 	private ParserResult parserResultInstance;
@@ -24,7 +29,9 @@ public class CommandManager {
 	// constructor
 	public CommandManager () throws FileCorruptionException 
 	{
-		storer = new StorageManager();
+		//for testing
+		storer = new StorageStub();
+//		storer = new StorageManager();
 		operationsHistory = new Vector<Command>();
 	}
 	
