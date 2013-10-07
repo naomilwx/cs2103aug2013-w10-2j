@@ -1,5 +1,6 @@
 package nailit.logic.parser;
 
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
@@ -18,6 +19,7 @@ public class AddParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
+		resultExecution.setCommand(CommandType.ADD);
 		for (int i=0; i<listOfCommand.length; i++)
 		{
 			listOfCommand[i] = listOfCommand[i].trim();
