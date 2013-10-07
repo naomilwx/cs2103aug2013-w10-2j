@@ -3,7 +3,7 @@ package nailit.logic.parser;
 import nailit.logic.ParserResult;
 import nailit.common.Task;
 import org.joda.time.DateTime;
-import com.joestelmach.natty.*;
+import com.joestelmach.natty.DateGroup;
 import java.util.*;
 
 public abstract class Parser {
@@ -12,7 +12,8 @@ public abstract class Parser {
 	
 	public static DateTime retrieveDateTime (String p){
 		DateTime result;
-		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
+		com.joestelmach.natty.Parser nattyParser; 
+		nattyParser = new com.joestelmach.natty.Parser();
 		
 		result = new DateTime(nattyParser.parse(p).get(0));
 	
