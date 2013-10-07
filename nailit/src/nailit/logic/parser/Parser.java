@@ -33,13 +33,43 @@ public abstract class Parser {
 	
 	public static boolean isDateTime(String p){
 		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
-		
-		if (nattyParser.parse(p).get(0).getText().equalsIgnoreCase(p))
-			return true;
-		else
+		List<DateGroup> parseResult = nattyParser.parse(p);
+		if(parseResult.isEmpty()){
 			return false;
+		}else{
+			DateGroup date = parseResult.get(0);
+			return date.getText().equalsIgnoreCase(p);
+		}
 	}
 	
+	public static boolean checkStringAfterHasDateTime(String str, String token){
+		int pos = str.indexOf(token);
+		int afterPos = pos + token.length();
+		if((pos != -1) && (str.length() > afterPos)){
+			String testStr = str.substring(afterPos).trim();
+			if(isNumber(testStr)){
+				return false;
+			}else{
+				return isDateTime(testStr);
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	public static boolean hasDateTime(String p){
+		String parseStr = p.toLowerCase();
+		return (checkStringAfterHasDateTime(parseStr, "at") || checkStringAfterHasDateTime(parseStr, "from"));
+	}
+	
+	public static boolean isNumber(String p){
+		if(p.isEmpty()){
+			return false;
+		}else{
+			String numRegex = "^[0-9]+$";
+			return p.matches(numRegex);
+		}
+	}
 	public static boolean isTag(String p){
 		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#')
 			return true;

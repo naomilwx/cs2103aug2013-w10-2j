@@ -20,6 +20,8 @@ public class ParserTest {
 		testIsTaskID(false, "sep 11 2012");
 		testIsDateTime(true, "sep 11 2012");
 		testIsDateTime(false, "Assignment 2");
+		testHasDateTime(false, "from 20");
+		testHasDateTime(true, "from 9am to 10 pm");
 	}
 	
 	private void testRetrieveDateTime (String expected, String command){
@@ -33,6 +35,10 @@ public class ParserTest {
 	private void testIsDateTime( boolean expected, String command)
 	{
 		assertEquals(expected, Parser.isDateTime(command));
+	}
+	
+	private void testHasDateTime(boolean expected, String command){
+		assertEquals(expected, Parser.hasDateTime(command));
 	}
 	
 }
