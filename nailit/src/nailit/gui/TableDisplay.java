@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -41,7 +42,8 @@ public class TableDisplay extends JScrollPane{
 	private void configureMainFrame(int width, int height){
 		containerWidth = width;
 		containerHeight = height;
-		this.setSize(containerWidth, containerHeight);
+		setSize(containerWidth, containerHeight);
+		setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 	}
 	
 	private void createAndConfigureTable() {

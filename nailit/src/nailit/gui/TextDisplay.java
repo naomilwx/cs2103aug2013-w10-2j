@@ -2,13 +2,15 @@ package nailit.gui;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 public class TextDisplay extends JScrollPane{
 	protected JTextPane textPane;
 	public TextDisplay(int width, int height){
-		this.setSize(width, height);
+		setSize(width, height);
+		setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		createAndConfigureTextPane();
 	}
 	private void createAndConfigureTextPane(){

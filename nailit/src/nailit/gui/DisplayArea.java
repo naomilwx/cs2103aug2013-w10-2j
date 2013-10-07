@@ -36,13 +36,11 @@ public class DisplayArea extends JLayeredPane {
 	private int displayWidth;
 	private int displayHeight;
 	
-	private final FocusListener displayFocusListener = new FocusListener(){
+	private final FocusListener defaultPaneFocusListener = new FocusListener(){
         public void focusGained(FocusEvent event) {
 			 //TODO:
 			 System.out.println("here");
-			 if(items.isEmpty()){
-				 GUIBoss.setFocusOnCommandBar();
-			 }
+			 defaultPaneOnFocusHandler();
 		 }
 		 public void focusLost(FocusEvent event){
 			 
@@ -95,7 +93,15 @@ public class DisplayArea extends JLayeredPane {
 		this.setSize(displayWidth, displayHeight);
 	}
 	private void addDisplayAreaListeners(){
-		defaultPane.addFocusListener(displayFocusListener);
+		defaultPane.addFocusListener(defaultPaneFocusListener);
+	}
+	private void defaultPaneOnFocusHandler(){
+		if(items.isEmpty()){
+			 GUIBoss.setFocusOnCommandBar();
+		 }else{
+			 Component item = items.peekFirst();
+			 item.requestFocus();
+		 }
 	}
 	protected void hideNotifications(){
 		popupPane.setVisible(false);
