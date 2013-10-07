@@ -16,11 +16,15 @@ public class ParserTest {
 		expectedDate = new DateTime(2013,9,11,00,00);
 		
 		testRetrieveDateTime(expectedDate.toString(NIConstants.DISPLAY_DATE_FORMAT),"11 Sep 2013");
+		testIsTaskID(true, "12");
 	}
 	
 	private void testRetrieveDateTime (String expected, String command){
 		assertEquals(expected,Parser.retrieveDateTime(command).toString(NIConstants.DISPLAY_DATE_FORMAT));
 	}
 	
+	private void testIsTaskID( boolean expected, String command){
+		assertEquals(expected, Parser.isTaskID(command));
+	}
 	
 }
