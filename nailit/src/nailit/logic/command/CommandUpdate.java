@@ -1,6 +1,8 @@
 package nailit.logic.command;
 import org.joda.time.DateTime;
 
+import test.storage.StorageStub;
+
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -25,7 +27,7 @@ public class CommandUpdate extends Command{
 	private final String UpdateFeedback = "update the task and the content updated is: ";
 
 
-	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse) {
+	public CommandUpdate(ParserResult resultInstance, StorageStub storerToUse) {
 		super(resultInstance, storerToUse);
 		updatedContent = "";
 		commandType = "update";
@@ -97,7 +99,7 @@ public class CommandUpdate extends Command{
 		}
 	}
 
-	private void retrieveTheTask() throws NoTaskFoundException, FileCorruptionException {
+	private void retrieveTheTask() throws Exception {
 		taskToRetrieveID = parserResultInstance.getTaskID();
 		taskRetrieved = storer.retrieve(taskToRetrieveID);
 

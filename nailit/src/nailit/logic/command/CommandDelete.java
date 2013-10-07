@@ -1,5 +1,6 @@
 package nailit.logic.command;
 
+import test.storage.StorageStub;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.ParserResult;
@@ -14,7 +15,7 @@ public class CommandDelete extends Command{
 
 	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	
-	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse) {
+	public CommandDelete(ParserResult resultInstance, StorageStub storerToUse) {
 		super(resultInstance, storerToUse);
 		commandType = "delete";
 	}
