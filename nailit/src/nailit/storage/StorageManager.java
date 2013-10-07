@@ -56,7 +56,7 @@ public class StorageManager {
 			return new Task(task_ID, name,startTime,endTime,priority, tag,desc,isCompleted);
 		}
 		catch(Exception e){
-			throw new FileCorruptionException("The file is corrupted!");
+			throw new FileCorruptionException(DATAPATH+" is corrupted. Please delete "+DATAPATH+" and restart NailIt");
 		}
 		
 		
@@ -67,6 +67,10 @@ public class StorageManager {
 		saveToFile();
 		return task;
 		
+	}
+	
+	public Vector<Task> retrieveAll(){
+		return null;
 	}
 	/**
 	 * Private Methods
