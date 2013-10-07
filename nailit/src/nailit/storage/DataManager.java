@@ -30,21 +30,21 @@ public class DataManager {
 			dataList.add(ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		else{
-			assert((ID <= dataList.size()-1)&&ID>=0);
-			dataList.set(ID, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
+			assert((ID <= dataList.size())&&ID>=1);
+			dataList.set(ID-1, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		return ID;
 	}
 	
 	public String retrieve(int ID) throws NoTaskFoundException{
 		String line;
-		if(ID>=dataList.size()){
+		if(ID>=dataList.size()+1){
 			throw new NoTaskFoundException("The ID you typed in exceeds the maximum Index!");
 		}
-		else if(ID<0){
+		else if(ID<1){
 			throw new NoTaskFoundException("The ID you typed in exceeds the lower bound!");
 		}
-		else if((line = dataList.get(ID))==null){
+		else if((line = dataList.get(ID-1))==null){
 			throw new NoTaskFoundException("The task has been deleted before");
 		}
 		else{
@@ -53,8 +53,8 @@ public class DataManager {
 	}
 	
 	public void remove(int ID){
-		assert(ID<=dataList.size()-1);
-		dataList.set(ID, null);
+		assert(ID<=dataList.size()&&ID>=1);
+		dataList.set(ID-1, null);
 	}
 	
 	public Vector<String> getDataList(){
@@ -73,7 +73,7 @@ public class DataManager {
 	 * Private Methods
 	 * */
 	private int generateNewID(){
-		return dataList.size();
+		return dataList.size()+1;
 	}
 	
 	private boolean addedBefore(int ID){
