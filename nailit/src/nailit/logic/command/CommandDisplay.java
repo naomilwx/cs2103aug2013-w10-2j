@@ -44,7 +44,7 @@ public class CommandDisplay extends Command{
 	private Result displayAllTasks() {
 		try {
 			Vector<Task> vectorOfTasks = storer.retrieveAll();
-			createResultObject(false, true, Result.TASK_DISPLAY, null, vectorOfTasks, null);
+			createResultObject(false, true, Result.LIST_DISPLAY, null, vectorOfTasks, null);
 			return executedResult;
 		} catch(Exception e) {
 			createUnsuccessfulResultObject();
