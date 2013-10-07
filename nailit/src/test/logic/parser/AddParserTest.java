@@ -21,29 +21,30 @@ public class AddParserTest {
 			expectedAdd.setCommand(CommandType.ADD);
 			expectedAdd.setPriority(TaskPriority.LOW);
 			expectedAdd.setStartTime(expectedDate = new DateTime(2013,9,11,00,00));
-			testExecuteName(expectedAdd.getName());
-			//testExecuteCommandType(expectedAdd.getCommand());
-			//testExecuteTaskPriority(expectedAdd.getPriority());
-			testExecuteTag(expectedAdd.getTag());
+			expectedAdd.setTag("#study#");
+			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteTag(expectedAdd.getTag(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
 		}
 		
-		private void testExecuteName (String expected){
-			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
+		private void testExecuteName (String expected, String command){
+			AddParser testAdd = new AddParser(command);
 			System.out.println(testAdd.execute().getName());
 			assertEquals(expected,testAdd.execute().getName());
 		}
 		
-		private void testExecuteCommandType (CommandType expected){
-			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
-			assertEquals(expected,testAdd.execute().getCommand());
+		private void testExecuteCommandType (String expected, String command){
+			AddParser testAdd = new AddParser(command);
+			assertEquals(expected,testAdd.execute().getCommand().toString());
 		}
 		
-		private void testExecuteTaskPriority (TaskPriority expected){
-			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
-			assertEquals(expected,testAdd.execute().getPriority());
+		private void testExecuteTaskPriority (String expected, String command){
+			AddParser testAdd = new AddParser(command);
+			assertEquals(expected,testAdd.execute().getPriority().toString());
 		}
-		private void testExecuteTag (String expected){
-			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
+		private void testExecuteTag (String expected, String command){
+			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getTag());
 		}
 		
