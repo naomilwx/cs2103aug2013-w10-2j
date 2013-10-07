@@ -43,10 +43,6 @@ public class AddParser extends Parser {
 			}
 		}
 		
-		//System.out.println(resultExecution.getPriority());
-		//System.out.println(resultExecution.getName());
-		//System.out.println(resultExecution.getTag());
-		//System.out.println(resultExecution.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		return resultExecution;
 	}
 }
