@@ -257,8 +257,21 @@ public class Task {
 		assert(isValidPriority(priority));
 		
 		String name = this.getName();
-		String startDate = this.getStartTime().toString();
-		String endDate = this.getEndTime().toString();
+		String startDate;
+		if(this.getStartTime() == null){
+			startDate = null;
+		}
+		else{
+			startDate = this.getStartTime().toString();
+		}
+		
+		String endDate;
+		if(this.getEndTime() == null){
+			endDate = null;
+		}
+		else{
+			endDate = this.getEndTime().toString();
+		}
 		String desc = this.getDescription();
 		String tag = this.getTag();
 		
@@ -266,7 +279,7 @@ public class Task {
 		assert(isValidCompleteStatus(completeStatus));
 		
 		
-		String taskString = name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus;
+		String taskString = ID+NIConstants.NORMAL_FIELD_SPLITTER +name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus;
 		
 		return taskString;
 	}
