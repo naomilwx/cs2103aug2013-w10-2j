@@ -12,14 +12,13 @@ public class CommandUpdate extends Command{
 	private Result executedResult;
 	private int taskToRetrieveID;
 	private Task taskRetrieved;
-	private int updatedTaskID;
 	
 	// for the use of commandSummary
 	private String updatedContent;
 	private String commandSummary;
 	
 	private final String Success_Msg_FirstPart = "The task with Task ID: "; 
-	private final String Success_Msg_SecondPart	= "is updated successfully, the new Task ID for it is: ";
+	private final String Success_Msg_SecondPart	= "is updated successfully";
 	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
 
 
@@ -33,7 +32,6 @@ public class CommandUpdate extends Command{
 	public Result executeCommand() {
 		retrieveTheTask();
 		updateTheRetrievedTask();
-		removeTheOriginalTaskObjOnStorage();
 		addTheUpdatedTaskObjOnStorage();
 		createResultObject();
 		createCommandSummary();
@@ -48,7 +46,7 @@ public class CommandUpdate extends Command{
 
 	private void createResultObject() {
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
-				Success_Msg_FirstPart + taskToRetrieveID + Success_Msg_SecondPart + updatedTaskID);
+				Success_Msg_FirstPart + taskToRetrieveID);
 		
 	}
 	
@@ -59,19 +57,9 @@ public class CommandUpdate extends Command{
 	}
 
 	private void addTheUpdatedTaskObjOnStorage() {
-		updatedTaskID = storer.add(taskRetrieved);
+		storer.add(taskRetrieved);
 	}
 
-	private void removeTheOriginalTaskObjOnStorage() {
-		try {
-			storer.remove(taskToRetrieveID);
-		} catch(Exception e) {
-			// do nothing, since the purpose is to remove the 
-			// task and the storage feedbacks that there is no 
-			// such task record 
-		}
-		
-	}
 
 	private void updateTheRetrievedTask() {
 		if(!parserResultInstance.isNullName()) {
@@ -111,7 +99,7 @@ public class CommandUpdate extends Command{
 	}
 	
 	public int getTaskID() {
-		return updatedTaskID;
+		return taskToRetrieveID;
 	}
 
 }
