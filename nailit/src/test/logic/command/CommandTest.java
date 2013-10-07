@@ -40,7 +40,7 @@ public class CommandTest {
 	public void testCommandDelete() throws FileCorruptionException {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
-		prForCommandDelete.setTaskID(123);
+		prForCommandDelete.setTaskID(-1);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessDeleteMsg + taskID);
