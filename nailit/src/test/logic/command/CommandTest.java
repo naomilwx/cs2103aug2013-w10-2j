@@ -17,7 +17,7 @@ public class CommandTest {
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
 
 	@Test
-	public void testCommandAdd() throws FileCorruptionException {
+	public void testCommandAddAlone() throws FileCorruptionException {
 		CommandManager cm = new CommandManager();
 		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
 		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
@@ -25,8 +25,8 @@ public class CommandTest {
 				"CS2103 project demo", startTime, endTime, TaskPriority.HIGH, 
 				"school work");
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
-		//int taskID = cm.operationsHistory.firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg);// + taskID);
+		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
 		assertEquals(resultObjOfCommandAdd, expectedResultObj);
 	}
 	

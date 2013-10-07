@@ -76,7 +76,7 @@ public class CommandManager {
 	}
 
 	private Result display() {
-		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer);
+		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this);
 		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
 		return resultToPassToGUI;
@@ -115,5 +115,9 @@ public class CommandManager {
 
 	private void addNewCommandObjToOperationsHistory(Command commandObjToAdd) {
 		operationsHistory.add(commandObjToAdd);
+	}
+	
+	public Vector<Command> getOperationsHistory() {
+		return operationsHistory;
 	}
 }
