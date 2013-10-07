@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
+	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
 	private static final int COMMANDBAR_HEIGHT = 20;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
@@ -21,6 +22,8 @@ public class CommandBar extends JPanel {
 	private JTextField textBar;
 	private int frameHeight;
 	private int frameWidth;
+	private int frameXPos;
+	private int frameYPos;
 	/**
 	 * Create the panel.
 	 */
@@ -32,10 +35,12 @@ public class CommandBar extends JPanel {
 	}
 	
 	private void positionAndResizeCommandFrame(int containerWidth, int containerHeight){
-		frameWidth = containerWidth-X_BUFFER_WIDTH-WINDOW_RIGHT_BUFFER;
-		frameHeight = COMMANDBAR_HEIGHT+2*Y_BUFFER_HEIGHT;
+		frameWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		frameHeight = COMMANDBAR_HEIGHT + 2*Y_BUFFER_HEIGHT;
+		frameXPos = X_BUFFER_WIDTH;
+		frameYPos = containerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
-		this.setLocation(X_BUFFER_WIDTH, containerHeight-frameHeight-WINDOW_BOTTOM_BUFFER);
+		this.setLocation(frameXPos, frameYPos);
 		this.setSize(frameWidth, frameHeight);
 		this.setLayout(null);
 	}
@@ -43,7 +48,6 @@ public class CommandBar extends JPanel {
 	private void createConfigureAndAddInputField(){
 		textBar = new JTextField();
 		resizeAndpositionTextInputField();
-		textBar.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		addListenersToTextInputField();
 		add(textBar);
 	}
@@ -74,7 +78,7 @@ public class CommandBar extends JPanel {
 	}
 	//Methods to manipulate the text in the user input JTextField
 	protected void clearUserInput(){
-		textBar.setText("");
+		textBar.setText(COMMANDBAR_EMPTY_DISPLAY);
 		return;
 	}
 	protected void setUserInput(String text){

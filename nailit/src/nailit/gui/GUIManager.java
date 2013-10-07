@@ -76,7 +76,7 @@ public class GUIManager {
 		this.launcher = launcher;
 		//TODO:
 //		logicExecutor = new LogicManager();
-		logicstub = new LogicManagerStub(Result.LIST_DISPLAY);
+		logicstub = new LogicManagerStub();
 		createComponentsAndAddToMainFrame();
 		//stub to be modified later
 	}
@@ -151,8 +151,9 @@ public class GUIManager {
 		}
 		displayArea.showNotifications();
 	}
-	private void displayTaskDetails(Vector<Task> tasklist){
-		Task task = tasklist.get(0);
+	private void displayTaskDetails(Vector<Task> taskList){
+		assert taskList.size() > 0;
+		Task task = taskList.firstElement();
 		String taskDisplay = task.toString();
 		displayArea.displayTaskDetails(taskDisplay);
 	}
