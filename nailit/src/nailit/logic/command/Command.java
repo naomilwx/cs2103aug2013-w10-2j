@@ -19,4 +19,6 @@ public abstract class Command {
 	
 	public abstract Result executeCommand();
 	
+	public abstract int getTaskID();
+	
 }

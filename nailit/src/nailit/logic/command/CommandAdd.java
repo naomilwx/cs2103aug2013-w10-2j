@@ -22,7 +22,7 @@ public class CommandAdd extends Command{
 	// this is used for the command history
 	private String commandSummary;
 	
-	private final String Success_Msg = "The new task is added successfully, the Task ID for it is: ";
+	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
@@ -49,7 +49,7 @@ public class CommandAdd extends Command{
 	}
 
 	private void createResultObject() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, Success_Msg + taskID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
 	}
 
 	private void createTaskObject() {
@@ -63,5 +63,9 @@ public class CommandAdd extends Command{
 		endTime = parserResultInstance.getEndTime();
 		taskPriority = parserResultInstance.getPriority();
 		taskTag = parserResultInstance.getTag();
+	}
+	
+	public int getTaskID() {
+		return taskID;
 	}
 }

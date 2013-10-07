@@ -53,6 +53,9 @@ public class CommandDisplay extends Command{
 		} catch(Exception e) {
 			createUnsuccessfulResultObject();
 		}
-
+	}
+	
+	public int getTaskID() {
+		return taskToRetrieveID;
 	}
 }

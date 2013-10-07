@@ -50,5 +50,9 @@ public class CommandDelete extends Command{
 		}
 		
 	}
+	
+	public int getTaskID() {
+		return taskToDeleteID;
+	}
 
 }

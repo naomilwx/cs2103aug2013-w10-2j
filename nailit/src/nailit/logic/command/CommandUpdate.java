@@ -108,7 +108,10 @@ public class CommandUpdate extends Command{
 		} catch (Exception e) {
 			createUnsuccessfulResultObject();
 		}
-		
+	}
+	
+	public int getTaskID() {
+		return updatedTaskID;
 	}
 
 }
