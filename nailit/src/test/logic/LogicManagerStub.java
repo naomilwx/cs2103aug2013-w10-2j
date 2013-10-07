@@ -9,8 +9,9 @@ import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.LogicManager;
 import nailit.logic.command.CommandManager;
+import nailit.storage.FileCorruptionException;
 
-public class LogicManagerStub{//NOTE should extend LogicManager. standalone for now because of bugs downstream
+public class LogicManagerStub extends LogicManager{
 	private DateTime startTime = new DateTime(2013,9,30,10,20);
 	private DateTime endTime = new DateTime();
 	private Task event = new Task("New Event Test", startTime, endTime, "#stub", TaskPriority.MEDIUM);
@@ -18,7 +19,9 @@ public class LogicManagerStub{//NOTE should extend LogicManager. standalone for 
 	private Vector<Task> taskList = new Vector<Task>();
 	private Result res = new Result();
 	
-	public LogicManagerStub(){
+	public LogicManagerStub() throws FileCorruptionException{
+		event.setID(1);
+		task.setID(2);
 		taskList.add(event);
 		taskList.add(task);
 	}

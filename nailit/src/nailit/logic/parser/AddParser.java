@@ -20,6 +20,7 @@ public class AddParser extends Parser {
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
+			listOfCommand[i] = listOfCommand[i].trim();
 			if (TaskPriority.isTaskPriority(listOfCommand[i])){
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
 			}else if (Parser.isTag(listOfCommand[i])){
@@ -29,7 +30,6 @@ public class AddParser extends Parser {
 					int atIndex = listOfCommand[i].toLowerCase().indexOf("at");
 					int stringLength = listOfCommand[i].length();
 					
-					resultExecution.setName(listOfCommand[i].substring(0,atIndex));
 					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
 				}else if (listOfCommand[i].toLowerCase().contains("from") && listOfCommand[i].toLowerCase().contains("to")){
 					int fromIndex = listOfCommand[i].toLowerCase().indexOf("from");
@@ -37,12 +37,12 @@ public class AddParser extends Parser {
 					int stringLength = listOfCommand[i].length();
 			
 					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
-					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
+					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
 				}else
 					resultExecution.setName(listOfCommand[i]);
 			}
 		}
-		System.out.println(listOfCommand[1]);
+		
 		return resultExecution;
 	}
 }
