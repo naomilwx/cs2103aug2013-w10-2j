@@ -40,7 +40,6 @@ public class DisplayArea extends JLayeredPane {
 	private int displayWidth;
 	private int displayHeight;
 	private int currentFocusElement = NULL_FOCUS;
-	private int shiftCount = 0;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
 			defaultPaneSetFocusHandler();
@@ -54,8 +53,6 @@ public class DisplayArea extends JLayeredPane {
 		public void keyPressed(KeyEvent keyStroke){
 			int keyCode = keyStroke.getKeyCode();
 			if(keyCode == KeyEvent.VK_SHIFT){
-				shiftCount += 1;
-				System.out.println("shift "+ shiftCount);
 				defaultPaneSetFocusHandler();
 			}
 		}
@@ -111,7 +108,6 @@ public class DisplayArea extends JLayeredPane {
 	}
 	private void defaultPaneSetFocusHandler(){
 		int nextFocusElement = NULL_FOCUS;
-		System.out.println("Current focus " + currentFocusElement);
 		if(currentFocusElement == NULL_FOCUS){
 			nextFocusElement = 0;
 		}else{
@@ -124,7 +120,6 @@ public class DisplayArea extends JLayeredPane {
 		 }else{
 			 Component item = items.get(nextFocusElement);
 			 item.requestFocus();
-			 item.addKeyListener(keyEventListener);
 			 currentFocusElement = nextFocusElement;
 		 }
 		System.out.println("changed to " + currentFocusElement);
@@ -149,6 +144,7 @@ public class DisplayArea extends JLayeredPane {
 			items.add(component);
 			removeExtraContent();
 		}
+		component.addKeyListener(keyEventListener);
 		defaultPane.add(component);
 		revalidate();
 	}
