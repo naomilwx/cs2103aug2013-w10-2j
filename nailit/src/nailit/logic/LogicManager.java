@@ -9,17 +9,17 @@ import nailit.storage.FileCorruptionException;
 
 public class LogicManager{
 	
-	private ParserManager ParserInstance;
+	private ParserManager parserInstance;
 	private CommandManager commandInstance;
 	
 	public LogicManager() throws FileCorruptionException {
-		ParserInstance = new ParserManager();
+		parserInstance = new ParserManager();
 		commandInstance = new CommandManager();
 	}
 	public Result executeCommand(String OriginalCommand){
 		Result executeCommandResult = new Result();
-		ParserInstance.passCommand(OriginalCommand);
-		ParserResult parserResultInstance = ParserInstance.execute();
+		parserInstance.passCommand(OriginalCommand);
+		ParserResult parserResultInstance = parserInstance.execute();
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
 	}
