@@ -60,7 +60,7 @@ public class StorageManager {
 				startTime = new DateTime(result[2]);
 			}
 			DateTime endTime;
-			if(result[3].compareTo(result[3]) == 0){
+			if(result[3].compareTo("null") == 0){
 				endTime = null;
 			}
 			else{
