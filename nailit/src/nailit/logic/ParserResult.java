@@ -9,8 +9,6 @@ import nailit.common.TaskPriority;
 public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 
-	// added by Shuzhi
-	// in delete and addDescription command: need tasdID
 	private int taskID;
 	private static CommandType command;
 	private static String name;
@@ -21,6 +19,7 @@ public class ParserResult{
 	private DateTime endTime;
 	
 	private boolean isDisplayAll = false;
+	private boolean isDisplayHistory = false;
 	
 	public ParserResult(){
 		taskID = 0;
@@ -47,6 +46,14 @@ public class ParserResult{
 	
 	public boolean isDisplayAll(){
 		return isDisplayAll;
+	}
+	
+	public void setDisplayHistory (boolean flag){
+		isDisplayHistory = flag;
+	}
+	
+	public boolean isDisplayHistory(){
+		return isDisplayHistory;
 	}
 	
 	public void setName(String nameExternal){
