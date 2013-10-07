@@ -13,6 +13,8 @@ public class CommandDisplay extends Command{
 	private Result executedResult;
 	private Task taskRetrieved;
 	private int taskToRetrieveID;
+	
+	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
 
 //	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	public CommandDisplay(ParserResult resultInstance,
@@ -38,9 +40,19 @@ public class CommandDisplay extends Command{
 		vectorStoringTheTask.add(taskRetrieved);
 		executedResult = new Result(false, true, Result.TASK_DISPLAY, null, vectorStoringTheTask, null);
 	}
+	
+	// there is no such task record in the storage to display
+	private void createUnsuccessfulResultObject() {
+		executedResult = new Result(false, false, Result.TASK_DISPLAY, UnsuccessfulFeedback, null, null);
+	}
 
 	private void retrieveTheTask() {
-		taskToRetrieveID = parserResultInstance.getTaskID();
-		taskRetrieved = storer.retrieve(taskToRetrieveID);
+		try{
+			taskToRetrieveID = parserResultInstance.getTaskID();
+			taskRetrieved = storer.retrieve(taskToRetrieveID);
+		} catch(Exception e) {
+			createUnsuccessfulResultObject();
+		}
+
 	}
 }
