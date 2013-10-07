@@ -1,5 +1,7 @@
 package nailit.logic.command;
 import org.joda.time.DateTime;
+
+import test.storage.StorageStub;
 import nailit.common.Result;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
@@ -25,7 +27,7 @@ public class CommandAdd extends Command{
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
 	
 	// constructor
-	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
+	public CommandAdd(ParserResult resultInstance, StorageStub storerToUse) {
 		super(resultInstance, storerToUse);
 		commandType = "add";
 	}

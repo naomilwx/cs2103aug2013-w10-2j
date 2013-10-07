@@ -29,6 +29,14 @@ public class StorageStub {
 		return new Task("CS2103", startTime, endTime, "school work", TaskPriority.HIGH);
 	}
 	
+	// for testing throw exception
+//	public Task retrieve(int taskID) throws Exception {
+//		throw new Exception();
+//	}
+//	
+//	public Task remove(int taskID) throws Exception {
+//		throw new Exception();
+//	}
 	
 	
 }
