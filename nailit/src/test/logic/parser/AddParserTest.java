@@ -8,7 +8,6 @@ import nailit.common.TaskPriority;
 import nailit.logic.parser.AddParser;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.parser.Parser;
 
 
 public class AddParserTest {
