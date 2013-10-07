@@ -15,21 +15,23 @@ public class LogicManagerStub{//NOTE should extend LogicManager. standalone for 
 	private DateTime endTime = new DateTime();
 	private Task event = new Task("New Event Test", startTime, endTime, "#stub", TaskPriority.MEDIUM);
 	private Task task = new Task("New Task Test", startTime, null, "#test", TaskPriority.HIGH);
-	private int displayType;
 	private Vector<Task> taskList = new Vector<Task>();
 	private Result res = new Result();
 	
-	public LogicManagerStub(int displayType){
-		this.displayType = displayType;
+	public LogicManagerStub(){
 		taskList.add(event);
 		taskList.add(task);
 	}
 	public Result executeCommand(String command){
 		res.setTaskList(taskList);
-		res.setDisplayType(displayType);
+		res.setDisplayType(Result.NOTIFICATION_DISPLAY);
 		res.setNotification("test");
 		if(command.equals("exit")){
 			res.setExitStatus(true);
+		}else if(command.equals("task")){
+			res.setDisplayType(Result.TASK_DISPLAY);
+		}else if(command.equals("list")){
+			res.setDisplayType(Result.LIST_DISPLAY);
 		}
 		return res;
 	}
