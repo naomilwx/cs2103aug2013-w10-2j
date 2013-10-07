@@ -16,6 +16,8 @@ public class AddParserTest {
 		@Test
 		public void test(){
 			ParserResult expectedAdd = new ParserResult();
+			ParserResult expectedAdd2 = new ParserResult();
+			
 			DateTime expectedStartDate;
 			DateTime expectedEndDate;
 			
