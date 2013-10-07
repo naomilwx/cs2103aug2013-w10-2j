@@ -21,12 +21,12 @@ public class AddParserTest {
 			expectedAdd.setCommand(CommandType.ADD);
 			expectedAdd.setPriority(TaskPriority.LOW);
 			expectedAdd.setStartTime(expectedDate = new DateTime(2013,9,11,00,00));
-			testExecute("testOne", expectedAdd);
+			testExecute(expectedAdd);
 		}
 		
-		private void testExecute (String description, ParserResult expected){
+		private void testExecute (ParserResult expected){
 			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
-			assertEquals(description,expected,testAdd.execute());
+			assertEquals(expected,testAdd.execute());
 		}
 		
 		

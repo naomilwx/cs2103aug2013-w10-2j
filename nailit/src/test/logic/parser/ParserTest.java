@@ -15,10 +15,12 @@ public class ParserTest {
 		
 		expectedDate = new DateTime(2013,9,11,00,00);
 		
-		testExecute("testOne", expectedDate.toString(NIConstants.DISPLAY_DATE_FORMAT),"11 Sep 2013");
+		testRetrieveDateTime(expectedDate.toString(NIConstants.DISPLAY_DATE_FORMAT),"11 Sep 2013");
 	}
 	
-	private void testExecute (String description, String expected, String command){
-		assertEquals(description,expected,Parser.retrieveDateTime(command).toString(NIConstants.DISPLAY_DATE_FORMAT));
+	private void testRetrieveDateTime (String expected, String command){
+		assertEquals(expected,Parser.retrieveDateTime(command).toString(NIConstants.DISPLAY_DATE_FORMAT));
 	}
+	
+	
 }
