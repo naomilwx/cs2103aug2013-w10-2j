@@ -5,6 +5,7 @@ import java.util.Vector;
 import nailit.common.Result;
 import nailit.logic.*;
 
+import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -21,7 +22,7 @@ public class CommandManager {
 	private Vector<Command> operationsHistory;
 	
 	// constructor
-	public CommandManager () 
+	public CommandManager () throws FileCorruptionException 
 	{
 		storer = new StorageManager();
 		operationsHistory = new Vector<Command>();
