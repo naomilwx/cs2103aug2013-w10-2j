@@ -279,7 +279,7 @@ public class Task {
 		assert(isValidCompleteStatus(completeStatus));
 		
 		
-		String taskString = ID+NIConstants.NORMAL_FIELD_SPLITTER +name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus;
+		String taskString = name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus;
 		
 		return taskString;
 	}
