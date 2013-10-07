@@ -1,6 +1,8 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -24,6 +26,16 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 public class TableDisplay extends JScrollPane{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 30;
+	private final LineBorder FOCUS_LINE_BORDER = new LineBorder(GUIManager.FOCUSED_BORDER_COLOR);
+	private final LineBorder UNFOCUS_LINE_BORDER = new LineBorder(GUIManager.BORDER_COLOR);
+	private final FocusListener tableDisplayFocusListener = new FocusListener(){
+		public void focusGained(FocusEvent event) {
+			setBorder(FOCUS_LINE_BORDER);
+		 }
+		public void focusLost(FocusEvent event){
+			setBorder(UNFOCUS_LINE_BORDER);
+		}
+	};
 	
 	private int containerHeight;
 	private int containerWidth;
@@ -43,7 +55,8 @@ public class TableDisplay extends JScrollPane{
 		containerWidth = width;
 		containerHeight = height;
 		setSize(containerWidth, containerHeight);
-		setBorder(new LineBorder(GUIManager.BORDER_COLOR));
+		setBorder(UNFOCUS_LINE_BORDER);
+		addFocusListener(tableDisplayFocusListener);
 	}
 	
 	private void createAndConfigureTable() {
