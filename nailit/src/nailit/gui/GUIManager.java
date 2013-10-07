@@ -101,10 +101,10 @@ public class GUIManager {
 		mainWindow.setVisible(isVisible);
 	}
 	
-	protected void setFocusOnDisplay(){
+	public void setFocusOnDisplay(){
 		displayArea.setFocus();
 	}
-	protected void setFocusOnCommandBar(){
+	public void setFocusOnCommandBar(){
 		commandBar.setFocus();
 	}
 	/**

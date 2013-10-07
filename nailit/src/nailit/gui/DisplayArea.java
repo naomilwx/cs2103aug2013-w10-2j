@@ -2,6 +2,11 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -26,12 +31,25 @@ public class DisplayArea extends JLayeredPane {
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
 	private JPanel popupPane;
-	
 	private LinkedList<Component> items;
 	
 	private int displayWidth;
 	private int displayHeight;
 	
+	private final FocusListener displayFocusListener = new FocusListener(){
+        public void focusGained(FocusEvent event) {
+			 //TODO:
+			 System.out.println("here");
+			 if(items.isEmpty()){
+				 GUIBoss.setFocusOnCommandBar();
+			 }
+		 }
+		 public void focusLost(FocusEvent event){
+			 
+		 }
+	};
+	
+	//DisplayArea constructor
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
 		GUIBoss = GUIMain;
 		items = new LinkedList<Component>();
@@ -39,6 +57,7 @@ public class DisplayArea extends JLayeredPane {
 		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
 		configureDisplayArea();
 		initialiseLayers();
+		addDisplayAreaListeners();
 	}
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
@@ -49,7 +68,8 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane = new JPanel();
 		defaultPane.setLayout(new BoxLayout(defaultPane,BoxLayout.Y_AXIS));
 		setLayerToDefaultSettings(defaultPane);
-		this.add(defaultPane,JLayeredPane.DEFAULT_LAYER);
+		defaultPane.setFocusable(true);
+		add(defaultPane,JLayeredPane.DEFAULT_LAYER);
 		
 		popupPane = new JPanel();
 		popupPane.setLayout(null);
@@ -73,6 +93,9 @@ public class DisplayArea extends JLayeredPane {
 		this.setBackground(DISPLAYAREA_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
+	}
+	private void addDisplayAreaListeners(){
+		defaultPane.addFocusListener(displayFocusListener);
 	}
 	protected void hideNotifications(){
 		popupPane.setVisible(false);
