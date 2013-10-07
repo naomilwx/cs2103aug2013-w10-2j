@@ -23,6 +23,11 @@ public class CommandDelete extends Command{
 	public Result executeCommand() {
 		removeTheTaskOnStorage();
 		createResultObject();
+		
+		// since there is no task record, a fake taskToDelete needed for testing
+		// when not delete, should be deleted
+		setTaskToRemove();
+		
 		createCommandSummary();
 		return executedResult;
 	}
@@ -53,6 +58,11 @@ public class CommandDelete extends Command{
 	
 	public int getTaskID() {
 		return taskToDeleteID;
+	}
+	
+	// for test
+	public void setTaskToRemove() {
+		this.taskToRemove = new Task();
 	}
 
 }
