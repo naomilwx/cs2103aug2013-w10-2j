@@ -2,7 +2,10 @@ package test.logic.command;
 
 import static org.junit.Assert.*;
 
+import java.util.Vector;
+
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -69,10 +72,46 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandDisplay() {
-		
+	public void testCommandDisplayNotExistingTask() throws FileCorruptionException {
+		CommandManager cm = new CommandManager();
+		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
+		prForCommandDisplay.setTaskID(123);
+		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
+		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback, null, null);
+		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
 	
+	@Test
+	public void testCommandDisplayExistingTask() throws FileCorruptionException {
+		CommandManager cm = new CommandManager();
+		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
+		prForCommandDisplay.setTaskID(123);
+		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
+		Vector<Task> vectorOfTask = new Vector<Task>();
+		Task expectedDisplayTask = createTask();
+		vectorOfTask.add(expectedDisplayTask);
+		Result expectedResultObj = new Result(false, true, Result.TASK_DISPLAY, null, vectorOfTask, null);
+		testTwoResultObjFromCommandDisplay(resultObjOfCommandUpdate, expectedResultObj);
+	}
+	
+	private void testTwoResultObjFromCommandDisplay(
+			Result resultObjOfCommandUpdate, Result expectedResultObj) {
+		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
+		Task displayedTask = resultObjOfCommandUpdate.getTaskList().firstElement();
+		Task expectedTask = expectedResultObj.getTaskList().firstElement();
+		assertEquals(displayedTask.getName(), expectedTask.getName());
+		assertEquals(displayedTask.getStartTime(), expectedTask.getStartTime());
+		assertEquals(displayedTask.getEndTime(), expectedTask.getEndTime());
+		assertEquals(displayedTask.getPriority(), expectedTask.getPriority());
+		assertEquals(displayedTask.getTag(), expectedTask.getTag());
+	}
+
+	private Task createTask() {
+		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
+		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
+		return new Task("CS2103", startTime, endTime, "school work", TaskPriority.HIGH);
+	}
+
 	private void testTwoResultObj(Result resultObjOfCommandAdd,
 			Result expectedResultObj) {
 		assertEquals(resultObjOfCommandAdd.getExitStatus(), expectedResultObj.getExitStatus());
