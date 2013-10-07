@@ -6,32 +6,31 @@ import static org.junit.Assert.*;
 
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
-import nailit.logic.parser.AddParser;
-import nailit.logic.parser.DeleteParser;
+import nailit.logic.parser.UpdateParser;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
 public class UpdateParserTest {
 	@Test
 	public void test(){
-		ParserResult expectedDelete = new ParserResult();
+		ParserResult expectedUpdate1 = new ParserResult();
 		
-		expectedDelete.setTaskID(12);
-		expectedDelete.setCommand(CommandType.DELETE);
+		expectedUpdate1.setTaskID(12);
+		expectedUpdate1.setCommand(CommandType.UPDATE);
 		
-		testExecute(expectedDelete.getTaskID(),"12");
-		testExecuteCommandType(expectedDelete.getCommand().toString(),"12");
+		testExecute(expectedUpdate1.getTaskID(),"12");
+		testExecuteCommandType(expectedUpdate1.getCommand().toString(),"12");
 		
 	}
 	
 	private void testExecute (int expected, String command){
-		DeleteParser testDelete = new DeleteParser(command);
-		assertEquals(expected,testDelete.execute().getTaskID());
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getTaskID());
 	}
 	
 	private void testExecuteCommandType (String expected, String command){
-		DeleteParser testDelete = new DeleteParser(command);
-		assertEquals(expected,testDelete.execute().getCommand().toString());
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getTaskID());
 	}
 
 }
