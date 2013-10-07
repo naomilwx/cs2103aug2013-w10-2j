@@ -25,12 +25,12 @@ public class DataManager {
 	 * Public Methods
 	 * */
 	public int add(int ID, String taskString){
-		
 		if(!addedBefore(ID)){
 			ID = generateNewID();
 			dataList.add(ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		else{
+			assert(ID <= dataList.size()-1);
 			dataList.set(ID, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
 		}
 		return ID;
@@ -54,11 +54,11 @@ public class DataManager {
 	}
 	
 	public Vector<String> getDataList(){
-		return null;
+		return dataList;
 	}
 	
 	public void setDataList(Vector<String> d){
-		
+		dataList = d;
 	}
 	
 	public DataManager clone(){
@@ -75,4 +75,5 @@ public class DataManager {
 	private boolean addedBefore(int ID){
 		return ID != Task.TASKID_NULL;
 	}
+	
 }
