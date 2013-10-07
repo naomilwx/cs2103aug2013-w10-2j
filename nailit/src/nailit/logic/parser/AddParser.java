@@ -42,7 +42,7 @@ public class AddParser extends Parser {
 					resultExecution.setName(listOfCommand[i]);
 			}
 		}
-		System.out.println(listOfCommand[1]);
+		System.out.println(resultExecution.getPriority());
 		return resultExecution;
 	}
 }
