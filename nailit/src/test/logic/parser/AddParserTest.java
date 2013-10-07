@@ -21,12 +21,30 @@ public class AddParserTest {
 			expectedAdd.setCommand(CommandType.ADD);
 			expectedAdd.setPriority(TaskPriority.LOW);
 			expectedAdd.setStartTime(expectedDate = new DateTime(2013,9,11,00,00));
-			testExecute(expectedAdd);
+			testExecuteName(expectedAdd.getName());
+			//testExecuteCommandType(expectedAdd.getCommand());
+			//testExecuteTaskPriority(expectedAdd.getPriority());
+			testExecuteTag(expectedAdd.getTag());
 		}
 		
-		private void testExecute (ParserResult expected){
+		private void testExecuteName (String expected){
 			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
-			assertEquals(expected,testAdd.execute());
+			System.out.println(testAdd.execute().getName());
+			assertEquals(expected,testAdd.execute().getName());
+		}
+		
+		private void testExecuteCommandType (CommandType expected){
+			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
+			assertEquals(expected,testAdd.execute().getCommand());
+		}
+		
+		private void testExecuteTaskPriority (TaskPriority expected){
+			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
+			assertEquals(expected,testAdd.execute().getPriority());
+		}
+		private void testExecuteTag (String expected){
+			AddParser testAdd = new AddParser("CSAssignment,#study#, at 11 Sep 2013, LOW");
+			assertEquals(expected,testAdd.execute().getTag());
 		}
 		
 		
