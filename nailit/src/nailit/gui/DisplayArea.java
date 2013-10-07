@@ -41,7 +41,7 @@ public class DisplayArea extends JLayeredPane {
 	private int displayHeight;
 	private int currentFocusElement = NULL_FOCUS;
 	private int shiftCount = 0;
-	private FocusListener defaultPaneFocusListener = new FocusListener(){
+	private final FocusListener defaultPaneFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
 			defaultPaneSetFocusHandler();
 		 }
