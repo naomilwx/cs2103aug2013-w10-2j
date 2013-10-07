@@ -18,8 +18,6 @@ public abstract class Parser {
 		nattyParser = new com.joestelmach.natty.Parser();
 		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
 		result = new DateTime(resultDateGroup.getDates().get(0));
-		
-		System.out.println(result.toString(NIConstants.DISPLAY_DATE_FORMAT));
 	
 		return result;
 	}
