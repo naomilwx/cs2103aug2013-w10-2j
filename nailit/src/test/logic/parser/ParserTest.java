@@ -1,10 +1,10 @@
 package test.logic.parser;
 
 import static org.junit.Assert.assertEquals;
+
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.parser.AddParser;
 import nailit.logic.parser.Parser;
 
 import org.joda.time.DateTime;
@@ -25,7 +25,6 @@ public class ParserTest {
 	}
 	
 	private void testExecute (String description, DateTime expected, String command){
-		
 		assertEquals(description,expected,Parser.retrieveDateTime(command));
 	}
 }
