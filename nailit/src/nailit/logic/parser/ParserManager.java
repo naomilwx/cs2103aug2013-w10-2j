@@ -19,6 +19,7 @@ public class ParserManager {
 		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
 		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
+		commandToExecute = commandToExecute.trim();
 		switch (commandType) {
 		case ADD:
 			AddParser addParserManager = new AddParser(commandToExecute);
