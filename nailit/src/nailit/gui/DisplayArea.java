@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -27,6 +30,7 @@ public class DisplayArea extends JLayeredPane {
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final double DISPLAY_AREA_SCALE = 0.8;
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
+	private static final int NULL_FOCUS = -1;
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
@@ -35,16 +39,24 @@ public class DisplayArea extends JLayeredPane {
 	
 	private int displayWidth;
 	private int displayHeight;
-	
+	private int currentFocusElement = NULL_FOCUS;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
         public void focusGained(FocusEvent event) {
-			 //TODO:
-			 System.out.println("here");
-			 defaultPaneOnFocusHandler();
+			 defaultPaneSetFocusHandler();
 		 }
 		 public void focusLost(FocusEvent event){
 			 
 		 }
+	};
+	private final KeyAdapter keyEventListener = new KeyAdapter(){
+		@Override
+		public void keyPressed(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_SHIFT){
+				System.out.println("shift");
+				defaultPaneSetFocusHandler();
+			}
+		}
 	};
 	
 	//DisplayArea constructor
@@ -95,14 +107,27 @@ public class DisplayArea extends JLayeredPane {
 	private void addDisplayAreaListeners(){
 		defaultPane.addFocusListener(defaultPaneFocusListener);
 	}
-	private void defaultPaneOnFocusHandler(){
-		if(items.isEmpty()){
+	private void defaultPaneSetFocusHandler(){
+		int nextFocusElement = NULL_FOCUS;
+		System.out.println(currentFocusElement);
+		if(currentFocusElement == NULL_FOCUS){
+			nextFocusElement = 0;
+		}else{
+			nextFocusElement = currentFocusElement + 1;
+		}
+		
+		if(items.isEmpty() || items.size() <= nextFocusElement){
+			 currentFocusElement = NULL_FOCUS;
 			 GUIBoss.setFocusOnCommandBar();
 		 }else{
-			 Component item = items.peekFirst();
+			 Component item = items.get(nextFocusElement);
 			 item.requestFocus();
+			 item.addKeyListener(keyEventListener);
+			 currentFocusElement = nextFocusElement;
+			 System.out.println("changed to " + currentFocusElement);
 		 }
 	}
+	
 	protected void hideNotifications(){
 		popupPane.setVisible(false);
 	}
