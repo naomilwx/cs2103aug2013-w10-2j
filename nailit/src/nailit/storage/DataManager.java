@@ -27,11 +27,11 @@ public class DataManager {
 	public int add(int ID, String taskString){
 		if(!addedBefore(ID)){
 			ID = generateNewID();
-			dataList.add(ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
+			dataList.add(taskString);
 		}
 		else{
 			assert(ID <= dataList.size()-1);
-			dataList.set(ID, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
+			dataList.set(ID, taskString);
 		}
 		return ID;
 	}
