@@ -1,10 +1,14 @@
 package nailit.logic.command;
 import org.joda.time.DateTime;
 
+import test.storage.StorageStub;
+
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
+import nailit.storage.FileCorruptionException;
+import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandUpdate extends Command{
@@ -20,9 +24,10 @@ public class CommandUpdate extends Command{
 	private final String Success_Msg_FirstPart = "The task with Task ID: "; 
 	private final String Success_Msg_SecondPart	= "is updated successfully";
 	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
+	private final String UpdateFeedback = "update the task and the content updated is: ";
 
 
-	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse) {
+	public CommandUpdate(ParserResult resultInstance, StorageStub storerToUse) {
 		super(resultInstance, storerToUse);
 		updatedContent = "";
 		commandType = "update";
@@ -30,7 +35,13 @@ public class CommandUpdate extends Command{
 
 	@Override
 	public Result executeCommand() {
-		retrieveTheTask();
+		try {
+			retrieveTheTask();
+		} catch(Exception e) {
+			createUnsuccessfulResultObject();
+			return executedResult;
+		}
+
 		updateTheRetrievedTask();
 		addTheUpdatedTaskObjOnStorage();
 		createResultObject();
@@ -39,21 +50,20 @@ public class CommandUpdate extends Command{
 	}
 	
 	private void createCommandSummary() {
-		commandSummary = "update the task and the content updated is: "
-				+ updatedContent;
+		commandSummary = UpdateFeedback + updatedContent;
 		
 	}
 
 	private void createResultObject() {
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
-				Success_Msg_FirstPart + taskToRetrieveID);
+				Success_Msg_FirstPart + taskToRetrieveID + Success_Msg_SecondPart);
 		
 	}
 	
 	// there is no such task record in the storage to display
 	private void createUnsuccessfulResultObject() {
-		executedResult = new Result(false, false, Result.TASK_DISPLAY,
-				UnsuccessfulFeedback, null, null);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY,
+				UnsuccessfulFeedback);
 	}
 
 	private void addTheUpdatedTaskObjOnStorage() {
@@ -89,17 +99,13 @@ public class CommandUpdate extends Command{
 		}
 	}
 
-	private void retrieveTheTask() {
-		try {
-			taskToRetrieveID = parserResultInstance.getTaskID();
-			taskRetrieved = storer.retrieve(taskToRetrieveID);
-		} catch (Exception e) {
-			createUnsuccessfulResultObject();
-		}
+	private void retrieveTheTask() throws Exception {
+		taskToRetrieveID = parserResultInstance.getTaskID();
+		taskRetrieved = storer.retrieve(taskToRetrieveID);
+
 	}
 	
 	public int getTaskID() {
 		return taskToRetrieveID;
 	}
-
 }
