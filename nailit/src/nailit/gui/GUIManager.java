@@ -80,8 +80,8 @@ public class GUIManager {
 			setWindowLookAndFeel();
 			this.launcher = launcher;
 			//TODO:
-	//		logicExecutor = new LogicManager();
-			logicExecutor = new LogicManagerStub();
+			logicExecutor = new LogicManager();
+//			logicExecutor = new LogicManagerStub();
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 		}catch(FileCorruptionException e){
