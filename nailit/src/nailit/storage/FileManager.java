@@ -46,7 +46,7 @@ public class FileManager {
 			for(int i=0;i<dataListForWriting.size();i++){
 				String line = dataListForWriting.get(i);
 				if(line != null){
-					writer.write(line);	
+					writer.write(line+"\n");	
 				}
 			}
 			writer.close();
@@ -56,7 +56,7 @@ public class FileManager {
 		}
 		
 	}
-	
+		
 	public Vector<String> getDataList(){
 		return dataListForReading; 
 	}
