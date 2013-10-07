@@ -29,53 +29,56 @@ public class AddParser extends Parser {
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
 			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
-			}else{
-				boolean flag = false;
-				if (listOfCommand[i].toLowerCase().contains("at")){
-			
-					int atIndex = listOfCommand[i].toLowerCase().indexOf("at");
-					System.out.println(listOfCommand[i]);
-					System.out.println(atIndex);
-					if (atIndex ==0){
-						if (listOfCommand[i].charAt(atIndex+2) == ' '){
-							flag = true;
-							int stringLength = listOfCommand[i].length();					
-							resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
-						}
-					}else if ((listOfCommand[i].charAt(atIndex-1) == ' ') && (listOfCommand[i].charAt(atIndex+2) == ' ')){
-						flag = true;
-						int stringLength = listOfCommand[i].length();					
-						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
-					}
-	
-				}else if (listOfCommand[i].toLowerCase().contains("from") && listOfCommand[i].toLowerCase().contains("to")){
-					int fromIndex = listOfCommand[i].toLowerCase().indexOf("from");
-					int toIndex = listOfCommand[i].toLowerCase().indexOf("to");
-					int stringLength = listOfCommand[i].length();
-					
-					System.out.println(fromIndex);
-					if (fromIndex == 0)
-					{
-						if ((fromIndex<toIndex) && (listOfCommand[i].charAt(fromIndex+4) == ' ') 
-								&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
-							flag = true;
-							resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
-							resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
-						}
-					}else if ((fromIndex<toIndex) && (listOfCommand[i].charAt(fromIndex-1) == ' ') && (listOfCommand[i].charAt(fromIndex+4) == ' ')
-				
-							&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
-						flag = true;
-						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
-						resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));}
-				}else
-					resultExecution.setName(listOfCommand[i]);
-				if (flag == false)
-					resultExecution.setName(listOfCommand[i]);
-			}
+			}else if (Parser.isDateTime(listOfCommand[i])){
+				if (resultExecution.getStartTime() == null)
+					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
+				else 
+					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
+			}else 
+				resultExecution.setName(listOfCommand[i]);
 			
 		}
 		
 		return resultExecution;
 	}
 }
+
+/*boolean flag = false;
+if (listOfCommand[i].toLowerCase().contains("at")){
+
+	int atIndex = listOfCommand[i].toLowerCase().indexOf("at");
+	System.out.println(listOfCommand[i]);
+	System.out.println(atIndex);
+	if (atIndex ==0){
+		if (listOfCommand[i].charAt(atIndex+2) == ' '){
+			flag = true;
+			int stringLength = listOfCommand[i].length();					
+			resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
+		}
+	}else if ((listOfCommand[i].charAt(atIndex-1) == ' ') && (listOfCommand[i].charAt(atIndex+2) == ' ')){
+		flag = true;
+		int stringLength = listOfCommand[i].length();					
+		resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(atIndex,stringLength)));
+	}
+
+}else if (listOfCommand[i].toLowerCase().contains("from") && listOfCommand[i].toLowerCase().contains("to")){
+	int fromIndex = listOfCommand[i].toLowerCase().indexOf("from");
+	int toIndex = listOfCommand[i].toLowerCase().indexOf("to");
+	int stringLength = listOfCommand[i].length();
+	
+	System.out.println(fromIndex);
+	if (fromIndex == 0)
+	{
+		if ((fromIndex<toIndex) && (listOfCommand[i].charAt(fromIndex+4) == ' ') 
+				&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
+			flag = true;
+			resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
+			resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
+		}
+	}else if ((fromIndex<toIndex) && (listOfCommand[i].charAt(fromIndex-1) == ' ') && (listOfCommand[i].charAt(fromIndex+4) == ' ')
+
+			&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
+		flag = true;
+		resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
+		resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));}
+}*/
