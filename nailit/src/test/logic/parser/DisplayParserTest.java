@@ -17,8 +17,8 @@ public class DisplayParserTest {
 	public void test(){
 		
 		
-		//testExecuteIsDisplayAll(true,"ALL");
-		//testExecuteTaskID(12, "12");
+		testExecuteIsDisplayAll(true,"ALL");
+		testExecuteTaskID(12, "12");
 		testExecuteStartTime("11 Sep 2013", "sep 11 2013");
 		
 	}
