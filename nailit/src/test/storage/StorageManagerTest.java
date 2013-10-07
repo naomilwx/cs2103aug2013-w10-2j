@@ -18,16 +18,16 @@ public class StorageManagerTest {
 	@Test
 	public void test() throws FileCorruptionException, NoTaskFoundException {
 		sto = new StorageManager();
-//		sto.clear();
+		sto.clear();
 		Task task1 = new Task("frist task");
 		Task task2 = new Task("second task");
-		testAddCommand("0,frist task,null,null,1,,,0\n",task1);
-		testAddCommand("0,frist task,null,null,1,,,0\n1,second task,null,null,1,,,0\n",task2);
-//		Task task3 = new Task(1,"third task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
-//		testAddCommand("0,frist task,null,null,1,,,0\n1,third task,null,null,1,school stuff,desc,1\n",task3);
-////		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
-////		testAddCommand("",task4);
-//		testRemoveCommand("1,third task,null,null,1,school stuff,desc,1\n",0);
+		testAddCommand("1,frist task,null,null,1,,,0\n",task1);
+		testAddCommand("1,frist task,null,null,1,,,0\n2,second task,null,null,1,,,0\n",task2);
+		Task task3 = new Task(2,"third task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
+		testAddCommand("1,frist task,null,null,1,,,0\n2,third task,null,null,1,school stuff,desc,1\n",task3);
+//		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
+//		testAddCommand("",task4);
+		testRemoveCommand("2,third task,null,null,1,school stuff,desc,1\n",1);
 		
 	}
 	
