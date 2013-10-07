@@ -49,8 +49,21 @@ public class StorageManager {
 		try{
 			int task_ID = Integer.parseInt(result[0]);
 			String name = result[1];
-			DateTime startTime = new DateTime(result[2]);
-			DateTime endTime = new DateTime(result[3]);
+			DateTime startTime;
+			if(result[2].compareTo("null") == 0){
+				startTime = null;
+			}
+			else{
+				startTime = new DateTime(result[2]);
+			}
+			DateTime endTime;
+			if(result[3].compareTo(result[3]) == 0){
+				endTime = null;
+			}
+			else{
+				endTime = new DateTime(result[3]);
+			}
+			
 			TaskPriority priority = TaskPriority.getPriority(Integer.parseInt(result[4]));
 			String tag = result[5];
 			String desc = result[6];
