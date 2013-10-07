@@ -17,6 +17,7 @@ public class StorageStub {
 		return 123;
 	}
 	
+	// for test normal situations
 	public Task retrieve(int taskID) {
 		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
 		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
