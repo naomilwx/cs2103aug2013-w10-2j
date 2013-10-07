@@ -2,6 +2,7 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
+
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.ParserResult;
@@ -32,29 +33,41 @@ public class CommandDisplay extends Command{
 	@Override
 	public Result executeCommand() {
 		if(parserResultInstance.isDisplayAll()) {
-			displayAllTasks();
+			return displayAllTasks();
 		} else if(parserResultInstance.isDisplayHistory()) {
-			displayOperationsHistory();
+			return displayOperationsHistory();
 		} else {
-			displayTheTask();
+			return displayTheTask();
 		}
-		return executedResult;
 	}
 
-	private void displayAllTasks() {
-		// TODO Auto-generated method stub
-		
+	private Result displayAllTasks() {
+		try {
+			Vector<Task> vectorOfTasks = storer.retrieveAll();
+			createResultObject(false, true, Result.TASK_DISPLAY, null, vectorOfTasks, null);
+			return executedResult;
+		} catch(Exception e) {
+			createUnsuccessfulResultObject();
+			return executedResult;
+		}
 	}
 
-	private void displayTheTask() {
-		retrieveTheTask();
+	private Result displayTheTask() {
+		try {
+			retrieveTheTask();
+		} catch(Exception e) {
+			createUnsuccessfulResultObject();
+			return executedResult;
+		}
 		Vector<Task> vectorStoringTheTask = new Vector<Task>();
 		vectorStoringTheTask.add(taskRetrieved);
 		createResultObject(false, true, Result.TASK_DISPLAY, null, vectorStoringTheTask, null);
 		createCommandSummary();
+		return executedResult;
 	}
 
-	private void displayOperationsHistory() {
+	private Result displayOperationsHistory() {
+		return executedResult;
 		// TODO Auto-generated method stub
 		
 	}
@@ -75,18 +88,14 @@ public class CommandDisplay extends Command{
 	
 	// there is no such task record in the storage to display
 	private void createUnsuccessfulResultObject() {
-		executedResult = new Result(false, false, Result.TASK_DISPLAY, UnsuccessfulFeedback, null, null);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback, null, null);
 	}
 
-	private void retrieveTheTask() {
-		try{
-			taskToRetrieveID = parserResultInstance.getTaskID();
-			taskRetrieved = storer.retrieve(taskToRetrieveID);
-		} catch(Exception e) {
-			createUnsuccessfulResultObject();
-		}
+	private void retrieveTheTask() throws Exception {
+		taskToRetrieveID = parserResultInstance.getTaskID();
+		taskRetrieved = storer.retrieve(taskToRetrieveID);
 	}
-	
+
 	public int getTaskID() {
 		return taskToRetrieveID;
 	}

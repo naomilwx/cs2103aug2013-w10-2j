@@ -6,7 +6,11 @@ import nailit.logic.ParserResult;
 public class ParserManager {
 
 	private String commandToExecute;
-	
+
+	public ParserManager() {
+		commandToExecute = "";
+	}
+
 	public void passCommand(String command){
 		commandToExecute = command;
 	}
@@ -14,6 +18,8 @@ public class ParserManager {
 	public ParserResult execute() {
 		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
+		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
+		commandToExecute = commandToExecute.trim();
 		switch (commandType) {
 		case ADD:
 			AddParser addParserManager = new AddParser(commandToExecute);

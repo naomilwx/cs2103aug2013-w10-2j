@@ -7,31 +7,51 @@ import static org.junit.Assert.*;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.parser.AddParser;
-import nailit.logic.parser.DeleteParser;
+import nailit.logic.parser.UpdateParser;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
 public class UpdateParserTest {
 	@Test
 	public void test(){
-		ParserResult expectedDelete = new ParserResult();
+		ParserResult expectedUpdate1 = new ParserResult();
 		
-		expectedDelete.setTaskID(12);
-		expectedDelete.setCommand(CommandType.DELETE);
+		expectedUpdate1.setTaskID(12);
+		expectedUpdate1.setCommand(CommandType.UPDATE);
 		
-		testExecute(expectedDelete.getTaskID(),"12");
-		testExecuteCommandType(expectedDelete.getCommand().toString(),"12");
+		testExecuteName("CS Assignment 2","Name CS Assignment 2");
+		testExecuteTag("#Work#", "Tag #Work#");
+		testExecuteTaskPriority("LOW", "Priority LOW");
+		testExecuteStartTime("11 Feb 2013", "StartTime feb 11 2013");
+		testExecuteEndTime("11 Feb 2013", "endtime feb 11 2013");
 		
 	}
 	
-	private void testExecute (int expected, String command){
-		DeleteParser testDelete = new DeleteParser(command);
-		assertEquals(expected,testDelete.execute().getTaskID());
+	private void testExecuteName (String expected, String command){
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getName());
 	}
 	
-	private void testExecuteCommandType (String expected, String command){
-		DeleteParser testDelete = new DeleteParser(command);
-		assertEquals(expected,testDelete.execute().getCommand().toString());
+	private void testExecuteTag (String expected, String command){
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getTag());
 	}
+	
+	private void testExecuteTaskPriority (String expected, String command){
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getPriority().toString());
+	}
+	
+	private void testExecuteStartTime (String expected, String command){
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
+	}
+	
+	private void testExecuteEndTime (String expected, String command){
+		UpdateParser testUpdate = new UpdateParser(command);
+		assertEquals(expected,testUpdate.execute().getEndTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
+	}
+	
+	
 
 }

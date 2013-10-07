@@ -22,6 +22,7 @@ public class StorageManager {
 		hardDisk = new FileManager(DATAPATH);
 		origInMemory = new DataManager();
 		currInMemory = new DataManager();
+		currInMemory.setDataList(hardDisk.getDataList());
 
 	}
 	public int add(Task task){
@@ -32,11 +33,16 @@ public class StorageManager {
 				
 		ID = currInMemory.add(ID,taskString);
 		
+		assert(ID>=0);
+		
 		saveToFile();
 		
 		return ID;
 	}
 
+	public Task retrieveNew(int ID){
+		return null;//TODO : reformat DataManager and FileManager
+	}
 	//update stub
 	public Task retrieve(int ID) throws NoTaskFoundException, FileCorruptionException {
 		
@@ -46,8 +52,21 @@ public class StorageManager {
 		try{
 			int task_ID = Integer.parseInt(result[0]);
 			String name = result[1];
-			DateTime startTime = new DateTime(result[2]);
-			DateTime endTime = new DateTime(result[3]);
+			DateTime startTime;
+			if(result[2].compareTo("null") == 0){
+				startTime = null;
+			}
+			else{
+				startTime = new DateTime(result[2]);
+			}
+			DateTime endTime;
+			if(result[3].compareTo(result[3]) == 0){
+				endTime = null;
+			}
+			else{
+				endTime = new DateTime(result[3]);
+			}
+			
 			TaskPriority priority = TaskPriority.getPriority(Integer.parseInt(result[4]));
 			String tag = result[5];
 			String desc = result[6];
@@ -69,8 +88,24 @@ public class StorageManager {
 		
 	}
 	
-	public Vector<Task> retrieveAll(){
-		return null;
+	public Vector<Task> retrieveAll() throws FileCorruptionException{
+		Vector<String> dataList = currInMemory.getDataList();
+		Vector<Task> taskList = new Vector<Task>();
+		for(int i=1;i<=dataList.size();i++){
+			try {
+				Task task = retrieve(i);
+				taskList.add(task);
+			} catch (NoTaskFoundException e) {
+
+			} 
+		}
+		
+		return taskList;
+	}
+	
+	public void clear(){
+		currInMemory.setDataList(new Vector<String>());
+		saveToFile();
 	}
 	/**
 	 * Private Methods

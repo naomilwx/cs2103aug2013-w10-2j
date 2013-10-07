@@ -20,7 +20,7 @@ public class DisplayParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DISPLAY);
 		
-		if (userCommand.equalsIgnoreCase("ALL")){
+		if (listOfCommand[0].equalsIgnoreCase("ALL")){
 			resultExecution.setDisplayAll(true);
 		}else if (Parser.isTaskID(userCommand)){
 			resultExecution.setTaskID(Integer.parseInt(userCommand));

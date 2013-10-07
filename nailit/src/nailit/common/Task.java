@@ -257,8 +257,21 @@ public class Task {
 		assert(isValidPriority(priority));
 		
 		String name = this.getName();
-		String startDate = this.getStartTime().toString();
-		String endDate = this.getEndTime().toString();
+		String startDate;
+		if(this.getStartTime() == null){
+			startDate = null;
+		}
+		else{
+			startDate = this.getStartTime().toString();
+		}
+		
+		String endDate;
+		if(this.getEndTime() == null){
+			endDate = null;
+		}
+		else{
+			endDate = this.getEndTime().toString();
+		}
 		String desc = this.getDescription();
 		String tag = this.getTag();
 		

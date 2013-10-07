@@ -25,7 +25,7 @@ public class ParserResult{
 		taskID = 0;
 		command = CommandType.INVALID;
 		name = null;
-		priority = null;
+		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 		tag = null;
 		startTime = null;
 		endTime = null;
