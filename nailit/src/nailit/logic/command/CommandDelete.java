@@ -13,7 +13,8 @@ public class CommandDelete extends Command{
 	private Task taskToRemove;
 	private int taskToDeleteID;
 
-	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
+	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";
+	private final String FeedbackForNotExistingTask = "The to-delete task does not exist in the storage."; 
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
@@ -22,10 +23,25 @@ public class CommandDelete extends Command{
 
 	@Override
 	public Result executeCommand() {
-		removeTheTaskOnStorage();
+		try {
+			removeTheTaskOnStorage();
+		} catch(Exception e) {
+			createResultObjectForNotExistingTask();
+			createCommandSummaryForDeletingNotExistingTask();
+			return executedResult;
+		}
+		
 		createResultObject();
 		createCommandSummary();
 		return executedResult;
+	}
+
+	private void createResultObjectForNotExistingTask() {
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
+	}
+
+	private void createCommandSummaryForDeletingNotExistingTask() {
+		commandSummary = "This is a delete command, but the to-delete task does not exist in the storage.";		
 	}
 
 	private void createResultObject() {
@@ -45,9 +61,7 @@ public class CommandDelete extends Command{
 			taskToDeleteID = parserResultInstance.getTaskID();
 			taskToRemove = storer.remove(taskToDeleteID);
 		} catch (Exception e) {
-			// do nothing, since the purpose is to remove the 
-			// task and the storage feedbacks that there is no 
-			// such task record
+			// no need to remove, since already not there.
 		}
 		
 	}
