@@ -37,6 +37,9 @@ public class StorageManager {
 		return ID;
 	}
 
+	public Task retrieveNew(int ID){
+		return null;//TODO : reformat DataManager and FileManager
+	}
 	//update stub
 	public Task retrieve(int ID) throws NoTaskFoundException, FileCorruptionException {
 		
@@ -69,8 +72,19 @@ public class StorageManager {
 		
 	}
 	
-	public Vector<Task> retrieveAll(){
-		return null;
+	public Vector<Task> retrieveAll() throws FileCorruptionException{
+		Vector<String> dataList = currInMemory.getDataList();
+		Vector<Task> taskList = new Vector<Task>();
+		for(int i=0;i<dataList.size();i++){
+			try {
+				Task task = retrieve(i);
+				taskList.add(task);
+			} catch (NoTaskFoundException e) {
+
+			} 
+		}
+		
+		return taskList;
 	}
 	/**
 	 * Private Methods
