@@ -24,6 +24,7 @@ import test.logic.LogicManagerStub;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
+import nailit.storage.FileCorruptionException;
 
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
@@ -37,6 +38,7 @@ public class GUIManager {
 	protected static final int MAIN_WINDOW_Y_POS = 100;
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
+	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	
 	protected static final int ID_COLUMN_WIDTH = 50;
@@ -69,17 +71,18 @@ public class GUIManager {
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
-	//TODO:
-	private LogicManagerStub logicstub;
 	
 	public GUIManager(final AppLauncher launcher) {
+		try{
 		setWindowLookAndFeel();
 		this.launcher = launcher;
 		//TODO:
 //		logicExecutor = new LogicManager();
-		logicstub = new LogicManagerStub();
+		logicExecutor = new LogicManagerStub();
 		createComponentsAndAddToMainFrame();
-		//stub to be modified later
+		}catch(FileCorruptionException e){
+			
+		}
 	}
 	
 	private void createComponentsAndAddToMainFrame() {
@@ -115,10 +118,12 @@ public class GUIManager {
 	protected void executeUserInputCommand(String input){
 		System.out.println(input);
 		displayArea.hideNotifications();
-		Result executionResult = logicstub.executeCommand(input);
+		Result executionResult = logicExecutor.executeCommand(input);
+		if(executionResult == null){
+			System.out.println("die!");
+		}
 		commandBar.clearUserInput();
 		processAndDisplayExecutionResult(executionResult);
-//		logicExecutor.executeCommand(input);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
