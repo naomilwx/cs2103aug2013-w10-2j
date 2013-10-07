@@ -24,20 +24,20 @@ public class UpdateParser extends Parser {
 		if (listOfCommand[0].equalsIgnoreCase("name")){
 			String answer = "";
 			for (int i=1; i<listOfCommand.length; i++)
-				answer += listOfCommand[i];
-			resultExecution.setName(answer);
+				answer += listOfCommand[i]+ " ";
+			resultExecution.setName(answer.substring(0, answer.length()-1));
 		}else if (listOfCommand[0].equalsIgnoreCase("tag")){
 			resultExecution.setTag(listOfCommand[1]);
 		}else if (listOfCommand[0].equalsIgnoreCase("StartTime")){
 			String answer = "";
 			for (int i=1; i<listOfCommand.length; i++)
-				answer += listOfCommand[i];
-			resultExecution.setStartTime(Parser.retrieveDateTime(answer));
+				answer += listOfCommand[i]+" ";
+			resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 		}else if (listOfCommand[0].equalsIgnoreCase("EndTime")){
 			String answer = "";
 			for (int i=1; i<listOfCommand.length; i++)
-				answer += listOfCommand[i];
-			resultExecution.setEndTime(Parser.retrieveDateTime(answer));
+				answer += listOfCommand[i]+" ";
+			resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 		}else if (listOfCommand[0].equalsIgnoreCase("Priority")){
 			resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[1]));
 		}
