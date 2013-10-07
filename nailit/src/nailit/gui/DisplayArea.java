@@ -45,7 +45,6 @@ public class DisplayArea extends JLayeredPane {
 			defaultPaneSetFocusHandler();
 		 }
 		public void focusLost(FocusEvent event){
-			System.out.println("lost");
 		}
 	};
 	private KeyAdapter keyEventListener = new KeyAdapter(){
@@ -122,7 +121,6 @@ public class DisplayArea extends JLayeredPane {
 			 item.requestFocus();
 			 currentFocusElement = nextFocusElement;
 		 }
-		System.out.println("changed to " + currentFocusElement);
 	}
 	
 	protected void hideNotifications(){

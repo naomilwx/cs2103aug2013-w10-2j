@@ -22,12 +22,20 @@ public class TextDisplay extends JScrollPane{
 	};
 	
 	protected JTextPane textPane;
+	private int containerWidth;
+	private int containerHeight;
 	
 	public TextDisplay(int width, int height){
-		setSize(width, height);
+		configureMainFrame(width, height);
+		createAndConfigureTextPane();
+	}
+	private void configureMainFrame(int width, int height){
+		containerWidth = width;
+		containerHeight = height;
+		setSize(containerWidth, containerHeight);
 		setBorder(UNFOCUS_LINE_BORDER);
 		addFocusListener(textDisplayFocusListener);
-		createAndConfigureTextPane();
+		
 	}
 	private void createAndConfigureTextPane(){
 		textPane = new JTextPane();
