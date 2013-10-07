@@ -58,7 +58,8 @@ public class AddParser extends Parser {
 								&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
 							flag = true;
 							resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
-							resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));}
+							resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
+						}
 					}else if ((fromIndex<toIndex) && (listOfCommand[i].charAt(fromIndex-1) == ' ') && (listOfCommand[i].charAt(fromIndex+4) == ' ')
 				
 							&& (listOfCommand[i].charAt(toIndex-1) == ' ') && (listOfCommand[i].charAt(toIndex+2) == ' ')){
