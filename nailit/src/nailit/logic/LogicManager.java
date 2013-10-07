@@ -4,6 +4,7 @@ import nailit.common.Result;
 import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
+import nailit.storage.FileCorruptionException;
 
 
 public class LogicManager{
@@ -11,7 +12,7 @@ public class LogicManager{
 	private ParserManager ParserInstance;
 	private CommandManager commandInstance;
 	
-	public LogicManager() {
+	public LogicManager() throws FileCorruptionException {
 		ParserInstance = new ParserManager();
 		commandInstance = new CommandManager();
 	}
