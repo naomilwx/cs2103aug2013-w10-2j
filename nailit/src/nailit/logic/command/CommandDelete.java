@@ -4,6 +4,8 @@ import test.storage.StorageStub;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.ParserResult;
+import nailit.storage.FileCorruptionException;
+import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
@@ -56,16 +58,13 @@ public class CommandDelete extends Command{
 				+ taskToRemove.getPriority();
 	}
 
-	private void removeTheTaskOnStorage() {
-		try {
-			taskToDeleteID = parserResultInstance.getTaskID();
-			taskToRemove = storer.remove(taskToDeleteID);
-		} catch (Exception e) {
-			// no need to remove, since already not there.
-		}
-		
+	private void removeTheTaskOnStorage() throws NoTaskFoundException,
+			FileCorruptionException {
+
+		taskToDeleteID = parserResultInstance.getTaskID();
+		taskToRemove = storer.remove(taskToDeleteID);
 	}
-	
+
 	public int getTaskID() {
 		return taskToDeleteID;
 	}

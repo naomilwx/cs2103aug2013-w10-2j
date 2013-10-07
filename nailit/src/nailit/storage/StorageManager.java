@@ -91,7 +91,7 @@ public class StorageManager {
 	public Vector<Task> retrieveAll() throws FileCorruptionException{
 		Vector<String> dataList = currInMemory.getDataList();
 		Vector<Task> taskList = new Vector<Task>();
-		for(int i=0;i<dataList.size();i++){
+		for(int i=1;i<=dataList.size();i++){
 			try {
 				Task task = retrieve(i);
 				taskList.add(task);
