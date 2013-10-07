@@ -76,7 +76,7 @@ public class GUIManager {
 		this.launcher = launcher;
 		//TODO:
 //		logicExecutor = new LogicManager();
-		logicstub = new LogicManagerStub(Result.LIST_DISPLAY);
+		logicstub = new LogicManagerStub();
 		createComponentsAndAddToMainFrame();
 		//stub to be modified later
 	}

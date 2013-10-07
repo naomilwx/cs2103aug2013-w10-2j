@@ -90,6 +90,7 @@ public class TableDisplay extends JScrollPane{
 	private void configureTable() {
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
+		table.setFocusable(false);
 		setRowWidths();
 		setViewportView(table);
 	}
