@@ -103,7 +103,7 @@ public class FileManager {
 	private void read() throws FileCorruptionException{
 		try {
 			String line = null;
-			int lastIndex = -1;
+			int lastIndex = 0;
 			while((line = reader.readLine()) != null){
 				String[] s = line.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);
 				int ID = Integer.parseInt(s[0]);
