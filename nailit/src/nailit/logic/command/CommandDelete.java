@@ -44,7 +44,9 @@ public class CommandDelete extends Command{
 			taskToDeleteID = parserResultInstance.getTaskID();
 			taskToRemove = storer.remove(taskToDeleteID);
 		} catch (Exception e) {
-			
+			// do nothing, since the purpose is to remove the 
+			// task and the storage feedbacks that there is no 
+			// such task record
 		}
 		
 	}
