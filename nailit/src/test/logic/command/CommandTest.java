@@ -15,7 +15,11 @@ import org.junit.Test;
 public class CommandTest {
 	
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
-	private final String SuccessDeleteMsg = "The task is deleted successfully, the Task ID for it is: ";;
+	private final String SuccessDeleteMsg = "The task is deleted successfully, the Task ID for it is: ";
+	private final String SuccessMsgFirstPart = "The task with Task ID: "; 
+	private final String SuccessMsgSecondPart	= "is updated successfully";
+	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
+
 
 
 	@Test
@@ -61,20 +65,47 @@ public class CommandTest {
 		CommandManager cm = new CommandManager();
 		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
 		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
-		ParserResult prForCommandAdd = createParserResult(CommandType.DELETE, 
+		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE, 
 				"CS2103 project demo", startTime, endTime, TaskPriority.HIGH, 
 				"school work");
 		// function delete, taskToDeleteID needed
-		prForCommandAdd.setTaskID(123);
-		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
+		prForCommandDelete.setTaskID(123);
+		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessDeleteMsg + taskID);
-		testTwoResultObj(resultObjOfCommandAdd, expectedResultObj);
+		testTwoResultObj(resultObjOfCommandDelete, expectedResultObj);
 	}
 	
 	@Test
-	public void testCommandUpdate() {
-		
+	public void testCommandUpdateNotExistingTask() throws FileCorruptionException {
+		CommandManager cm = new CommandManager();
+		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
+		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
+		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE, 
+				"CS2103 project demo", startTime, endTime, TaskPriority.HIGH, 
+				"school work");
+		// function update, taskToDeleteID needed
+		prForCommandUpdate.setTaskID(123);
+		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
+		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		Result expectedResultObj = createSimpleResultObj(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
+		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
+	}
+	
+	@Test
+	public void testCommandUpdate() throws FileCorruptionException {
+		CommandManager cm = new CommandManager();
+		DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
+		DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
+		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE, 
+				"CS2103 project demo", startTime, endTime, TaskPriority.HIGH, 
+				"school work");
+		// function update, taskToDeleteID needed
+		prForCommandUpdate.setTaskID(123);
+		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
+		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsgFirstPart + taskID + SuccessMsgSecondPart);
+		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
 	
 	@Test
