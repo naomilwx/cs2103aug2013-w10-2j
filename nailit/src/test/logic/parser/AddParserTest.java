@@ -43,7 +43,6 @@ public class AddParserTest {
 		
 		private void testExecuteName (String expected, String command){
 			AddParser testAdd = new AddParser(command);
-			System.out.println(testAdd.execute().getName());
 			assertEquals(expected,testAdd.execute().getName());
 		}
 		
