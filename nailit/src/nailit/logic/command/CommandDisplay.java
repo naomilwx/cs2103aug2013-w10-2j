@@ -32,14 +32,31 @@ public class CommandDisplay extends Command{
 	@Override
 	public Result executeCommand() {
 		if(parserResultInstance.isDisplayAll()) {
-			retrieveAllTheTasks();
+			displayAllTasks();
 		} else if(parserResultInstance.isDisplayHistory()) {
-			
+			displayOperationsHistory();
+		} else {
+			displayTheTask();
 		}
-		retrieveTheTask();
-		//createResultObject(false, true, Result.TASK_DISPLAY, null, vectorStoringTheTask, null);
-		createCommandSummary();
 		return executedResult;
+	}
+
+	private void displayAllTasks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void displayTheTask() {
+		retrieveTheTask();
+		Vector<Task> vectorStoringTheTask = new Vector<Task>();
+		vectorStoringTheTask.add(taskRetrieved);
+		createResultObject(false, true, Result.TASK_DISPLAY, null, vectorStoringTheTask, null);
+		createCommandSummary();
+	}
+
+	private void displayOperationsHistory() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void retrieveAllTheTasks() {
@@ -53,8 +70,6 @@ public class CommandDisplay extends Command{
 
 	private void createResultObject(boolean isExitCommand, boolean isSuccess, int displayType, 
 			String printOut, Vector<Task> tasks, Vector<String> history) {
-		Vector<Task> vectorStoringTheTask = new Vector<Task>();
-		vectorStoringTheTask.add(taskRetrieved);
 		executedResult = new Result(isExitCommand, isSuccess, displayType, printOut, tasks, history);
 	}
 	
