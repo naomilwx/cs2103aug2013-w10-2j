@@ -17,6 +17,7 @@ public class ParserTest {
 		
 		testRetrieveDateTime(expectedDate.toString(NIConstants.DISPLAY_DATE_FORMAT),"11 Sep 2013");
 		testIsTaskID(true, "12");
+		testIsTaskID(false, "sep 11 2012");
 	}
 	
 	private void testRetrieveDateTime (String expected, String command){
