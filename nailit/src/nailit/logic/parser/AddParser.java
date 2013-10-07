@@ -37,12 +37,9 @@ public class AddParser extends Parser {
 					int stringLength = listOfCommand[i].length();
 			
 					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(fromIndex+4, toIndex)));
-					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
-				}else{
-					System.out.println(listOfCommand[i]);
+					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i].substring(toIndex+2, stringLength)));
+				}else
 					resultExecution.setName(listOfCommand[i]);
-					System.out.println(resultExecution.getName());
-				}
 			}
 		}
 		
