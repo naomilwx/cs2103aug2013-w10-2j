@@ -1,9 +1,10 @@
 package nailit.logic.parser;
 
 import nailit.logic.ParserResult;
+import nailit.common.NIConstants;
 import nailit.common.Task;
 import org.joda.time.DateTime;
-import com.joestelmach.natty.*;
+import com.joestelmach.natty.DateGroup;
 import java.util.*;
 
 public abstract class Parser {
@@ -12,9 +13,11 @@ public abstract class Parser {
 	
 	public static DateTime retrieveDateTime (String p){
 		DateTime result;
-		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
+		com.joestelmach.natty.Parser nattyParser;
 		
-		result = new DateTime(nattyParser.parse(p).get(0));
+		nattyParser = new com.joestelmach.natty.Parser();
+		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
+		result = new DateTime(resultDateGroup.getDates().get(0));
 	
 		return result;
 	}

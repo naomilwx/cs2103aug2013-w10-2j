@@ -42,6 +42,7 @@ public class AddParser extends Parser {
 					resultExecution.setName(listOfCommand[i]);
 			}
 		}
+		System.out.println(listOfCommand[1]);
 		return resultExecution;
 	}
 }
