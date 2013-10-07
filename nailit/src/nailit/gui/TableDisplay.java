@@ -26,16 +26,6 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 public class TableDisplay extends ScrollableFocusableDisplay{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 30;
-//	private final LineBorder FOCUS_LINE_BORDER = new LineBorder(GUIManager.FOCUSED_BORDER_COLOR);
-//	private final LineBorder UNFOCUS_LINE_BORDER = new LineBorder(GUIManager.BORDER_COLOR);
-//	private final FocusListener tableDisplayFocusListener = new FocusListener(){
-//		public void focusGained(FocusEvent event) {
-//			setBorder(FOCUS_LINE_BORDER);
-//		 }
-//		public void focusLost(FocusEvent event){
-//			setBorder(UNFOCUS_LINE_BORDER);
-//		}
-//	};
 	
 	private int containerHeight;
 	private int containerWidth;
