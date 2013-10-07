@@ -38,19 +38,19 @@ public class MainWindow extends JFrame {
 	 */
 	private void initialize() {
 		createAndConfigureContentPane();
-		configureMainWindowDisplay();
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		configureMainWindow();
 		addListenersToMainFrame();
-		this.setResizable(false);
 	}
 	private void createAndConfigureContentPane(){
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 	}
-	private void configureMainWindowDisplay(){
+	private void configureMainWindow(){
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setBounds(GUIManager.MAIN_WINDOW_X_POS, GUIManager.MAIN_WINDOW_Y_POS, WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setTitle(GUIManager.APPLICATION_NAME);
+		this.setResizable(false);
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
