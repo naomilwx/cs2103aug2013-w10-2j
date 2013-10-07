@@ -24,8 +24,10 @@ public abstract class Parser {
 	
 	public static boolean isTaskID(String p){
 		for (int i=0; i<p.length(); i++)
-			if (p.charAt(i)<'0' && p.charAt(i)>'9')
+			if ((p.charAt(i)<48) || (p.charAt(i)>57))
 				return false;
+		if (Integer.parseInt(p)>10000000)
+			return false;
 		return true;
 	}
 	
