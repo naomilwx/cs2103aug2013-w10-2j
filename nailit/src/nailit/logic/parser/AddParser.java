@@ -20,9 +20,11 @@ public class AddParser extends Parser {
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		resultExecution.setCommand(CommandType.ADD);
+		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
 			listOfCommand[i] = listOfCommand[i].trim();
+			System.out.println(listOfCommand[i]);
 			if (TaskPriority.isTaskPriority(listOfCommand[i])){
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i]));
 			}else if (Parser.isTag(listOfCommand[i])){

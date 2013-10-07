@@ -18,6 +18,8 @@ public class ParserTest {
 		testRetrieveDateTime(expectedDate.toString(NIConstants.DISPLAY_DATE_FORMAT),"11 Sep 2013");
 		testIsTaskID(true, "12");
 		testIsTaskID(false, "sep 11 2012");
+		testIsDateTime(true, "sep 11 2012");
+		testIsDateTime(false, "Assignment 2");
 	}
 	
 	private void testRetrieveDateTime (String expected, String command){
@@ -26,6 +28,11 @@ public class ParserTest {
 	
 	private void testIsTaskID( boolean expected, String command){
 		assertEquals(expected, Parser.isTaskID(command));
+	}
+	
+	private void testIsDateTime( boolean expected, String command)
+	{
+		assertEquals(expected, Parser.isDateTime(command));
 	}
 	
 }
