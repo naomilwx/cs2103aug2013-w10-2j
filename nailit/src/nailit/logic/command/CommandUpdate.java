@@ -27,7 +27,7 @@ public class CommandUpdate extends Command{
 	private final String UpdateFeedback = "update the task and the content updated is: ";
 
 
-	public CommandUpdate(ParserResult resultInstance, StorageStub storerToUse) {
+	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
 		updatedContent = "";
 		commandType = "update";

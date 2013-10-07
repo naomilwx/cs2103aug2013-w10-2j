@@ -15,7 +15,7 @@ public class CommandDelete extends Command{
 
 	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	
-	public CommandDelete(ParserResult resultInstance, StorageStub storerToUse) {
+	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
 		commandType = "delete";
 	}

@@ -2,7 +2,6 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
-import test.storage.StorageStub;
 
 import nailit.common.Result;
 import nailit.common.Task;
@@ -25,7 +24,7 @@ public class CommandDisplay extends Command{
 
 //	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	public CommandDisplay(ParserResult resultInstance,
-			StorageStub storerToUse, CommandManager cm) {
+			StorageManager storerToUse, CommandManager cm) {
 		super(resultInstance, storerToUse);
 		this.cm = cm;
 		commandType = "display";
@@ -43,9 +42,14 @@ public class CommandDisplay extends Command{
 	}
 
 	private Result displayAllTasks() {
-		return executedResult;
-		// TODO Auto-generated method stub
-		
+		try {
+			Vector<Task> vectorOfTasks = storer.retrieveAll();
+			createResultObject(false, true, Result.TASK_DISPLAY, null, vectorOfTasks, null);
+			return executedResult;
+		} catch(Exception e) {
+			createUnsuccessfulResultObject();
+			return executedResult;
+		}
 	}
 
 	private Result displayTheTask() {
