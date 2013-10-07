@@ -18,17 +18,17 @@ public class UpdateParserTest {
 		expectedUpdate1.setTaskID(12);
 		expectedUpdate1.setCommand(CommandType.UPDATE);
 		
-		testExecute(expectedUpdate1.getTaskID(),"12");
-		testExecuteCommandType(expectedUpdate1.getCommand().toString(),"12");
+		testExecuteName("CS Assignment 2","Name CS Assignment 2");
+		testExecuteTag("#Work#", "Tag #Work");
 		
 	}
 	
-	private void testExecute (int expected, String command){
+	private void testExecuteName (String expected, String command){
 		UpdateParser testUpdate = new UpdateParser(command);
-		assertEquals(expected,testUpdate.execute().getTaskID());
+		assertEquals(expected,testUpdate.execute().getName());
 	}
 	
-	private void testExecuteCommandType (String expected, String command){
+	private void testExecuteTag (String expected, String command){
 		UpdateParser testUpdate = new UpdateParser(command);
 		assertEquals(expected,testUpdate.execute().getTaskID());
 	}
