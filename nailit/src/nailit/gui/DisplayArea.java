@@ -143,6 +143,7 @@ public class DisplayArea extends JLayeredPane {
 			removeExtraContent();
 		}
 		component.addKeyListener(keyEventListener);
+		component.setFocusTraversalKeysEnabled(false);
 		defaultPane.add(component);
 		revalidate();
 	}
