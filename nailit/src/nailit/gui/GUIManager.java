@@ -83,7 +83,7 @@ public class GUIManager {
 	//		logicExecutor = new LogicManager();
 			logicExecutor = new LogicManagerStub();
 			createComponentsAndAddToMainFrame();
-			createAndDisplayHomeWindow();
+//			createAndDisplayHomeWindow();
 		}catch(FileCorruptionException e){
 			
 		}
