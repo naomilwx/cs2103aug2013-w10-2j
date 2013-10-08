@@ -1,5 +1,6 @@
 package nailit.gui;
 
+import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -13,6 +14,7 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
 	private int containerWidth;
 	private int containerHeight;
+	private int preferredHeight;
 	
 	public TextDisplay(int width, int height){
 		configureMainFrame(width, height);
@@ -26,8 +28,10 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 		addFocusListener(displayFocusListener);		
 	}
 	private void createAndConfigureTextPane(){
+		preferredHeight = containerWidth/2;
 		textPane = new JTextPane();
 		textPane.setEditable(false);
+		textPane.setPreferredSize(new Dimension(containerWidth, preferredHeight));
 		setViewportView(textPane);
 	}
 	protected void basicDisplay(String text){
