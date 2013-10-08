@@ -3,23 +3,49 @@ package nailit.logic.parser;
 import nailit.logic.ParserResult;
 import nailit.common.NIConstants;
 import nailit.common.Task;
+
 import org.joda.time.DateTime;
+
 import com.joestelmach.natty.DateGroup;
+
 import java.util.*;
 
 public abstract class Parser {
-
+	public static com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
+	
 	public abstract ParserResult execute();
 	
 	public static DateTime retrieveDateTime (String p){
 		DateTime result;
-		com.joestelmach.natty.Parser nattyParser;
 		
-		nattyParser = new com.joestelmach.natty.Parser();
 		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
 		result = new DateTime(resultDateGroup.getDates().get(0));
 	
 		return result;
+	}
+	
+	public static Vector<DateTime> retrieveDateTimesList(String p){
+		Vector<DateTime> results = new Vector<DateTime>();
+		List<DateGroup> dateGroups = nattyParser.parse(p);
+		List<Date> dates = new Vector<Date>();
+		if(!dateGroups.isEmpty()){
+			dates = dateGroups.get(0).getDates();
+		}
+		if(dates.size() == 1){
+			DateTime start = new DateTime(dates.get(0));
+			results.add(start);
+		}else if(dates.size() == 2){
+			DateTime first = new DateTime(dates.get(0));
+			DateTime second = new DateTime(dates.get(1));
+			if(first.compareTo(second) == -1){
+				results.add(first);
+				results.add(second);
+			}else{
+				results.add(second);
+				results.add(first);
+			}
+		}
+		return results;
 	}
 	
 	public static boolean isTaskID(String p){
@@ -32,7 +58,6 @@ public abstract class Parser {
 	}
 	
 	public static boolean isDateTime(String p){
-		com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
 		List<DateGroup> parseResult = nattyParser.parse(p);
 		if(parseResult.isEmpty()){
 			return false;
