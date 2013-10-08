@@ -168,7 +168,7 @@ public class GUIManager {
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
 				notificationStr = "";
-				err.printStackTrace();
+//				err.printStackTrace(); //TODO:
 			}
 			if(!notificationStr.isEmpty()){
 				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
@@ -176,7 +176,7 @@ public class GUIManager {
 			}
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
-			e.printStackTrace();
+//			e.printStackTrace(); //TODO:
 		}
 	}
 	protected void processAndDisplayExecutionResult(Result result){
@@ -285,16 +285,6 @@ public class GUIManager {
 				
 			});
 			
-//			trayIcon.addActionListener(new ActionListener(){
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//				
-//			});
-			//TODO: figure how to maximise window again
 			try {
 				systemTray.add(trayIcon);
 			} catch (AWTException e1) {
