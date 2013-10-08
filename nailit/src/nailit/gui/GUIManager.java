@@ -94,7 +94,6 @@ public class GUIManager {
 			setWindowLookAndFeel();
 			this.launcher = launcher;
 			logicExecutor = new LogicManager();
-//			logicExecutor = new LogicManagerStub();
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 			showInSystemTray(this);
@@ -106,7 +105,7 @@ public class GUIManager {
 	
 	private void createAndDisplayHomeWindow() {
 		homeWindow = new HomeWindow(this);
-		homeWindow.setVisible(true);
+//		homeWindow.setVisible(true);
 	}
 	protected void toggleHomeWindow(){
 		if(homeWindow != null){
@@ -132,6 +131,7 @@ public class GUIManager {
 	}
 	public void setVisible(boolean isVisible){
 		mainWindow.setVisible(isVisible);
+//		homeWindow.setVisible(isVisible);
 	}
 	
 	public void setFocusOnDisplay(){
@@ -261,8 +261,7 @@ public class GUIManager {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					mainWindow.setVisible(true);
-//					homeWindow.setVisible(true);
+					GUIBoss.setVisible(false);
 				}
 				
 			});
@@ -276,6 +275,15 @@ public class GUIManager {
 				
 			});
 			
+//			trayIcon.addActionListener(new ActionListener(){
+//
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//				
+//			});
 			//TODO: figure how to maximise window again
 			try {
 				systemTray.add(trayIcon);
