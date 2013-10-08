@@ -94,7 +94,12 @@ public class GUIManager {
 		homeWindow = new HomeWindow(this);
 		homeWindow.setVisible(true);
 	}
-
+	protected void toggleHomeWindow(){
+		if(homeWindow != null){
+			boolean currentVisibility = homeWindow.isVisible();
+			homeWindow.setVisible(!currentVisibility);
+		}
+	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
