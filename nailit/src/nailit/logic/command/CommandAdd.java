@@ -24,7 +24,7 @@ public class CommandAdd extends Command{
 	// this is used for the command history
 	private String commandSummary;
 	
-	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
+	private static final String SUCCESS_MSG = "Task: %1s [ID: %2d] has been successfully added";
 	
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
@@ -52,7 +52,8 @@ public class CommandAdd extends Command{
 	}
 
 	private void createResultObject() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
+		String notificationStr = String.format(SUCCESS_MSG, taskName, taskID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
 	}
 
 	private void createTaskObject() {
