@@ -15,8 +15,8 @@ public class CommandDelete extends Command{
 	private Task taskToRemove;
 	private int taskToDeleteID;
 
-	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";
-	private final String FeedbackForNotExistingTask = "The to-delete task does not exist in the storage."; 
+	private static final String SUCCESS_MSG = "Task: [ID %1s]has been successfully deleted.";
+	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task."; 
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
@@ -39,7 +39,8 @@ public class CommandDelete extends Command{
 	}
 
 	private void createResultObjectForNotExistingTask() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
+		String notificationStr = String.format(FEEDBACK_FOR_NOT_EXISTING_TASK, taskToDeleteID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
 	}
 
 	private void createCommandSummaryForDeletingNotExistingTask() {
@@ -47,7 +48,8 @@ public class CommandDelete extends Command{
 	}
 
 	private void createResultObject() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, Success_Msg + taskToDeleteID);		
+		String notificationStr = String.format(SUCCESS_MSG, taskToDeleteID);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);		
 	}
 
 	private void createCommandSummary() {
