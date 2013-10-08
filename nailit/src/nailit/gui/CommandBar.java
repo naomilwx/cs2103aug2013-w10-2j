@@ -74,6 +74,8 @@ public class CommandBar extends JPanel {
 					ctrlPressed = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
 					GUIBoss.toggleHomeWindow();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_C){
+					GUIBoss.setVisible(false);
 				}
 			}
 			@Override
