@@ -42,6 +42,7 @@ public class GUIManager {
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
+	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
 	
 	protected static final int ID_COLUMN_WIDTH = 50;
 	protected static final int NAME_COLUMN_WIDTH = 300;
@@ -125,14 +126,22 @@ public class GUIManager {
 	 * @param input
 	 */
 	protected void executeUserInputCommand(String input){
-		System.out.println(input);
-		displayArea.hideNotifications();
-		Result executionResult = logicExecutor.executeCommand(input);
-		if(executionResult == null){
-			System.out.println("die!");
+		try{
+			System.out.println(input);
+			displayArea.hideNotifications();
+			Result executionResult = logicExecutor.executeCommand(input);
+			if(executionResult == null){
+				System.out.println("die!");
+			}
+			commandBar.clearUserInput();
+			processAndDisplayExecutionResult(executionResult);
+		}catch(Error err){
+			if(err.getMessage() == "Unrecognized command type"){
+				displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
+			}
+		}catch(Exception e){
+			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 		}
-		commandBar.clearUserInput();
-		processAndDisplayExecutionResult(executionResult);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
@@ -162,8 +171,11 @@ public class GUIManager {
 		String notificationStr = result.getPrintOut();
 		boolean isSuccess = result.getExecutionSuccess();
 		if(!notificationStr.isEmpty()){
-			notificationArea.displayNotification(notificationStr, isSuccess);
+			displayNotification(notificationStr, isSuccess);
 		}
+	}
+	private void displayNotification(String notificationStr, boolean isSuccess){
+		notificationArea.displayNotification(notificationStr, isSuccess);
 		displayArea.showNotifications();
 	}
 	private void displayTaskDetails(Vector<Task> taskList){
