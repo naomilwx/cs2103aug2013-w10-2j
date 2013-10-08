@@ -37,12 +37,12 @@ public abstract class Parser {
 		if(parseResult.isEmpty()){
 			return false;
 		}else{
-			DateGroup date = parseResult.get(0);
-			return date.getText().equalsIgnoreCase(p);
+			//DateGroup date = parseResult.get(0);
+			return parseResult.get(0).getText().equalsIgnoreCase(p);
 		}
 	}
 	
-	public static boolean checkStringAfterHasDateTime(String str, String token){
+	/*public static boolean checkStringAfterHasDateTime(String str, String token){
 		int pos = str.indexOf(token);
 		int afterPos = pos + token.length();
 		if((pos != -1) && (str.length() > afterPos)){
@@ -55,12 +55,12 @@ public abstract class Parser {
 		}else{
 			return false;
 		}
-	}
+	}*/
 	
-	public static boolean hasDateTime(String p){
+	/*public static boolean hasDateTime(String p){
 		String parseStr = p.toLowerCase();
 		return (checkStringAfterHasDateTime(parseStr, "at") || checkStringAfterHasDateTime(parseStr, "from"));
-	}
+	}*/
 	
 	public static boolean isNumber(String p){
 		if(p.isEmpty()){
