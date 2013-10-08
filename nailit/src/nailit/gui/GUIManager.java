@@ -2,6 +2,7 @@ package nailit.gui;
 
 import nailit.AppLauncher;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextPane;
@@ -9,12 +10,20 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
@@ -43,6 +52,9 @@ public class GUIManager {
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
+	private static final String TRAY_ICON_IMG_PATH = "todo.png";
+	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
+	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
 	protected static final int ID_COLUMN_WIDTH = 50;
 	protected static final int NAME_COLUMN_WIDTH = 300;
@@ -84,6 +96,7 @@ public class GUIManager {
 //			logicExecutor = new LogicManagerStub();
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
+			showInSystemTray(this);
 		}catch(FileCorruptionException e){
 			//TODO:
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -218,5 +231,59 @@ public class GUIManager {
 			e.printStackTrace();
 		}
 	}
+	
+	private void showInSystemTray(final GUIManager GUIBoss){
+		if(SystemTray.isSupported()){
+			final SystemTray systemTray = SystemTray.getSystemTray();
+			Image trayImage = TRAY_ICON_IMG.getImage();
+			final TrayIcon trayIcon = new TrayIcon(trayImage);
 
+			MenuItem showMain = new MenuItem("Open");
+			MenuItem showAll = new MenuItem("Home");
+			MenuItem exitApp = new MenuItem("Exit");
+			final PopupMenu menu = new PopupMenu();
+			menu.add(showMain);
+			menu.add(showAll);
+			menu.add(exitApp);
+
+			trayIcon.setPopupMenu(menu);
+			trayIcon.setImageAutoSize(true);
+			trayIcon.setToolTip(NAILIT_TRAY_TOOLTIP_TEXT);
+			
+			showMain.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent event) {
+					mainWindow.setVisible(true);
+				}
+			});
+			
+			showAll.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					mainWindow.setVisible(true);
+//					homeWindow.setVisible(true);
+				}
+				
+			});
+			
+			exitApp.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					GUIBoss.exit();
+				}
+				
+			});
+			
+			//TODO: figure how to maximise window again
+			try {
+				System.out.println("exe");
+				systemTray.add(trayIcon);
+			} catch (AWTException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
 }
