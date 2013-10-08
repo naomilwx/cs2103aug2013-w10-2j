@@ -5,8 +5,10 @@ import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -60,6 +62,7 @@ public class CommandBar extends JPanel {
 	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
+			private boolean ctrlPressed = false;
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
@@ -67,6 +70,17 @@ public class CommandBar extends JPanel {
 					GUIBoss.executeUserInputCommand(getUserInput());
 				}else if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_TAB){
 					GUIBoss.setFocusOnDisplay();
+				}else if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = true;
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+					GUIBoss.toggleHomeWindow();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = false;
 				}
 			}
 		});
