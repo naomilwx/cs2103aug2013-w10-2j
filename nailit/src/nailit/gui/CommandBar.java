@@ -49,6 +49,7 @@ public class CommandBar extends JPanel {
 		textBar = new JTextField();
 		resizeAndpositionTextInputField();
 		addListenersToTextInputField();
+		textBar.setFocusTraversalKeysEnabled(false);
 		add(textBar);
 	}
 	
@@ -64,7 +65,7 @@ public class CommandBar extends JPanel {
 				int keyCode = keyStroke.getKeyCode();
 				if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
-				}else if(keyCode == KeyEvent.VK_UP){
+				}else if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_TAB){
 					GUIBoss.setFocusOnDisplay();
 				}
 			}
