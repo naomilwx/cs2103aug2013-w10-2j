@@ -1,6 +1,7 @@
 package nailit.gui;
 
 import nailit.AppLauncher;
+import nailit.NailItGlobalKeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -88,6 +89,7 @@ public class GUIManager {
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
+	private NailItGlobalKeyListener globalKeyListener;
 	
 	public GUIManager(final AppLauncher launcher) {
 		try{
@@ -97,6 +99,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 			showInSystemTray(this);
+			globalKeyListener = new NailItGlobalKeyListener(this);
 		}catch(FileCorruptionException e){
 			//TODO:
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -130,10 +133,17 @@ public class GUIManager {
 		mainWindow.addItem(displayArea);
 	}
 	public void setVisible(boolean isVisible){
+		if(!isVisible){
+			enableGlobalKeyListener();
+		}
 		mainWindow.setVisible(isVisible);
 //		homeWindow.setVisible(isVisible);
 	}
-	
+	public void enableGlobalKeyListener(){
+		if(!globalKeyListener.isEnabled()){
+			globalKeyListener.registerGlobalKeyHook();
+		}
+	}
 	public void setFocusOnDisplay(){
 		displayArea.setFocus();
 	}
