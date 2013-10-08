@@ -20,9 +20,8 @@ public class CommandDisplay extends Command{
 	// history
 	private CommandManager cm;
 	
-	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
+	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found. Please check and try again.";
 
-//	private final String Success_Msg = "The task is deleted successfully, the Task ID for it is: ";;
 	public CommandDisplay(ParserResult resultInstance,
 			StorageManager storerToUse, CommandManager cm) {
 		super(resultInstance, storerToUse);
@@ -88,7 +87,8 @@ public class CommandDisplay extends Command{
 	
 	// there is no such task record in the storage to display
 	private void createUnsuccessfulResultObject() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback, null, null);
+		String notificationStr = String.format(UNSUCCESS_DISPLAY_FEEDBACK, taskToRetrieveID);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, notificationStr, null, null);
 	}
 
 	private void retrieveTheTask() throws Exception {
