@@ -42,7 +42,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommand[i]+" ";
 			resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
-			resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2]));
+			resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2].toUpperCase()));
 		}
 		
 		return resultExecution;
