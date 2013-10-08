@@ -80,13 +80,13 @@ public class GUIManager {
 		try{
 			setWindowLookAndFeel();
 			this.launcher = launcher;
-			//TODO:
 			logicExecutor = new LogicManager();
 //			logicExecutor = new LogicManagerStub();
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 		}catch(FileCorruptionException e){
-			
+			//TODO:
+			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
 		}
 	}
 	
@@ -136,11 +136,18 @@ public class GUIManager {
 			commandBar.clearUserInput();
 			processAndDisplayExecutionResult(executionResult);
 		}catch(Error err){
-			if(err.getMessage() == "Unrecognized command type"){
-				displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
+			String notificationStr = err.getMessage();
+			if(notificationStr == null){
+				notificationStr = "";
+				err.printStackTrace();
+			}
+			if(!notificationStr.isEmpty()){
+				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
+				displayNotification(notificationStr, false);
 			}
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
+			e.printStackTrace();
 		}
 	}
 	protected void processAndDisplayExecutionResult(Result result){
