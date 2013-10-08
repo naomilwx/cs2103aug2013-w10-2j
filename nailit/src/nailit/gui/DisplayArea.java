@@ -139,8 +139,8 @@ public class DisplayArea extends JLayeredPane {
 			items.clear();
 		}else{
 			//always keep number of items displayed to 2.
+			removeExtraContent(component);
 			items.add(component);
-			removeExtraContent();
 		}
 		component.addKeyListener(keyEventListener);
 		component.setFocusTraversalKeysEnabled(false);
@@ -163,10 +163,14 @@ public class DisplayArea extends JLayeredPane {
 	protected void displayHistoryList(Vector<String> list){
 		//TODO
 	}
-	private void removeExtraContent(){
-		while(items.size() > MAX_NUM_ITEMS_IN_DEFAULTPANE){
-			Component extra = items.removeFirst();
-			defaultPane.remove(extra);
+	//function to keep top displayed component if it is a table and new display is not a table
+	private void removeExtraContent(Component newComponent){
+		Component first = items.peekFirst();
+		items.clear();
+		defaultPane.removeAll();
+		if((first instanceof TableDisplay) && !(newComponent instanceof TableDisplay)){
+			items.add(first);
+			defaultPane.add(first);
 		}
 	}
 	protected void addPopup(Component component){
