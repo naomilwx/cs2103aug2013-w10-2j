@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
@@ -52,7 +53,7 @@ public class GUIManager {
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
-	private static final String TRAY_ICON_IMG_PATH = "todo.png";
+	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("todo.png");
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
@@ -236,7 +237,7 @@ public class GUIManager {
 		if(SystemTray.isSupported()){
 			final SystemTray systemTray = SystemTray.getSystemTray();
 			Image trayImage = TRAY_ICON_IMG.getImage();
-			final TrayIcon trayIcon = new TrayIcon(trayImage);
+			final TrayIcon trayIcon = new TrayIcon(trayImage, NAILIT_TRAY_TOOLTIP_TEXT);
 
 			MenuItem showMain = new MenuItem("Open");
 			MenuItem showAll = new MenuItem("Home");
@@ -248,7 +249,6 @@ public class GUIManager {
 
 			trayIcon.setPopupMenu(menu);
 			trayIcon.setImageAutoSize(true);
-			trayIcon.setToolTip(NAILIT_TRAY_TOOLTIP_TEXT);
 			
 			showMain.addActionListener(new ActionListener(){
 				@Override
@@ -278,7 +278,6 @@ public class GUIManager {
 			
 			//TODO: figure how to maximise window again
 			try {
-				System.out.println("exe");
 				systemTray.add(trayIcon);
 			} catch (AWTException e1) {
 				// TODO Auto-generated catch block
