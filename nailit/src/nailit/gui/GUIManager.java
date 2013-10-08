@@ -261,7 +261,7 @@ public class GUIManager {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GUIBoss.setVisible(false);
+					GUIBoss.setVisible(true);
 				}
 				
 			});
