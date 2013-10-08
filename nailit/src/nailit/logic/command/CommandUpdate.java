@@ -2,7 +2,7 @@ package nailit.logic.command;
 import org.joda.time.DateTime;
 
 import test.storage.StorageStub;
-
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -21,10 +21,11 @@ public class CommandUpdate extends Command{
 	private String updatedContent;
 	private String commandSummary;
 	
-	private final String Success_Msg_FirstPart = "The task with Task ID: "; 
-	private final String Success_Msg_SecondPart	= "is updated successfully";
-	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
-	private final String UpdateFeedback = "update the task and the content updated is: ";
+	private static final String SUCCESS_MSG_FIRSTPART = "Task [ID: "; 
+	private static final String SUCCESS_MSG_SECONDPART	= "] has been successfully updated";
+	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK = "Sorry, Task [ID: %1d] not found. Please check and try again.";
+	private static final String UPDATE_SUCCESSFUL_FEEDBACK = 
+			"Task [ID: %1d] has been successfully updated. The content updated is: \n";
 
 
 	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse) {
@@ -44,26 +45,28 @@ public class CommandUpdate extends Command{
 
 		updateTheRetrievedTask();
 		addTheUpdatedTaskObjOnStorage();
-		createResultObject();
 		createCommandSummary();
+		createResultObject();
 		return executedResult;
 	}
 	
 	private void createCommandSummary() {
-		commandSummary = UpdateFeedback + updatedContent;
+		commandSummary = String.format(UPDATE_SUCCESSFUL_FEEDBACK, taskToRetrieveID) + updatedContent;
 		
 	}
 
 	private void createResultObject() {
+//		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
+//				SUCCESS_MSG_FIRSTPART + taskToRetrieveID + SUCCESS_MSG_SECONDPART);
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
-				Success_Msg_FirstPart + taskToRetrieveID + Success_Msg_SecondPart);
-		
+				commandSummary);
 	}
 	
 	// there is no such task record in the storage to display
 	private void createUnsuccessfulResultObject() {
+		String notificationStr = String.format(UPDATE_UNSUCCESSFUL_FEEDBACK, taskToRetrieveID);
 		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY,
-				UnsuccessfulFeedback);
+				notificationStr);
 	}
 
 	private void addTheUpdatedTaskObjOnStorage() {
@@ -75,27 +78,27 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullName()) {
 			String newName = parserResultInstance.getName();
 			taskRetrieved.setName(newName);
-			updatedContent = updatedContent + newName + " ";
+			updatedContent = updatedContent + "Name: " + newName + " \n";
 		}
 		if(!parserResultInstance.isNullStartTime()) {
 			DateTime newStartTime = parserResultInstance.getStartTime();
 			taskRetrieved.setStartTime(newStartTime);
-			updatedContent = updatedContent + newStartTime + " ";
+			updatedContent = updatedContent + "Starttime: "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		}
 		if(!parserResultInstance.isNullEndTime()) {
 			DateTime newEndTime = parserResultInstance.getEndTime();
 			taskRetrieved.setEndTime(newEndTime);
-			updatedContent = updatedContent + newEndTime + " ";
+			updatedContent = updatedContent + "Endtime: " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		}
 		if(!parserResultInstance.isNullTag()) {
 			String newTag = parserResultInstance.getTag();
 			taskRetrieved.setTag(newTag);
-			updatedContent = updatedContent + newTag + " ";
+			updatedContent = updatedContent + "Tag: " + newTag + " \n";
 		}
 		if(!parserResultInstance.isNullPriority()) {
 			TaskPriority newPriority = parserResultInstance.getPriority();
 			taskRetrieved.setPriority(newPriority);
-			updatedContent = updatedContent + newPriority + " ";
+			updatedContent = updatedContent + "Priority: " + newPriority + " ";
 		}
 	}
 
