@@ -48,9 +48,13 @@ public class Task {
 		name = taskName;
 		startTime = start;
 		endTime = end;
-		tag = t;
 		isCompleted = false;
 		priority = p;
+		if(t == null){
+			tag = "";
+		}else{
+			tag = t;
+		}
 	}
 	
 	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String tag, String desc, boolean isCompleted){
