@@ -62,8 +62,12 @@ public abstract class Parser {
 		if(parseResult.isEmpty()){
 			return false;
 		}else{
-			//DateGroup date = parseResult.get(0);
-			return parseResult.get(0).getText().equalsIgnoreCase(p);
+			if(isNumber(p)){
+				return false;
+			}else{
+				//DateGroup date = parseResult.get(0);
+				return parseResult.get(0).getText().equalsIgnoreCase(p);
+			}
 		}
 	}
 	
