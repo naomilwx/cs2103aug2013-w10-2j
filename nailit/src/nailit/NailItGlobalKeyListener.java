@@ -12,20 +12,26 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class NailItGlobalKeyListener implements NativeKeyListener{
 	private GUIManager GUI;
 	private boolean ctrlKeyDown = false;
+	private boolean isEnabled;
 	
 	public NailItGlobalKeyListener(GUIManager theGUI){
 		GUI = theGUI;
+		initialiseGlobalListener();
+	}
+	public boolean isEnabled(){
+		return isEnabled;
 	}
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if(keyCode == NativeKeyEvent.VK_CONTROL){
 			ctrlKeyDown = true;
 		}
-		if(ctrlKeyDown == true && keyCode == NativeKeyEvent.VK_STOP){
+		if(ctrlKeyDown == true && keyCode == NativeKeyEvent.VK_COMMA){
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						GUI.setVisible(true);
+						disableGlobalKeyHook();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -46,11 +52,13 @@ public class NailItGlobalKeyListener implements NativeKeyListener{
 	
 	public void registerGlobalKeyHook() {
         GlobalScreen.getInstance().addNativeKeyListener(this);
-}
+        isEnabled = true;
+	}
 
 	public void disableGlobalKeyHook() {
 	        GlobalScreen.getInstance().removeNativeKeyListener(this);
 	        ctrlKeyDown = false;
+	        isEnabled = false;
 	}
 	
 	public void initialiseGlobalListener(){
