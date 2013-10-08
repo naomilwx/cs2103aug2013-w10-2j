@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	private final WindowListener windowClosePressed =  new WindowAdapter(){
 		public void windowClosing(WindowEvent event){
-			setVisible(false);
+			GUIBoss.setVisible(false);
 		}
 	};
 	
