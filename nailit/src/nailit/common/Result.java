@@ -7,6 +7,7 @@ public class Result {
 	public static final int TASK_DISPLAY = 1;
 	public static final int LIST_DISPLAY = 2;
 	public static final int HISTORY_DISPLAY = 3;
+	public static final int EXECUTION_RESULT_DISPLAY = 4;
 	
 	private boolean isExit;
 	private boolean isSuccessful;
