@@ -93,13 +93,13 @@ public class GUIManager {
 	
 	public GUIManager(final AppLauncher launcher) {
 		try{
-			setWindowLookAndFeel();
 			this.launcher = launcher;
-			logicExecutor = new LogicManager();
+			setWindowLookAndFeel();
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 			showInSystemTray(this);
 			globalKeyListener = new NailItGlobalKeyListener(this);
+			logicExecutor = new LogicManager();
 		}catch(FileCorruptionException e){
 			//TODO:
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
