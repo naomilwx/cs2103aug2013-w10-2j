@@ -7,10 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
+import nailit.storage.FileCorruptionException;
 
 import org.joda.time.DateTime;
 
@@ -22,7 +24,7 @@ public class FileManager {
 	private String path;
 	
 	/**
-	 * Constructor
+	 * Constructor 
 	 * @throws FileCorruptionException 
 	 * */
 	public FileManager(String path) throws FileCorruptionException{
@@ -57,13 +59,18 @@ public class FileManager {
 		
 	}
 		
-	public Vector<String> getDataList(){
+	public Vector<String> getFileContents(){
 		return dataListForReading; 
 	}
 	
 	public Vector<String> getDataListForWriting(){
 		return dataListForWriting;
 	}
+	
+	public void setDataListForWriting(Vector<String> dataList){
+		dataListForWriting = dataList;
+	}
+	
 	
 /***************************
  * Private Methods
@@ -103,17 +110,11 @@ public class FileManager {
 	private void read() throws FileCorruptionException{
 		try {
 			String line = null;
-			int lastIndex = 0;
+			
 			while((line = reader.readLine()) != null){
-				String[] s = line.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);
-				int ID = Integer.parseInt(s[0]);
-				
-				for(int i=lastIndex+1;i<=ID-1;i++){
-					dataListForReading.add(null);
-				}
-				lastIndex = ID;
 				dataListForReading.add(line);
 			}
+			
 		} catch (Exception e) {
 			throw new FileCorruptionException("The database is corrupted");
 		}
@@ -135,4 +136,7 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 }
