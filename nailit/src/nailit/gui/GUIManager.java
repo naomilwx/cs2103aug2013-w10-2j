@@ -168,7 +168,7 @@ public class GUIManager {
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
 				notificationStr = "";
-//				err.printStackTrace(); //TODO:
+				err.printStackTrace(); //TODO:
 			}
 			if(!notificationStr.isEmpty()){
 				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
@@ -176,7 +176,7 @@ public class GUIManager {
 			}
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
-//			e.printStackTrace(); //TODO:
+			e.printStackTrace(); //TODO:
 		}
 	}
 	protected void processAndDisplayExecutionResult(Result result){
