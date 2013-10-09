@@ -98,7 +98,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 //			createAndDisplayHomeWindow();
 			showInSystemTray(this);
-			globalKeyListener = new NailItGlobalKeyListener(this);
+//			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 		}catch(FileCorruptionException e){
 			//TODO:
@@ -133,9 +133,9 @@ public class GUIManager {
 		mainWindow.addItem(displayArea);
 	}
 	public void setVisible(boolean isVisible){
-		if(!isVisible){
-			enableGlobalKeyListener();
-		}
+//		if(!isVisible){
+//			enableGlobalKeyListener();
+//		}
 		mainWindow.setVisible(isVisible);
 //		homeWindow.setVisible(isVisible);
 	}
