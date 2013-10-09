@@ -30,7 +30,7 @@ public class StorageManager {
 	}
 	
 	public int add(Task task){
-				
+		System.out.println(task.changeToDiskFormat());
 		Task taskToBeAdded = task.copy();
 				
 		int ID = inMemory.add(taskToBeAdded);
@@ -142,7 +142,12 @@ public class StorageManager {
 	private void interpretFileContents(Vector<String> fileContents) throws FileCorruptionException{
 		originalTaskList = new HashMap<Integer,Task>();
 		try{
-			nextValidIDWhenSessionStarts = Integer.parseInt(fileContents.get(0));
+			if(isEmptyFile(fileContents)){
+				nextValidIDWhenSessionStarts = 1;
+			}
+			else{
+				nextValidIDWhenSessionStarts = Integer.parseInt(fileContents.get(0));
+			}
 			
 			for(int i=1;i<fileContents.size();i++){
 				Task task = stringToTask(fileContents.get(i));
@@ -186,6 +191,10 @@ public class StorageManager {
 		
 		Task task = new Task(task_ID, name,startTime,endTime,priority, tag,desc,isCompleted);
 		return task;
+	}
+	
+	private boolean isEmptyFile(Vector<String> fileContents){
+		return fileContents.size() == 0;
 	}
 	public static void main(String[] args) throws FileCorruptionException{
 		String s = "";
