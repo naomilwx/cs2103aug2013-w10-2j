@@ -1,83 +1,88 @@
 package nailit.storage;
 import org.joda.time.DateTime;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
+import nailit.storage.NoTaskFoundException;
 
 public class DataManager {
 	
 	/**
 	 * Private Fields
 	 * */
-	private Vector<String> dataList = new Vector<String>();
+	private HashMap<Integer,Task> hashTable = new HashMap<Integer,Task>();
+	private int nextValidID;
 	
 	/**
 	 * Constructor
 	 * */
-	public DataManager(){
-	
+	public DataManager(int nextValidID,HashMap<Integer,Task> hashTable){
+		this.nextValidID =nextValidID;
+		this.hashTable = hashTable;
 	}
 
 	/**
 	 * Public Methods
 	 * */
-	public int add(int ID, String taskString){
+	public int add(Task newTask){
+		int ID = newTask.getID();
 		if(!addedBefore(ID)){
+			
 			ID = generateNewID();
-			dataList.add(ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
+			newTask.setID(ID);
+			
+			hashTable.put(ID, newTask);
 		}
 		else{
-			assert((ID <= dataList.size())&&ID>=1);
-			dataList.set(ID-1, ID + NIConstants.NORMAL_FIELD_SPLITTER + taskString);
+			assert(ID>=1);
+
+			hashTable.put(ID,newTask);
 		}
 		return ID;
 	}
 	
-	public String retrieve(int ID) throws NoTaskFoundException{
-		String line;
-		if(ID>=dataList.size()+1){
-			throw new NoTaskFoundException("The ID you typed in exceeds the maximum Index!");
-		}
-		else if(ID<1){
-			throw new NoTaskFoundException("The ID you typed in exceeds the lower bound!");
-		}
-		else if((line = dataList.get(ID-1))==null){
-			throw new NoTaskFoundException("The task has been deleted before");
+	public Task retrieve(int ID) throws NoTaskFoundException{
+		Task task = hashTable.get(ID);
+		if(task==null){
+			throw new NoTaskFoundException("The task cannot be found!");
 		}
 		else{
-			return line;
+			return task;
 		}
 	}
 	
-	public void remove(int ID){
-		assert(ID<=dataList.size()&&ID>=1);
-		dataList.set(ID-1, null);
+	public Task remove(int ID){
+		assert(isValidID(ID));
+		return hashTable.remove(ID);
 	}
-	
-	public Vector<String> getDataList(){
-		return dataList;
+		
+	public int getNextValidID(){
+		return nextValidID;
 	}
-	
-	public void setDataList(Vector<String> d){
-		dataList = d;
-	}
-	
-	public DataManager clone(){
-		return null;
+	public HashMap<Integer,Task> getHashMap(){
+		return hashTable;
 	}
 	
 	/**
 	 * Private Methods
 	 * */
 	private int generateNewID(){
-		return dataList.size()+1;
+		int newID = nextValidID;
+		nextValidID++;
+		return newID;
 	}
 	
 	private boolean addedBefore(int ID){
 		return ID != Task.TASKID_NULL;
 	}
 	
+	private boolean isValidID(int ID){
+		return true;
+	}
 }
