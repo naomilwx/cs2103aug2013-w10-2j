@@ -28,6 +28,7 @@ public class LogicManagerStub extends LogicManager{
 	public Result executeCommand(String command){
 		res.setTaskList(taskList);
 		res.setDisplayType(Result.NOTIFICATION_DISPLAY);
+		res.setTaskToDisplay(task);
 		res.setNotification("test");
 		if(command.equals("exit")){
 			res.setExitStatus(true);
@@ -35,6 +36,8 @@ public class LogicManagerStub extends LogicManager{
 			res.setDisplayType(Result.TASK_DISPLAY);
 		}else if(command.equals("list")){
 			res.setDisplayType(Result.LIST_DISPLAY);
+		}else if(command.equals("new")){
+			res.setDisplayType(Result.EXECUTION_RESULT_DISPLAY);
 		}
 		return res;
 	}

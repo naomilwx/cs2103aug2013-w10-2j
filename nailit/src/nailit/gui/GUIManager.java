@@ -190,13 +190,18 @@ public class GUIManager {
 		int displayType = result.getDisplayType();
 		switch (displayType){
 			case Result.TASK_DISPLAY:
-				displayTaskDetails(result.getTaskList());
+				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
 				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:
 				displayArea.displayHistoryList(result.getHistoryList());
+				break;
+			case Result.EXECUTION_RESULT_DISPLAY:
+				displayExecutionNotification(result);
+				displayArea.displayTaskList(result.getTaskList());
+				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			default:
 				displayExecutionNotification(result);
@@ -214,13 +219,7 @@ public class GUIManager {
 		notificationArea.displayNotification(notificationStr, isSuccess);
 		displayArea.showNotifications();
 	}
-	private void displayTaskDetails(Vector<Task> taskList){
-		assert taskList.size() > 0;
-		Task task = taskList.firstElement();
-		String taskDisplay = task.toString();
-		displayArea.displayTaskDetails(taskDisplay);
-	}
-
+	
 	private void exit(){
 		launcher.exit();
 	}

@@ -147,10 +147,13 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane.add(component);
 		revalidate();
 	}
-	protected void displayTaskDetails(String details){
-		TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
-		textDisplay.basicDisplay(details);
-		addContent(textDisplay, false);
+	protected void displayTaskDetails(Task task){
+		if(task!=null){
+			String details = task.toString();
+			TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
+			textDisplay.basicDisplay(details);
+			addContent(textDisplay, false);
+		}
 	}
 	protected void displayTaskList(Vector<Task> tasks){
 		TableDisplay taskTable = 
