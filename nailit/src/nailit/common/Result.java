@@ -8,28 +8,44 @@ public class Result {
 	public static final int LIST_DISPLAY = 2;
 	public static final int HISTORY_DISPLAY = 3;
 	public static final int EXECUTION_RESULT_DISPLAY = 4;
+	public static final String EMPTY_DISPLAY = "";
 	
 	private boolean isExit;
 	private boolean isSuccessful;
-	private int displayType;
-	private String notificationPrintOut;
-	private Vector<Task> taskList;
-	private Vector<String> historyList;
+	private int displayType = NULL_DISPLAY;
+	private String notificationPrintOut = EMPTY_DISPLAY;
+	private Vector<Task> taskList = new Vector<Task>();
+	private Vector<String> historyList = new Vector<String>();
+	private Task task = null;
+	
 	//initialise "empty" Result object
 	public Result(){
 		isExit = false;
 		isSuccessful = false;
-		displayType = NULL_DISPLAY;
-		notificationPrintOut = "";
-		taskList = null;
 	}
+	
 	public Result(boolean isExitCommand, boolean isSuccess, int displayType, String printOut){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
 		this.displayType = displayType;
 		notificationPrintOut = printOut;
-		taskList = null;
-		historyList = null;
+	}
+	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
+			Task taskToDisplay){
+		isExit = isExitCommand;
+		isSuccessful = isSuccess;
+		this.displayType = displayType;
+		task = taskToDisplay;
+	}
+	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
+			String printOut, Task taskToDisplay, Vector<Task> tasks, Vector<String> history){
+		isExit = isExitCommand;
+		isSuccessful = isSuccess;
+		this.displayType = displayType;
+		notificationPrintOut = printOut;
+		taskList = tasks;
+		historyList = history;
+		task = taskToDisplay;
 	}
 	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
 			String printOut, Vector<Task> tasks, Vector<String> history){
@@ -59,6 +75,9 @@ public class Result {
 	public void setHistoryList(Vector<String> historyList){
 		this.historyList = historyList;
 	}
+	public void setTaskToDisplay(Task taskToDisplay){
+		task = taskToDisplay;
+	}
 	//getters
 	public boolean getExitStatus(){
 		return isExit;
@@ -80,5 +99,8 @@ public class Result {
 	}
 	public int getDisplayType(){
 		return displayType;
+	}
+	public Task getTaskToDisplay(){
+		return task;
 	}
 }
