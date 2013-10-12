@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 
+import nailit.common.FilterObject;
 import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -69,6 +70,14 @@ public class StorageManager {
 		return toTaskVector(hashTable);
 	}
 	
+	public Vector<Task> filter(FilterObject ftobj){
+		Vector<Task> taskList = retrieveAll();
+		Vector<Task> filteredTaskList = new Vector<Task>();
+		
+		for(int i=0;i<taskList.size();i++){
+			
+		}
+	}
 	public void clear(){
 //		currInMemory.setDataList(new Vector<String>());
 		saveToFile();
@@ -195,6 +204,33 @@ public class StorageManager {
 	
 	private boolean isEmptyFile(Vector<String> fileContents){
 		return fileContents.size() == 0;
+	}
+	
+	private boolean isEmptyName (String name){
+		return name == null;
+	}
+	
+	private boolean isEmptyStartTime(DateTime startTime){
+		return startTime == null;
+	}
+	
+	private boolean isEmptyEndTime(DateTime endTime){
+		return endTime == null;
+	}
+	
+	private boolean isEmptyPriority(TaskPriority priority){
+		return priority == null;
+	}
+	
+	private boolean isEmptyTag(String tag){
+		return tag == null;
+	}
+	
+	private boolean isEmptyCompeteStatus(Boolean isCompleted){
+		return isCompleted == null;
+	}
+	private boolean matchTask(Task task, FilterObject ftobj){
+		if(!isEmptyName(ftobj.))
 	}
 	public static void main(String[] args) throws FileCorruptionException{
 		String s = "";
