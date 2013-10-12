@@ -111,7 +111,8 @@ public class GUIManager {
 	
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
-		historyWindow = new ExtendedWindow(this, HISTORY_WINDOW_WIDTH);
+		historyWindow = new HistoryWindow(this, HISTORY_WINDOW_WIDTH);
+		historyWindow.setVisible(true);
 	}
 	private void createAndDisplayHomeWindow() {
 		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
