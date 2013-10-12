@@ -1,5 +1,17 @@
 package nailit.logic;
 
+import nailit.common.TaskPriority;
+
 public enum CommandType {
-	ADD, COMPLETE, DELETE, DISPLAY, EXIT, SEARCH, SHOWHISTORY, UNDO, UPDATE, INVALID
+	ADD, ADDDESCRIPTION, COMPLETE, DELETE, DISPLAY, EXIT, SEARCH, SHOWHISTORY, UNDO, UPDATE, INVALID;
+
+
+	public static boolean isCommandType(String p){
+		for(CommandType type: CommandType.values()){
+			if(p.equalsIgnoreCase(type.toString())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
