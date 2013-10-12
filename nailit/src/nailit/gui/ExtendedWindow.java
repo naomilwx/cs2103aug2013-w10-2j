@@ -19,6 +19,8 @@ public class ExtendedWindow extends JFrame{
 	protected int displayPaneWidth;
 	protected int displayPaneHeight;
 	protected int windowWidth;
+	protected int contentWidth;
+	protected int contentHeight;
 	
 	public ExtendedWindow(final GUIManager GUIMain, int width){
 		GUIBoss = GUIMain;

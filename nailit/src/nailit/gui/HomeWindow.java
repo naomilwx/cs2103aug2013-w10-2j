@@ -3,8 +3,6 @@ package nailit.gui;
 import javax.swing.JPanel;
 
 public class HomeWindow extends ExtendedWindow{
-	private int contentWidth;
-	private int contentHeight;
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
 		initialiseAndConfigureWindowContent();
