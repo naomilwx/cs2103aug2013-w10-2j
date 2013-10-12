@@ -16,6 +16,9 @@ public class CommandDelete extends Command{
 	private Result executedResult;
 	private Task taskToRemove;
 	private int taskToDeleteID;
+	private boolean deleteSuccessfully;
+	
+	private int taskToDeleteDisplayID;
 	
 	// task list, in which the task is to delete
 	private Vector<Task> taskList;
@@ -33,20 +36,22 @@ public class CommandDelete extends Command{
 
 	@Override
 	public Result executeCommand() {
-		int taskToDeleteDisplayID = getTaskDisplayID();
+		taskToDeleteDisplayID = getTaskDisplayID();
 		try {
 			if(isExistToDeleteTaskInTaskList(taskToDeleteDisplayID)) {
 				removeTheTaskOnStorage(taskToDeleteDisplayID);
 			} else {
+				deleteSuccessfully = false;
 				return createResultObjectForTaskToDeleteNotExistingInTaskList(taskToDeleteDisplayID);
 			}
 			
 		} catch(Exception e) {
+			deleteSuccessfully = false;
 			createResultObjectForNotExistingTask(taskToDeleteDisplayID);
 			createCommandSummaryForDeletingNotExistingTask();
 			return executedResult;
 		}
-		
+		deleteSuccessfully = true;
 		createResultObject(taskToDeleteDisplayID);
 		createCommandSummary();
 		return executedResult;
@@ -112,6 +117,14 @@ public class CommandDelete extends Command{
 
 	public int getTaskID() {
 		return taskToDeleteID;
+	}
+
+	public boolean deleteSuccess() {
+		return deleteSuccessfully;
+	}
+
+	public int getDisplayID() {
+		return taskToDeleteDisplayID;
 	}
 
 	
