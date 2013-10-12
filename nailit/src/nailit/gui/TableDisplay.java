@@ -184,21 +184,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		}
 	}
 	
-	protected void addContentToTable(Task task){
-		Vector<String> row = new Vector<String>();
-		String ID = "" + task.getID();
-		row.add(ID);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task.getName(), task.getTag());
-		row.add(nameAndTag);
-		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
-		row.add(timeDet);
-		String status = TaskStatusDisplayRenderer.formatStatusCellDisplay(task);
-		row.add(status);
-		tableRows.add(row);
-	}
-	protected void addContentToTable(Vector<String> list){
-		@SuppressWarnings("unchecked")
-		Vector<String> row = (Vector<String>) list.clone();
+	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
 	}
 

@@ -21,6 +21,9 @@ import javax.swing.border.LineBorder;
 
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
+import nailit.gui.renderer.TaskNameDisplayRenderer;
+import nailit.gui.renderer.TaskStatusDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
@@ -158,10 +161,25 @@ public class DisplayArea extends JLayeredPane {
 	protected void displayTaskList(Vector<Task> tasks){
 		TableDisplay taskTable = 
 				new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		Vector<String> row;
 		for(int i = 0; i < tasks.size(); i++){
-			taskTable.addContentToTable(tasks.get(i));	
+			row = formatTaskForRowDisplay(tasks.get(i), i+1);
+			taskTable.addContentToTable(row);	
 		}
 		addContent(taskTable, false);
+	}
+	
+	protected Vector<String> formatTaskForRowDisplay(Task task, int rowNum){
+		Vector<String> row = new Vector<String>();
+		String ID = "" + rowNum;
+		row.add(ID);
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task.getName(), task.getTag());
+		row.add(nameAndTag);
+		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
+		row.add(timeDet);
+		String status = TaskStatusDisplayRenderer.formatStatusCellDisplay(task);
+		row.add(status);
+		return row;
 	}
 	
 	//function to keep top displayed component if it is a table and new display is not a table
