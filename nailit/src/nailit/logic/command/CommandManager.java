@@ -111,10 +111,25 @@ public class CommandManager {
 	}
 
 	private Result update() {
-		CommandUpdate newUpdateCommandObj = new CommandUpdate(parserResultInstance, storer);
+		CommandUpdate newUpdateCommandObj = new CommandUpdate(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newUpdateCommandObj.executeCommand();
+		if(newUpdateCommandObj.updateSuccess()) {
+			int taskUpdatedDisplayID = newUpdateCommandObj.getDisplayID();
+			deleteTaskFromCurrentTaskList(taskUpdatedDisplayID);
+			addTaskToCurrentTaskList(resultToPassToGUI);
+		}
+		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
 		return resultToPassToGUI;
+	}
+
+	private void addTaskToCurrentTaskList(Result result) {
+		Task taskUpdated = result.getTaskToDisplay();
+		currentTaskList.add(taskUpdated);
+	}
+
+	private void deleteTaskFromCurrentTaskList(int taskUpdatedDisplayID) {
+		currentTaskList.remove(taskUpdatedDisplayID - 1);
 	}
 
 	private Result search() {
@@ -127,7 +142,7 @@ public class CommandManager {
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
 		
 		if(newDeleteCommandObj.deleteSuccess()) {
-			int taskDeletedDisplayID = newDeleteCommandObj.getDisplayID();
+			int taskDeletedDisplayID = newDeleteCommandObj.getTaskDisplayID();
 			deleteTheTaskInCurrentTaskList(taskDeletedDisplayID);
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
