@@ -53,7 +53,7 @@ public class CommandAdd extends Command{
 
 	private void createResultObject() {
 		String notificationStr = String.format(SUCCESS_MSG, taskName, taskID);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
+		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, notificationStr, taskPassedToStorer, null, null);
 	}
 
 	private void createTaskObject() {
