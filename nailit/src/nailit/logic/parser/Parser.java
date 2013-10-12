@@ -24,6 +24,24 @@ public abstract class Parser {
 		return result;
 	}
 	
+	public static DateTime retrieveDateTimeFirst (String p){
+		DateTime result;
+		
+		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
+		result = new DateTime(resultDateGroup.getDates().get(0));
+	
+		return result;
+	}
+	
+	public static DateTime retrieveDateTimeSecond (String p){
+		DateTime result;
+		
+		DateGroup resultDateGroup = nattyParser.parse(p).get(1);
+		result = new DateTime(resultDateGroup.getDates().get(1));
+	
+		return result;
+	}
+	
 	public static int numberOfTime(String p){		
 		List<DateGroup> resultDateGroup;
 		int answer;
@@ -31,7 +49,7 @@ public abstract class Parser {
 		resultDateGroup = nattyParser.parse(p);
 		answer = resultDateGroup.size();
 	    
-		return anwer;
+		return answer;
 	}
 	
 	public static boolean isTaskID(String p){
@@ -45,6 +63,13 @@ public abstract class Parser {
 	
 	public static boolean isDateTime(String p){
 		List<DateGroup> parseResult = nattyParser.parse(p);
+		int fromIndex;
+		
+		p = p.trim();
+	    if (p.substring(0,4).equalsIgnoreCase("from"))
+	    		p = p.substring(4);
+		p = p.trim();
+		
 		if(parseResult.isEmpty()){
 			return false;
 		}else{
@@ -52,6 +77,7 @@ public abstract class Parser {
 				return false;
 			}else{
 				DateGroup date = parseResult.get(0);
+				System.out.println("test  "+ date.getText());
 				return date.getText().equalsIgnoreCase(p);
 			}
 		}
