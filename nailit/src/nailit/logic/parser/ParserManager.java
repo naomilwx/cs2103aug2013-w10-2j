@@ -59,6 +59,8 @@ public class ParserManager {
 
 		if (commandTypeString.equalsIgnoreCase("add")) {
 			return CommandType.ADD;
+		} else if (commandTypeString.equalsIgnoreCase("adddescription")) {
+			return CommandType.ADDDESCRIPTION;
 		} else if (commandTypeString.equalsIgnoreCase("complete")) {
 			return CommandType.COMPLETE;
 		} else if (commandTypeString.equalsIgnoreCase("delete")) {

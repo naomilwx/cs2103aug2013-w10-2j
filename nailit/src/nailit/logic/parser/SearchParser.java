@@ -16,11 +16,10 @@ public class SearchParser extends Parser {
 	
 	@Override
 	public ParserResult execute(){
-		
 		ParserResult resultExecution = new ParserResult();
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
-		resultExecution.setCommand(CommandType.ADD);
+		resultExecution.setCommand(CommandType.SEARCH);
 		
 		for (int i=0; i<listOfCommand.length; i++)
 		{
@@ -31,9 +30,13 @@ public class SearchParser extends Parser {
 			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
 			}else if (Parser.isDateTime(listOfCommand[i])){
-				if (resultExecution.getStartTime() == null)
-					resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
-				else 
+				if (resultExecution.getStartTime() == null){
+					if (Parser.numberOfTime(listOfCommand[i]) == 2){
+						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommand[i]));
+						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommand[i]));
+					}else
+						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
+				} else 
 					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
 			}else 
 				resultExecution.setName(listOfCommand[i]);
