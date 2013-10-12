@@ -18,5 +18,14 @@ public class HistoryWindow extends ExtendedWindow{
 	}
 	protected void displayHistoryList(Vector<String> list){
 		//TODO
+		Vector<String> row;
+		int rowNum;
+		for(int i = 0; i < list.size(); i++){
+			row = new Vector<String>();
+			rowNum = i+1;
+			row.add(""+rowNum);
+			row.add(list.get(i));
+			((TableDisplay) displayPane).addContentToTable(row);
+		}
 	}
 }
