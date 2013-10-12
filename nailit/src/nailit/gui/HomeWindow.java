@@ -14,4 +14,7 @@ public class HomeWindow extends ExtendedWindow{
 		displayPane.setLocation(EXTENDED_WINDOW_X_BUFFER, EXTENDED_WINDOW_Y_BUFFER);
 		addItem(displayPane);
 	}
+	protected void displayReminders(){
+		//TODO:
+	}
 }
