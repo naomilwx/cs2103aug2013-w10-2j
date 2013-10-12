@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 
+import nailit.common.FilterObject;
 import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -69,8 +70,22 @@ public class StorageManager {
 		return toTaskVector(hashTable);
 	}
 	
+	public Vector<Task> filter(FilterObject ftobj){
+		Vector<Task> taskList = retrieveAll();
+		Vector<Task> filteredTaskList = new Vector<Task>();
+		
+		for(int i=0;i<taskList.size();i++){
+			Task task = taskList.get(i);
+			if(matchTask(task,ftobj)){
+				filteredTaskList.add(taskList.get(i));
+			}
+		}
+		
+		return filteredTaskList;
+	}
 	public void clear(){
-//		currInMemory.setDataList(new Vector<String>());
+		inMemory.setHashMap(new HashMap<Integer,Task>());
+		inMemory.setNextValidID(1);
 		saveToFile();
 	}
 	/**
@@ -195,6 +210,143 @@ public class StorageManager {
 	
 	private boolean isEmptyFile(Vector<String> fileContents){
 		return fileContents.size() == 0;
+	}
+	
+	private boolean isNameEmpty (FilterObject ftobj){
+		return ftobj.getName() == null;
+	}
+	
+	private boolean isStartTimeEmpty(FilterObject ftobj){
+		return ftobj.getStartTime() == null;
+	}
+	
+	private boolean isEndTimeEmpty(FilterObject ftobj){
+		return ftobj.getStartTime() == null;
+	}
+	
+	private boolean isPriorityEmpty(FilterObject ftobj){
+		return ftobj.getPriority() == null;
+	}
+	
+	private boolean isTagEmpty(FilterObject ftobj){
+		return ftobj.getTag() == null;
+	}
+	
+	private boolean isCompleteStatusEmpty(FilterObject ftobj){
+		return ftobj.isCompleted() == null;
+	}
+	
+	private boolean nameNotMatch(Task task, FilterObject ftobj){
+		return !isNameEmpty(ftobj)&&!task.getName().toLowerCase().contains(ftobj.getName().toLowerCase());
+	}
+	
+	private boolean priorityNotMatch(Task task,FilterObject ftobj){
+		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
+	}
+	
+	private boolean tagNotMatch(Task task,FilterObject ftobj){
+		return !isTagEmpty(ftobj)&&!task.getTag().equalsIgnoreCase(ftobj.getTag());
+	}
+	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
+		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
+	}
+	
+	private boolean isEvent(Task task){
+		return task.getStartTime() !=null &&task.getEndTime() != null;
+	}
+	private boolean TimeNotMatch(Task task,FilterObject ftobj){
+		
+		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
+		//For tasks, we only check whether taskEndTime is in the time period
+		
+		if(isEvent(task)){
+			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+					return true;
+				}
+				else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+					return true;
+				}
+				else{
+					return false;
+				}
+				
+			}
+			else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				return false;
+			}
+
+		}
+		else{
+			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+				if(task.getEndTime().compareTo(ftobj.getStartTime())==-1){
+					return true;
+				}
+				else if(task.getEndTime().compareTo(ftobj.getEndTime())==1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+				if(task.getEndTime().compareTo(ftobj.getStartTime())==-1){
+					return true;
+				}
+				else{
+					return false;
+				}
+				
+			}
+			else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+				if(task.getEndTime().compareTo(ftobj.getEndTime())==1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				return false;
+			}
+
+		}
+	}
+
+	private boolean matchTask(Task task, FilterObject ftobj){
+		if(nameNotMatch(task,ftobj)){
+			return false;
+		}
+		if(TimeNotMatch(task,ftobj)){
+			return false;
+		}
+		if(priorityNotMatch(task,ftobj)){
+			return false;
+		}
+		if(tagNotMatch(task,ftobj)){
+			return false;
+		}
+		if(completeStatusNotMatch(task,ftobj)){
+			return false;
+		}
+		
+		return true;
 	}
 	public static void main(String[] args) throws FileCorruptionException{
 		String s = "";
