@@ -1,4 +1,5 @@
 package nailit.logic.parser;
+import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.command.*;
 import nailit.logic.ParserResult;
@@ -56,30 +57,10 @@ public class ParserManager {
 	private static CommandType determineCommandType(String commandTypeString) {
 		if (commandTypeString == null)
 			throw new Error("command type string cannot be null!");
-
-		if (commandTypeString.equalsIgnoreCase("add")) {
-			return CommandType.ADD;
-		} else if (commandTypeString.equalsIgnoreCase("adddescription")) {
-			return CommandType.ADDDESCRIPTION;
-		} else if (commandTypeString.equalsIgnoreCase("complete")) {
-			return CommandType.COMPLETE;
-		} else if (commandTypeString.equalsIgnoreCase("delete")) {
-			return CommandType.DELETE;
-		} else if (commandTypeString.equalsIgnoreCase("display")) {
-			return CommandType.DISPLAY;
-		} else if (commandTypeString.equalsIgnoreCase("exit")) {
-			return CommandType.EXIT;
-		} else if (commandTypeString.equalsIgnoreCase("search")){
-			return CommandType.SEARCH;
-		} else if (commandTypeString.equalsIgnoreCase("showhistory")) {
-			return CommandType.SHOWHISTORY;
-		} else if (commandTypeString.equalsIgnoreCase("undo")) {
-			return CommandType.UNDO;
-		} else if (commandTypeString.equalsIgnoreCase("update")) {
-			return CommandType.UPDATE;
-		} else {
+		if (CommandType.isCommandType(commandTypeString))
+			return CommandType.valueOf(commandTypeString.toUpperCase());
+		else
 			return CommandType.INVALID;
-		}
 	}
 	
 }
