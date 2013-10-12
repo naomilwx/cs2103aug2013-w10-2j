@@ -74,8 +74,11 @@ public class CommandBar extends JPanel {
 					ctrlPressed = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
 					GUIBoss.toggleHomeWindow();
+					GUIBoss.setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
 					GUIBoss.setVisible(false);
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
+					GUIBoss.hideHistoryWindow();
 				}
 			}
 			@Override

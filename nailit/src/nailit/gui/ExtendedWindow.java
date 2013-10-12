@@ -1,6 +1,8 @@
 package nailit.gui;
 
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,12 +24,12 @@ public class ExtendedWindow extends JFrame{
 	protected int contentWidth;
 	protected int contentHeight;
 	
+	
 	public ExtendedWindow(final GUIManager GUIMain, int width){
 		GUIBoss = GUIMain;
 		windowWidth = width;
 		initialiseHomeWindow();
 	}
-	
 	private void initialiseHomeWindow(){
 		configureHomeWindowFrame();
 		createAndInitialiseContentPane();
@@ -46,5 +48,8 @@ public class ExtendedWindow extends JFrame{
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
+	}
+	protected void setFocus() {
+		displayPane.requestFocus();
 	}
 }

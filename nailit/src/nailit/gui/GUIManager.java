@@ -124,6 +124,9 @@ public class GUIManager {
 			homeWindow.setVisible(!currentVisibility);
 		}
 	}
+	protected void hideHistoryWindow(){
+		historyWindow.setVisible(false);
+	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
@@ -157,6 +160,9 @@ public class GUIManager {
 	}
 	public void setFocusOnCommandBar(){
 		commandBar.setFocus();
+	}
+	public void setFocusOnHomeWindow(){
+		homeWindow.setFocus();
 	}
 	/**
 	 * Executes command entered by user
