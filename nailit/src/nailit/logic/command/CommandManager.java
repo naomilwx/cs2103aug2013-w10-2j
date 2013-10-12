@@ -125,8 +125,18 @@ public class CommandManager {
 	private Result delete() {
 		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
+		
+		if(newDeleteCommandObj.deleteSuccess()) {
+			int taskDeletedDisplayID = newDeleteCommandObj.getDisplayID();
+			deleteTheTaskInCurrentTaskList(taskDeletedDisplayID);
+		}
+		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
 		return resultToPassToGUI;
+	}
+
+	private void deleteTheTaskInCurrentTaskList(int taskDeletedDisplayID) {
+		currentTaskList.remove(taskDeletedDisplayID - 1);
 	}
 
 	private Result complete() {
