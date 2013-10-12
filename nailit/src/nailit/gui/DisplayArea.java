@@ -163,9 +163,7 @@ public class DisplayArea extends JLayeredPane {
 		}
 		addContent(taskTable, false);
 	}
-	protected void displayHistoryList(Vector<String> list){
-		//TODO
-	}
+	
 	//function to keep top displayed component if it is a table and new display is not a table
 	private void removeExtraContent(Component newComponent){
 		Component first = items.peekFirst();

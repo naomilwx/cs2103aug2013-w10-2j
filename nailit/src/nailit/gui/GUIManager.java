@@ -88,7 +88,7 @@ public class GUIManager {
 	private DisplayArea displayArea;
 	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
-	private ExtendedWindow historyWindow;
+	private HistoryWindow historyWindow;
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
@@ -112,7 +112,6 @@ public class GUIManager {
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
 		historyWindow = new HistoryWindow(this, HISTORY_WINDOW_WIDTH);
-		historyWindow.setVisible(true);
 	}
 	private void createAndDisplayHomeWindow() {
 		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
@@ -204,7 +203,8 @@ public class GUIManager {
 				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:
-				displayArea.displayHistoryList(result.getHistoryList());
+				historyWindow.displayHistoryList(result.getHistoryList());
+				historyWindow.setVisible(true);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
 				displayExecutionNotification(result);
