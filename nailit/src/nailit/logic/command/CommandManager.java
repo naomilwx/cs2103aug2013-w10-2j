@@ -5,6 +5,7 @@ import java.util.Vector;
 import test.storage.StorageStub;
 
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.logic.*;
 
 import nailit.storage.FileCorruptionException;
@@ -26,6 +27,13 @@ public class CommandManager {
 	// the vector object is used to store the done operations
 	private Vector<Command> operationsHistory;
 	
+	// the current displaying task list in the GUI
+	private Vector<Task> currentTaskList;
+	
+	// the content of the filter that filters the currentTaskList
+	// eg. it can be "all", "CS2103, 2013-10-20, low"
+	private Vector<String> filterContentForCurrentTaskList;
+	
 	// constructor
 	public CommandManager () throws FileCorruptionException 
 	{
@@ -33,6 +41,8 @@ public class CommandManager {
 		//storer = new StorageStub();
 		storer = new StorageManager();
 		operationsHistory = new Vector<Command>();
+		currentTaskList = null;
+		filterContentForCurrentTaskList = null;
 	}
 	
 	public Result executeCommand(ParserResult parserResultInstance)
@@ -94,15 +104,15 @@ public class CommandManager {
 
 	private Result display() {
 		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this);
-		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
+		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
 	}
 
 	private Result update() {
 		CommandUpdate newUpdateCommandObj = new CommandUpdate(parserResultInstance, storer);
-		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
 		Result resultToPassToGUI = newUpdateCommandObj.executeCommand();
+		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
 		return resultToPassToGUI;
 	}
 
@@ -113,8 +123,8 @@ public class CommandManager {
 
 	private Result delete() {
 		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer);
-		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
+		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
 		return resultToPassToGUI;
 	}
 
@@ -125,8 +135,8 @@ public class CommandManager {
 
 	private Result add() {
 		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer);
-		addNewCommandObjToOperationsHistory(newAddCommandObj);
 		Result resultToPassToGUI = newAddCommandObj.executeCommand();
+		addNewCommandObjToOperationsHistory(newAddCommandObj);
 		return resultToPassToGUI;
 	}
 
@@ -136,5 +146,10 @@ public class CommandManager {
 	
 	public Vector<Command> getOperationsHistory() {
 		return operationsHistory;
+	}
+	
+	// sort the Tasks in the currentTaskList according to isCompleted, date, priority
+	private void sort() {
+		
 	}
 }
