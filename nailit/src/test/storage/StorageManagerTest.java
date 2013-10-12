@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Vector;
 
+import nailit.common.FilterObject;
 import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -28,7 +29,9 @@ public class StorageManagerTest {
 		testAddCommand("1,frist task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",task3);
 //		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
 //		testAddCommand("",task4);
-		testRemoveCommand("2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",1);
+//		testRemoveCommand("2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",1);
+		FilterObject fo = new FilterObject("first",null,null,null,null,null);
+		testFilterCommand("1,frist task,null,null,1,,,0\n",fo);
 		
 	} 
 	
@@ -53,4 +56,9 @@ public class StorageManagerTest {
 		assertEquals(expected,out);
 	}
 
+	public void testFilterCommand(String expected,FilterObject fo){
+		Vector<Task> v=sto.filter(fo);
+		String out = printVector(v);
+		assertEquals(expected,out);
+	}
 }

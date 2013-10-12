@@ -163,7 +163,7 @@ public class GUIManager {
 	 */
 	protected void executeUserInputCommand(String input){
 		try{
-			System.out.println(input);
+			//System.out.println(input);
 			displayArea.hideNotifications();
 			Result executionResult = logicExecutor.executeCommand(input);
 			if(executionResult == null){
