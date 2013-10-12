@@ -32,7 +32,7 @@ public class AddParser extends Parser {
 			}else if (Parser.isDateTime(listOfCommand[i])){
 				if (resultExecution.getStartTime() == null){
 					if (Parser.numberOfTime(listOfCommand[i]) == 2){
-						resultExecution.setStartTime(Parser.retriveDateTimeFirst(listOfCommand[i]));
+						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommand[i]));
 						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommand[i]));
 					}else
 						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
