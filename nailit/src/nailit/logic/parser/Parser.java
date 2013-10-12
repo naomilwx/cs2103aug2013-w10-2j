@@ -24,28 +24,14 @@ public abstract class Parser {
 		return result;
 	}
 	
-	public static Vector<DateTime> retrieveDateTimesList(String p){
-		Vector<DateTime> results = new Vector<DateTime>();
-		List<DateGroup> dateGroups = nattyParser.parse(p);
-		List<Date> dates = new Vector<Date>();
-		if(!dateGroups.isEmpty()){
-			dates = dateGroups.get(0).getDates();
-		}
-		if(dates.size() == 1){
-			DateTime start = new DateTime(dates.get(0));
-			results.add(start);
-		}else if(dates.size() == 2){
-			DateTime first = new DateTime(dates.get(0));
-			DateTime second = new DateTime(dates.get(1));
-			if(first.compareTo(second) == -1){
-				results.add(first);
-				results.add(second);
-			}else{
-				results.add(second);
-				results.add(first);
-			}
-		}
-		return results;
+	public static int numberOfTime(String p){		
+		List<DateGroup> resultDateGroup;
+		int answer;
+		
+		resultDateGroup = nattyParser.parse(p);
+		answer = resultDateGroup.size();
+	    
+		return anwer;
 	}
 	
 	public static boolean isTaskID(String p){
@@ -65,31 +51,11 @@ public abstract class Parser {
 			if(isNumber(p)){
 				return false;
 			}else{
-				//DateGroup date = parseResult.get(0);
-				return parseResult.get(0).getText().equalsIgnoreCase(p);
+				DateGroup date = parseResult.get(0);
+				return date.getText().equalsIgnoreCase(p);
 			}
 		}
 	}
-	
-	/*public static boolean checkStringAfterHasDateTime(String str, String token){
-		int pos = str.indexOf(token);
-		int afterPos = pos + token.length();
-		if((pos != -1) && (str.length() > afterPos)){
-			String testStr = str.substring(afterPos).trim();
-			if(isNumber(testStr)){
-				return false;
-			}else{
-				return isDateTime(testStr);
-			}
-		}else{
-			return false;
-		}
-	}*/
-	
-	/*public static boolean hasDateTime(String p){
-		String parseStr = p.toLowerCase();
-		return (checkStringAfterHasDateTime(parseStr, "at") || checkStringAfterHasDateTime(parseStr, "from"));
-	}*/
 	
 	public static boolean isNumber(String p){
 		if(p.isEmpty()){
