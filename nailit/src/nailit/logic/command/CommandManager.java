@@ -1,5 +1,6 @@
 package nailit.logic.command;
 
+import java.util.Collections;
 import java.util.Vector;
 
 import test.storage.StorageStub;
@@ -168,11 +169,11 @@ public class CommandManager {
 		// so create a commandSearch object to do the retrieving job
 		CommandSearch newCommandSearchObj = new CommandSearch(storer);
 		// the searchResult is not sorted
-		Vector<Task> searchResult = newCommandSearchObj.search(filterContentForCurrentTaskList);
+		currentTaskList = newCommandSearchObj.search(filterContentForCurrentTaskList);
 		// sort the searchResult
-		Vector<Task> sortedSearchResult = sort(searchResult);
+		sort();
 		// add the searchResult into the resultToPassToGUI
-		resultToPassToGUI.setTaskList(sortedSearchResult);
+		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
 	}
 
@@ -185,10 +186,8 @@ public class CommandManager {
 	}
 	
 	// sort the Tasks in the currentTaskList according to isCompleted, date, priority
-	private Vector<Task> sort(Vector<Task> searchResult) {
-		
-		
-		return searchResult;
-		
+	private void sort() {
+		ComparatorForTwoTaskObj newComparator = new ComparatorForTwoTaskObj();
+		Collections.sort(currentTaskList, newComparator);
 	}
 }
