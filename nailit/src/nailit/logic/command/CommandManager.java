@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import test.storage.StorageStub;
 
+import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.*;
@@ -32,7 +33,7 @@ public class CommandManager {
 	
 	// the content of the filter that filters the currentTaskList
 	// eg. it can be "all", "CS2103, 2013-10-20, low"
-	private Vector<String> filterContentForCurrentTaskList;
+	private FilterObject filterContentForCurrentTaskList;
 	
 	// constructor
 	public CommandManager () throws FileCorruptionException 
@@ -134,9 +135,16 @@ public class CommandManager {
 	}
 
 	private Result add() {
-		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer);
+		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer); 
+		// the resultToPassToGUI does not have the currentTaskList
 		Result resultToPassToGUI = newAddCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newAddCommandObj);
+		// the new added task may or may not should exist in the currentTaskList,
+		// so create a commandSearch object to do the retrieving job
+		CommandSearch newCommandSearchObj = new CommandSearch(storer);
+		Vector<Task> searchResult = newCommandSearchObj.search(filterContentForCurrentTaskList);
+		// add the searchResult into the resultToPassToGUI
+		resultToPassToGUI.setTaskList(searchResult);
 		return resultToPassToGUI;
 	}
 
