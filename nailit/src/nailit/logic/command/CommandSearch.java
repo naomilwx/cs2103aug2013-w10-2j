@@ -32,8 +32,8 @@ public class CommandSearch extends Command{
 	}
 
 	public Vector<Task> search(FilterObject filterContentForCurrentTaskList) {
-		// TODO Auto-generated method stub
-		return null;
+		Vector<Task> filteredResult = storer.filter(filterContentForCurrentTaskList);
+		return filteredResult;
 	}
 
 }
