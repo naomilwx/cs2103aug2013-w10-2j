@@ -6,11 +6,11 @@ public class FilterObject {
 	String  name;
 	DateTime startTime;
 	DateTime endTime;
-	boolean isCompleted;
+	Boolean isCompleted;
 	TaskPriority priority;
 	String tag;
 	
-	public FilterObject(String taskName, DateTime start, DateTime end, String tag, TaskPriority p,boolean isCompleted){
+	public FilterObject(String taskName, DateTime start, DateTime end, String tag, TaskPriority p,Boolean isCompleted){
 		name = taskName;
 		startTime = start;
 		endTime = end;
@@ -22,4 +22,29 @@ public class FilterObject {
 			this.tag = tag;
 		}
 	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public DateTime getStartTime(){
+		return startTime;
+	}
+	
+	public DateTime getEndTime(){
+		return endTime;
+	}
+	
+	public Boolean isCompleted(){
+		return isCompleted;
+	}
+	public TaskPriority getPriority(){
+		return priority;
+	}
+	
+	public String getTag(){
+		return tag;
+	}
+	
 }
+
