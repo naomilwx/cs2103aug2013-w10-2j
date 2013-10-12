@@ -47,10 +47,12 @@ public class GUIManager {
 	protected static final int WINDOW_BOTTOM_BUFFER = 35;
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 100;
-	protected static final int HOME_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
-	protected static final int HOME_WINDOW_Y_POS = MAIN_WINDOW_Y_POS;
+	protected static final int EXTENDED_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
+	protected static final int EXTENDED_WINDOW_Y_POS = MAIN_WINDOW_Y_POS;
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
+	protected static final int HOME_WINDOW_WIDTH = 450;
+	protected static final int HISTORY_WINDOW_WIDTH = 400;
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
@@ -86,6 +88,7 @@ public class GUIManager {
 	private DisplayArea displayArea;
 	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
+	private ExtendedWindow historyWindow;
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
@@ -96,7 +99,7 @@ public class GUIManager {
 			this.launcher = launcher;
 			setWindowLookAndFeel();
 			createComponentsAndAddToMainFrame();
-//			createAndDisplayHomeWindow();
+			initialiseExtendedWindows();
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
@@ -106,9 +109,13 @@ public class GUIManager {
 		}
 	}
 	
+	private void initialiseExtendedWindows(){
+		createAndDisplayHomeWindow();
+		historyWindow = new ExtendedWindow(this, HISTORY_WINDOW_WIDTH);
+	}
 	private void createAndDisplayHomeWindow() {
-		homeWindow = new HomeWindow(this);
-//		homeWindow.setVisible(true);
+		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
+		homeWindow.setVisible(true);
 	}
 	protected void toggleHomeWindow(){
 		if(homeWindow != null){
