@@ -123,7 +123,7 @@ public class CommandManager {
 	}
 
 	private Result delete() {
-		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer);
+		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
 		return resultToPassToGUI;
