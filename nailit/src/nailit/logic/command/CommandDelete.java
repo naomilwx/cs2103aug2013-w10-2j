@@ -57,7 +57,7 @@ public class CommandDelete extends Command{
 		return executedResult;
 	}
 
-	private int getTaskDisplayID() {
+	public int getTaskDisplayID() {
 		// currently displayID is still taskID
 		int displayID = parserResultInstance.getTaskID();
 		return displayID;
@@ -123,9 +123,6 @@ public class CommandDelete extends Command{
 		return deleteSuccessfully;
 	}
 
-	public int getDisplayID() {
-		return taskToDeleteDisplayID;
-	}
 
 	
 	

@@ -87,7 +87,7 @@ public class CommandUpdate extends Command{
 		}
 	}
 
-	private int getDisplayID() {
+	public int getDisplayID() {
 		// currently, displayID is still taskID
 		return parserResultInstance.getTaskID();
 	}
@@ -100,7 +100,7 @@ public class CommandUpdate extends Command{
 	private void createResultObject() {
 //		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
 //				SUCCESS_MSG_FIRSTPART + taskToRetrieveID + SUCCESS_MSG_SECONDPART);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
+		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
 				commandSummary, taskRetrieved, null, null);
 	}
 	
@@ -152,5 +152,9 @@ public class CommandUpdate extends Command{
 	
 	public int getTaskID() {
 		return taskToRetrieveID;
+	}
+
+	public boolean updateSuccess() {
+		return updateSuccessfully;
 	}
 }
