@@ -36,19 +36,19 @@ public abstract class Parser {
 	public static DateTime retrieveDateTimeSecond (String p){
 		DateTime result;
 		
-		DateGroup resultDateGroup = nattyParser.parse(p).get(1);
+		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
 		result = new DateTime(resultDateGroup.getDates().get(1));
 	
 		return result;
 	}
 	
 	public static int numberOfTime(String p){		
-		List<DateGroup> resultDateGroup;
+		DateGroup resultDateGroup;
 		int answer;
 		
-		resultDateGroup = nattyParser.parse(p);
-		answer = resultDateGroup.size();
-	    
+		resultDateGroup = nattyParser.parse(p).get(0);
+		answer = resultDateGroup.getDates().size();
+	   
 		return answer;
 	}
 	

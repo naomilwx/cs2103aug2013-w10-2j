@@ -19,8 +19,9 @@ public class ParserTest {
 		//testIsTaskID(true, "12");
 		//testIsTaskID(false, "sep 11 2012");
 		//testIsDateTime(true, "sep 11 2012");
-		testIsDateTime(false, "Assignment 2");
-		testIsDateTime(true, "from yesterday to tomorrow");
+		//testIsDateTime(false, "Assignment 2");
+		//testIsDateTime(true, "from yesterday to tomorrow");
+		testNumberOfTime(2,"from yesterday to tomorrow");
 		//testHasDateTime(false, "from 20");
 		//testHasDateTime(true, "from 9am to 10 pm");
 	}
@@ -36,6 +37,11 @@ public class ParserTest {
 	private void testIsDateTime( boolean expected, String command)
 	{
 		assertEquals(expected, Parser.isDateTime(command));
+	}
+	
+	private void testNumberOfTime( int expected, String command)
+	{
+		assertEquals(expected, Parser.numberOfTime(command));
 	}
 	
 	
