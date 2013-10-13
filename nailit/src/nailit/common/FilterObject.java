@@ -3,12 +3,13 @@ package nailit.common;
 import org.joda.time.DateTime;
 
 public class FilterObject {
-	String  name;
-	DateTime startTime;
-	DateTime endTime;
-	Boolean isCompleted;
-	TaskPriority priority;
-	String tag;
+	private String  name;
+	private DateTime startTime;
+	private DateTime endTime;
+	private Boolean isCompleted;
+	private TaskPriority priority;
+	private String tag;
+	private Boolean isSearchAll;
 	
 	public FilterObject(String taskName, DateTime start, DateTime end, String tag, TaskPriority p,Boolean isCompleted){
 		name = taskName;
@@ -17,6 +18,7 @@ public class FilterObject {
 		this.isCompleted = isCompleted;
 		priority = p;
 		this.tag = tag;
+		this.isSearchAll = false;
 	}
 	
 	public String getName(){
@@ -40,6 +42,14 @@ public class FilterObject {
 	
 	public String getTag(){
 		return tag;
+	}
+	
+	public Boolean getIsSearchAll(){
+		return isSearchAll;
+	}
+	
+	public void setIsSearchAll(Boolean isSearchAll){
+		this.isSearchAll = isSearchAll;
 	}
 	
 }
