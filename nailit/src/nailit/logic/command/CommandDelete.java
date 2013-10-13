@@ -105,7 +105,7 @@ public class CommandDelete extends Command{
 
 	private void createResultObject() {
 		String notificationStr = String.format(SUCCESS_MSG, taskToDeleteDisplayID);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr, taskToRemove, null, null);		
+		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, notificationStr, taskToRemove, null, null);		
 	}
 
 	private void createCommandSummary() {
