@@ -59,7 +59,7 @@ public class CommandManager {
 		}
 	}
 
-	private Result doExecution() {
+	private Result doExecution() throws Exception {
 		CommandType commandType = parserResultInstance.getCommand();
 		// in each command execute method like add(), we will create the
 		// corresponding object and use them to execute the command.
