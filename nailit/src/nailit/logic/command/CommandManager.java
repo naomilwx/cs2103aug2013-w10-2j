@@ -43,7 +43,7 @@ public class CommandManager {
 		//storer = new StorageStub();
 		storer = new StorageManager();
 		operationsHistory = new Vector<Command>();
-		currentTaskList = null;
+		currentTaskList = new Vector<Task>();
 		filterContentForCurrentTaskList = null;
 		parserResultInstance = null;
 	}
