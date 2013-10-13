@@ -1,4 +1,6 @@
 package nailit.logic.command;
+import java.util.Vector;
+
 import org.joda.time.DateTime;
 
 import test.storage.StorageStub;
@@ -21,28 +23,43 @@ public class CommandUpdate extends Command{
 	private String updatedContent;
 	private String commandSummary;
 	
+	private Vector<Task> taskList;
+	private int taskToRetrieveDisplayID;
+	
+	private boolean updateSuccessfully;
+	
 	private static final String SUCCESS_MSG_FIRSTPART = "Task [ID: "; 
 	private static final String SUCCESS_MSG_SECONDPART	= "] has been successfully updated";
 	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK = "Sorry, Task [ID: %1d] not found. Please check and try again.";
+	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK_FOR_TASK_NOT_EXIST_IN_CURRENT_LIST = "Sorry, Task [ID: %1d] is not in the current task list. Please check and try again.";
+
 	private static final String UPDATE_SUCCESSFUL_FEEDBACK = 
 			"Task [ID: %1d] has been successfully updated. The content updated is: \n";
 
 
-	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse) {
+	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
 		updatedContent = "";
 		commandType = "update";
+		this.taskList = taskList;
 	}
 
 	@Override
 	public Result executeCommand() {
+		taskToRetrieveDisplayID = getDisplayID();
 		try {
-			retrieveTheTask();
+			if(isExistToUpdateTaskInTaskList()) {
+				retrieveTheTask();
+			} else {
+				updateSuccessfully = false;
+				return createResultObjectForTaskToUpdateNotExistingInTaskList(taskToRetrieveDisplayID);
+			}
+			
 		} catch(Exception e) {
 			createUnsuccessfulResultObject();
 			return executedResult;
 		}
-
+		updateSuccessfully = true;
 		updateTheRetrievedTask();
 		addTheUpdatedTaskObjOnStorage();
 		createCommandSummary();
@@ -50,6 +67,31 @@ public class CommandUpdate extends Command{
 		return executedResult;
 	}
 	
+	private Result createResultObjectForTaskToUpdateNotExistingInTaskList(
+			int taskToRetrieveDisplayID2) {
+		String notificationStr = String.format(UPDATE_UNSUCCESSFUL_FEEDBACK_FOR_TASK_NOT_EXIST_IN_CURRENT_LIST, taskToRetrieveDisplayID);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY,
+				notificationStr);
+		return executedResult;
+	}
+
+	private boolean isExistToUpdateTaskInTaskList() {
+		if(taskList == null) {
+			return false;
+		} else if(taskList.size() < taskToRetrieveDisplayID) {
+			return false;
+		} else if(taskToRetrieveDisplayID < 1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public int getDisplayID() {
+		// currently, displayID is still taskID
+		return parserResultInstance.getTaskID();
+	}
+
 	private void createCommandSummary() {
 		commandSummary = String.format(UPDATE_SUCCESSFUL_FEEDBACK, taskToRetrieveID) + updatedContent;
 		
@@ -58,8 +100,8 @@ public class CommandUpdate extends Command{
 	private void createResultObject() {
 //		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
 //				SUCCESS_MSG_FIRSTPART + taskToRetrieveID + SUCCESS_MSG_SECONDPART);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
-				commandSummary);
+		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
+				commandSummary, taskRetrieved, null, null);
 	}
 	
 	// there is no such task record in the storage to display
@@ -103,12 +145,16 @@ public class CommandUpdate extends Command{
 	}
 
 	private void retrieveTheTask() throws Exception {
-		taskToRetrieveID = parserResultInstance.getTaskID();
-		taskRetrieved = storer.retrieve(taskToRetrieveID);
-
+		taskRetrieved = taskList.get(taskToRetrieveDisplayID - 1);
 	}
+	
+	
 	
 	public int getTaskID() {
 		return taskToRetrieveID;
+	}
+
+	public boolean updateSuccess() {
+		return updateSuccessfully;
 	}
 }
