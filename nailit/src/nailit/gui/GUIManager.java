@@ -103,7 +103,6 @@ public class GUIManager {
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
-			System.out.println("here");
 		}catch(FileCorruptionException e){
 			//TODO:
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -232,11 +231,8 @@ public class GUIManager {
 		String notificationStr = result.getPrintOut();
 		boolean isSuccess = result.getExecutionSuccess();
 		if(!notificationStr.isEmpty()){
-			System.out.println(notificationStr);
-			System.out.println("ye");
 			displayNotification(notificationStr, isSuccess);
 		}else{
-			System.out.println("hidden");
 			displayArea.hideNotifications();
 		}
 	}
