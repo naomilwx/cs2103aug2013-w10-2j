@@ -78,7 +78,8 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
 					GUIBoss.setVisible(false);
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
-					GUIBoss.hideHistoryWindow();
+					GUIBoss.toggleHistoryWindow();
+					GUIBoss.setFocusOnCommandBar();
 				}
 			}
 			@Override

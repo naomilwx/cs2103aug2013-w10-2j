@@ -102,7 +102,7 @@ public class GUIManager {
 			initialiseExtendedWindows();
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
-			logicExecutor = new LogicManagerStub();
+			logicExecutor = new LogicManager();
 			System.out.println("here");
 		}catch(FileCorruptionException e){
 			//TODO:
@@ -122,6 +122,12 @@ public class GUIManager {
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
 			homeWindow.setVisible(!currentVisibility);
+		}
+	}
+	protected void toggleHistoryWindow(){
+		if(historyWindow != null){
+			boolean currentVisibility = historyWindow.isVisible();
+			historyWindow.setVisible(!currentVisibility);
 		}
 	}
 	protected void hideHistoryWindow(){
@@ -226,7 +232,12 @@ public class GUIManager {
 		String notificationStr = result.getPrintOut();
 		boolean isSuccess = result.getExecutionSuccess();
 		if(!notificationStr.isEmpty()){
+			System.out.println(notificationStr);
+			System.out.println("ye");
 			displayNotification(notificationStr, isSuccess);
+		}else{
+			System.out.println("hidden");
+			displayArea.hideNotifications();
 		}
 	}
 	private void displayNotification(String notificationStr, boolean isSuccess){

@@ -150,6 +150,8 @@ public class DisplayArea extends JLayeredPane {
 	protected void addContent(Component component, boolean replace){
 		if(popupPane.isVisible()){
 			shiftLayer(defaultPane, defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+		}else{
+			shiftLayer(defaultPane, GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
 		}
 		
 		if(replace){
