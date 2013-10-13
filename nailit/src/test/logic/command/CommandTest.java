@@ -29,7 +29,7 @@ public class CommandTest {
 	private final DateTime endTime = new DateTime(2013, 10, 9, 11, 0);
 
 	@Test
-	public void testCommandAdd() throws FileCorruptionException {
+	public void testCommandAdd() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
@@ -39,7 +39,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandDelete() throws FileCorruptionException {
+	public void testCommandDelete() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
 		prForCommandDelete.setTaskID(123);
@@ -50,7 +50,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandUpdateNotExistingTask() throws FileCorruptionException {
+	public void testCommandUpdateNotExistingTask() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE); 
 		// function update, taskToDeleteID needed
@@ -62,7 +62,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandUpdate() throws FileCorruptionException {
+	public void testCommandUpdate() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE);
 		// function update, taskToDeleteID needed
@@ -74,7 +74,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandDisplayNotExistingTask() throws FileCorruptionException {
+	public void testCommandDisplayNotExistingTask() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);
@@ -84,7 +84,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandAddAgain() throws FileCorruptionException {
+	public void testCommandAddAgain() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
@@ -94,7 +94,7 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandDisplayExistingTask() throws FileCorruptionException {
+	public void testCommandDisplayExistingTask() throws Exception {
 		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);

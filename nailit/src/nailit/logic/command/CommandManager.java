@@ -44,7 +44,7 @@ public class CommandManager {
 		storer = new StorageManager();
 		operationsHistory = new Vector<Command>();
 		currentTaskList = new Vector<Task>();
-		filterContentForCurrentTaskList = null;
+		filterContentForCurrentTaskList = new FilterObject();
 		parserResultInstance = null;
 	}
 	
@@ -161,6 +161,7 @@ public class CommandManager {
 	}
 	
 	private Result search() {
+		// if it is seach all, do not forget to set the filter.setIsSearchAll(true)
 		return null;
 		// TODO Auto-generated method stub
 	}
@@ -208,7 +209,9 @@ public class CommandManager {
 			return false;
 		} else {
 			Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
-			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
+			if(filterContentForCurrentTaskList.getIsSearchAll()) {
+				return true;
+			} else if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
 				return true;
 			} else if(taskToCompare.getStartTime().equals(filterContentForCurrentTaskList.getStartTime())) {
 				return true;
