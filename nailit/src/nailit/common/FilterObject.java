@@ -9,8 +9,17 @@ public class FilterObject {
 	private Boolean isCompleted;
 	private TaskPriority priority;
 	private String tag;
-	private Boolean isSearchAll;
+	private boolean isSearchAll;
 	
+	public FilterObject(){
+		name = null;
+		startTime = null;
+		endTime = null;
+		this.isCompleted = null;
+		priority = null;
+		this.tag = null;
+		this.isSearchAll = false;
+	}
 	public FilterObject(String taskName, DateTime start, DateTime end, String tag, TaskPriority p,Boolean isCompleted){
 		name = taskName;
 		startTime = start;
@@ -44,11 +53,11 @@ public class FilterObject {
 		return tag;
 	}
 	
-	public Boolean getIsSearchAll(){
+	public boolean getIsSearchAll(){
 		return isSearchAll;
 	}
 	
-	public void setIsSearchAll(Boolean isSearchAll){
+	public void setIsSearchAll(boolean isSearchAll){
 		this.isSearchAll = isSearchAll;
 	}
 	
