@@ -41,7 +41,7 @@ public class CommandDelete extends Command{
 	public Result executeCommand() throws Exception {
 		taskToDeleteDisplayID = getTaskDisplayID();
 		// if displayID is TASKID_NULL, throw exception
-		if(taskToDeleteDisplayID == Task.TASKID_NULL) {
+		if(taskToDeleteDisplayID == 0) { // 0 means no display ID but the original one. later need change
 			throw new Exception(EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL);
 		} else {
 			try {

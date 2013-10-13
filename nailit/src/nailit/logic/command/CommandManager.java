@@ -138,7 +138,7 @@ public class CommandManager {
 
 	}
 	
-	private Result update() {
+	private Result update() throws Exception {
 		CommandUpdate newUpdateCommandObj = new CommandUpdate(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newUpdateCommandObj.executeCommand();
 		if(newUpdateCommandObj.updateSuccess()) {
@@ -146,6 +146,8 @@ public class CommandManager {
 			deleteTaskFromCurrentTaskList(taskUpdatedDisplayID);
 			addTaskToCurrentTaskList(resultToPassToGUI);
 		}
+		// the the display ID for the task may change
+		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
 		return resultToPassToGUI;
