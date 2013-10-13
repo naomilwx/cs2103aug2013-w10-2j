@@ -34,7 +34,9 @@ public class CommandTest {
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
+		
+		Task expectedAddedTask = new Task("CS2103 project", startTime, endTime, "school work", TaskPriority.HIGH);
+		Result expectedResultObj = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, null, expectedAddedTask, null, null);
 		testTwoResultObj(resultObjOfCommandAdd, expectedResultObj);
 	}
 	
@@ -45,7 +47,9 @@ public class CommandTest {
 		prForCommandDelete.setTaskID(123);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
+		
+		
+		Result expectedResultObj = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
 		testTwoResultObj(resultObjOfCommandDelete, expectedResultObj);
 	}
 	
@@ -57,7 +61,7 @@ public class CommandTest {
 		prForCommandUpdate.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
+		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
 	
@@ -69,7 +73,7 @@ public class CommandTest {
 		prForCommandUpdate.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
+		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
 	
@@ -89,7 +93,7 @@ public class CommandTest {
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		Result expectedResultObj = createSimpleResultObj(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
+		Result expectedResultObj = new Result(false, true, Result.NOTIFICATION_DISPLAY, SuccessMsg + taskID);
 		testTwoResultObj(resultObjOfCommandAdd, expectedResultObj);
 	}
 	
@@ -127,7 +131,7 @@ public class CommandTest {
 		assertEquals(resultObjOfCommandAdd.getExitStatus(), expectedResultObj.getExitStatus());
 		assertEquals(resultObjOfCommandAdd.getExecutionSuccess(), expectedResultObj.getExecutionSuccess());
 		assertEquals(resultObjOfCommandAdd.getDisplayType(), expectedResultObj.getDisplayType());
-		assertEquals(resultObjOfCommandAdd.getPrintOut(), expectedResultObj.getPrintOut());
+		assertEquals(resultObjOfCommandAdd.getTaskToDisplay(), expectedResultObj.getTaskToDisplay());
 	}
 	
 	private ParserResult createParserResult(CommandType commandType, String taskName, DateTime startTime, 
@@ -142,9 +146,7 @@ public class CommandTest {
 		return newPR;
 	}
 	
-	private Result createSimpleResultObj(boolean isExitCommand, boolean isSuccess, int displayType, String printOut) {
-		return new Result(isExitCommand, isSuccess, displayType, printOut);
-	}
+
 	
 	private ParserResult createParserResult(CommandType commandType) {
 		return createParserResult(commandType, 

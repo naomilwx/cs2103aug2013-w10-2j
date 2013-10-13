@@ -60,8 +60,8 @@ public class CommandDisplay extends Command{
 			// since successfully retrieve all the task on the storage
 			// update the current task list as the list of all tasks
 			// and make the filter as all
-			taskList = vectorOfTasks;
-			currentFilterObj.setIsSearchAll(true);
+			cm.setCurrentList(vectorOfTasks);
+			cm.setCurrentFilterSearchAll();
 		} catch(Exception e) {
 			createUnsuccessfulResultObjectForDisplayAll();
 		}

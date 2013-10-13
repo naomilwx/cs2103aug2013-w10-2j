@@ -236,4 +236,12 @@ public class CommandManager {
 	public FilterObject getCurrentFilterObj() {
 		return filterContentForCurrentTaskList;
 	}
+
+	public void setCurrentList(Vector<Task> vectorOfTasks) {
+		currentTaskList = vectorOfTasks;
+	}
+
+	public void setCurrentFilterSearchAll() {
+		filterContentForCurrentTaskList.setIsSearchAll(true);
+	}
 }
