@@ -3,6 +3,7 @@ package nailit.logic.command;
 import java.util.Vector;
 
 
+import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.ParserResult;
@@ -23,21 +24,28 @@ public class CommandDisplay extends Command{
 	// instance belongs to, since it may display the operations
 	// history
 	private CommandManager cm;
+	private FilterObject currentFilterObj;
 	
-	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found. Please check and try again.";
-
+	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found in the task list. Please check and try again.";
+	private static final String FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL = "Sorry, the system fails to retrieve all the tasks in the storage. Please try again.";
+	private static final String NO_DISPLAY_ID_WARNING = "The parserResult does not have DisplayID.";
+	private static final String TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST = "The task to display does not exist in the display list.";
+	
 	public CommandDisplay(ParserResult resultInstance,
-			StorageManager storerToUse, CommandManager cm, Vector<Task> currentTaskList) {
+			StorageManager storerToUse, CommandManager cm) {
 		super(resultInstance, storerToUse);
 		this.cm = cm;
 		commandType = "display";
-		taskList = currentTaskList;
+		taskList = cm.getCurrentTaskList();
+		commandSummary = "Display operation";
+		currentFilterObj = cm.getCurrentFilterObj();
 	}
 
 	@Override
-	public Result executeCommand() {
+	public Result executeCommand() throws Exception {
 		if(parserResultInstance.isDisplayAll()) {
-			return displayAllTasks();
+			displayAllTasks();
+			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
 			return displayOperationsHistory();
 		} else {
@@ -45,30 +53,42 @@ public class CommandDisplay extends Command{
 		}
 	}
 
-	private Result displayAllTasks() {
+	private void displayAllTasks() {
 		try {
 			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
 			createResultObject(false, true, Result.LIST_DISPLAY, null, null, vectorOfTasks, null);
-			return executedResult;
+			// since successfully retrieve all the task on the storage
+			// update the current task list as the list of all tasks
+			// and make the filter as all
+			taskList = vectorOfTasks;
+			//currentFilterObj.
 		} catch(Exception e) {
-			createUnsuccessfulResultObject();
-			return executedResult;
+			createUnsuccessfulResultObjectForDisplayAll();
 		}
 	}
 
-	private Result displayTheTask() {
-		try {
-			getDisplayID();
-			retrieveTheTask();
-		} catch(Exception e) {
-			createUnsuccessfulResultObject();
+	private void createUnsuccessfulResultObjectForDisplayAll() {
+		// in case GUI access the taskList 
+		Vector<Task> emptyTaskList = new Vector<Task>();
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL, null, emptyTaskList, null);
+	}
+
+	private Result displayTheTask() throws Exception {
+		getDisplayID();
+		if(displayID == 0) { // currently, 0 means no display ID, needs changes later
+			throw new Exception(NO_DISPLAY_ID_WARNING);
+		} else {
+			try {
+				retrieveTheTask(); // let retrievedTask = the task to display, which is gotten from task list
+			} catch(Exception e) {
+				createUnsuccessfulResultObject();
+				return executedResult;
+			}
+			
+			createResultObject(false, true, Result.EXECUTION_RESULT_DISPLAY, null, taskRetrieved, taskList, null);
+			createCommandSummary();
 			return executedResult;
 		}
-//		Vector<Task> vectorStoringTheTask = new Vector<Task>();
-//		vectorStoringTheTask.add(taskRetrieved);
-		createResultObject(false, true, Result.EXECUTION_RESULT_DISPLAY, null, taskRetrieved, taskList, null);
-		createCommandSummary();
-		return executedResult;
 	}
 
 	private void getDisplayID() {
@@ -88,7 +108,7 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "display the task with the Task ID: " + taskToRetrieveID;		
+		commandSummary = "display the task with the Task ID: " + displayID;		
 	}
 
 	private void createResultObject(boolean isExitCommand, boolean isSuccess, int displayType, 
@@ -98,15 +118,15 @@ public class CommandDisplay extends Command{
 	
 	// there is no such task record in the storage to display
 	private void createUnsuccessfulResultObject() {
-		String notificationStr = String.format(UNSUCCESS_DISPLAY_FEEDBACK, taskToRetrieveID);
+		String notificationStr = String.format(UNSUCCESS_DISPLAY_FEEDBACK, displayID);
 		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, notificationStr, null, null);
 	}
 
 	private void retrieveTheTask() throws Exception {
 		if(taskList == null || (taskList.size() < displayID) || (displayID < 1)) {
-			throw new Exception("The task to display does not exist in the display list.");
+			throw new Exception(TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST);
 		} else {
-			taskRetrieved = taskList.get(displayID);
+			taskRetrieved = taskList.get(displayID - 1);
 		} 
 	}
 

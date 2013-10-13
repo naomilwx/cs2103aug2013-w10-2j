@@ -120,29 +120,6 @@ public class CommandManager {
 		return resultToPassToGUI;
 	}
 	
-	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
-		if(filterContentForCurrentTaskList == null) {
-			return false;
-		} else {
-			Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
-			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
-				return true;
-			} else if(taskToCompare.getStartTime().equals(filterContentForCurrentTaskList.getStartTime())) {
-				return true;
-			} else if(taskToCompare.getEndTime().equals(filterContentForCurrentTaskList.getEndTime())) {
-				return true;
-			} else if(taskToCompare.getPriority().equals(filterContentForCurrentTaskList.getPriority())) {
-				return true;
-			} else if(taskToCompare.getTag().equals(filterContentForCurrentTaskList.getTag())) {
-				return true;
-			} else if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
 	private Result delete() throws Exception {
 
 		// delete the task according to its displayID in the taskList
@@ -176,8 +153,8 @@ public class CommandManager {
 		return resultToPassToGUI;
 	}
 	
-	private Result display() {
-		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this, currentTaskList);
+	private Result display() throws Exception {
+		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this);
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
@@ -224,5 +201,36 @@ public class CommandManager {
 	private void sort() {
 		ComparatorForTwoTaskObj newComparator = new ComparatorForTwoTaskObj();
 		Collections.sort(currentTaskList, newComparator);
+	}
+	
+	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
+		if(filterContentForCurrentTaskList == null) {
+			return false;
+		} else {
+			Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
+			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
+				return true;
+			} else if(taskToCompare.getStartTime().equals(filterContentForCurrentTaskList.getStartTime())) {
+				return true;
+			} else if(taskToCompare.getEndTime().equals(filterContentForCurrentTaskList.getEndTime())) {
+				return true;
+			} else if(taskToCompare.getPriority().equals(filterContentForCurrentTaskList.getPriority())) {
+				return true;
+			} else if(taskToCompare.getTag().equals(filterContentForCurrentTaskList.getTag())) {
+				return true;
+			} else if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public Vector<Task> getCurrentTaskList() {
+		return currentTaskList;
+	}
+	
+	public FilterObject getCurrentFilterObj() {
+		return filterContentForCurrentTaskList;
 	}
 }
