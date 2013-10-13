@@ -26,6 +26,9 @@ public class CommandDelete extends Command{
 	private static final String SUCCESS_MSG = "Task: [ID %1s]has been successfully deleted.";
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST = "Task [ID %1d] does not exist in the current task list. Cannot delete non-existant task."; 
+	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult instance is null."; 
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, but the to-delete task does not exist in the storage.";;
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but the to-delete task does not exist in the task list."; 
 
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
@@ -35,26 +38,33 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public Result executeCommand() {
+	public Result executeCommand() throws Exception {
 		taskToDeleteDisplayID = getTaskDisplayID();
-		try {
-			if(isExistToDeleteTaskInTaskList(taskToDeleteDisplayID)) {
-				removeTheTaskOnStorage(taskToDeleteDisplayID);
-			} else {
+		// if displayID is TASKID_NULL, throw exception
+		if(taskToDeleteDisplayID == 0) { // 0 means no display ID but the original one. later need change
+			throw new Exception(EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL);
+		} else {
+			try {
+				if(isExistToDeleteTaskInTaskList()) {
+					removeTheTaskOnStorage();
+				} else {
+					deleteSuccessfully = false;
+					createResultObjectForTaskToDeleteNotExistingInTaskList();
+					createCommandSummaryForDeletingNotExistingTaskInTaskList();
+					return executedResult;
+				}
+				
+			} catch(Exception e) {
 				deleteSuccessfully = false;
-				return createResultObjectForTaskToDeleteNotExistingInTaskList(taskToDeleteDisplayID);
+				createResultObjectForNotExistingTask();
+				createCommandSummaryForDeletingNotExistingTask();
+				return executedResult;
 			}
-			
-		} catch(Exception e) {
-			deleteSuccessfully = false;
-			createResultObjectForNotExistingTask(taskToDeleteDisplayID);
-			createCommandSummaryForDeletingNotExistingTask();
+			deleteSuccessfully = true;
+			createResultObject();
+			createCommandSummary();
 			return executedResult;
 		}
-		deleteSuccessfully = true;
-		createResultObject(taskToDeleteDisplayID);
-		createCommandSummary();
-		return executedResult;
 	}
 
 	public int getTaskDisplayID() {
@@ -63,7 +73,7 @@ public class CommandDelete extends Command{
 		return displayID;
 	}
 
-	private boolean isExistToDeleteTaskInTaskList(int taskToDeleteDisplayID) {
+	private boolean isExistToDeleteTaskInTaskList() {
 		if(taskList == null) {
 			return false;
 		} else if(taskList.size() < taskToDeleteDisplayID) {
@@ -75,22 +85,25 @@ public class CommandDelete extends Command{
 		}
 	}
 
-	private Result createResultObjectForTaskToDeleteNotExistingInTaskList(int taskToDeleteDisplayID) {
+	private void createResultObjectForTaskToDeleteNotExistingInTaskList() {
 		String notificationStr = String.format(FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST, taskToDeleteDisplayID);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
-		return executedResult;
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, notificationStr);
 	}
 
-	private void createResultObjectForNotExistingTask(int taskToDeleteDisplayID) {
+	private void createResultObjectForNotExistingTask() {
 		String notificationStr = String.format(FEEDBACK_FOR_NOT_EXISTING_TASK, taskToDeleteDisplayID);
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
+		executedResult = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
 	}
 
 	private void createCommandSummaryForDeletingNotExistingTask() {
-		commandSummary = "This is a delete command, but the to-delete task does not exist in the storage.";		
+		commandSummary = COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE;		
+	}
+	
+	private void createCommandSummaryForDeletingNotExistingTaskInTaskList() {
+		commandSummary = COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST;		
 	}
 
-	private void createResultObject(int taskToDeleteDisplayID) {
+	private void createResultObject() {
 		String notificationStr = String.format(SUCCESS_MSG, taskToDeleteDisplayID);
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr, taskToRemove, null, null);		
 	}
@@ -103,14 +116,16 @@ public class CommandDelete extends Command{
 				+ taskToRemove.getPriority();
 	}
 
-	private void removeTheTaskOnStorage(int taskToDeleteDisplayID) throws NoTaskFoundException,
+	private void removeTheTaskOnStorage() throws NoTaskFoundException,
 			FileCorruptionException {
 	
-		taskToDeleteID = retrieveTheTaskID(taskToDeleteDisplayID);
+		taskToDeleteID = retrieveTheTaskID();
 		storer.remove(taskToDeleteID);
 	}
 
-	private int retrieveTheTaskID(int taskToDeleteDisplayID) {
+	private int retrieveTheTaskID() {
+		// retrieve the task from the taskList according to display ID
+		// then remove it from storage according to its task ID
 		taskToRemove = taskList.get(taskToDeleteDisplayID - 1);
 		return taskToRemove.getID();
 	}
