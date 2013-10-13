@@ -48,7 +48,7 @@ public abstract class Parser {
 		
 		resultDateGroup = nattyParser.parse(p).get(0);
 		answer = resultDateGroup.getDates().size();
-	   
+		System.out.println(answer);
 		return answer;
 	}
 	

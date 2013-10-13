@@ -51,11 +51,23 @@ public class DisplayArea extends JLayeredPane {
 		}
 	};
 	private KeyAdapter keyEventListener = new KeyAdapter(){
+		boolean ctrlPressed = false;
 		@Override
 		public void keyPressed(KeyEvent keyStroke){
 			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_SHIFT){
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = true;
+			}else if(keyCode == KeyEvent.VK_SHIFT){
 				defaultPaneSetFocusHandler();
+			}else if(ctrlPressed && (keyCode == KeyEvent.VK_TAB)){
+				GUIBoss.setFocusOnCommandBar();
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = false;
 			}
 		}
 	};
@@ -116,13 +128,16 @@ public class DisplayArea extends JLayeredPane {
 			nextFocusElement = currentFocusElement + 1;
 		}
 		
-		if(items.isEmpty() || items.size() <= nextFocusElement){
-			 currentFocusElement = NULL_FOCUS;
-			 GUIBoss.setFocusOnCommandBar();
+		if(items.isEmpty()){
+			currentFocusElement = NULL_FOCUS;
+			GUIBoss.setFocusOnCommandBar();
 		 }else{
-			 Component item = items.get(nextFocusElement);
-			 item.requestFocus();
-			 currentFocusElement = nextFocusElement;
+			if(items.size() <= nextFocusElement){
+				nextFocusElement = 0;
+			}
+			Component item = items.get(nextFocusElement);
+			item.requestFocus();
+			currentFocusElement = nextFocusElement;
 		 }
 	}
 	

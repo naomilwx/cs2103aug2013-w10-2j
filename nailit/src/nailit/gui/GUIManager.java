@@ -102,7 +102,7 @@ public class GUIManager {
 			initialiseExtendedWindows();
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
-			logicExecutor = new LogicManager();
+			logicExecutor = new LogicManagerStub();
 			System.out.println("here");
 		}catch(FileCorruptionException e){
 			//TODO:
