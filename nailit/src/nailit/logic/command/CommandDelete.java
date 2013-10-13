@@ -92,7 +92,7 @@ public class CommandDelete extends Command{
 
 	private void createResultObjectForNotExistingTask() {
 		String notificationStr = String.format(FEEDBACK_FOR_NOT_EXISTING_TASK, taskToDeleteDisplayID);
-		executedResult = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, notificationStr);
 	}
 
 	private void createCommandSummaryForDeletingNotExistingTask() {
