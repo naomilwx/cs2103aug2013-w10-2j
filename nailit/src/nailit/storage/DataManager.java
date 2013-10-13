@@ -69,6 +69,13 @@ public class DataManager {
 		return hashTable;
 	}
 	
+	public void setHashMap(HashMap<Integer,Task> h){
+		hashTable = h;
+	}
+	
+	public void setNextValidID(int ID){
+		nextValidID = ID;
+	}
 	/**
 	 * Private Methods
 	 * */
