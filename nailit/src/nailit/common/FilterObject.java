@@ -16,11 +16,7 @@ public class FilterObject {
 		endTime = end;
 		this.isCompleted = isCompleted;
 		priority = p;
-		if(tag == null){
-			this.tag = "";
-		}else{
-			this.tag = tag;
-		}
+		this.tag = tag;
 	}
 	
 	public String getName(){

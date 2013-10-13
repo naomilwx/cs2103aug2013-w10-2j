@@ -21,18 +21,26 @@ public class StorageManagerTest {
 	public void test() throws FileCorruptionException, NoTaskFoundException {
 		sto = new StorageManager();
 		sto.clear();
-		Task task1 = new Task("frist task");
+		Task task1 = new Task("first task");
 		Task task2 = new Task("second task");
-		testAddCommand("1,frist task,null,null,1,,,0\n",task1);
-		testAddCommand("1,frist task,null,null,1,,,0\n2,second task,null,null,1,,,0\n",task2);
+		testAddCommand("1,first task,null,null,1,,,0\n",task1);
+		testAddCommand("1,first task,null,null,1,,,0\n2,second task,null,null,1,,,0\n",task2);
 		Task task3 = new Task(2,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
-		testAddCommand("1,frist task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",task3);
+		testAddCommand("1,first task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",task3);
 //		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
 //		testAddCommand("",task4);
 //		testRemoveCommand("2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",1);
 		FilterObject fo = new FilterObject("first",null,null,null,null,null);
-		testFilterCommand("1,frist task,null,null,1,,,0\n",fo);
-		
+		testFilterCommand("1,first task,null,null,1,,,0\n",fo);
+		FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
+		testFilterCommand("2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",fo1);
+		FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
+		testFilterCommand("",fo2);
+		FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
+		testFilterCommand("2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",fo3);
+		FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
+		testFilterCommand("1,first task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n",fo4);
+
 	} 
 	
 	public String printVector(Vector<Task> v){

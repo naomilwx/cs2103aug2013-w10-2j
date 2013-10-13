@@ -31,7 +31,6 @@ public class StorageManager {
 	}
 	
 	public int add(Task task){
-		System.out.println(task.changeToDiskFormat());
 		Task taskToBeAdded = task.copy();
 				
 		int ID = inMemory.add(taskToBeAdded);
@@ -71,6 +70,9 @@ public class StorageManager {
 	}
 	
 	public Vector<Task> filter(FilterObject ftobj){
+		if(ftobj == null){
+			return null;
+		}
 		Vector<Task> taskList = retrieveAll();
 		Vector<Task> filteredTaskList = new Vector<Task>();
 		
@@ -221,7 +223,7 @@ public class StorageManager {
 	}
 	
 	private boolean isEndTimeEmpty(FilterObject ftobj){
-		return ftobj.getStartTime() == null;
+		return ftobj.getEndTime() == null;
 	}
 	
 	private boolean isPriorityEmpty(FilterObject ftobj){
@@ -259,7 +261,7 @@ public class StorageManager {
 		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
 		//For tasks, we only check whether taskEndTime is in the time period
 		
-		if(isEvent(task)){
+		if(task.isEvent()){
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
@@ -292,6 +294,14 @@ public class StorageManager {
 				return false;
 			}
 
+		}
+		else if(task.isFloatingTask()){
+			if(!isStartTimeEmpty(ftobj)||!isEndTimeEmpty(ftobj)){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
 		else{
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
