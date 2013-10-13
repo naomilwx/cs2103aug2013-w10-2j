@@ -15,6 +15,10 @@ public class CommandDisplay extends Command{
 	private Task taskRetrieved;
 	private int taskToRetrieveID;
 	
+	private Vector<Task> taskList;
+	
+	private int displayID;
+	
 	// the CommandManager instance that the CommandDisplay 
 	// instance belongs to, since it may display the operations
 	// history
@@ -23,10 +27,11 @@ public class CommandDisplay extends Command{
 	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found. Please check and try again.";
 
 	public CommandDisplay(ParserResult resultInstance,
-			StorageManager storerToUse, CommandManager cm) {
+			StorageManager storerToUse, CommandManager cm, Vector<Task> currentTaskList) {
 		super(resultInstance, storerToUse);
 		this.cm = cm;
 		commandType = "display";
+		taskList = currentTaskList;
 	}
 
 	@Override
@@ -42,8 +47,8 @@ public class CommandDisplay extends Command{
 
 	private Result displayAllTasks() {
 		try {
-			Vector<Task> vectorOfTasks = storer.retrieveAll();
-			createResultObject(false, true, Result.LIST_DISPLAY, null, vectorOfTasks, null);
+			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
+			createResultObject(false, true, Result.LIST_DISPLAY, null, null, vectorOfTasks, null);
 			return executedResult;
 		} catch(Exception e) {
 			createUnsuccessfulResultObject();
@@ -53,16 +58,22 @@ public class CommandDisplay extends Command{
 
 	private Result displayTheTask() {
 		try {
+			getDisplayID();
 			retrieveTheTask();
 		} catch(Exception e) {
 			createUnsuccessfulResultObject();
 			return executedResult;
 		}
-		Vector<Task> vectorStoringTheTask = new Vector<Task>();
-		vectorStoringTheTask.add(taskRetrieved);
-		createResultObject(false, true, Result.TASK_DISPLAY, null, vectorStoringTheTask, null);
+//		Vector<Task> vectorStoringTheTask = new Vector<Task>();
+//		vectorStoringTheTask.add(taskRetrieved);
+		createResultObject(false, true, Result.EXECUTION_RESULT_DISPLAY, null, taskRetrieved, taskList, null);
 		createCommandSummary();
 		return executedResult;
+	}
+
+	private void getDisplayID() {
+		// currently, displayID is still taskID
+		displayID = parserResultInstance.getTaskID();
 	}
 
 	private Result displayOperationsHistory() {
@@ -71,8 +82,8 @@ public class CommandDisplay extends Command{
 		
 	}
 
-	private void retrieveAllTheTasks() {
-		// TODO Auto-generated method stub
+	private Vector<Task> retrieveAllTheTasks() {
+		return storer.retrieveAll();
 		
 	}
 
@@ -81,8 +92,8 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createResultObject(boolean isExitCommand, boolean isSuccess, int displayType, 
-			String printOut, Vector<Task> tasks, Vector<String> history) {
-		executedResult = new Result(isExitCommand, isSuccess, displayType, printOut, tasks, history);
+			String printOut, Task taskRetrieved, Vector<Task> tasks, Vector<String> history) {
+		executedResult = new Result(isExitCommand, isSuccess, displayType, printOut, taskRetrieved, tasks, history);
 	}
 	
 	// there is no such task record in the storage to display
@@ -92,8 +103,11 @@ public class CommandDisplay extends Command{
 	}
 
 	private void retrieveTheTask() throws Exception {
-		taskToRetrieveID = parserResultInstance.getTaskID();
-		taskRetrieved = storer.retrieve(taskToRetrieveID);
+		if(taskList == null || (taskList.size() < displayID) || (displayID < 1)) {
+			throw new Exception("The task to display does not exist in the display list.");
+		} else {
+			taskRetrieved = taskList.get(displayID);
+		} 
 	}
 
 	public int getTaskID() {

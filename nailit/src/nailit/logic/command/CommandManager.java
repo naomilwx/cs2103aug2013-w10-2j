@@ -105,7 +105,7 @@ public class CommandManager {
 	}
 
 	private Result display() {
-		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this);
+		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this, currentTaskList);
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
