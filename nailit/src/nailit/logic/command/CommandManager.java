@@ -3,6 +3,8 @@ package nailit.logic.command;
 import java.util.Collections;
 import java.util.Vector;
 
+import org.joda.time.DateTime;
+
 import test.storage.StorageStub;
 
 import nailit.common.FilterObject;
@@ -205,28 +207,61 @@ public class CommandManager {
 	}
 	
 	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
-		if(filterContentForCurrentTaskList == null) {
-			return false;
-		} else {
-			Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
-			if(filterContentForCurrentTaskList.getIsSearchAll()) {
+		Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
+		// date in filter
+		DateTime filterST = filterContentForCurrentTaskList.getStartTime();
+		DateTime filterET = filterContentForCurrentTaskList.getEndTime();
+		
+		// date in the task
+		DateTime taskST = taskToCompare.getStartTime();
+		DateTime taskET = taskToCompare.getEndTime();
+		
+		if (filterContentForCurrentTaskList.getIsSearchAll()) {
+			return true;
+		} 
+		
+		if (filterContentForCurrentTaskList.getName() != null) {
+			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
 				return true;
-			} else if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
+			} 
+		} 
+		
+		if(filterContentForCurrentTaskList.getPriority() != null) {
+			if(taskToCompare.getPriority() == filterContentForCurrentTaskList.getPriority()) {
 				return true;
-			} else if(taskToCompare.getStartTime().equals(filterContentForCurrentTaskList.getStartTime())) {
+			}
+		} 
+		
+		if(filterContentForCurrentTaskList.getTag() != null) {
+			if(taskToCompare.getTag() == filterContentForCurrentTaskList.getTag()) {
 				return true;
-			} else if(taskToCompare.getEndTime().equals(filterContentForCurrentTaskList.getEndTime())) {
-				return true;
-			} else if(taskToCompare.getPriority().equals(filterContentForCurrentTaskList.getPriority())) {
-				return true;
-			} else if(taskToCompare.getTag().equals(filterContentForCurrentTaskList.getTag())) {
-				return true;
-			} else if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
-				return true;
-			} else {
-				return false;
 			}
 		}
+
+		if (taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
+			return true;
+		}
+
+		if (filterST != null && filterET != null) { // a time range, meaning
+													// that start time needs to
+													// be within the range
+			if ((filterST.compareTo(taskST) < 0) && (filterET.compareTo(taskST) > 0)) {
+				return true;
+			}
+		} 
+		
+		if(filterST != null && filterET == null) { // from a time, taskST needs to after it
+			if(filterST.compareTo(taskST) < 0) {
+				return true;
+			}
+		}
+		
+		if(filterST == null && filterET != null) { // to a time, taskST needs to before it
+			if(filterET.compareTo(taskST) > 0) {
+				return true;
+			}
+		} 
+		return false;
 	}
 
 	public Vector<Task> getCurrentTaskList() {
