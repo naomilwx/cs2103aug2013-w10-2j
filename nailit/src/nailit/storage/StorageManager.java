@@ -71,7 +71,7 @@ public class StorageManager {
 	
 	public Vector<Task> filter(FilterObject ftobj){
 		if(ftobj == null){
-			return null;
+			return new Vector<Task>();
 		}
 		Vector<Task> taskList = retrieveAll();
 		Vector<Task> filteredTaskList = new Vector<Task>();
