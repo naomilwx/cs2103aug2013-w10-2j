@@ -109,17 +109,40 @@ public class CommandManager {
 		Result resultToPassToGUI = newAddCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newAddCommandObj);
 		// the new added task may or may not should exist in the currentTaskList,
-		// so create a commandSearch object to do the retrieving job
-		CommandSearch newCommandSearchObj = new CommandSearch(storer);
-		// the searchResult is not sorted
-		currentTaskList = newCommandSearchObj.search(filterContentForCurrentTaskList);
-		// sort the searchResult
-		sort();
+		// check whether the added task fit the filterContentForCurrentTaskList
+		// if fit, add it and sort the current task list
+		if(isTheTaskFitTheFilter(resultToPassToGUI)) {
+			addTaskToCurrentTaskList(resultToPassToGUI);
+			sort();
+		}
 		// add the searchResult into the resultToPassToGUI
 		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
 	}
 	
+	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
+		if(filterContentForCurrentTaskList == null) {
+			return false;
+		} else {
+			Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
+			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
+				return true;
+			} else if(taskToCompare.getStartTime().equals(filterContentForCurrentTaskList.getStartTime())) {
+				return true;
+			} else if(taskToCompare.getEndTime().equals(filterContentForCurrentTaskList.getEndTime())) {
+				return true;
+			} else if(taskToCompare.getPriority().equals(filterContentForCurrentTaskList.getPriority())) {
+				return true;
+			} else if(taskToCompare.getTag().equals(filterContentForCurrentTaskList.getTag())) {
+				return true;
+			} else if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
 	private Result delete() throws Exception {
 
 		// delete the task according to its displayID in the taskList
@@ -146,7 +169,7 @@ public class CommandManager {
 			deleteTaskFromCurrentTaskList(taskUpdatedDisplayID);
 			addTaskToCurrentTaskList(resultToPassToGUI);
 		}
-		// the the display ID for the task may change
+		// the display ID for the task may change, so sort again
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
