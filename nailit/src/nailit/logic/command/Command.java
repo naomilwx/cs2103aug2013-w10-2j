@@ -19,7 +19,7 @@ public abstract class Command {
 	}
 
 
-	public abstract Result executeCommand();
+	public abstract Result executeCommand() throws Exception;
 	
 	public abstract int getTaskID();
 	

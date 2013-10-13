@@ -48,11 +48,15 @@ public class CommandManager {
 		parserResultInstance = null;
 	}
 	
-	public Result executeCommand(ParserResult parserResultInstance)
+	public Result executeCommand(ParserResult parserResultInstance) throws Exception
 	{
-		this.parserResultInstance = parserResultInstance;
-		Result executedResult = doExecution();
-		return executedResult;
+		if(parserResultInstance == null) {
+			throw new Exception("The parserResult Instance is a null object.");
+		} else {
+			this.parserResultInstance = parserResultInstance;
+			Result executedResult = doExecution();
+			return executedResult;
+		}
 	}
 
 	private Result doExecution() {
@@ -116,17 +120,22 @@ public class CommandManager {
 		return resultToPassToGUI;
 	}
 	
-	private Result delete() {
-		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer, currentTaskList);
+	private Result delete() throws Exception {
+
+		// delete the task according to its displayID in the taskList
+		CommandDelete newDeleteCommandObj = new CommandDelete(
+				parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
-		
-		if(newDeleteCommandObj.deleteSuccess()) {
+		// if successfully deleted, update the currentTaskList by removing that
+		// task from the list
+		if (newDeleteCommandObj.deleteSuccess()) {
 			int taskDeletedDisplayID = newDeleteCommandObj.getTaskDisplayID();
 			deleteTheTaskInCurrentTaskList(taskDeletedDisplayID);
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
 		return resultToPassToGUI;
+
 	}
 	
 	private Result update() {
