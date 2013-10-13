@@ -12,7 +12,6 @@ public abstract class ScrollableFocusableDisplay extends JScrollPane{
 	protected final FocusListener displayFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
 			setBorder(FOCUS_LINE_BORDER);
-			System.out.println("focus");
 		 }
 		public void focusLost(FocusEvent event){
 			setBorder(UNFOCUS_LINE_BORDER);
