@@ -17,7 +17,7 @@ public class LogicManager{
 		parserInstance = new ParserManager();
 		commandInstance = new CommandManager();
 	}
-	public Result executeCommand(String OriginalCommand){
+	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
 		parserInstance.passCommand(OriginalCommand);
 		ParserResult parserResultInstance = parserInstance.execute();
