@@ -126,6 +126,21 @@ public class CommandSearch extends Command{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	// these three functions are used for updating the currentTaskList 
+	// and filterObj in CommandManager
+	public Vector<Task> getLatestTaskList() {
+		return filteredTasks;
+	}
+	
+	public FilterObject getLatestFilteredResult() {
+		return filterObjForTheSearch;
+	}
+	
+	public boolean isFilterNothing() {
+		return isEmptySearch;
+	}
+
 
 
 }
