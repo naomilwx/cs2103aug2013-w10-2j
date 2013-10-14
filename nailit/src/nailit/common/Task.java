@@ -57,15 +57,19 @@ public class Task {
 		}
 	}
 	
-	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String tag, String desc, boolean isCompleted){
+	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String t, String desc, boolean isCompleted){
 		this.ID = ID;
 		name = taskName;
 		startTime = start;
 		endTime = end;
 		priority = p;
-		this.tag = tag;
 		description = desc;
 		this.isCompleted = isCompleted;
+		if(t == null){
+			tag = "";
+		}else{
+			tag = t;
+		}
 	}
 	public boolean isAdded(){
 		return added;
@@ -127,7 +131,11 @@ public class Task {
 		description = taskDesc;
 	}
 	public void setTag(String taskTag){
-		tag = taskTag;
+		if(taskTag != null){
+			tag = taskTag;
+		}else{
+			tag = "";
+		}
 	}
 	public void setCompleted(boolean completed){
 		isCompleted = completed;

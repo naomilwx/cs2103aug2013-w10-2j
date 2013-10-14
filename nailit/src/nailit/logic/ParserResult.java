@@ -144,7 +144,7 @@ public class ParserResult{
 	}
 	
 	public boolean isNullTag(){
-		if (tag == ""){
+		if (tag == "" || tag == null){
 			return true;
 		}else{
 			return false;
