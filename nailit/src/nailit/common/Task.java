@@ -131,7 +131,11 @@ public class Task {
 		description = taskDesc;
 	}
 	public void setTag(String taskTag){
-		tag = taskTag;
+		if(taskTag != null){
+			tag = taskTag;
+		}else{
+			tag = "";
+		}
 	}
 	public void setCompleted(boolean completed){
 		isCompleted = completed;
