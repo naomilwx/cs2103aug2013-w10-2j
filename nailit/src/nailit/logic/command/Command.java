@@ -21,6 +21,6 @@ public abstract class Command {
 
 	public abstract Result executeCommand() throws Exception;
 	
-	public abstract int getTaskID();
+	public abstract int getTaskID(); 
 	
 }
