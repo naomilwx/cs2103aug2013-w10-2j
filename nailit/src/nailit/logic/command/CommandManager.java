@@ -167,7 +167,29 @@ public class CommandManager {
 		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
 		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newSearchCommandObj);
+		// update the currentTaskList and filter Object
+		updateCurrentTaskList(newSearchCommandObj);
+		updateCurrentFilterObj(newSearchCommandObj);
 		return resultToPassToGUI;
+	}
+
+	private void updateCurrentFilterObj(CommandSearch newSearchCommandObj) {
+		if(newSearchCommandObj.isFilterNothing()) { // filterObj does not change in this situation
+			// do nothing
+		} else {
+			filterContentForCurrentTaskList = newSearchCommandObj.getLatestFilteredResult();
+		}
+	}
+
+	private void updateCurrentTaskList(CommandSearch newSearchCommandObj) {
+		Vector<Task> tl = newSearchCommandObj.getLatestTaskList();
+		if(tl == null ) { // this situation shouldn't happen; in case happen, do not change currentTaskList
+			// do nothing
+		} else if(newSearchCommandObj.isFilterNothing()){ // do not change currentList
+			// do nothing
+		} else {
+			currentTaskList = tl;
+		}
 	}
 
 	private Result complete() {

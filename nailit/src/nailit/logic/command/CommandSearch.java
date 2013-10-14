@@ -140,7 +140,4 @@ public class CommandSearch extends Command{
 	public boolean isFilterNothing() {
 		return isEmptySearch;
 	}
-
-
-
 }
