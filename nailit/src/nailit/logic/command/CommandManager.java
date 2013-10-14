@@ -164,8 +164,10 @@ public class CommandManager {
 	
 	private Result search() {
 		// if it is seach all, do not forget to set the filter.setIsSearchAll(true)
-		return null;
-		// TODO Auto-generated method stub
+		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
+		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
+		addNewCommandObjToOperationsHistory(newSearchCommandObj);
+		return resultToPassToGUI;
 	}
 
 	private Result complete() {
