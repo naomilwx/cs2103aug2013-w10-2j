@@ -33,9 +33,9 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 	private int compareDate(DateTime hostTaskDate, DateTime taskToCompareDate) {
 		// has start date is better than null
 		if(hostTaskDate != null && taskToCompareDate == null) {
-			return 1;
-		} else if(hostTaskDate == null && taskToCompareDate != null) { 
 			return -1;
+		} else if(hostTaskDate == null && taskToCompareDate != null) { 
+			return 1;
 		} else if(hostTaskDate == null && taskToCompareDate == null) {
 			return 0;
 		} else {
