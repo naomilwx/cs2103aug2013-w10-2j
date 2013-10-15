@@ -1,6 +1,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -15,18 +16,20 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.gui.renderer.TableHeaderRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
 
 public class TableDisplay extends ScrollableFocusableDisplay{
-	private static final int TABLE_HEADER_HEIGHT = 50;
+	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 50;
 	private static final int NO_SELECTED_ROW = -1;
 	
@@ -102,6 +105,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	private void createAndConfigureTable() {
 		initialiseTableStructures();
+		configureTableHeader();
 		setHeaderText();
 		configureTable();
 	}
@@ -166,7 +170,11 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		noOfCols = tableHeaderLabel.size();
 		tableModel.setDataVector(tableRows, tableHeaderLabel);
 	}
-	
+	private void configureTableHeader(){
+		JTableHeader header = table.getTableHeader();
+		header.setDefaultRenderer(new TableHeaderRenderer());
+		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));;
+	}
 	private void setRowWidths(){
 		switch(tableDisplayType){
 			case Result.HISTORY_DISPLAY:
