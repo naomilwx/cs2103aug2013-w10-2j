@@ -60,7 +60,7 @@ public class GUIManager {
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
-	protected static final int ID_COLUMN_WIDTH = 50;
+	protected static final int ID_COLUMN_WIDTH = 45;
 	protected static final int NAME_COLUMN_WIDTH = 300;
 	protected static final int TIME_COLUMN_WIDTH = 180;
 	protected static final int TAG_COLUMN_WIDTH = 80;

@@ -9,9 +9,9 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 		setText(output);
 	}
 	public static String formatTaskNameCellDisplay(String taskName, String tag){
-		String formattedString = "<p>" + taskName + "</p>";
+		String formattedString = "<p class = \"name\">" + taskName + "</p>";
 		if(!tag.isEmpty()){
-			formattedString = formattedString + "<p>" + tag + "</p>";
+			formattedString = formattedString + "<p class = \"tag\">" + tag + "</p>";
 		}
 		return formattedString;
 	}
