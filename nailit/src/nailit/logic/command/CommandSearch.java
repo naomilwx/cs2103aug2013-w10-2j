@@ -63,7 +63,7 @@ public class CommandSearch extends Command{
 	}
 
 	private void createResultForNoContentParserResult() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, SEARCH_NONE_WARNING_FEEDBACK);
+		executedResult = new Result(false, false, Result.LIST_DISPLAY, SEARCH_NONE_WARNING_FEEDBACK);
 	}
 
 	private void createCommandSummary() {
