@@ -7,6 +7,7 @@ import nailit.common.Task;
 public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
 			+ "p.name {font-size: 15px;}"
+			+ "p.tag {font-size: 10px; color: gray;}"
 			+ "</style></head>";
 	private static final String TASK_DONE_CODE = "&#10004  ";
 	private static final String TASK_NOT_DONE_CODE = "&nbsp;   ";
