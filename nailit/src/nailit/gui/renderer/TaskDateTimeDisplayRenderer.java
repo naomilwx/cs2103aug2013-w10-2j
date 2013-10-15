@@ -8,12 +8,17 @@ import nailit.common.Task;
 import nailit.common.NIConstants;
 
 public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
+	private static final String cellStyle = "<head><style type = \"text/css\">" 
+			+ "p.date {font-size: 12px;}"
+			+ "p.time {font-size: 12px;}"
+			+ "p.datetime {font-size: 12px;}"
+			+ "</style></head>";
 	protected static final String ONE_DAY_EVENT_DATETIME_DISPLAY_FORMAT = 
 			"<p class = \"date\">" + "Day: %1s" +"</p>"
 					+ "<p class = \"time\">" + "Start: %2s  End: %3s" + "</p>";
 	protected static final String EVENT_DATETIME_DISPLAY_FORMAT = 
-			"<p class = \"date\">" + "Start: %1s" + "</p>" +
-			"<p class = \"time\">" + "End: %2s" + "</p>";
+			"<p class = \"datetime\">" + "Start: %1s" + "</p>" +
+			"<p class = \"datetime\">" + "End: %2s" + "</p>";
 	protected static final String TASK_DATETIME_DISPLAY_FORMAT = 
 			"<p class = \"date\">" + "Day: %1s" + "</p>" + 
 			"<p class = \"time\">" + "Time: %2s" + "</p>";
@@ -25,7 +30,7 @@ public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	@Override
 	protected void setValue(Object value){
 		String dateTimeDisplayStr = (String) value;
-		String outStr = "<html>" + dateTimeDisplayStr + "<html>";
+		String outStr = "<html>" + cellStyle + dateTimeDisplayStr + "<html>";
 		setText(outStr);
 	}
 	
