@@ -56,12 +56,18 @@ public class CommandDisplay extends Command{
 	private void displayAllTasks() {
 		try {
 			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
-			createResultObject(false, true, Result.LIST_DISPLAY, null, null, vectorOfTasks, null);
-			// since successfully retrieve all the task on the storage
-			// update the current task list as the list of all tasks
-			// and make the filter as all
-			cm.setCurrentList(vectorOfTasks);
-			cm.setCurrentFilterSearchAll();
+			// if the retrieved content is empty or null, return notification instead
+			if(vectorOfTasks == null || vectorOfTasks.isEmpty()) {
+				
+			} else {
+				createResultObject(false, true, Result.LIST_DISPLAY, null, null, vectorOfTasks, null);
+				// since successfully retrieve all the task on the storage
+				// update the current task list as the list of all tasks
+				// and make the filter as all
+				cm.setCurrentList(vectorOfTasks);
+				cm.setCurrentFilterSearchAll();
+			}
+			
 		} catch(Exception e) {
 			createUnsuccessfulResultObjectForDisplayAll();
 		}

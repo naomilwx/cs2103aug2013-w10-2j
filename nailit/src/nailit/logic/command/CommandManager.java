@@ -117,8 +117,15 @@ public class CommandManager {
 			addTaskToCurrentTaskList(resultToPassToGUI);
 			sort();
 		}
-		// add the searchResult into the resultToPassToGUI
-		resultToPassToGUI.setTaskList(currentTaskList);
+		
+		// deal with the case that when user add a task while nothing in the task list.
+		// in this situation, instead of giving a display type Execution_Display, we give task display
+		if(currentTaskList.isEmpty()) {
+			resultToPassToGUI.setDisplayType(Result.TASK_DISPLAY);
+		} else {
+			// add the searchResult into the resultToPassToGUI
+			resultToPassToGUI.setTaskList(currentTaskList);
+		}
 		return resultToPassToGUI;
 	}
 	
