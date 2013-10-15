@@ -184,6 +184,7 @@ public class GUIManager {
 			if(executionResult == null){
 				System.out.println("die!");
 			}
+			assert executionResult != null;
 			commandBar.clearUserInput();
 			processAndDisplayExecutionResult(executionResult);
 		}catch(Error err){
@@ -215,6 +216,7 @@ public class GUIManager {
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
+				displayExecutionNotification(result);
 				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:

@@ -35,9 +35,13 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 		textPane.setSize(containerWidth, preferredHeight);
 		setViewportView(textPane);
 	}
-	protected void basicDisplay(String text){
+	protected void displayText(String text){
 		centeriseTextDisplay();
 		textPane.setText(text);
+	}
+	protected void displayHTMLFormattedText(String text){
+		textPane.setContentType("text/html");
+		displayText(text);
 	}
 	protected void centeriseTextDisplay(){
 		SimpleAttributeSet textAttribute = new SimpleAttributeSet();
