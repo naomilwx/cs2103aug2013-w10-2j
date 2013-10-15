@@ -21,13 +21,13 @@ import javax.swing.table.TableColumnModel;
 
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.gui.renderer.TaskStatusDisplayRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
+import nailit.gui.renderer.IDDisplayRenderer;
 
 public class TableDisplay extends ScrollableFocusableDisplay{
-	private static final int TABLE_HEADER_HEIGHT = 40;
-	private static final int TABLE_ROW_HEIGHT = 30;
+	private static final int TABLE_HEADER_HEIGHT = 50;
+	private static final int TABLE_ROW_HEIGHT = 50;
 	private static final int NO_SELECTED_ROW = -1;
 	
 	private int containerHeight;
@@ -92,10 +92,14 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		containerHeight = height;
 		setSize(containerWidth, containerHeight);
 		setBorder(UNFOCUS_LINE_BORDER);
+		hideScrollBars();
 		addFocusListener(displayFocusListener);
 		addKeyListener(moreTableMainFrameKeyEventListener);
 	}
-	
+	private void hideScrollBars(){
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	}
 	private void createAndConfigureTable() {
 		initialiseTableStructures();
 		setHeaderText();
@@ -113,7 +117,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table = new JTable(){
 			private final TaskNameDisplayRenderer taskNameRenderer = new TaskNameDisplayRenderer();
 			private final TaskDateTimeDisplayRenderer taskDateTimeRenderer = new TaskDateTimeDisplayRenderer();
-			private final TaskStatusDisplayRenderer statusDisplayRenderer = new TaskStatusDisplayRenderer();
+			private final IDDisplayRenderer idDisplayRenderer = new IDDisplayRenderer();
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int col){
 				switch(tableDisplayType){
@@ -123,10 +127,12 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 					String colName = GUIManager.ALL_TASKS_TABLE_HEADER[col];
 					if(colName.equals(GUIManager.TASK_NAME_COL_NAME)){
 						return taskNameRenderer;
-					}else if(colName.equals(GUIManager.TASK_TIME_DET_COL_NAME)){
+					}else if(colName.equals(GUIManager.TASK_START_TIME_COL_NAME)){
 						return taskDateTimeRenderer;
-					}else if(colName.equals(GUIManager.TASK_STATUS_COL_NAME)){
-						return statusDisplayRenderer;
+					}else if(colName.equals(GUIManager.TASK_END_TIME_COL_NAME)){
+						return taskDateTimeRenderer;
+					}else if(colName.equals(GUIManager.ID_COL_NAME)){
+						return idDisplayRenderer;
 					}else{
 						return super.getCellRenderer(row, col);
 					}

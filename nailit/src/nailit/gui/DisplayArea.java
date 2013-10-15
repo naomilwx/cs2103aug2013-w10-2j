@@ -23,7 +23,6 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
-import nailit.gui.renderer.TaskStatusDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
@@ -169,7 +168,15 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void displayTaskDetails(Task task){
 		if(task!=null){
-			String details = task.toString();
+			String details = task.formatName() + "\n";
+			if(!task.getTag().isEmpty()){
+				details += task.formatTag() + "\n";
+			}
+			if(!task.isFloatingTask()){
+				details += task.formatDateDetails() + "\n";
+			}
+			details += task.formatPriority() +"\n"
+					 + task.formatStatus() + "\n";
 			TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
 			textDisplay.basicDisplay(details);
 			addContent(textDisplay, false);
@@ -190,12 +197,12 @@ public class DisplayArea extends JLayeredPane {
 		Vector<String> row = new Vector<String>();
 		String ID = "" + rowNum;
 		row.add(ID);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task.getName(), task.getTag());
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
 		row.add(nameAndTag);
-		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
-		row.add(timeDet);
-		String status = TaskStatusDisplayRenderer.formatStatusCellDisplay(task);
-		row.add(status);
+		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
+		row.add(timeStartDet);
+		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime());
+		row.add(timeEndDet);
 		return row;
 	}
 	

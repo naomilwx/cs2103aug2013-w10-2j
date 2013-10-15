@@ -14,9 +14,11 @@ import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int COMMANDBAR_HEIGHT = 20;
+	private static final int COMMANDBAR_HEIGHT = 30;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
+	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
+	public static final int TEXTBAR_X_BUFFER_WIDTH = 5;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	//reference to main GUI container class so CommandBar can have access to the methods there
@@ -37,8 +39,8 @@ public class CommandBar extends JPanel {
 	}
 	
 	private void positionAndResizeCommandFrame(int containerWidth, int containerHeight){
-		frameWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		frameHeight = COMMANDBAR_HEIGHT + 2*Y_BUFFER_HEIGHT;
+		frameWidth = containerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		frameHeight = COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = containerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -57,7 +59,7 @@ public class CommandBar extends JPanel {
 	
 	private void resizeAndpositionTextInputField(){
 		int width = frameWidth - 2* X_BUFFER_WIDTH;
-		textBar.setLocation(X_BUFFER_WIDTH,Y_BUFFER_HEIGHT);
+		textBar.setLocation(TEXTBAR_X_BUFFER_WIDTH,TEXTBAR_Y_BUFFER_HEIGHT);
 		textBar.setSize(width,COMMANDBAR_HEIGHT);
 	}
 	private void addListenersToTextInputField(){

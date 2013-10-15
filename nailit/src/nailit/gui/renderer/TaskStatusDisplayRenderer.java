@@ -10,15 +10,16 @@ public class TaskStatusDisplayRenderer extends DefaultTableCellRenderer{
 	@Override
 	protected void setValue(Object value){
 		String output = "<html>" + (String) value + "<html>";
+		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 		setText(output);
 	}
 	public static String formatStatusCellDisplay(Task task){
 		String formattedStr = "";
 		if(!task.isEvent()){
 			if(task.checkCompleted()){
-				formattedStr = "<p>" + "Done" + "</p>";
+				formattedStr = "<p class = \"status\">" + "Done" + "</p>";
 			}else{
-				formattedStr = "<p>" + "Undone" + "</p>";
+				formattedStr = "<p class = \" status\">" + "Undone" + "</p>";
 			}
 		}else{
 			formattedStr = NULL_STATUS_DISPLAY;
