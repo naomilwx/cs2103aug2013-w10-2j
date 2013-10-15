@@ -60,7 +60,7 @@ public class CommandDisplay extends Command{
 			if(vectorOfTasks == null || vectorOfTasks.isEmpty()) {
 				
 			} else {
-				createResultObject(false, true, Result.LIST_DISPLAY, null, null, vectorOfTasks, null);
+				createResultObject(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, vectorOfTasks, null);
 				// since successfully retrieve all the task on the storage
 				// update the current task list as the list of all tasks
 				// and make the filter as all
