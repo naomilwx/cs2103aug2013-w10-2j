@@ -81,7 +81,7 @@ public class CommandSearch extends Command{
 			if(filteredTasks.isEmpty()) { // meaning that no suitable tasks to fetch, gives back notification
 				executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK);
 			} else {
-				executedResult = new Result(false, true, Result.LIST_DISPLAY, null, null, filteredTasks, null);
+				executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, filteredTasks, null);
 			}
 			
 		}
