@@ -9,16 +9,17 @@ import nailit.common.NIConstants;
 
 public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
-			+ "p.date {font-size: 15px;}"
-			+ "p.time {font-size: 12px}"
+			+ "p.date {font-size: 15px; text-align:center;}"
+			+ "p.time {font-size: 12px; text-align:center;}"
 			+ "</style></head>";
 
 	protected static final String TASK_DATETIME_DISPLAY_FORMAT = 
 			"<p class = \"date\"> %1s" + "</p>" + 
 			"<p class = \"time\"> %2s" + "</p>";
-	protected static final String EMPTY_TIME_DISPLAY_FORMAT = "<p>" + "-" + "</p>";
+	protected static final String EMPTY_TIME_DISPLAY_FORMAT = "<p>" + "--" + "</p>";
 	
 	public TaskDateTimeDisplayRenderer(){
+		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 	}
 	@Override
 	protected void setValue(Object value){
