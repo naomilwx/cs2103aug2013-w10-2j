@@ -100,6 +100,14 @@ public class Task {
 	public DateTime getEndTime(){
 		return endTime;
 	}
+	public boolean isNormalTask(){
+		if(startTime == null && endTime != null){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	public boolean isFloatingTask(){
 		if(startTime==null && endTime==null){
 			return true;
