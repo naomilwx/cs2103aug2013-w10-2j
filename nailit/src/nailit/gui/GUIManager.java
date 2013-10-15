@@ -49,7 +49,8 @@ public class GUIManager {
 	protected static final int MAIN_WINDOW_Y_POS = 100;
 	protected static final int EXTENDED_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
 	protected static final int EXTENDED_WINDOW_Y_POS = MAIN_WINDOW_Y_POS;
-	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	protected static final int HOME_WINDOW_WIDTH = 450;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
@@ -62,8 +63,8 @@ public class GUIManager {
 	
 	protected static final int ID_COLUMN_WIDTH = 45;
 	protected static final int NAME_COLUMN_WIDTH = 380;
-	protected static final int START_TIME_COLUMN_WIDTH = 120;
-	protected static final int END_TIME_COLUMN_WIDTH = 120;
+	protected static final int START_TIME_COLUMN_WIDTH = 130;
+	protected static final int END_TIME_COLUMN_WIDTH = 130;
 	protected static final int TOTAL_TABLE_WIDTH
 	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + START_TIME_COLUMN_WIDTH + END_TIME_COLUMN_WIDTH;
 	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
@@ -75,7 +76,7 @@ public class GUIManager {
 	protected static final String ID_COL_NAME = "ID";
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
 	protected static final String TASK_START_TIME_COL_NAME = "Start";
-	protected static final String TASK_END_TIME_COL_NAME = "END";
+	protected static final String TASK_END_TIME_COL_NAME = "End";
 	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
 		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME};
@@ -105,6 +106,9 @@ public class GUIManager {
 		}catch(FileCorruptionException e){
 			//TODO:
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
+		}catch(Exception e){
+			//TODO:
+			e.printStackTrace();
 		}
 	}
 	
@@ -244,7 +248,7 @@ public class GUIManager {
 		launcher.exit();
 	}
 
-	private void setWindowLookAndFeel(){
+	private void setWindowLookAndFeel() throws Exception{
 		try {
 			UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL);
 		} catch (ClassNotFoundException e) {
@@ -258,7 +262,11 @@ public class GUIManager {
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try{
+				UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK);
+			}catch(Exception e1){
+				throw new Exception("Unable to load window look and feel");
+			}
 		}
 	}
 	
