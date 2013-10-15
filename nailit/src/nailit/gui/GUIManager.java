@@ -64,22 +64,20 @@ public class GUIManager {
 	protected static final int NAME_COLUMN_WIDTH = 300;
 	protected static final int TIME_COLUMN_WIDTH = 180;
 	protected static final int TAG_COLUMN_WIDTH = 80;
-	protected static final int STATUS_COLUMN_WIDTH = 50;
 	protected static final int TOTAL_TABLE_WIDTH
-	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH + STATUS_COLUMN_WIDTH;
+	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TIME_COLUMN_WIDTH;
 	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
 	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
-		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH, STATUS_COLUMN_WIDTH};
+		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, TIME_COLUMN_WIDTH};
 	protected static final int[] COMMAND_HISTORY_COLUMN_WIDTH =
 		{ID_COLUMN_WIDTH, COMMAND_COLUMN_WIDTH};
 	
 	protected static final String ID_COL_NAME = "ID";
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
 	protected static final String TASK_TIME_DET_COL_NAME = "Time";
-	protected static final String TASK_STATUS_COL_NAME = "Status";
 	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
-		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_TIME_DET_COL_NAME, TASK_STATUS_COL_NAME};
+		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_TIME_DET_COL_NAME};
 	protected static final String[] COMMAND_HISTORY_HEADER =
 		{ID_COL_NAME, COMMAND_COL_NAME};
 	
