@@ -165,6 +165,10 @@ public class CommandManager {
 	private Result display() throws Exception {
 		CommandDisplay newDisplayCommandObj = new CommandDisplay(parserResultInstance, storer, this);
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
+		// should sort the currentTaskList and then set the sorted 
+		// one on the returned result object
+		sort();
+		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
 	}
