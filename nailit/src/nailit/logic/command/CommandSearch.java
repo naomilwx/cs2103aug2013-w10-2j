@@ -11,6 +11,13 @@ import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
+/*
+ * comment on the situation that the no search content:
+ * in this situation, storer will give back all the tasks in the storage.
+ * Filtered Tasks will contain all the tasks, but isEmptySearch is true.
+ * This means when use the search obj, remember to check isEmptySearch first.
+ * 
+ */
 public class CommandSearch extends Command{
 	
 	// the filterOnject instance for the search, which contains all the search information
@@ -46,7 +53,7 @@ public class CommandSearch extends Command{
 	public Result executeCommand() {
 		translateParserResultToFilterObject();
 		searchFromStorage();
-		if(isEmptySearch) {
+		if(isEmptySearch) { // no search content, give notification in returned result
 			createResultForNoContentParserResult();
 		} else {
 			createResult();

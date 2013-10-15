@@ -169,12 +169,16 @@ public class CommandManager {
 		// update the currentTaskList and filter Object
 		updateCurrentTaskList(newSearchCommandObj);
 		updateCurrentFilterObj(newSearchCommandObj);
+		// since want to sort the searched tasks list, we need to sort 
+		// the current task list and then add it to the result obj
+		sort();
+		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
 	}
 
 	private void updateCurrentFilterObj(CommandSearch newSearchCommandObj) {
-		if(newSearchCommandObj.isFilterNothing()) { // filterObj does not change in this situation
-			// do nothing
+		if(newSearchCommandObj.isFilterNothing()) { // filterObj becomes a new original filterObj
+			filterContentForCurrentTaskList = new FilterObject();
 		} else {
 			filterContentForCurrentTaskList = newSearchCommandObj.getLatestFilteredResult();
 		}
@@ -184,8 +188,8 @@ public class CommandManager {
 		Vector<Task> tl = newSearchCommandObj.getLatestTaskList();
 		if(tl == null ) { // this situation shouldn't happen; in case happen, do not change currentTaskList
 			// do nothing
-		} else if(newSearchCommandObj.isFilterNothing()){ // do not change currentList
-			// do nothing
+		} else if(newSearchCommandObj.isFilterNothing()){ // change the currentTaskList as a empty vector
+			currentTaskList = new Vector<Task>();
 		} else {
 			currentTaskList = tl;
 		}
