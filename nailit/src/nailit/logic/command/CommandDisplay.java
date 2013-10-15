@@ -91,7 +91,7 @@ public class CommandDisplay extends Command{
 				return executedResult;
 			}
 			
-			createResultObject(false, true, Result.TASK_DISPLAY, null, taskRetrieved, cm.getCurrentTaskList(), null);
+			createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, taskRetrieved, cm.getCurrentTaskList(), null);
 			createCommandSummary();
 			return executedResult;
 		}
