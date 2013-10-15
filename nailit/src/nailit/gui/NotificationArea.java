@@ -23,6 +23,6 @@ public class NotificationArea extends TextDisplay{
 		}
 		textPane.setBorder(new LineBorder(displayColor));
 		textPane.setForeground(displayColor);
-		basicDisplay(notification);
+		displayText(notification);
 	}
 }
