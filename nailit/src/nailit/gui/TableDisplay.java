@@ -21,6 +21,7 @@ import javax.swing.table.TableColumnModel;
 
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.gui.renderer.TableHeaderRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
@@ -102,6 +103,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	private void createAndConfigureTable() {
 		initialiseTableStructures();
+		setHeaderRenderer();
 		setHeaderText();
 		configureTable();
 	}
@@ -166,7 +168,9 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		noOfCols = tableHeaderLabel.size();
 		tableModel.setDataVector(tableRows, tableHeaderLabel);
 	}
-	
+	private void setHeaderRenderer(){
+		table.getTableHeader().setDefaultRenderer(new TableHeaderRenderer());
+	}
 	private void setRowWidths(){
 		switch(tableDisplayType){
 			case Result.HISTORY_DISPLAY:
