@@ -305,10 +305,10 @@ public class StorageManager {
 		}
 		else if(task.isNormalTask()){
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getEndTime().compareTo(ftobj.getStartTime())==-1){
+				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
 				}
-				else if(task.getEndTime().compareTo(ftobj.getEndTime())==1){
+				else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
 				}
 				else{
@@ -316,7 +316,7 @@ public class StorageManager {
 				}
 			}
 			else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
-				if(task.getEndTime().compareTo(ftobj.getStartTime())==-1){
+				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
 				}
 				else{
@@ -325,7 +325,7 @@ public class StorageManager {
 				
 			}
 			else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getEndTime().compareTo(ftobj.getEndTime())==1){
+				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
 				}
 				else{
