@@ -123,7 +123,9 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 					String colName = GUIManager.ALL_TASKS_TABLE_HEADER[col];
 					if(colName.equals(GUIManager.TASK_NAME_COL_NAME)){
 						return taskNameRenderer;
-					}else if(colName.equals(GUIManager.TASK_TIME_DET_COL_NAME)){
+					}else if(colName.equals(GUIManager.TASK_START_TIME_COL_NAME)){
+						return taskDateTimeRenderer;
+					}else if(colName.equals(GUIManager.TASK_END_TIME_COL_NAME)){
 						return taskDateTimeRenderer;
 					}else if(colName.equals(GUIManager.ID_COL_NAME)){
 						return idDisplayRenderer;
