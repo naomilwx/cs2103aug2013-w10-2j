@@ -198,7 +198,7 @@ public class DisplayArea extends JLayeredPane {
 		Vector<String> row = new Vector<String>();
 		String ID = "" + rowNum;
 		row.add(ID);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task.getName(), task.getTag());
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
 		row.add(nameAndTag);
 		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
 		row.add(timeDet);
