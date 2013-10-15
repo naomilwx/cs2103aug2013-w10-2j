@@ -23,7 +23,6 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
-import nailit.gui.renderer.TaskStatusDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
@@ -202,8 +201,6 @@ public class DisplayArea extends JLayeredPane {
 		row.add(nameAndTag);
 		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
 		row.add(timeDet);
-		String status = TaskStatusDisplayRenderer.formatStatusCellDisplay(task);
-		row.add(status);
 		return row;
 	}
 	
