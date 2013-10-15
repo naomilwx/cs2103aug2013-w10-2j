@@ -101,7 +101,7 @@ public class Task {
 		return endTime;
 	}
 	public boolean isNormalTask(){
-		if(startTime == null && endTime != null){
+		if(startTime != null && endTime == null){
 			return true;
 		}
 		else{
