@@ -115,7 +115,7 @@ public class CommandSearch extends Command{
 			commandSummary = commandSummary + searchedET;
 			isEmptySearch = false;
 		}
-		if (!parserResultInstance.isNullPriority()) {
+		if (parserResultInstance.isSearchPriority()) {
 			searchedPriority = parserResultInstance.getPriority();
 			commandSummary = commandSummary + searchedPriority;
 			isEmptySearch = false;
