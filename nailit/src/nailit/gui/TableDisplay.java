@@ -26,8 +26,8 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
 
 public class TableDisplay extends ScrollableFocusableDisplay{
-	private static final int TABLE_HEADER_HEIGHT = 45;
-	private static final int TABLE_ROW_HEIGHT = 45;
+	private static final int TABLE_HEADER_HEIGHT = 50;
+	private static final int TABLE_ROW_HEIGHT = 50;
 	private static final int NO_SELECTED_ROW = -1;
 	
 	private int containerHeight;
@@ -92,10 +92,14 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		containerHeight = height;
 		setSize(containerWidth, containerHeight);
 		setBorder(UNFOCUS_LINE_BORDER);
+		hideScrollBars();
 		addFocusListener(displayFocusListener);
 		addKeyListener(moreTableMainFrameKeyEventListener);
 	}
-	
+	private void hideScrollBars(){
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	}
 	private void createAndConfigureTable() {
 		initialiseTableStructures();
 		setHeaderText();
