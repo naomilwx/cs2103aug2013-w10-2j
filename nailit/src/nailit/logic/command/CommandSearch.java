@@ -125,7 +125,7 @@ public class CommandSearch extends Command{
 			commandSummary = commandSummary + searchedTag;
 			isEmptySearch = false;
 		}
-		filterObjForTheSearch = new FilterObject(searchedName, searchedST, searchedET, searchedTag, searchedPriority, false);
+		filterObjForTheSearch = new FilterObject(searchedName, searchedST, searchedET, searchedTag, searchedPriority, null);
 	}
 
 	@Override

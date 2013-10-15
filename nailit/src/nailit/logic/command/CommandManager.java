@@ -276,8 +276,11 @@ public class CommandManager {
 			}
 		}
 
-		if (filterContentForCurrentTaskList.isCompleted() == null || taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
-			return true;
+
+		if (filterContentForCurrentTaskList.isCompleted() != null) { // means the field is searched
+			if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()){
+				return true;
+			}
 		}
 
 		if (filterST != null && filterET != null) { // a time range, meaning
