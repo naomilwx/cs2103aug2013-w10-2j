@@ -276,7 +276,7 @@ public class CommandManager {
 			}
 		}
 
-		if (taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
+		if (filterContentForCurrentTaskList.isCompleted() == null || taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()) {
 			return true;
 		}
 
