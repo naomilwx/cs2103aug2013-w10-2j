@@ -66,7 +66,7 @@ public abstract class Parser {
 		int fromIndex;
 		
 		p = p.trim();
-	    if (p.substring(0,4).equalsIgnoreCase("from"))
+	    if (p.length()>4 && p.substring(0,4).equalsIgnoreCase("from"))
 	    		p = p.substring(4);
 		p = p.trim();
 		
