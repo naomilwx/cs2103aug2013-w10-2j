@@ -169,7 +169,15 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void displayTaskDetails(Task task){
 		if(task!=null){
-			String details = task.toString();
+			String details = task.formatName() + "\n";
+			if(!task.getTag().isEmpty()){
+				details += task.formatTag() + "\n";
+			}
+			if(!task.isFloatingTask()){
+				details += task.formatDateDetails() + "\n";
+			}
+			details += task.formatPriority() +"\n"
+					 + task.formatStatus() + "\n";
 			TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
 			textDisplay.basicDisplay(details);
 			addContent(textDisplay, false);

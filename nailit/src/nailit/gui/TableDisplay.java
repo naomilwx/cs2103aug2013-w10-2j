@@ -24,6 +24,7 @@ import nailit.common.Task;
 import nailit.gui.renderer.TaskStatusDisplayRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
+import nailit.gui.renderer.IDDisplayRenderer;
 
 public class TableDisplay extends ScrollableFocusableDisplay{
 	private static final int TABLE_HEADER_HEIGHT = 40;
@@ -114,6 +115,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			private final TaskNameDisplayRenderer taskNameRenderer = new TaskNameDisplayRenderer();
 			private final TaskDateTimeDisplayRenderer taskDateTimeRenderer = new TaskDateTimeDisplayRenderer();
 			private final TaskStatusDisplayRenderer statusDisplayRenderer = new TaskStatusDisplayRenderer();
+			private final IDDisplayRenderer idDisplayRenderer = new IDDisplayRenderer();
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int col){
 				switch(tableDisplayType){
@@ -127,6 +129,8 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 						return taskDateTimeRenderer;
 					}else if(colName.equals(GUIManager.TASK_STATUS_COL_NAME)){
 						return statusDisplayRenderer;
+					}else if(colName.equals(GUIManager.ID_COL_NAME)){
+						return idDisplayRenderer;
 					}else{
 						return super.getCellRenderer(row, col);
 					}
