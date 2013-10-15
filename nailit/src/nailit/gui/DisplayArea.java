@@ -199,8 +199,10 @@ public class DisplayArea extends JLayeredPane {
 		row.add(ID);
 		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
 		row.add(nameAndTag);
-		String timeDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task);
-		row.add(timeDet);
+		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
+		row.add(timeStartDet);
+		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime());
+		row.add(timeEndDet);
 		return row;
 	}
 	
