@@ -163,7 +163,6 @@ public class CommandManager {
 	}
 	
 	private Result search() {
-		// if it is seach all, do not forget to set the filter.setIsSearchAll(true)
 		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
 		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newSearchCommandObj);
