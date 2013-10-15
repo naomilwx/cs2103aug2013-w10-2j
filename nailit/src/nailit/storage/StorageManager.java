@@ -303,7 +303,7 @@ public class StorageManager {
 				return false;
 			}
 		}
-		else{
+		else if(task.isNormalTask()){
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getEndTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
@@ -336,6 +336,9 @@ public class StorageManager {
 				return false;
 			}
 
+		}
+		else{
+			return true;//TODO: check the standard for those tasks that does not belong to any category
 		}
 	}
 
