@@ -76,10 +76,10 @@ public class CommandSearch extends Command{
 
 	private void createResult() {
 		if(filteredTasks == null) { // it should not happen, but in case
-			executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, STORAGE_GIVES_NULL_VECTOR);
+			executedResult = new Result(false, false, Result.LIST_DISPLAY, STORAGE_GIVES_NULL_VECTOR);
 		} else {
 			if(filteredTasks.isEmpty()) { // meaning that no suitable tasks to fetch, gives back notification
-				executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK);
+				executedResult = new Result(false, false, Result.LIST_DISPLAY, NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK);
 			} else {
 				executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, filteredTasks, null);
 			}
