@@ -214,7 +214,7 @@ public class DisplayArea extends JLayeredPane {
 		}
 		
 		String taskDesc = task.getDescription();
-		if(!taskDesc.isEmpty() && !taskDesc.equals("null")){
+		if(taskDesc != null && !taskDesc.isEmpty()){
 			details += formatTaskDetailsForDisplay(taskDesc, rowCount);
 		}
 	
