@@ -35,8 +35,8 @@ public class AppLauncher {
 		}
 	}
 	
-	public static void logMessage(Level lvl, String msg){
-		appLog.log(lvl,msg);
+	public static Logger getLogger(){
+		return appLog;
 	}
 	
 	public void run(){

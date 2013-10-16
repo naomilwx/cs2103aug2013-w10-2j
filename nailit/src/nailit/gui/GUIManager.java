@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Vector;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.border.LineBorder;
 import javax.swing.text.Utilities;
@@ -94,10 +95,12 @@ public class GUIManager {
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
 	private NailItGlobalKeyListener globalKeyListener;
+	private Logger logger;
 	
 	public GUIManager(final AppLauncher launcher) {
 		try{
 			this.launcher = launcher;
+			logger = AppLauncher.getLogger();
 			setWindowLookAndFeel();
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
@@ -105,7 +108,7 @@ public class GUIManager {
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 		}catch(FileCorruptionException e){
-			AppLauncher.logMessage(Level.INFO, "Storage file corrupted.");
+			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
 		}catch(Exception e){
 			//TODO:
