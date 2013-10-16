@@ -213,13 +213,13 @@ public class GUIManager {
 		}
 	}
 	protected void displayExecutionResult(Result result){
+		displayExecutionNotification(result);
 		int displayType = result.getDisplayType();
 		switch (displayType){
 			case Result.TASK_DISPLAY:
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
-				displayExecutionNotification(result);
 				displayArea.displayTaskList(result.getTaskList());
 				break;
 			case Result.HISTORY_DISPLAY:
@@ -227,12 +227,10 @@ public class GUIManager {
 				historyWindow.setVisible(true);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
-				displayExecutionNotification(result);
 				displayArea.displayTaskList(result.getTaskList());
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			default:
-				displayExecutionNotification(result);
 				break;
 		}
 	}
