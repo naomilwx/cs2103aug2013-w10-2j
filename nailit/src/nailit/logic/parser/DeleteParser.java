@@ -17,7 +17,10 @@ public class DeleteParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 	
 		resultExecution.setCommand(CommandType.DELETE);
-		resultExecution.setTaskID(Integer.parseInt(userCommand));
+		if (Parser.isNumber(userCommand))
+			resultExecution.setTaskID(Integer.parseInt(userCommand));
+		else 
+			System.out.println("Wrong Format");
 		
 		return resultExecution;
 	}
