@@ -23,6 +23,7 @@ import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
+import nailit.gui.renderer.TaskDetailsFormatter;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
@@ -34,19 +35,13 @@ public class DisplayArea extends JLayeredPane {
 	private static final double DISPLAY_AREA_SCALE = 0.8;
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	private static final int NULL_FOCUS = -1;
-	private static final String TASK_DISPLAY_STYLE = 
-			"<head><style type = \"text/css\">" 
-			+ "p.name {font-size: 14px;}"
-			+ "p.tag {font-size: 9px; color: gray;}"
-			+ "p.date {font-size: 12px;}"
-			+ "p.time {font-size: 10px;}"
-			+ "p.title {font-size: 12px;}"
-			+ "</style></head>";
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
 	private JPanel popupPane;
 	private LinkedList<Component> items;
+	private TableDisplay taskTable;
+	private TextDisplay textDisplay;
 	
 	private int displayWidth;
 	private int displayHeight;
@@ -178,96 +173,27 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void displayTaskDetails(Task task){
 		if(task!=null){
-			String details = formatTaskForDisplay(task);
-			TextDisplay textDisplay = new TextDisplay(displayWidth, displayHeight);
+			String details = TaskDetailsFormatter.formatTaskForDisplay(task);
+			textDisplay = new TextDisplay(displayWidth, displayHeight);
 			textDisplay.displayHTMLFormattedText(details);
 			addContent(textDisplay, false);
 		}
 	}
-	protected String formatTaskForDisplay(Task task){
-		int rowCount = 2;
-		String details = "<html>" + TASK_DISPLAY_STYLE;
-		details += "<tr><td><p class = \"title\">Name: </p></td>";
-		details += "<td><p class = \"name\">" + task.getName() + "</p>";
-		if(!task.getTag().isEmpty()){
-			details += "<p class = \"tag\">" + task.getTag() + "<p></td>";
-		}else{
-			details += "</td>";
-		}
-		String otherDetails = formatTaskDateTimeForDisplay(task);
-		
-		otherDetails += "<tr><td><p class = \"title\">Priority: </p></td><td><p class = \"prority\">" 
-				+ task.getPriority() + "</p></td></tr>";
-		if(!task.isEvent()){
-			if(task.isFloatingTask()){
-				rowCount += 1;
-			}else{
-				rowCount += 2; //including row for due date
-			}
-			otherDetails += "<tr><td><p class = \"title\">Status: </p></td><td><p class = \"status\">";
-			if(task.checkCompleted()){
-				otherDetails += "Done</p></td></tr>";
-			}else{
-				otherDetails += "Not done</p></td></tr>";
-			}
-		}else{
-			rowCount += 2; //for start and end time
-		}
-		
-		String taskDesc = task.getDescription();
-		if(taskDesc != null && !taskDesc.isEmpty()){
-			details += formatTaskDetailsForDisplay(taskDesc, rowCount);
-		}
-	
-		details += otherDetails + "</html>";
-		return details;
-	}
-	
-	private String formatTaskDateTimeForDisplay(Task task){
-		String details = "";
-		if(!task.isFloatingTask()){
-			if(task.isEvent()){
-				details += "<tr><td><p class = \"title\">Start: </p></td><td>"
-							 + TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()) 
-							 +"</td></tr>";
-				details += "<tr><td><p class = \"title\">End: </p></td><td>" 
-							 + TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime())  
-							 + "</td></tr>";
-			}else{
-				if(task.getStartTime() != null){
-					details += "<tr><td><p class = \"title\">Due: </p></td><td><p class = \"datetime\">" 
-								 + TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime())  
-								 + "</td></tr>";
-				}
-			}
-		}
-		return details;
-	}
-	private String formatTaskDetailsForDisplay(String desc, int rowCount){
-		String details = "<td style = \" width: 20px\" colspan = \"1\" rowspan = \"" 
-						+ rowCount + "\"></td>";
-		details += "<td colspan = \"1\" rowspan = \"" 
-				+ rowCount + "\"><p class = \"title\"> Description: </p></td>";
-		details += "<td rowspan = \"" + rowCount + "\">"
-				+ "<p class = \"desc\">" + desc + "</p></td>";
-		return details;
-	}
 	
 	protected void displayTaskList(Vector<Task> tasks){
-		TableDisplay taskTable = 
-				new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		taskTable = new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		Vector<String> row;
 		for(int i = 0; i < tasks.size(); i++){
-			row = formatTaskForRowDisplay(tasks.get(i), i+1);
+			String IDVal = i+1 + "";
+			row = formatTaskForRowDisplay(tasks.get(i), IDVal);
 			taskTable.addContentToTable(row);	
 		}
 		addContent(taskTable, false);
 	}
 	
-	protected Vector<String> formatTaskForRowDisplay(Task task, int rowNum){
+	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
 		Vector<String> row = new Vector<String>();
-		String ID = "" + rowNum;
-		row.add(ID);
+		row.add(IDVal);
 		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
 		row.add(nameAndTag);
 		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
