@@ -148,8 +148,8 @@ public class GUIManager {
 	private void initialiseAndConfigureDisplayArea(){
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight());
 		notificationArea = new NotificationArea(displayArea.getWidth());
-		notificationArea.displayNotification(GUIManager.WELCOME_MESSAGE, true);
 		displayArea.addPopup(notificationArea);
+		displayArea.hideNotifications();
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.addItem(commandBar);

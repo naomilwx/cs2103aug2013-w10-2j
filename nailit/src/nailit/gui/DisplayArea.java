@@ -26,7 +26,7 @@ import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
-	private static final Color DISPLAYAREA_BACKGROUND_COLOR = Color.white;
+	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
@@ -121,9 +121,10 @@ public class DisplayArea extends JLayeredPane {
 	}
 	private void configureDisplayArea(){
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
-		this.setBackground(DISPLAYAREA_BACKGROUND_COLOR);
+		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
+		this.setOpaque(true);
 	}
 	private void addDisplayAreaListeners(){
 		defaultPane.addFocusListener(defaultPaneFocusListener);
