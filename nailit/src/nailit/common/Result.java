@@ -12,6 +12,7 @@ public class Result {
 	
 	private boolean isExit;
 	private boolean isSuccessful;
+	private boolean isDelete = false;
 	private int displayType = NULL_DISPLAY;
 	private String notificationPrintOut = EMPTY_DISPLAY;
 	private Vector<Task> taskList = new Vector<Task>();
@@ -78,9 +79,15 @@ public class Result {
 	public void setTaskToDisplay(Task taskToDisplay){
 		task = taskToDisplay;
 	}
+	public void setDeleteStatus(boolean isDeleteCommand){
+		isDelete = isDeleteCommand;
+	}
 	//getters
 	public boolean getExitStatus(){
 		return isExit;
+	}
+	public boolean getDeleteStatus(){
+		return isDelete;
 	}
 	public boolean getExecutionSuccess(){
 		return isSuccessful;
