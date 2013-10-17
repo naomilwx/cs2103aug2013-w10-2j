@@ -2,6 +2,7 @@ package nailit.gui;
 
 import nailit.AppLauncher;
 import nailit.NailItGlobalKeyListener;
+import nailit.logic.CommandType;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -204,6 +205,10 @@ public class GUIManager {
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
 		}
+	}
+	protected void executeTriggeredTaskDisplay(int taskDisplayID){
+		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
+		executeUserInputCommand(displayCommand);
 	}
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){

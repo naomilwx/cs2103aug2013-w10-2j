@@ -157,15 +157,18 @@ public class Task {
 	public void setEndTime(DateTime end){
 		endTime = end;
 	}
+	
 	//Functions to format Task details for printout
 	public String formatID(){
 		String formattedID = "ID: "+ ID;
 		return formattedID;
 	}
+	
 	public String formatName(){
 		String formattedName = "Name: " + name;
 		return formattedName;
 	}
+	
 	public String formatTag(){
 		String formattedTag = "";
 		if(!tag.isEmpty()){
@@ -173,10 +176,12 @@ public class Task {
 		}
 		return formattedTag;
 	}
+	
 	public String formatPriority(){
 		String formattedPriority = "Priority: " + priority.toString();
 		return formattedPriority;
 	}
+	
 	public String formatDateDetails(){
 		String formattedDateDetails = "";
 		if(isEvent()){
@@ -189,6 +194,7 @@ public class Task {
 		}
 		return formattedDateDetails;
 	}
+	
 	public String formatStatus(){
 		String formattedStatus = "Status: ";
 		if(isCompleted){
@@ -198,19 +204,20 @@ public class Task {
 		}
 		return formattedStatus;
 	}
+	
 	//method to create copy of Task object
 	public Task copy(){
-		// change from Shuzhi
-		// the same, delete description,
 		Task newTask = new Task(name, startTime, endTime, tag, priority);
 		newTask.setDescription(description);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
 		return newTask;
 	}
+	
 	public String printNameAndID(){
 		return String.format(BASIC_PRINTOUT_FORMAT, ID, name);
 	}
+	
 	public boolean isAtSameStartTime(Task other){
 		if(startTime == null || other.startTime == null){
 			return ((startTime == null) && (other.startTime ==null));
