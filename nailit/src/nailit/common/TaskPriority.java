@@ -1,5 +1,4 @@
 package nailit.common;
-import java.io.Serializable;
 
 
 public enum TaskPriority {

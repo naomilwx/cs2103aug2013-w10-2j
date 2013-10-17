@@ -43,7 +43,6 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	private Vector<String> tableHeaderLabel;
 	private TableDisplay selfRef = this; //for tableKeyEventListener
 	
-	private int selectedRow = NO_SELECTED_ROW;
 	private int noOfCols;
 	
 	private KeyAdapter tableKeyEventListener = new KeyAdapter(){
@@ -51,17 +50,18 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		public void keyPressed(KeyEvent keyStroke){
 			int keyCode = keyStroke.getKeyCode();
 			if(keyCode == KeyEvent.VK_SHIFT){
-				selectedRow = NO_SELECTED_ROW;
 				table.clearSelection();
 				selfRef.requestFocus();
 			}else if(keyCode == KeyEvent.VK_TAB){
-				int nextSelectedRow = NO_SELECTED_ROW;
+				int selectedRow = table.getSelectedRow();
+				
 				if(selectedRow == NO_SELECTED_ROW){
-					nextSelectedRow = 0;
+					selectedRow = 0;
 				}else{
-					nextSelectedRow = selectedRow + 1;
+					selectedRow = selectedRow + 1;
 				}
-				if(nextSelectedRow >= tableRows.size()){
+				
+				if(selectedRow >= tableRows.size()){
 					if(tableRows.isEmpty()){
 						table.getParent().requestFocus();
 					}else{
@@ -69,7 +69,6 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 						table.changeSelection(selectedRow, noOfCols, false, false);
 					}
 				}else{
-					selectedRow = nextSelectedRow;
 					table.changeSelection(selectedRow, noOfCols, false, false);
 				}
 			}
@@ -96,6 +95,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		setSize(containerWidth, containerHeight);
 		setBorder(UNFOCUS_LINE_BORDER);
 		hideScrollBars();
+		setFocusTraversalKeysEnabled(false);
 		addFocusListener(displayFocusListener);
 		addKeyListener(moreTableMainFrameKeyEventListener);
 	}
@@ -150,6 +150,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	private void configureTable() {
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
+		table.setFocusTraversalKeysEnabled(false);
 		table.addKeyListener(tableKeyEventListener);
 		setRowWidths();
 		setViewportView(table);
@@ -197,9 +198,14 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			column.setPreferredWidth(widths[i]);
 		}
 	}
-	
+	protected int getSelectedRowDisplayID(){
+		return table.getSelectedRow() + 1;
+	}
 	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
+	}
+	protected void addKeyListenerToTable(KeyAdapter taskTableKeyEventListener) {
+		table.addKeyListener(taskTableKeyEventListener);
 	}
 
 }

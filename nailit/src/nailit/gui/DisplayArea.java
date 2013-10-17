@@ -53,6 +53,7 @@ public class DisplayArea extends JLayeredPane {
 		public void focusLost(FocusEvent event){
 		}
 	};
+	
 	private KeyAdapter keyEventListener = new KeyAdapter(){
 		boolean ctrlPressed = false;
 		@Override
@@ -182,6 +183,7 @@ public class DisplayArea extends JLayeredPane {
 	
 	protected void displayTaskList(Vector<Task> tasks){
 		taskTable = new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		addAdditionalKeyListenerToTaskTable();
 		Vector<String> row;
 		for(int i = 0; i < tasks.size(); i++){
 			String IDVal = i+1 + "";
@@ -190,7 +192,18 @@ public class DisplayArea extends JLayeredPane {
 		}
 		addContent(taskTable, false);
 	}
-	
+	private void addAdditionalKeyListenerToTaskTable(){
+		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					GUIBoss.executeTriggeredTaskDisplay(taskTable.getSelectedRowDisplayID());
+				}
+			}
+		};
+		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
+	}
 	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
 		Vector<String> row = new Vector<String>();
 		row.add(IDVal);

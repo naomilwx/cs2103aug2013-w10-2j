@@ -53,7 +53,7 @@ public class CommandBar extends JPanel {
 		textBar = new JTextField();
 		resizeAndpositionTextInputField();
 		addListenersToTextInputField();
-		textBar.setFocusTraversalKeysEnabled(false);
+		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
 		add(textBar);
 	}
 	
