@@ -70,9 +70,9 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 		if(hostTaskIsCompleted == taskToCompareIsCompleted) {
 			return 0;
 		} else if(hostTaskIsCompleted == false && taskToCompareIsCompleted == true) {
-			return 1;
-		} else {
 			return -1;
+		} else {
+			return 1;
 		}
 	}
 
