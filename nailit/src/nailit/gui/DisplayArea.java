@@ -198,6 +198,7 @@ public class DisplayArea extends JLayeredPane {
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
 				if(keyCode == KeyEvent.VK_ENTER){
+					GUIBoss.setFocusOnCommandBar();
 					GUIBoss.executeTriggeredTaskDisplay(taskTable.getSelectedRowDisplayID());
 				}
 			}
