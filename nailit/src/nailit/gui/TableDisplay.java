@@ -2,6 +2,7 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -10,10 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.ComponentInputMap;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -32,6 +37,9 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	private static final int TABLE_HEADER_HEIGHT = 40;
 	private static final int TABLE_ROW_HEIGHT = 50;
 	private static final int NO_SELECTED_ROW = -1;
+	private static final int SINGLE_SCROLLDOWN = 1;
+	private static final int SINGLE_SCROLLUP = -1;
+	private static final int TAB_SCROLL_OFFSET = 5;
 	
 	private int containerHeight;
 	private int containerWidth;
@@ -41,39 +49,11 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	private Vector<Vector<String>> tableRows;
 	private DefaultTableModel tableModel;
 	private Vector<String> tableHeaderLabel;
-	private TableDisplay selfRef = this; //for tableKeyEventListener
+	private TableDisplay selfRef = this; //for AbstractAction
 	
 	private int noOfCols;
+	//listeners
 	
-	private KeyAdapter tableKeyEventListener = new KeyAdapter(){
-		@Override
-		public void keyPressed(KeyEvent keyStroke){
-			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_SHIFT){
-				table.clearSelection();
-				selfRef.requestFocus();
-			}else if(keyCode == KeyEvent.VK_TAB){
-				int selectedRow = table.getSelectedRow();
-				
-				if(selectedRow == NO_SELECTED_ROW){
-					selectedRow = 0;
-				}else{
-					selectedRow = selectedRow + 1;
-				}
-				
-				if(selectedRow >= tableRows.size()){
-					if(tableRows.isEmpty()){
-						table.getParent().requestFocus();
-					}else{
-						selectedRow = 0;
-						table.changeSelection(selectedRow, noOfCols, false, false);
-					}
-				}else{
-					table.changeSelection(selectedRow, noOfCols, false, false);
-				}
-			}
-		}
-	};
 	private KeyAdapter moreTableMainFrameKeyEventListener = new KeyAdapter(){
 		@Override
 		public void keyPressed(KeyEvent keyStroke){
@@ -81,6 +61,32 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			if(keyCode == KeyEvent.VK_TAB){
 				table.requestFocus();
 			}
+		}
+	};
+	//actions
+	private final AbstractAction quickScrollToRowBelowOnTab = new AbstractAction(){
+		@Override
+		public void actionPerformed(ActionEvent event){
+			scrollToNextRow(TAB_SCROLL_OFFSET);
+		}
+	};
+	private final AbstractAction scrollToRowBelowOnKeyEvent = new AbstractAction(){
+		@Override
+		public void actionPerformed(ActionEvent event){
+			scrollToNextRow(SINGLE_SCROLLDOWN);
+		}
+	};
+	private final AbstractAction scrollToRowAboveOnKeyEvent = new AbstractAction(){
+		@Override
+		public void actionPerformed(ActionEvent event){
+			scrollToNextRow(SINGLE_SCROLLUP);
+		}
+	};
+	private final AbstractAction focusOnMainTableOnShift = new AbstractAction(){
+		@Override
+		public void actionPerformed(ActionEvent event){
+			table.clearSelection();
+			selfRef.requestFocus();
 		}
 	};
 	
@@ -151,7 +157,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		table.setFocusTraversalKeysEnabled(false);
-		table.addKeyListener(tableKeyEventListener);
+		createTableKeyBindings();
 		setRowWidths();
 		setViewportView(table);
 	}
@@ -198,14 +204,58 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			column.setPreferredWidth(widths[i]);
 		}
 	}
+	private void performEnterEvent(){
+		if(tableDisplayType == Result.LIST_DISPLAY){
+			
+		}
+	}
+	private void scrollToNextRow(int offSet){
+		if(tableRows.isEmpty()){
+			table.getParent().requestFocus();
+		}else{
+			int selectedRow = table.getSelectedRow();
+			
+			if(selectedRow == NO_SELECTED_ROW){
+				selectedRow = 0;
+			}else{
+				selectedRow = selectedRow + offSet;
+				if(selectedRow < 0){//negative offset: scrolling up. go to end of table
+					selectedRow = tableRows.size() - 1;
+				}
+			}
+			
+			if(selectedRow >= tableRows.size()){
+				selectedRow = 0;
+				table.changeSelection(selectedRow, noOfCols, false, false);
+			}else{
+				table.changeSelection(selectedRow, noOfCols, false, false);
+			}
+		}
+	}
+	
+	private void createTableKeyBindings(){
+		ComponentInputMap tableInputMap = new ComponentInputMap(table);
+		ActionMap tableActionMap = new ActionMap();
+		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Esc Event");
+		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Tab Key");
+		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "Down Key");
+		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "Up Key");
+		tableActionMap.put("Esc Event", focusOnMainTableOnShift);
+		tableActionMap.put("Tab Key", quickScrollToRowBelowOnTab);
+		tableActionMap.put("Down Key", scrollToRowBelowOnKeyEvent);
+		tableActionMap.put("Up Key", scrollToRowAboveOnKeyEvent);
+		table.setInputMap(JTable.WHEN_FOCUSED, tableInputMap);
+		table.setActionMap(tableActionMap);
+	}
+	
 	protected int getSelectedRowDisplayID(){
 		return table.getSelectedRow() + 1;
 	}
 	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
 	}
-	protected void addKeyListenerToTable(KeyAdapter taskTableKeyEventListener) {
-		table.addKeyListener(taskTableKeyEventListener);
+	protected void addKeyListenerToTable(KeyAdapter tableKeyEventListener) {
+		table.addKeyListener(tableKeyEventListener);
 	}
 
 }
