@@ -55,7 +55,7 @@ public class CommandManager {
 		if(parserResultInstance == null) {
 			throw new Exception("The parserResult Instance is a null object.");
 		} else {
-			System.out.println(parserResultInstance.getName());
+			
 			this.parserResultInstance = parserResultInstance;
 			Result executedResult = doExecution();
 			return executedResult;
