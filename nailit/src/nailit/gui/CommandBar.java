@@ -23,6 +23,8 @@ public class CommandBar extends JPanel {
 	public static final int TEXTBAR_X_BUFFER_WIDTH = 5;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
+	private static final int MAX_ROWS_IN_TEXTFIELD = 4;
+	
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
 	private JScrollPane textBarWrapper;
@@ -32,51 +34,71 @@ public class CommandBar extends JPanel {
 	private int frameXPos;
 	private int frameYPos;
 	private int commandBarHeight;
+	private int commandBarWidth;
+	private int rowsInTextField = 1;
+	private int mainContainerWidth;
+	private int mainContainerHeight;
 	/**
 	 * Create the panel.
 	 */
 	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
-		
-		positionAndResizeCommandFrame(containerWidth, containerHeight);
+		mainContainerWidth = containerWidth;
+		mainContainerHeight = containerHeight;
+		positionAndResizeCommandFrame();
 		createConfigureAndAddInputField();
 	}
 	
-	private void positionAndResizeCommandFrame(int containerWidth, int containerHeight){
-		frameWidth = containerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		adjustCommandBarAndFrameHeight(1);
-		frameXPos = X_BUFFER_WIDTH;
-		frameYPos = containerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
+	private void positionAndResizeCommandFrame(){
+		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
+		adjustCommandBarAndFrameHeightAndPos(rowsInTextField);
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		this.setLocation(frameXPos, frameYPos);
 		this.setSize(frameWidth, frameHeight);
 		this.setLayout(null);
 	}
-	private void adjustCommandBarAndFrameHeight(int textRowNum){
+	private void adjustCommandBarAndFrameHeightAndPos(int textRowNum){
 		commandBarHeight = textRowNum * DEFAULT_COMMANDBAR_HEIGHT;
 		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+		frameXPos = X_BUFFER_WIDTH;
+		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
+	}
+	private void addNewLineToTextField(){
+		if(rowsInTextField < MAX_ROWS_IN_TEXTFIELD){
+			rowsInTextField += 1;
+		}
+		commandFrameAndBarDynamicResize();
+	}
+	private void commandFrameAndBarDynamicResize(){
+		adjustCommandBarAndFrameHeightAndPos(rowsInTextField);
+		this.setSize(frameWidth, frameHeight);
+		this.setLocation(frameXPos, frameYPos);
+		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
+		textBar.setSize(commandBarWidth, commandBarHeight);
+		revalidate();
 	}
 	private void createConfigureAndAddInputField(){
 		textBarWrapper = new JScrollPane();
 		textBar = new JTextArea();
 		configureTextBarWrapper();
-		resizeAndpositionTextInputField();
+		configureTextInputField();
 		addListenersToTextInputField();
-		textBar.setLineWrap(true);
-		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
+		
 		textBarWrapper.setViewportView(textBar);
 		add(textBarWrapper);
 	}
 	
-	private void resizeAndpositionTextInputField(){
-		int width = frameWidth - 2* X_BUFFER_WIDTH;
-		textBarWrapper.setLocation(TEXTBAR_X_BUFFER_WIDTH, TEXTBAR_Y_BUFFER_HEIGHT);
-		textBarWrapper.setSize(width, commandBarHeight);
-		textBar.setSize(width, commandBarHeight);
+	private void configureTextInputField(){
+		textBar.setLineWrap(true);
+		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
+		textBar.setSize(commandBarWidth, commandBarHeight);
 	}
+	
 	private void configureTextBarWrapper(){
+		textBarWrapper.setLocation(TEXTBAR_X_BUFFER_WIDTH, TEXTBAR_Y_BUFFER_HEIGHT);
+		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 		textBarWrapper.setFocusable(false);
-		textBarWrapper.setBorder(null);
 		textBarWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         textBarWrapper.setHorizontalScrollBar(null);
 	}
@@ -86,7 +108,9 @@ public class CommandBar extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
+				if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
+					addNewLineToTextField();
+				}else if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
 				}else if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_TAB){
 					GUIBoss.setFocusOnDisplay();
