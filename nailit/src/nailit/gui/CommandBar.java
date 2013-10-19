@@ -6,7 +6,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
@@ -122,6 +121,10 @@ public class CommandBar extends JPanel {
 		textBar.addKeyListener(new KeyAdapter(){
 			private boolean ctrlPressed = false;
 			private boolean shiftDown = false;
+			private void resetKeys(){
+				ctrlPressed = false;
+				shiftDown = false;
+			}
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
@@ -132,17 +135,21 @@ public class CommandBar extends JPanel {
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
 				}else if(keyCode == KeyEvent.VK_TAB){
+					resetKeys();
 					GUIBoss.setFocusOnDisplay();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
 					shiftDown = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+					resetKeys();
 					GUIBoss.toggleHomeWindow();
 					GUIBoss.setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
+					resetKeys();
 					GUIBoss.setVisible(false);
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
+					resetKeys();
 					GUIBoss.toggleHistoryWindow();
 					GUIBoss.setFocusOnCommandBar();
 				}else if(keyCode == KeyEvent.VK_BACK_SPACE){
