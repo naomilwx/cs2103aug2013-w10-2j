@@ -67,7 +67,7 @@ public class DisplayArea extends JLayeredPane {
 		}
 	};
 	
-	//DisplayArea constructor
+	//DisplayArea constructor. offset is the height of the CommandBar below
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight, int offset) {
 		GUIBoss = GUIMain;
 		items = new LinkedList<Component>();
@@ -108,8 +108,17 @@ public class DisplayArea extends JLayeredPane {
 	}
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
-		displayHeight = containerHeight - 3 * Y_BUFFER_HEIGHT - 2 * WINDOW_BOTTOM_BUFFER;
+		displayHeight = containerHeight - 2 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
 	}
+	
+	protected void dynamicallyResizeDisplayArea(int additionalOffset){
+		adjustDisplayHeight(additionalOffset);
+		this.setSize(displayWidth, displayHeight);
+		defaultPane.setSize(displayWidth, displayHeight);
+		popupPane.setSize(displayWidth, displayHeight);
+		revalidate();
+	}
+	
 	private void shiftLayer(JPanel layer, int xpos, int ypos){
 		layer.setLocation(xpos, ypos);
 	}

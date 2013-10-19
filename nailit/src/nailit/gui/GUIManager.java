@@ -47,7 +47,7 @@ public class GUIManager {
 	protected static final int Y_BUFFER_HEIGHT = 7;
 	protected static final int X_BUFFER_WIDTH = 5;
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
-	protected static final int WINDOW_BOTTOM_BUFFER = 35;
+	protected static final int WINDOW_BOTTOM_BUFFER = 32;
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 100;
 	protected static final int EXTENDED_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
@@ -176,6 +176,9 @@ public class GUIManager {
 	}
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
+	}
+	protected void resizeMainDisplayArea(){
+		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	/**
 	 * Executes command entered by user
