@@ -9,7 +9,7 @@ import nailit.common.NIConstants;
 
 public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
-			+ "p.date {font-size: 15px; text-align:center;}"
+			+ "p.date {font-size: 14px; text-align:center;}"
 			+ "p.time {font-size: 12px; text-align:center;}"
 			+ "</style></head>";
 

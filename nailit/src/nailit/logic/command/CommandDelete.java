@@ -2,7 +2,7 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
-import test.storage.StorageStub;
+import test.storage.StorageManagerStub;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.ParserResult;

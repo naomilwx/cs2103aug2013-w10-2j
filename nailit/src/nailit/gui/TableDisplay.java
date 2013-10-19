@@ -34,7 +34,7 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
 
 public class TableDisplay extends ScrollableFocusableDisplay{
-	private static final int TABLE_HEADER_HEIGHT = 40;
+	private static final int TABLE_HEADER_HEIGHT = 35;
 	private static final int TABLE_ROW_HEIGHT = 50;
 	private static final int NO_SELECTED_ROW = -1;
 	private static final int SINGLE_SCROLLDOWN = 1;

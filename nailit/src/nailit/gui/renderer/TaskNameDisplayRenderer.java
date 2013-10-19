@@ -7,7 +7,7 @@ import nailit.common.TaskPriority;
 
 public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
-			+ "p.name {font-size: 15px;}"
+			+ "p.name {font-size: 14px;}"
 			+ "p.tag {font-size: 10px; color: gray;}"
 			+ "</style></head>";
 	private static final String PRIORITY_DISPLAY_FORMAT = "<p class = \"priority\" style = \"color: %1s\">%2s</p>";
