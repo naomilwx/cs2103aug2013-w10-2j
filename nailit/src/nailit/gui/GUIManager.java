@@ -204,6 +204,7 @@ public class GUIManager {
 				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
 				displayNotification(notificationStr, false);
 			}
+			err.printStackTrace();
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
