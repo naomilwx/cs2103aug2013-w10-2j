@@ -21,13 +21,12 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 		
 		String hostTaskName = hostTask.getName();
 		String taskToCompareName = taskToCompare.getName();
-		
 		if(compareCompleteLevel(hostTaskIsCompleted, taskToCompareIsCompleted) == 0) {
 			if(compareDate(hostTaskDate, taskToCompareDate) == 0) {
 				if(comparePriorityCode(hostTaskPriorityCode, taskToComparePriorityCode) == 0){
 					return compareName(hostTaskName, taskToCompareName);
 				}else{
-					return compareDate(hostTaskDate, taskToCompareDate);
+					return comparePriorityCode(hostTaskPriorityCode, taskToComparePriorityCode);
 				}
 			} else { // compare Date
 				return compareDate(hostTaskDate, taskToCompareDate);
@@ -53,9 +52,9 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 	private int comparePriorityCode(int hostTaskPriorityCode,
 			int taskToComparePriorityCode) {
 		if(hostTaskPriorityCode < taskToComparePriorityCode) {
-			return -1;
-		} else if(hostTaskPriorityCode > taskToComparePriorityCode) {
 			return 1;
+		} else if(hostTaskPriorityCode > taskToComparePriorityCode) {
+			return -1;
 		} else {
 			return 0;
 		}
