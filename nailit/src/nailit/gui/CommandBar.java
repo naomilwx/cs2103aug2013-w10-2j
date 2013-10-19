@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
@@ -14,7 +16,7 @@ import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int COMMANDBAR_HEIGHT = 30;
+	private static final int DEFAULT_COMMANDBAR_HEIGHT = 25;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
@@ -23,11 +25,13 @@ public class CommandBar extends JPanel {
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
-	private JTextField textBar;
+	private JScrollPane textBarWrapper;
+	private JTextArea textBar;
 	private int frameHeight;
 	private int frameWidth;
 	private int frameXPos;
 	private int frameYPos;
+	private int commandBarHeight;
 	/**
 	 * Create the panel.
 	 */
@@ -40,7 +44,7 @@ public class CommandBar extends JPanel {
 	
 	private void positionAndResizeCommandFrame(int containerWidth, int containerHeight){
 		frameWidth = containerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		frameHeight = COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+		adjustCommandBarAndFrameHeight(1);
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = containerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -48,19 +52,33 @@ public class CommandBar extends JPanel {
 		this.setSize(frameWidth, frameHeight);
 		this.setLayout(null);
 	}
-	
+	private void adjustCommandBarAndFrameHeight(int textRowNum){
+		commandBarHeight = textRowNum * DEFAULT_COMMANDBAR_HEIGHT;
+		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+	}
 	private void createConfigureAndAddInputField(){
-		textBar = new JTextField();
+		textBarWrapper = new JScrollPane();
+		textBar = new JTextArea();
+		configureTextBarWrapper();
 		resizeAndpositionTextInputField();
 		addListenersToTextInputField();
+		textBar.setLineWrap(true);
 		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
-		add(textBar);
+		textBarWrapper.setViewportView(textBar);
+		add(textBarWrapper);
 	}
 	
 	private void resizeAndpositionTextInputField(){
 		int width = frameWidth - 2* X_BUFFER_WIDTH;
-		textBar.setLocation(TEXTBAR_X_BUFFER_WIDTH,TEXTBAR_Y_BUFFER_HEIGHT);
-		textBar.setSize(width,COMMANDBAR_HEIGHT);
+		textBarWrapper.setLocation(TEXTBAR_X_BUFFER_WIDTH, TEXTBAR_Y_BUFFER_HEIGHT);
+		textBarWrapper.setSize(width, commandBarHeight);
+		textBar.setSize(width, commandBarHeight);
+	}
+	private void configureTextBarWrapper(){
+		textBarWrapper.setFocusable(false);
+		textBarWrapper.setBorder(null);
+		textBarWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        textBarWrapper.setHorizontalScrollBar(null);
 	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
