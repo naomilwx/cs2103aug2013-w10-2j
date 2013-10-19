@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 
-import test.storage.StorageStub;
+import test.storage.StorageManagerStub;
 
 import nailit.common.FilterObject;
 import nailit.common.Result;

@@ -1,6 +1,6 @@
 package nailit.logic.command;
 
-import test.storage.StorageStub;
+import test.storage.StorageManagerStub;
 import nailit.common.Result;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
