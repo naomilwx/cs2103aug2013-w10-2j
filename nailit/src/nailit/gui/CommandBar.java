@@ -16,7 +16,8 @@ import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int DEFAULT_COMMANDBAR_HEIGHT = 25;
+	private static final int COMMANDBAR_TEXT_HEIGHT = 20;
+	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 5;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
@@ -36,6 +37,7 @@ public class CommandBar extends JPanel {
 	private int commandBarHeight;
 	private int commandBarWidth;
 	private int rowsInTextField = 1;
+	private int numOfTextLines = 1;
 	private int mainContainerWidth;
 	private int mainContainerHeight;
 	/**
@@ -59,7 +61,7 @@ public class CommandBar extends JPanel {
 		this.setLayout(null);
 	}
 	private void adjustCommandBarAndFrameHeightAndPos(int textRowNum){
-		commandBarHeight = textRowNum * DEFAULT_COMMANDBAR_HEIGHT;
+		commandBarHeight = textRowNum * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
@@ -69,6 +71,16 @@ public class CommandBar extends JPanel {
 			rowsInTextField += 1;
 		}
 		commandFrameAndBarDynamicResize();
+	}
+	private void removeLineFromTextField(){
+		if(numOfTextLines > textBar.getLineCount()){
+			numOfTextLines -= 1;
+		}
+		if(numOfTextLines < rowsInTextField){
+			rowsInTextField -= 1;
+			commandFrameAndBarDynamicResize();
+			GUIBoss.resizeMainDisplayArea();
+		}
 	}
 	private void commandFrameAndBarDynamicResize(){
 		adjustCommandBarAndFrameHeightAndPos(rowsInTextField);
@@ -102,21 +114,29 @@ public class CommandBar extends JPanel {
 		textBarWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         textBarWrapper.setHorizontalScrollBar(null);
 	}
+	private void addNewLineOfText(){
+		numOfTextLines += 1;
+		textBar.append("\n");
+	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
 			private boolean ctrlPressed = false;
+			private boolean shiftDown = false;
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
-				if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
+				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineToTextField();
+					addNewLineOfText();
 					GUIBoss.resizeMainDisplayArea();
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
-				}else if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_TAB){
+				}else if(keyCode == KeyEvent.VK_TAB){
 					GUIBoss.setFocusOnDisplay();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
+				}else if(keyCode == KeyEvent.VK_SHIFT){
+					shiftDown = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
 					GUIBoss.toggleHomeWindow();
 					GUIBoss.setFocusOnCommandBar();
@@ -125,6 +145,8 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
 					GUIBoss.toggleHistoryWindow();
 					GUIBoss.setFocusOnCommandBar();
+				}else if(keyCode == KeyEvent.VK_BACK_SPACE){
+					removeLineFromTextField();
 				}
 			}
 			@Override
@@ -132,6 +154,8 @@ public class CommandBar extends JPanel {
 				int keyCode = keyStroke.getKeyCode();
 				if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = false;
+				}else if(keyCode == KeyEvent.VK_SHIFT){
+					shiftDown = false;
 				}
 			}
 		});
