@@ -12,6 +12,7 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String TASK_DONE_CODE = "&#10004  ";
 	private static final String TASK_NOT_DONE_CODE = "&nbsp;   ";
 	private static final String ROW_FILLER = "<p></p>";
+
 	@Override
 	protected void setValue(Object value){
 		String output = "<html>" + cellStyle + (String) value + "</html>";

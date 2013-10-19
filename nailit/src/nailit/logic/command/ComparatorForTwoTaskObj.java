@@ -62,6 +62,8 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 	}
 	
 	private int compareName(String hostTaskName, String taskToCompareName){
+		assert hostTaskName != null;
+		assert taskToCompareName != null;
 		return hostTaskName.compareTo(taskToCompareName);
 	}
 

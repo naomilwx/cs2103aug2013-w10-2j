@@ -45,6 +45,7 @@ public class DisplayArea extends JLayeredPane {
 	
 	private int displayWidth;
 	private int displayHeight;
+	private int containerHeight;
 	private int currentFocusElement = NULL_FOCUS;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
@@ -67,15 +68,18 @@ public class DisplayArea extends JLayeredPane {
 	};
 	
 	//DisplayArea constructor
-	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight) {
+	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight, int offset) {
 		GUIBoss = GUIMain;
 		items = new LinkedList<Component>();
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
+		this.containerHeight = containerHeight;
+//		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
+		setDisplayHeight(offset);
 		configureDisplayArea();
 		initialiseLayers();
 		addDisplayAreaListeners();
 	}
+	
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
 	 * the result of user commands are displayed
@@ -101,6 +105,10 @@ public class DisplayArea extends JLayeredPane {
 		layer.setSize(displayWidth, displayHeight);
 		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		layer.setOpaque(false);
+	}
+	//sets display height based on available space
+	private void setDisplayHeight(int additionalOffset){
+		displayHeight = containerHeight - 3 * Y_BUFFER_HEIGHT - 2 * WINDOW_BOTTOM_BUFFER;
 	}
 	private void shiftLayer(JPanel layer, int xpos, int ypos){
 		layer.setLocation(xpos, ypos);

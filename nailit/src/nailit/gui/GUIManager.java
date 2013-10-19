@@ -44,7 +44,7 @@ public class GUIManager {
 	public static final String APPLICATION_NAME = "NailIt!";
 	protected static final Color BORDER_COLOR = Color.black;
 	protected static final Color FOCUSED_BORDER_COLOR = Color.orange;
-	protected static final int Y_BUFFER_HEIGHT = 10;
+	protected static final int Y_BUFFER_HEIGHT = 7;
 	protected static final int X_BUFFER_WIDTH = 5;
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
 	protected static final int WINDOW_BOTTOM_BUFFER = 35;
@@ -125,7 +125,7 @@ public class GUIManager {
 		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
 		homeWindow.setVisible(true);
 	}
-	protected void toggleHomeWindow(){
+	public void toggleHomeWindow(){
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
 			homeWindow.setVisible(!currentVisibility);
@@ -147,7 +147,7 @@ public class GUIManager {
 		loadComponentsUntoMainFrame();
 	}
 	private void initialiseAndConfigureDisplayArea(){
-		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight(), commandBar.getHeight());
 		notificationArea = new NotificationArea(displayArea.getWidth());
 		displayArea.addPopup(notificationArea);
 		displayArea.hideNotifications();
