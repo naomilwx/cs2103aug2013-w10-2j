@@ -32,15 +32,16 @@ public class DataManager {
 	 * */
 	public int add(Task newTask){
 		int ID = newTask.getID();
+		
+		assert(isValidID(ID));
+
 		if(!addedBefore(ID)){
 			
 			ID = generateNewID();
 			newTask.setID(ID);
 			
 			hashTable.put(ID, newTask);
-		}
-		else{
-			assert(ID>=1);
+		}else{
 
 			hashTable.put(ID,newTask);
 		}
@@ -48,17 +49,21 @@ public class DataManager {
 	}
 	
 	public Task retrieve(int ID) throws NoTaskFoundException{
-		Task task = hashTable.get(ID);
-		if(task==null){
+		if(!hashTable.containsKey(ID)){
 			throw new NoTaskFoundException("The task cannot be found!");
-		}
-		else{
+		}else{
+			Task task = hashTable.get(ID);
 			return task;
 		}
 	}
 	
-	public Task remove(int ID){
+	public Task remove(int ID) throws NoTaskFoundException{
+		
 		assert(isValidID(ID));
+		
+		if(!hashTable.containsKey(ID)){
+			throw new NoTaskFoundException("The task cannot be found!");
+		}
 		return hashTable.remove(ID);
 	}
 		
@@ -90,6 +95,6 @@ public class DataManager {
 	}
 	
 	private boolean isValidID(int ID){
-		return true;
+		return (ID == Task.TASKID_NULL) || (ID>=1&&ID<nextValidID);
 	}
 }
