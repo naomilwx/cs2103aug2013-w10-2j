@@ -46,7 +46,7 @@ public class AddParser extends Parser {
 				name+= listOfCommand[i];
 		}
 		if (name.equals("")) System.out.println("Wrong format: No name");
-		
+		resultExecution.setName(name);
 		return resultExecution;
 	}
 }
