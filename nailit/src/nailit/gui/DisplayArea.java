@@ -201,11 +201,24 @@ public class DisplayArea extends JLayeredPane {
 	}
 	private void addAdditionalKeyListenerToTaskTable(){
 		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
+			private boolean ctrlPressed = false;
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
+				if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = true;
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
+					ctrlPressed = false;
+					taskTableOnCtrlEnterEvent();
+				}else if(keyCode == KeyEvent.VK_ENTER){
 					taskTableOnEnterEvent();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = false;
 				}
 			}
 		};
@@ -214,6 +227,10 @@ public class DisplayArea extends JLayeredPane {
 	protected void taskTableOnEnterEvent(){
 		GUIBoss.setFocusOnCommandBar();
 		GUIBoss.executeTriggeredTaskDisplay(taskTable.getSelectedRowDisplayID());
+	}
+	protected void taskTableOnCtrlEnterEvent(){
+		GUIBoss.setFocusOnCommandBar();
+		GUIBoss.loadExistingTaskDescriptionInCommandBar(taskTable.getSelectedRowDisplayID());
 	}
 	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
 		Vector<String> row = new Vector<String>();

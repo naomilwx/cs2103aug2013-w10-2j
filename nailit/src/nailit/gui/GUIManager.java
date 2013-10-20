@@ -184,10 +184,11 @@ public class GUIManager {
 	 * Executes command entered by user
 	 * @param input
 	 */
-	protected void executeUserInputCommand(String input){
+	protected Result executeUserInputCommand(String input){
+		Result executionResult = null;
 		try{
 			displayArea.hideNotifications();
-			Result executionResult = logicExecutor.executeCommand(input);
+			executionResult = logicExecutor.executeCommand(input);
 			if(executionResult == null){
 				System.out.println("die!");
 			}
@@ -209,11 +210,25 @@ public class GUIManager {
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
 		}
+		return executionResult;
 	}
-	protected void executeTriggeredTaskDisplay(int taskDisplayID){
+	
+	//
+	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
 		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
-		executeUserInputCommand(displayCommand);
+		return executeUserInputCommand(displayCommand);
 	}
+	protected void loadExistingTaskDescriptionInCommandBar(int taskDisplayID){
+		Result result = executeTriggeredTaskDisplay(taskDisplayID);
+		if(result !=  null){
+			Task task = result.getTaskToDisplay();
+			if(task != null){
+				commandBar.setUserInput(CommandType.ADDDESCRIPTION.toString() +" " +task.getDescription());
+			}
+		}
+	}
+	//
+	
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
 			exit();
