@@ -223,7 +223,8 @@ public class GUIManager {
 		if(result !=  null){
 			Task task = result.getTaskToDisplay();
 			if(task != null){
-				commandBar.setUserInput(CommandType.ADDDESCRIPTION.toString() +" " +task.getDescription());
+				commandBar.setUserInput(CommandType.ADDDESCRIPTION.toString() +" "+ taskDisplayID
+						+" " +task.getDescription());
 			}
 		}
 	}
