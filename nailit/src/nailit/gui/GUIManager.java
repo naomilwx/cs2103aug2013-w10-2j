@@ -35,6 +35,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.Utilities;
 
 import test.logic.LogicManagerStub;
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
