@@ -218,10 +218,26 @@ public class CommandUpdate extends Command{
 	public Task getRetrievedTask() {
 		return taskRetrieved;
 	}
+	
+	public Task getUpdatedTask() {
+		return updatedTask;
+	}
 
 	@Override
 	public String getCommandString() {
 		return commandSummary;
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isSuccessRedo() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

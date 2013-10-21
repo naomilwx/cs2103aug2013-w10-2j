@@ -27,9 +27,11 @@ public abstract class Command {
 	public abstract CommandType getCommandType();	
 	
 	public abstract void undo();
+	public abstract void redo();
 
 
 	public abstract boolean undoSuccessfully();
+	public abstract boolean isSuccessRedo();
 	
 	public abstract String getCommandString();
 }

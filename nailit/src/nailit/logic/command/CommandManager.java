@@ -125,8 +125,71 @@ public class CommandManager {
 	}
 	
 	private Result redo() {
-		// TODO Auto-generated method stub
-		return null;
+		Command commandToRedo = getTheCommandToRedo();
+		Result resultToPassToGUI = new Result();
+		if(commandToRedo == null) {
+			resultToPassToGUI = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Sorry, you haven't undone any command, so cannot redo.", null, currentTaskList, null);
+		} else {
+			commandToRedo.redo();
+			if(commandToRedo.isSuccessRedo()) {
+				updateCurrentListAfterRedo(commandToRedo);
+				resultToPassToGUI = createResultForRndoSuccessfully();
+			} else {
+				resultToPassToGUI = createResultForRedoFailure();
+			}
+			
+		}
+		return resultToPassToGUI;
+	}
+
+	private Result createResultForRedoFailure() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Redo cannot be done.", null, currentTaskList, null);		
+
+	}
+
+	private Result createResultForRndoSuccessfully() {
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo successfully.", null, currentTaskList, null);
+
+	}
+
+	private void updateCurrentListAfterRedo(Command commandToRedo) {
+		int taskID = commandToRedo.getTaskID();
+		CommandType commandType = commandToRedo.getCommandType();
+		if(commandType == CommandType.ADD) {
+			CommandAdd ca = (CommandAdd)commandToRedo;
+			Task taskAddedBack = ca.getTaskAdded();
+			if(isTheTaskFitTheFilter(taskAddedBack)) {
+				currentTaskList.add(taskAddedBack);
+				sort();
+			}
+		} else {
+			int count = -1;
+			Iterator<Task> itr = currentTaskList.iterator();
+			
+			while(itr.hasNext()) {
+				count++;
+				Task currentTask = itr.next();
+				int currentTaskID = currentTask.getID();
+				if(currentTaskID == taskID) {
+					currentTaskList.remove(count);
+					if(commandType == CommandType.UPDATE) {
+						CommandUpdate cu = (CommandUpdate)commandToRedo;
+						currentTaskList.add(cu.getUpdatedTask());
+						sort();
+					}
+				} 
+			}
+		}
+		
+	}
+
+	private Command getTheCommandToRedo() {
+		int size = redoCommandsList.size();
+		if(size == 0) {
+			return null;
+		} else {
+			return redoCommandsList.get(size-1);
+		}
 	}
 
 	private Result undo() { // do not put into the command history
@@ -192,7 +255,7 @@ public class CommandManager {
 	
 
 	private Result createResultForUndoFailure() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Undo cannot be done.");		
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Undo cannot be done.", null, currentTaskList, null);		
 	}
 
 	private Command getTheCommandToUndo() {
@@ -206,7 +269,7 @@ public class CommandManager {
 //			} 
 //		}
 		int size = operationsHistory.size();
-		for(int i = size; i > 0; i--) {
+		for(int i = size-1; i >= 0; i--) {
 			Command currentCommand = operationsHistory.get(i);
 			CommandType currentCommandType = currentCommand.getCommandType();
 			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
