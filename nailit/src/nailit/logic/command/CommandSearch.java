@@ -8,6 +8,7 @@ import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
@@ -34,6 +35,8 @@ public class CommandSearch extends Command{
 	// check whether has search content
 	private boolean isEmptySearch;
 	
+	private CommandType commandType;
+	
 	private final static String COMMAND_SUMMARY_CONTENT = "This is a search command. The search content is: "; 
 	private final static String SEARCH_NONE_WARNING = "This is a search command, but the search content is none.";
 	private final static String SEARCH_NONE_WARNING_FEEDBACK = "Sorry, please tell us what you want to search.";
@@ -47,6 +50,7 @@ public class CommandSearch extends Command{
 		executedResult = null;
 		commandSummary = "";
 		isEmptySearch = true;
+		commandType = CommandType.SEARCH;
 	}
 
 	@Override
@@ -146,5 +150,37 @@ public class CommandSearch extends Command{
 	
 	public boolean isFilterNothing() {
 		return isEmptySearch;
+	}
+	
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	@Override
+	public void undo() {
+		// nothing to do
+	}
+
+	@Override
+	public boolean undoSuccessfully() {
+		// nothing to do
+		return false;
+	}
+
+	@Override
+	public String getCommandString() {
+		return commandSummary;
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isSuccessRedo() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
