@@ -137,7 +137,6 @@ public class CommandManager {
 			} else {
 				resultToPassToGUI = createResultForRedoFailure();
 			}
-			
 		}
 		return resultToPassToGUI;
 	}
@@ -249,6 +248,7 @@ public class CommandManager {
 						currentTaskList.add(cu.getRetrievedTask());
 						sort();
 					}
+					break;
 				} 
 			}
 		}
