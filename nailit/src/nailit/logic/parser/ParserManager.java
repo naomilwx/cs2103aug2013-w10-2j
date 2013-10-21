@@ -47,6 +47,9 @@ public class ParserManager {
 		case SEARCH:
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
+		case UNDO:
+			UndoParser undoParserManager = new UndoParser(commandToExecute);
+			return undoParserManager.execute();
 		case UPDATE:
 			UpdateParser updateParserManager = new UpdateParser(commandToExecute);
 			return updateParserManager.execute();
