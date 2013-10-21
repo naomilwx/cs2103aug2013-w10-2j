@@ -58,7 +58,7 @@ public class StorageManagerTest {
 	}
 	
 	public void testRemoveCommand(String expected,int ID) throws NoTaskFoundException, FileCorruptionException{
-		sto.remove(ID);
+		sto.remove(ID, false);
 		Vector<Task> v = sto.retrieveAll();
 		String out = printVector(v);
 		assertEquals(expected,out);
