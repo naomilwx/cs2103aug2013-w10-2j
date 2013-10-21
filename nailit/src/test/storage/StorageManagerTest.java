@@ -17,8 +17,32 @@ import org.junit.Test;
 
 public class StorageManagerTest {
 	public StorageManager sto;
+	
 	@Test
-	public void test() throws FileCorruptionException, NoTaskFoundException {
+	public void removeTest() throws FileCorruptionException{
+		sto = new StorageManager();
+		sto.clear();
+		Task task1 = new Task("first task");
+		Task task2 = new Task("second task");
+		testRemoveCommand("Assertion Error!",1);
+		testRemoveCommand("Assertion Error!",0);
+		testRemoveCommand("No task can be found!",Task.TASKID_NULL);
+		
+		testRemoveCommand("Assertion Error!",2);
+		testAddCommand("" +
+				"1,first task,null,null,1,,,0\n",task1);
+		testRemoveCommand("",1);
+		
+		//undoRemove test
+				Task taskRemoveUndo = task1.copy();
+				taskRemoveUndo.setID(1);
+				testAddCommand("" +
+						"1,first task,null,null,1,,,0\n",taskRemoveUndo);
+
+	}
+	
+	@Test
+	public void integrateTest() throws FileCorruptionException, NoTaskFoundException {
 		sto = new StorageManager();
 		sto.clear();
 		Task task1 = new Task("first task");
@@ -81,11 +105,19 @@ public class StorageManagerTest {
 	}
 	
 
-	public void testRemoveCommand(String expected,int ID) throws NoTaskFoundException{
-		sto.remove(ID,false);
+	public void testRemoveCommand(String expected,int ID) {
+		String out;
+		try {
+			sto.remove(ID,false);
+			Vector<Task> v = sto.retrieveAll();
+			out = printVector(v);
+		} catch (NoTaskFoundException e) {
+			out = "No task can be found!";
+		}catch(AssertionError a){
+			out = "Assertion Error!";
+		}
 
-		Vector<Task> v = sto.retrieveAll();
-		String out = printVector(v);
+		
 		assertEquals(expected,out);
 	}
 
