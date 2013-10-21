@@ -47,6 +47,9 @@ public class CommandAdd extends Command{
 		taskPassedToStorer.setID(taskID); //temp fix here. will it be better if storage returns task object instead of id?
 		createResultObject();
 		createCommandSummary();
+		
+		System.out.println(taskID);
+		
 		return executedResult;
 	}
 
