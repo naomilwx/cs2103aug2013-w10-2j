@@ -52,7 +52,7 @@ public class CommandDelete extends Command{
 		} else {
 			try {
 				if(isExistToDeleteTaskInTaskList()) {
-					removeTheTaskOnStorage();
+					removeTheTaskOnStorage(); // inside the method, taskToRemove is defined
 				} else {
 					deleteSuccessfully = false;
 					createResultObjectForTaskToDeleteNotExistingInTaskList();
@@ -158,7 +158,7 @@ public class CommandDelete extends Command{
 
 	@Override
 	public void undo() {
-		if(this.deleteSuccess()) {
+		if(this.deleteSuccess()) { // in fact cannot happen
 			storer.add(taskToRemove);
 			isUndoSuccess = true;
 		} else {

@@ -196,7 +196,7 @@ public class CommandManager {
 
 	private Result undo() { // do not put into the command history
 		Command commandToUndo = getTheCommandToUndo();
-		Result resultToPassToGUI = new Result();
+		Result resultToPassToGUI = new Result(); // means there is no command can be undone
 		if(commandToUndo == null) { // two situations
 			if(operationsHistory.isEmpty()) { // no command done yet
 				resultToPassToGUI = createResultForEmptyCommandsHistory();
@@ -209,7 +209,7 @@ public class CommandManager {
 			commandToUndo.undo();
 			if(commandToUndo.undoSuccessfully()) {
 				redoCommandsList.add(commandToUndo); // add the undone command into the redo list
-				updateCurrentListAfterUndo(commandToUndo);
+				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
 				resultToPassToGUI = createResultForUndoSuccessfully();
 			} else {
 				resultToPassToGUI = createResultForUndoFailure();
@@ -274,6 +274,7 @@ public class CommandManager {
 		for(int i = size-1; i >= 0; i--) {
 			Command currentCommand = operationsHistory.get(i);
 			CommandType currentCommandType = currentCommand.getCommandType();
+			// this gurantee that only conmmand add, delete and update will be popped
 			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
 				return currentCommand;
 			}
@@ -284,7 +285,6 @@ public class CommandManager {
 	
 	private Result createResultForEmptyCommandsHistory() {
 		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, COMMAND_HISTORY_IS_EMPTY_FEEDBACK);
-		
 	}
 	
 	private Result createResultForNoUndoableCommand() {
@@ -326,9 +326,10 @@ public class CommandManager {
 		if (newDeleteCommandObj.deleteSuccess()) {
 			int taskDeletedDisplayID = newDeleteCommandObj.getTaskDisplayID();
 			deleteTheTaskInCurrentTaskList(taskDeletedDisplayID);
+			addNewCommandObjToOperationsHistory(newDeleteCommandObj); // only add the sucessful command to the command stack
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
-		addNewCommandObjToOperationsHistory(newDeleteCommandObj);
+		
 		return resultToPassToGUI;
 
 	}
@@ -355,14 +356,14 @@ public class CommandManager {
 		// one on the returned result object
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
+//		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
 	}
 	
 	private Result search() {
 		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
 		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
-		addNewCommandObjToOperationsHistory(newSearchCommandObj);
+//		addNewCommandObjToOperationsHistory(newSearchCommandObj);
 		// update the currentTaskList and filter Object
 		updateCurrentTaskList(newSearchCommandObj);
 		updateCurrentFilterObj(newSearchCommandObj);

@@ -18,9 +18,9 @@ public class CommandUpdate extends Command{
 	private CommandType commandType;
 	private Result executedResult;
 	private int taskToRetrieveID;
-	private Task taskRetrieved;
+	private Task taskRetrieved; // previous version
 	
-	private Task updatedTask;
+	private Task updatedTask; // updated version
 	
 	// for the use of commandSummary
 	private String updatedContent;
@@ -208,7 +208,7 @@ public class CommandUpdate extends Command{
 
 	@Override
 	public void undo() {
-		storer.add(taskRetrieved);
+		storer.add(taskRetrieved); // update back to the previous version
 		isUndoSuccess = true;
 	}
 
@@ -217,8 +217,8 @@ public class CommandUpdate extends Command{
 		return isUndoSuccess;
 	}
 	
-	public Task getRetrievedTask() {
-		return taskRetrieved;
+	public Task getRetrievedTask() { // get the previous version of task
+		return taskRetrieved; 
 	}
 	
 	public Task getUpdatedTask() {
