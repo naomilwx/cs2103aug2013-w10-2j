@@ -80,14 +80,10 @@ public class StorageManagerTest {
 		assertEquals(expected,out);
 	}
 	
-<<<<<<< local
 
 	public void testRemoveCommand(String expected,int ID) throws NoTaskFoundException{
 		sto.remove(ID,false);
-=======
-	public void testRemoveCommand(String expected,int ID) throws NoTaskFoundException, FileCorruptionException{
-		sto.remove(ID, false);
->>>>>>> other
+
 		Vector<Task> v = sto.retrieveAll();
 		String out = printVector(v);
 		assertEquals(expected,out);
