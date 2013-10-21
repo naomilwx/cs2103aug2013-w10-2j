@@ -1,13 +1,6 @@
 package nailit.storage;
-import org.joda.time.DateTime;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
-
-import nailit.common.NIConstants;
-import nailit.common.TaskPriority;
 import nailit.common.Task;
 import nailit.storage.NoTaskFoundException;
 
