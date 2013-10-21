@@ -46,5 +46,11 @@ public class CommandExit extends Command{
 		return false;
 	}
 
+	@Override
+	public String getCommandString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

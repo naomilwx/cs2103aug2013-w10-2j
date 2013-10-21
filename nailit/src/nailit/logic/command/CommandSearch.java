@@ -166,4 +166,9 @@ public class CommandSearch extends Command{
 		// nothing to do
 		return false;
 	}
+
+	@Override
+	public String getCommandString() {
+		return commandSummary;
+	}
 }
