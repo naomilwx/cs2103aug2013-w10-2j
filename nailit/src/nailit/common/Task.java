@@ -132,6 +132,9 @@ public class Task {
 			return false;
 		}
 	}
+	public void setIDToNull(){
+		ID = Task.TASKID_NULL;
+	}
 	public void setName(String taskName){
 		name = taskName;
 	}
