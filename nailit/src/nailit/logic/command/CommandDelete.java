@@ -25,6 +25,7 @@ public class CommandDelete extends Command{
 	private Vector<Task> taskList;
 	
 	private boolean isUndoSuccess;
+	private boolean isRedoSuccess;
 
 	private static final String SUCCESS_MSG = "Task: [ID %1s]has been successfully deleted.";
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
@@ -39,6 +40,7 @@ public class CommandDelete extends Command{
 		commandType = CommandType.DELETE;
 		this.taskList = taskList;
 		isUndoSuccess = false;
+		isRedoSuccess = false;
 	}
 
 	@Override
@@ -176,14 +178,17 @@ public class CommandDelete extends Command{
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
+		try {
+			storer.remove(taskToDeleteID, false);
+		} catch (NoTaskFoundException e) {
+			isRedoSuccess = false;
+		}
 		
 	}
 
 	@Override
 	public boolean isSuccessRedo() {
-		// TODO Auto-generated method stub
-		return false;
+		return isRedoSuccess;
 	}
 	
 	
