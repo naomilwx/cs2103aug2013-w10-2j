@@ -188,7 +188,9 @@ public class CommandManager {
 		if(size == 0) {
 			return null;
 		} else {
-			return redoCommandsList.get(size-1);
+			Command commandToRedo = redoCommandsList.get(size-1);
+			redoCommandsList.remove(size-1);
+			return commandToRedo;
 		}
 	}
 
