@@ -1,6 +1,7 @@
 package nailit.logic.command;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -38,6 +39,14 @@ public class CommandManager {
 	// eg. it can be "all", "CS2103, 2013-10-20, low"
 	private FilterObject filterContentForCurrentTaskList;
 	
+	// store the commands that have been undoed
+	private Vector<Command> redoCommandsList;
+	
+	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has been executed yet, so no undo command can be done.";
+	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the command history. You can undo Add, delete, or Update command.";
+	private static String STORAGE_THROWING_EXCEPTION_FEEDBACK = "Sorry, storage throws exception. The command cannot be undone.";
+
+	
 	// constructor
 	public CommandManager () throws FileCorruptionException 
 	{
@@ -48,6 +57,7 @@ public class CommandManager {
 		currentTaskList = new Vector<Task>();
 		filterContentForCurrentTaskList = new FilterObject();
 		parserResultInstance = null;
+		redoCommandsList = new Vector<Command>();
 	}
 	
 	public Result executeCommand(ParserResult parserResultInstance) throws Exception
@@ -92,6 +102,14 @@ public class CommandManager {
 			Result resultToReturn = complete();
 			return resultToReturn;
 		}
+		case UNDO: {
+			Result resultToReturn = undo();
+			return resultToReturn;
+		}
+		case REDO: {
+			Result resultToReturn = redo();
+			return resultToReturn;
+		}
 		case INVALID: {
 			break;
 		}
@@ -106,6 +124,99 @@ public class CommandManager {
 		return null;
 	}
 	
+	private Result redo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Result undo() { // do not put into the command history
+		Command commandToUndo = getTheCommandToUndo();
+		Result resultToPassToGUI = new Result();
+		if(commandToUndo == null) { // two situations
+			if(operationsHistory.isEmpty()) { // no command done yet
+				resultToPassToGUI = createResultForEmptyCommandsHistory();
+				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
+			} else {
+				resultToPassToGUI = createResultForNoUndoableCommand();
+				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
+			}
+		} else { // three situations
+			commandToUndo.undo();
+			if(commandToUndo.undoSuccessfully()) {
+				redoCommandsList.add(commandToUndo); // add the undone command into the redo list
+				updateCurrentListAfterUndo(commandToUndo);
+				resultToPassToGUI = createResultForUndoSuccessfully();
+			} else {
+				resultToPassToGUI = createResultForUndoFailure();
+			}
+		}
+		return resultToPassToGUI;
+	}
+
+	
+
+	private Result createResultForUndoSuccessfully() {
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo successfully.", null, currentTaskList, null);
+	}
+
+	private void updateCurrentListAfterUndo(Command commandToUndo) {
+		int taskID = commandToUndo.getTaskID();
+		CommandType commandType = commandToUndo.getCommandType();
+		if(commandType == CommandType.DELETE) {
+			CommandDelete cd = (CommandDelete)commandToUndo;
+			Task taskAddedBack = cd.getTaskDeleted();
+			if(isTheTaskFitTheFilter(taskAddedBack)) {
+				currentTaskList.add(taskAddedBack);
+				sort();
+			}
+		} else {
+			int count = -1;
+			Iterator<Task> itr = currentTaskList.iterator();
+			
+			while(itr.hasNext()) {
+				count++;
+				Task currentTask = itr.next();
+				int currentTaskID = currentTask.getID();
+				if(currentTaskID == taskID) {
+					currentTaskList.remove(count);
+					if(commandType == CommandType.UPDATE) {
+						CommandUpdate cu = (CommandUpdate)commandToUndo;
+						currentTaskList.add(cu.getRetrievedTask());
+						sort();
+					}
+				} 
+			}
+		}
+	}
+
+	
+
+	private Result createResultForUndoFailure() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Undo cannot be done.");		
+	}
+
+	private Command getTheCommandToUndo() {
+		Iterator<Command> itr = operationsHistory.iterator();
+		while(itr.hasNext()) {
+			Command currentCommand = itr.next();
+			CommandType currentCommandType = currentCommand.getCommandType();
+			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
+				return currentCommand;
+			} 
+		}
+		// no undoable command
+		return null;
+	}
+	
+	private Result createResultForEmptyCommandsHistory() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, COMMAND_HISTORY_IS_EMPTY_FEEDBACK);
+		
+	}
+	
+	private Result createResultForNoUndoableCommand() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, NO_UNDOABLE_COMMNAD_FEEDBACK);
+	}
+
 	private Result add() {
 		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer); 
 		// the resultToPassToGUI does not have the currentTaskList
@@ -247,6 +358,67 @@ public class CommandManager {
 	
 	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
 		Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
+		// date in filter
+		DateTime filterST = filterContentForCurrentTaskList.getStartTime();
+		DateTime filterET = filterContentForCurrentTaskList.getEndTime();
+		
+		// date in the task
+		DateTime taskST = taskToCompare.getStartTime();
+		DateTime taskET = taskToCompare.getEndTime();
+		
+		if (filterContentForCurrentTaskList.getIsSearchAll()) {
+			return true;
+		} 
+		
+		if (filterContentForCurrentTaskList.getName() != null) {
+			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
+				return true;
+			} 
+		} 
+		
+		if(filterContentForCurrentTaskList.getPriority() != null) {
+			if(taskToCompare.getPriority() == filterContentForCurrentTaskList.getPriority()) {
+				return true;
+			}
+		} 
+		
+		if(filterContentForCurrentTaskList.getTag() != null) {
+			if(taskToCompare.getTag() == filterContentForCurrentTaskList.getTag()) {
+				return true;
+			}
+		}
+
+
+		if (filterContentForCurrentTaskList.isCompleted() != null) { // means the field is searched
+			if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()){
+				return true;
+			}
+		}
+
+		if (filterST != null && filterET != null) { // a time range, meaning
+													// that start time needs to
+													// be within the range
+			if ((filterST.compareTo(taskST) < 0) && (filterET.compareTo(taskST) > 0)) {
+				return true;
+			}
+		} 
+		
+		if(filterST != null && filterET == null) { // from a time, taskST needs to after it
+			if(filterST.compareTo(taskST) < 0) {
+				return true;
+			}
+		}
+		
+		if(filterST == null && filterET != null) { // to a time, taskST needs to before it
+			if(filterET.compareTo(taskST) > 0) {
+				return true;
+			}
+		} 
+		return false;
+	}
+	
+	private boolean isTheTaskFitTheFilter(Task taskAddedBack) {
+		Task taskToCompare = taskAddedBack;
 		// date in filter
 		DateTime filterST = filterContentForCurrentTaskList.getStartTime();
 		DateTime filterET = filterContentForCurrentTaskList.getEndTime();

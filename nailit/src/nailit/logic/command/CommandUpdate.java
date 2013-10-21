@@ -8,16 +8,19 @@ import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandUpdate extends Command{
-	private String commandType;
+	private CommandType commandType;
 	private Result executedResult;
 	private int taskToRetrieveID;
 	private Task taskRetrieved;
+	
+	private Task updatedTask;
 	
 	// for the use of commandSummary
 	private String updatedContent;
@@ -27,6 +30,8 @@ public class CommandUpdate extends Command{
 	private int taskToRetrieveDisplayID;
 	
 	private boolean updateSuccessfully;
+	
+	private boolean isUndoSuccess;
 	
 	private static final String SUCCESS_MSG_FIRSTPART = "Task [ID: "; 
 	private static final String SUCCESS_MSG_SECONDPART	= "] has been successfully updated";
@@ -44,8 +49,10 @@ public class CommandUpdate extends Command{
 	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
 		updatedContent = "";
-		commandType = "update";
+		commandType = CommandType.UPDATE;
 		this.taskList = taskList;
+		updatedTask = new Task();
+		isUndoSuccess = false;
 	}
 
 	@Override
@@ -119,7 +126,7 @@ public class CommandUpdate extends Command{
 //		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
 //				SUCCESS_MSG_FIRSTPART + taskToRetrieveID + SUCCESS_MSG_SECONDPART);
 		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
-				commandSummary, taskRetrieved, null, null);
+				commandSummary, updatedTask, null, null);
 	}
 	
 	// there is no such task record in the storage to display
@@ -131,36 +138,52 @@ public class CommandUpdate extends Command{
 
 	private void addTheUpdatedTaskObjOnStorage() {
 		// since there is taskID in the taskRetrieved, storer knows that it is update operation
-		storer.add(taskRetrieved);
+		storer.add(updatedTask);
 	}
 
 
 	private void updateTheRetrievedTask() {
 		if(!parserResultInstance.isNullName()) {
 			String newName = parserResultInstance.getName();
-			taskRetrieved.setName(newName);
+			updatedTask.setName(newName);
 			updatedContent = updatedContent + "Name: " + newName + " \n";
+		} else { // means name use the original one, since no update
+			updatedTask.setName(taskRetrieved.getName());
 		}
+		
 		if(!parserResultInstance.isNullStartTime()) {
 			DateTime newStartTime = parserResultInstance.getStartTime();
-			taskRetrieved.setStartTime(newStartTime);
+			updatedTask.setStartTime(newStartTime);
 			updatedContent = updatedContent + "Starttime: "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+		} else { // means name use the original one, since no update
+			updatedTask.setStartTime(taskRetrieved.getStartTime());
 		}
+		
 		if(!parserResultInstance.isNullEndTime()) {
 			DateTime newEndTime = parserResultInstance.getEndTime();
-			taskRetrieved.setEndTime(newEndTime);
+			updatedTask.setEndTime(newEndTime);
 			updatedContent = updatedContent + "Endtime: " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+		} else { // means name use the original one, since no update
+			updatedTask.setEndTime(taskRetrieved.getEndTime());
 		}
+		
 		if(!parserResultInstance.isNullTag()) {
 			String newTag = parserResultInstance.getTag();
-			taskRetrieved.setTag(newTag);
+			updatedTask.setTag(newTag);
 			updatedContent = updatedContent + "Tag: " + newTag + " \n";
+		} else { // means name use the original one, since no update
+			updatedTask.setTag(taskRetrieved.getTag());
 		}
+		
 		if(!parserResultInstance.isNullPriority()) {
 			TaskPriority newPriority = parserResultInstance.getPriority();
-			taskRetrieved.setPriority(newPriority);
+			updatedTask.setPriority(newPriority);
 			updatedContent = updatedContent + "Priority: " + newPriority + " ";
+		} else { // means name use the original one, since no update
+			updatedTask.setPriority(taskRetrieved.getPriority());
 		}
+		
+		updatedTask.setID(taskRetrieved.getID());
 	}
 
 	private void retrieveTheTask() {
@@ -176,4 +199,24 @@ public class CommandUpdate extends Command{
 	public boolean updateSuccess() {
 		return updateSuccessfully;
 	}
+	
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	@Override
+	public void undo() {
+		storer.add(taskRetrieved);
+		isUndoSuccess = true;
+	}
+
+	@Override
+	public boolean undoSuccessfully() {
+		return isUndoSuccess;
+	}
+	
+	public Task getRetrievedTask() {
+		return taskRetrieved;
+	}
+
 }
