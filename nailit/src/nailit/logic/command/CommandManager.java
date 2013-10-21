@@ -196,13 +196,22 @@ public class CommandManager {
 	}
 
 	private Command getTheCommandToUndo() {
-		Iterator<Command> itr = operationsHistory.iterator();
-		while(itr.hasNext()) {
-			Command currentCommand = itr.next();
+		
+//		Iterator<Command> itr = operationsHistory.iterator();
+//		while(itr.hasNext()) {
+//			Command currentCommand = itr.next();
+//			CommandType currentCommandType = currentCommand.getCommandType();
+//			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
+//				return currentCommand;
+//			} 
+//		}
+		int size = operationsHistory.size();
+		for(int i = size; i > 0; i--) {
+			Command currentCommand = operationsHistory.get(i);
 			CommandType currentCommandType = currentCommand.getCommandType();
 			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
 				return currentCommand;
-			} 
+			}
 		}
 		// no undoable command
 		return null;
