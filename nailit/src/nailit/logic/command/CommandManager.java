@@ -23,7 +23,7 @@ public class CommandManager {
 	// the storage object that the commandManager works with 
 	
 	// for testing
-	private StorageManager storer;
+	protected StorageManager storer; //Note from Naomi: changed to protected so it is visible to child stub
 //	private StorageManager storer;
 	
 	// the parserResult to use in the commandExcute

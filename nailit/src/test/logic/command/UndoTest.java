@@ -41,7 +41,6 @@ public class UndoTest {
 				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 				createDateTime(2013, 1, 9, 1, 0));
 		parserResultDisplayAll.setDisplayAll(true);
-		
 		// undo parserResult
 		ParserResult parserResultUndo = new ParserResult();
 		createPR(parserResultUndo, CommandType.UNDO, "task3", 
@@ -50,13 +49,14 @@ public class UndoTest {
 		
 		// execute
 		
-		CommandManager cm = new CommandManager();
+		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultAdd2);
 		cm.executeCommand(parserResultAdd3);
+		
 		cm.executeCommand(parserResultDisplayAll);
 		Result resultOfUndo = cm.executeCommand(parserResultUndo);
-		
+		System.out.print(cm.getTaskList());
 		// create the expected result
 		// create task objs
 		Task task1 = createTask("task1", 
@@ -73,7 +73,7 @@ public class UndoTest {
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
 		currentTaskList.add(task2);
-		
+		System.out.print(cm.getTaskList());
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
 				"Undo successfully.", null, currentTaskList, null);
 		
