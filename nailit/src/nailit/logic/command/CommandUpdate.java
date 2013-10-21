@@ -32,6 +32,7 @@ public class CommandUpdate extends Command{
 	private boolean updateSuccessfully;
 	
 	private boolean isUndoSuccess;
+	private boolean isRedoSuccess;
 	
 	private static final String SUCCESS_MSG_FIRSTPART = "Task [ID: "; 
 	private static final String SUCCESS_MSG_SECONDPART	= "] has been successfully updated";
@@ -53,6 +54,7 @@ public class CommandUpdate extends Command{
 		this.taskList = taskList;
 		updatedTask = new Task();
 		isUndoSuccess = false;
+		isRedoSuccess = false;
 	}
 
 	@Override
@@ -230,14 +232,13 @@ public class CommandUpdate extends Command{
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		storer.add(updatedTask);
+		isUndoSuccess = true;
 	}
 
 	@Override
 	public boolean isSuccessRedo() {
-		// TODO Auto-generated method stub
-		return false;
+		return isRedoSuccess;
 	}
 
 }

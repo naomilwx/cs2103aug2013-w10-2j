@@ -26,6 +26,7 @@ public class CommandAdd extends Command{
 	private String commandSummary;
 	
 	private boolean isUndoSuccess;
+	private boolean isRedoSuccess;
 	
 	private static final String SUCCESS_MSG = "Task: %1s [ID: %2d] has been successfully added";
 	
@@ -34,6 +35,7 @@ public class CommandAdd extends Command{
 		super(resultInstance, storerToUse);
 		commandType = CommandType.ADD;
 		isUndoSuccess = false;
+		isRedoSuccess = false;
 	}
 
 	@Override
@@ -104,14 +106,14 @@ public class CommandAdd extends Command{
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		taskPassedToStorer.setID(taskID);
+		storer.add(taskPassedToStorer); // will the storer redo a delete here?
+		this.isRedoSuccess = true;
 	}
 
 	@Override
 	public boolean isSuccessRedo() {
-		// TODO Auto-generated method stub
-		return false;
+		return isRedoSuccess;
 	}
 	
 	public Task getTaskAdded() {
