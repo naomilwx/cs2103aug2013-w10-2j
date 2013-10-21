@@ -6,11 +6,12 @@ import java.util.Vector;
 import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDisplay extends Command{
-	private String commandType;
+	private CommandType commandType;
 	private String commandSummary;
 	private Result executedResult;
 	private Task taskRetrieved;
@@ -35,7 +36,7 @@ public class CommandDisplay extends Command{
 			StorageManager storerToUse, CommandManager cm) {
 		super(resultInstance, storerToUse);
 		this.cm = cm;
-		commandType = "display";
+		commandType = CommandType.DISPLAY;
 		taskList = cm.getCurrentTaskList();
 		commandSummary = "Display operation";
 		currentFilterObj = cm.getCurrentFilterObj();
@@ -138,5 +139,20 @@ public class CommandDisplay extends Command{
 
 	public int getTaskID() {
 		return taskToRetrieveID;
+	}
+	
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	@Override
+	public void undo() {
+		// nothing
+	}
+
+	@Override
+	public boolean undoSuccessfully() {
+		// nothing to do
+		return false;
 	}
 }
