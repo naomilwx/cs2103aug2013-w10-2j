@@ -7,10 +7,11 @@ import nailit.common.TaskPriority;
 import nailit.common.Task;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandAdd extends Command{
-	private String commandType;
+	private CommandType commandType;
 	private Result executedResult;
 	private Task taskPassedToStorer;
 	private CommandType command;
@@ -24,12 +25,15 @@ public class CommandAdd extends Command{
 	// this is used for the command history
 	private String commandSummary;
 	
+	private boolean isUndoSuccess;
+	
 	private static final String SUCCESS_MSG = "Task: %1s [ID: %2d] has been successfully added";
 	
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
-		commandType = "add";
+		commandType = CommandType.ADD;
+		isUndoSuccess = false;
 	}
 
 	@Override
@@ -72,5 +76,24 @@ public class CommandAdd extends Command{
 	
 	public int getTaskID() {
 		return taskID;
+	}
+	
+	public CommandType getCommandType() {
+		return commandType;
+	}
+
+	@Override
+	public void undo() {
+		try {
+			storer.remove(taskID, true);
+			isUndoSuccess = true;
+		} catch (NoTaskFoundException e) {
+			isUndoSuccess = false;
+		}
+	}
+
+	@Override
+	public boolean undoSuccessfully() {
+		return isUndoSuccess;
 	}
 }
