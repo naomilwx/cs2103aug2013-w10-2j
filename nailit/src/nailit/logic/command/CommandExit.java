@@ -52,5 +52,17 @@ public class CommandExit extends Command{
 		return null;
 	}
 
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isSuccessRedo() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

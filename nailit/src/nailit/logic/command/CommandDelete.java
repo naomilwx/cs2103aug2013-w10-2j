@@ -173,6 +173,18 @@ public class CommandDelete extends Command{
 	public String getCommandString() {
 		return commandSummary;
 	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isSuccessRedo() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }
