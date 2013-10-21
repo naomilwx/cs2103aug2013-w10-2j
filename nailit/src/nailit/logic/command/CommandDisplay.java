@@ -1,5 +1,6 @@
 package nailit.logic.command;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 
@@ -104,9 +105,26 @@ public class CommandDisplay extends Command{
 	}
 
 	private Result displayOperationsHistory() {
+		createResultForDisplayOperationshistory();
 		return executedResult;
-		// TODO Auto-generated method stub
 		
+		
+	}
+
+	private void createResultForDisplayOperationshistory() {
+		Vector<String> commandString = getCommandString(cm.getOperationsHistory());
+		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "This is the commands you have made.", null, null, commandString);
+		
+	}
+
+	private Vector<String> getCommandString(Vector<Command> operationsHistory) {
+		Vector<String> commandString = new Vector<String>();
+		Iterator<Command> itr = operationsHistory.iterator();
+		
+		while(itr.hasNext()) {
+			commandString.add(itr.next().getCommandString());
+		}
+		return commandString;
 	}
 
 	private Vector<Task> retrieveAllTheTasks() {
@@ -154,5 +172,10 @@ public class CommandDisplay extends Command{
 	public boolean undoSuccessfully() {
 		// nothing to do
 		return false;
+	}
+
+	@Override
+	public String getCommandString() {
+		return commandSummary;
 	}
 }

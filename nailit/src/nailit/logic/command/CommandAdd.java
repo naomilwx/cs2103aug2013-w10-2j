@@ -96,4 +96,9 @@ public class CommandAdd extends Command{
 	public boolean undoSuccessfully() {
 		return isUndoSuccess;
 	}
+
+	@Override
+	public String getCommandString() {
+		return commandSummary;
+	}
 }

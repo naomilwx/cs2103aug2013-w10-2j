@@ -30,4 +30,6 @@ public abstract class Command {
 
 
 	public abstract boolean undoSuccessfully();
+	
+	public abstract String getCommandString();
 }

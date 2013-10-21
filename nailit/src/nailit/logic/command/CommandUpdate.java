@@ -219,4 +219,9 @@ public class CommandUpdate extends Command{
 		return taskRetrieved;
 	}
 
+	@Override
+	public String getCommandString() {
+		return commandSummary;
+	}
+
 }
