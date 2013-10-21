@@ -23,14 +23,24 @@ public class ParserManager {
 		commandToExecute = commandToExecute.trim();
 		switch (commandType) {
 		case ADD:
-			AddParser addParserManager = new AddParser(commandToExecute);
-			return addParserManager.execute();
+			try {
+				AddParser addParserManager = new AddParser(commandToExecute);
+				return addParserManager.execute();
+			}
+			catch (Exception e) {
+				System.out.print(e);
+			}
 		case COMPLETE:
 			CompleteParser completeParserManager = new CompleteParser(commandToExecute);
 			return completeParserManager.execute();
 		case DELETE:
-			DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
-			return deleteParserManager.execute();
+			try {
+				DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
+				return deleteParserManager.execute();
+			}
+			catch (Exception e) {
+				System.out.println(e);
+			}
 		case DISPLAY:
 			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
 			return displayParserManager.execute();

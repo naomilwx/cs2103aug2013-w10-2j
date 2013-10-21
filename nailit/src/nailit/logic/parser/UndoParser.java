@@ -18,6 +18,8 @@ public class UndoParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 	
+		if (userCommand.equalsIgnoreCase(""))
+			resultExecution.setTaskID(-1);
 		resultExecution.setCommand(CommandType.UNDO);
 		resultExecution.setTaskID(Integer.parseInt(userCommand));
 		
