@@ -115,11 +115,27 @@ public class CommandDelete extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "delete " + taskToRemove.getName() + " " 
-				+ taskToRemove.getStartTime() + " - " 
-				+ taskToRemove.getEndTime() + " " 
-				+ taskToRemove.getTag() 
-				+ taskToRemove.getPriority();
+		
+		commandSummary = "delete";
+		if(taskToRemove.getName() != null) {
+			commandSummary = commandSummary + " Name: " + taskToRemove.getName() + "/";
+		} 
+		
+		if(taskToRemove.getStartTime() != null) {
+			commandSummary = commandSummary + " Start time: " + taskToRemove.getStartTime() + "/";
+		} 
+		
+		if(taskToRemove.getEndTime() != null) {
+			commandSummary = commandSummary + " End time: " + taskToRemove.getEndTime() + "/";
+		} 
+		
+		if(taskToRemove.getTag() != null) {
+			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "/";
+		} 
+		
+		if(taskToRemove.getPriority() != null) {
+			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "/";
+		} 
 	}
 
 	private void removeTheTaskOnStorage() throws NoTaskFoundException,
