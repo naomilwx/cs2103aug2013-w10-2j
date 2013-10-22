@@ -54,11 +54,26 @@ public class CommandAdd extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "add " + parserResultInstance.getName() + " " 
-				+ parserResultInstance.getStartTime() + " - " 
-				+ parserResultInstance.getEndTime() + " " 
-				+ parserResultInstance.getTag() 
-				+ parserResultInstance.getPriority();
+		commandSummary = "add";
+		if(parserResultInstance.getName() != null) {
+			commandSummary = commandSummary + " Name: " + parserResultInstance.getName() + "/";
+		} 
+		
+		if(parserResultInstance.getStartTime() != null) {
+			commandSummary = commandSummary + " Start time: " + parserResultInstance.getStartTime() + "/";
+		} 
+		
+		if(parserResultInstance.getEndTime() != null) {
+			commandSummary = commandSummary + " End time: " + parserResultInstance.getEndTime() + "/";
+		} 
+		
+		if(parserResultInstance.getTag() != null) {
+			commandSummary = commandSummary + " Tag: " + parserResultInstance.getTag() + "/";
+		} 
+		
+		if(parserResultInstance.getPriority() != null) {
+			commandSummary = commandSummary + " Priority: " + parserResultInstance.getPriority() + "/";
+		} 
 	}
 
 	private void createResultObject() {
