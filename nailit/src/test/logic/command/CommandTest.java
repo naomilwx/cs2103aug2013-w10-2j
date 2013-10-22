@@ -30,10 +30,10 @@ public class CommandTest {
 
 	@Test
 	public void testCommandAdd() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+//		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		
 		Task expectedAddedTask = new Task("CS2103 project", startTime, endTime, "school work", TaskPriority.HIGH);
 		Result expectedResultObj = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, null, expectedAddedTask, null, null);
@@ -41,21 +41,20 @@ public class CommandTest {
 	}
 	
 	@Test
-	public void testCommandDelete() throws Exception {
-		CommandManager cm = new CommandManager();
+	public void testCommandDelete() throws Exception { //TODO:Implement working test
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
 		prForCommandDelete.setTaskID(123);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
-		
-		
+//		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+
 		Result expectedResultObj = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
 		testTwoResultObj(resultObjOfCommandDelete, expectedResultObj);
 	}
 	
 	@Test
 	public void testCommandUpdateNotExistingTask() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE); 
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskID(123);
@@ -67,7 +66,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandUpdate() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE);
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskID(123);
@@ -79,7 +78,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandDisplayNotExistingTask() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
@@ -89,7 +88,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandAddAgain() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
@@ -99,7 +98,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandDisplayExistingTask() throws Exception {
-		CommandManager cm = new CommandManager();
+		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);

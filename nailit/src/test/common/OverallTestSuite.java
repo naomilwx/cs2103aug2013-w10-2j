@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	LogicManagerTest.class,
-	StorageManagerTest.class
+	StorageManagerTest.class,
+	TaskTest.class,
 })
 
 public class OverallTestSuite {
