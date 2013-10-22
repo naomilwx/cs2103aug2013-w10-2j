@@ -109,7 +109,7 @@ public class CommandAdd extends Command{
 
 	@Override
 	public void redo() {
-		taskPassedToStorer.setID(taskID);
+		taskPassedToStorer.setID(Task.TASKID_NULL);
 		storer.add(taskPassedToStorer); // will the storer redo a delete here?
 		this.isRedoSuccess = true;
 	}

@@ -568,4 +568,5 @@ public class CommandManager {
 	public void setCurrentFilterSearchAll() {
 		filterContentForCurrentTaskList.setIsSearchAll(true);
 	}
+	
 }
