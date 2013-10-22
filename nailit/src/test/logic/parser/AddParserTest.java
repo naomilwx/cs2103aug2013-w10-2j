@@ -28,12 +28,13 @@ public class AddParserTest {
 			expectedAdd.setEndTime(expectedEndDate = new DateTime(2013,9,12,00,00));
 			expectedAdd.setTag("#study#");
 			
-			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, 11 Sep 2013, LOW");
 			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
 			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
 			testExecuteTag(expectedAdd.getTag(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
-			testExecuteStartTime(expectedAdd.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteStartTime(expectedAdd.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT),"CSAssignment,#study#, 11 Sep 2013, LOW");
 			
+			// this is the test for special cases(boundary case) for "from .. to .."
 			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
 			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
 			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
