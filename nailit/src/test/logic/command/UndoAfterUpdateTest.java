@@ -19,6 +19,10 @@ public class UndoAfterUpdateTest {
 			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0);
 	
+	private static ParserResult parserResultAdd2 = createPR(CommandType.ADD, "task2", 
+			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			createDateTime(2013, 4, 2, 1, 0), false, 0);
+	
 	private static ParserResult parserResultUpdate = createPR(CommandType.UPDATE, "task2", 
 			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1); // since the task ID should be 1
@@ -55,8 +59,11 @@ public class UndoAfterUpdateTest {
 		// execute
 		CommandManager cm = new CommandManager();
 		cm.executeCommand(parserResultAdd1);
+		cm.executeCommand(parserResultAdd2);
 		cm.executeCommand(parserResultDisplayAll);
 		cm.executeCommand(parserResultUpdate);
+		
+		cm.executeCommand(parserResultUndo); // undo an update and an add
 		Result resultOfUndo = cm.executeCommand(parserResultUndo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);

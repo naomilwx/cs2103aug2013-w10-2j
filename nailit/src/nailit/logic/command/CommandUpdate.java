@@ -66,6 +66,7 @@ public class CommandUpdate extends Command{
 			try {
 				if(isExistToUpdateTaskInTaskList()) {
 					retrieveTheTask();
+					setTaskID(); // set taskToRetrieveID
 				} else {
 					updateSuccessfully = false;
 					createResultObjectForTaskToUpdateNotExistingInTaskList();
@@ -88,6 +89,10 @@ public class CommandUpdate extends Command{
 		}
 	}
 	
+	private void setTaskID() {
+		taskToRetrieveID = taskRetrieved.getID();
+	}
+
 	private void createCommandSummaryForUpdatingTaskNotInStorage() {
 		commandSummary = COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_STORAGE;
 	}

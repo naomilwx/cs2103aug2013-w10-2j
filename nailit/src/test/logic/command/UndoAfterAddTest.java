@@ -62,15 +62,17 @@ public class UndoAfterAddTest {
 	public void testUndoAfterAdd() throws Exception {
 		
 		// execute
+		// undo twice
 		CommandManager cm = new CommandManager();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultAdd2);
 		cm.executeCommand(parserResultAdd3);
 		cm.executeCommand(parserResultDisplayAll);
+		cm.executeCommand(parserResultUndo);
 		Result resultOfUndo = cm.executeCommand(parserResultUndo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-		currentTaskList.add(task2);
+//		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
 				"Undo successfully.", null, currentTaskList, null);
