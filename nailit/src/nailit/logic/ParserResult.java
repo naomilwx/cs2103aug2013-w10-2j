@@ -20,7 +20,7 @@ public class ParserResult{
 	
 	private boolean isDisplayAll = false;
 	private boolean isDisplayHistory = false;
-	private boolean isSearchPriority = false;
+	private boolean isSetPriority = false;
 	
 	public ParserResult(){
 		taskID = 0;
@@ -31,7 +31,7 @@ public class ParserResult{
 		startTime = null;
 		endTime = null;
 		isDisplayAll = false;
-		isSearchPriority = false;
+		isSetPriority = false;
 	}
 	
 	public void setCommand(CommandType commandExternal){
@@ -59,11 +59,11 @@ public class ParserResult{
 	}
 	
 	public void setSearchPriority (boolean flag){
-		isSearchPriority = flag;
+		isSetPriority = flag;
 	}
 	
-	public boolean isSearchPriority(){
-		return isSearchPriority;
+	public boolean isSetPriority(){
+		return isSetPriority;
 	}
 	
 	public void setName(String nameExternal){
@@ -130,6 +130,7 @@ public class ParserResult{
 	}
 	
 	public void setPriority(TaskPriority priorityExternal){
+		isSetPriority = true;
 		priority = priorityExternal;
 	}
 	
