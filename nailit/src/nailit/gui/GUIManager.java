@@ -214,7 +214,12 @@ public class GUIManager {
 		return executionResult;
 	}
 	
-	//
+	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
+	protected void executeTriggeredTaskDelete(int taskDisplayID) {
+		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
+		executeUserInputCommand(deleteCommand);
+		return;
+	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
 		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
 		return executeUserInputCommand(displayCommand);
@@ -350,4 +355,5 @@ public class GUIManager {
 			}
 		}
 	}
+
 }
