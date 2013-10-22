@@ -175,6 +175,7 @@ public class GUIManager {
 		}
 	}
 	public void setFocusOnDisplay(){
+		removeDeletedTaskFromTaskListDisplay();
 		displayArea.setFocus();
 	}
 	public void setFocusOnCommandBar(){
@@ -242,6 +243,9 @@ public class GUIManager {
 	}
 	//
 	
+	protected void removeDeletedTaskFromTaskListDisplay(){
+		displayArea.removeDeletedTasksFromTaskListTable();
+	}
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
 			exit();
