@@ -32,7 +32,13 @@ public class StorageManager {
 	
 	
 	public int add(Task task){
+		if(task == null){
+			return Task.TASKID_NULL;
+		}
+		
 		Task taskToBeAdded = task.copy();
+		
+		reformatTaskDescription(task);
 				
 		int ID = inMemory.add(taskToBeAdded);
 				
@@ -168,8 +174,7 @@ public class StorageManager {
 		try{
 			if(isEmptyFile(fileContents)){
 				nextValidIDWhenSessionStarts = 1;
-			}
-			else{
+			}else{
 				nextValidIDWhenSessionStarts = Integer.parseInt(fileContents.get(0));
 			}
 			
@@ -374,6 +379,12 @@ public class StorageManager {
 		}
 		
 		return true;
+	}
+	
+	private void reformatTaskDescription(Task task){
+		String originalDescription = task.getDescription();
+		String newDescription = originalDescription.replaceAll("\n", NIConstants.DESCRIPTION_LINE_SPLITER);
+		task.setDescription(newDescription);
 	}
 	public static void main(String[] args) throws FileCorruptionException{
 		String s = "";

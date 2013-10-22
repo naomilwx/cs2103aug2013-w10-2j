@@ -52,7 +52,7 @@ public class DataManager {
 	
 	public Task remove(int ID) throws NoTaskFoundException{
 		
-		assert(isValidID(ID));
+		assert(isValidRemovableID(ID));
 		
 		if(!hashTable.containsKey(ID)){
 			throw new NoTaskFoundException("The task cannot be found!");
@@ -89,5 +89,9 @@ public class DataManager {
 	
 	private boolean isValidID(int ID){
 		return (ID == Task.TASKID_NULL) || (ID>=1&&ID<nextValidID);
+	}
+	
+	private boolean isValidRemovableID(int ID){
+		return ID>=1&&ID<nextValidID;
 	}
 }
