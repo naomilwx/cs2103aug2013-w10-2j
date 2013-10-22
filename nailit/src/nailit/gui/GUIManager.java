@@ -35,6 +35,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.Utilities;
 
 import test.logic.LogicManagerStub;
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
@@ -213,7 +214,12 @@ public class GUIManager {
 		return executionResult;
 	}
 	
-	//
+	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
+	protected void executeTriggeredTaskDelete(int taskDisplayID) {
+		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
+		executeUserInputCommand(deleteCommand);
+		return;
+	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
 		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
 		return executeUserInputCommand(displayCommand);
@@ -223,7 +229,8 @@ public class GUIManager {
 		if(result !=  null){
 			Task task = result.getTaskToDisplay();
 			if(task != null){
-				commandBar.setUserInput(CommandType.ADDDESCRIPTION.toString() +" " +task.getDescription());
+				commandBar.setUserInput(CommandType.ADDDESCRIPTION.toString() +" "+ taskDisplayID
+						+" " +task.getDescription());
 			}
 		}
 	}
@@ -348,4 +355,5 @@ public class GUIManager {
 			}
 		}
 	}
+
 }

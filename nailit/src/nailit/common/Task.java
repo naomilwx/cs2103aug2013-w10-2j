@@ -132,6 +132,9 @@ public class Task {
 			return false;
 		}
 	}
+	public void setIDToNull(){
+		ID = Task.TASKID_NULL;
+	}
 	public void setName(String taskName){
 		name = taskName;
 	}
@@ -217,7 +220,7 @@ public class Task {
 	public String printNameAndID(){
 		return String.format(BASIC_PRINTOUT_FORMAT, ID, name);
 	}
-	
+	//start of task utiliy functions
 	public boolean isAtSameStartTime(Task other){
 		if(startTime == null || other.startTime == null){
 			return ((startTime == null) && (other.startTime ==null));
@@ -243,6 +246,56 @@ public class Task {
 			return startDay.equals(endDay);
 		}
 	}
+	public boolean isAfterDateTime(DateTime dateTime){
+		if(dateTime == null){
+			return true; //TODO: check if this should happen
+		}
+		if(startTime != null){
+			return (startTime.compareTo(dateTime) >=0);//startTime is after given date
+		}else if(endTime != null){
+			return (endTime.compareTo(dateTime) >= 0);
+		}else{
+			return false;
+		}
+	}
+	public boolean isBeforeDateTime(DateTime dateTime){
+		if(dateTime == null){
+			return true;
+		}
+		if(startTime != null){
+			return (startTime.compareTo(dateTime) <= 0);
+		}else if(endTime != null){
+			return (endTime.compareTo(dateTime) <= 0);
+		}else{
+			return false;
+		}
+	}
+	public boolean isInDateRange(DateTime start, DateTime end){
+		if(start != null && end != null){
+			if(isEvent()){
+				if(isAfterDateTime(start) && isAfterDateTime(end)){
+					return false;
+				}else if((endTime.compareTo(start) <= 0) && (endTime.compareTo(end) <= 0)){
+					return false;
+				}else{
+					return true;
+				}
+			}else{
+				if(isAfterDateTime(start) && isAfterDateTime(end)){
+					return false;
+				}else if(isBeforeDateTime(start) && isBeforeDateTime(end)){
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}else if(start == null){
+			return isBeforeDateTime(end);
+		}else{
+			return isAfterDateTime(start);
+		}
+	}
+	//end of task utility functions
 	@Override
 	public String toString(){ //TODO: figure out whether to include description
 		String output = formatID()+"\n"

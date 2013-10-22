@@ -130,11 +130,17 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			private final IDDisplayRenderer idDisplayRenderer = new IDDisplayRenderer();
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int col){
+				String colName = "";
 				switch(tableDisplayType){
 				case Result.HISTORY_DISPLAY:
-					return super.getCellRenderer(row, col);
+					colName = GUIManager.COMMAND_HISTORY_HEADER[col];
+					if(colName.equals(GUIManager.ID_COL_NAME)){
+						return idDisplayRenderer;
+					}else{
+						return super.getCellRenderer(row, col);
+					}
 				case Result.LIST_DISPLAY:
-					String colName = GUIManager.ALL_TASKS_TABLE_HEADER[col];
+					colName = GUIManager.ALL_TASKS_TABLE_HEADER[col];
 					if(colName.equals(GUIManager.TASK_NAME_COL_NAME)){
 						return taskNameRenderer;
 					}else if(colName.equals(GUIManager.TASK_START_TIME_COL_NAME)){

@@ -212,6 +212,8 @@ public class DisplayArea extends JLayeredPane {
 					taskTableOnCtrlEnterEvent();
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					taskTableOnEnterEvent();
+				}else if(keyCode == KeyEvent.VK_DELETE){
+					taskTableOnDeleteEvent();
 				}
 			}
 			@Override
@@ -223,6 +225,10 @@ public class DisplayArea extends JLayeredPane {
 			}
 		};
 		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
+	}
+	private void taskTableOnDeleteEvent() {
+		GUIBoss.setFocusOnCommandBar();
+		GUIBoss.executeTriggeredTaskDelete(taskTable.getSelectedRowDisplayID());
 	}
 	protected void taskTableOnEnterEvent(){
 		GUIBoss.setFocusOnCommandBar();
