@@ -14,7 +14,8 @@ import nailit.storage.FileCorruptionException;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-
+import org.junit.experimental.categories.Category;
+@Category(CommandTest.class)
 public class CommandTest {
 	
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
