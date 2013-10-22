@@ -7,14 +7,14 @@ public class Task {
 	public static final int TASKID_NULL = -1;
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
 	
-	private int ID;
-	private String name;
-	private String description;
+	private int ID = TASKID_NULL;
+	private String name = NIConstants.EMPTY_STRING;
+	private String description = NIConstants.EMPTY_STRING;
 	private DateTime startTime;
 	private DateTime endTime;
-	private String tag;
+	private String tag = NIConstants.EMPTY_STRING;
 	private boolean added = false; //variable to indicate if task has been added to task list
-	private boolean isCompleted;
+	private boolean isCompleted = false;
 
 	private TaskPriority priority;
 
@@ -22,23 +22,14 @@ public class Task {
 	public static final int INCOMPLETE_IN_HARDDISK = 0;
 
 	public Task(){
-		ID = TASKID_NULL;
-		name = "";
-		description = ""; //TODO: replace with constant
 		startTime = null;
 		endTime = null;
-		tag = "";
-		isCompleted = false;
 		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	public Task(String taskName){
-		ID = TASKID_NULL;
 		name = taskName;
-		description = ""; //TODO: replace with constant
 		startTime = null;
 		endTime = null;
-		tag = "";
-		isCompleted = false;
 		added = true;
 		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
@@ -46,10 +37,8 @@ public class Task {
 	public Task(String taskName, DateTime start, DateTime end, String t, TaskPriority p){
 		ID = TASKID_NULL;
 		name = taskName;
-		description = ""; //TODO: replace with constant
 		startTime = start;
 		endTime = end;
-		isCompleted = false;
 		priority = p;
 		if(t == null){
 			tag = "";
