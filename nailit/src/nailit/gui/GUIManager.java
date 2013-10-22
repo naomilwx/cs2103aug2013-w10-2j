@@ -109,6 +109,7 @@ public class GUIManager {
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
+			configureDefaultDisplay();
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -118,6 +119,9 @@ public class GUIManager {
 		}
 	}
 	
+	private void configureDefaultDisplay(){
+		executeUserInputCommand(CommandType.DISPLAY + " all");
+	}
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
 		historyWindow = new HistoryWindow(this, HISTORY_WINDOW_WIDTH);
