@@ -132,13 +132,13 @@ public class CommandDelete extends Command{
 		taskToRemove.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
 		} 
 		
-		if(taskToRemove.getTag() != null) {
-			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "\n";
-		} 
-		
-		if(taskToRemove.getPriority() != null) {
-			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "\n";
-		} 
+//		if(taskToRemove.getTag() != null) {
+//			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "\n";
+//		} 
+//		
+//		if(taskToRemove.getPriority() != null) {
+//			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "\n";
+//		} 
 	}
 
 	private void removeTheTaskOnStorage() throws NoTaskFoundException,

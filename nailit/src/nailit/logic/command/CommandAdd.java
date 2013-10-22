@@ -70,13 +70,13 @@ public class CommandAdd extends Command{
 		parserResultInstance.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
 		} 
 		
-		if(parserResultInstance.getTag() != null) {
-			commandSummary = commandSummary + " Tag: " + parserResultInstance.getTag() + "\n";
-		} 
-		
-		if(parserResultInstance.getPriority() != null) {
-			commandSummary = commandSummary + " Priority: " + parserResultInstance.getPriority() + "\n";
-		} 
+//		if(parserResultInstance.getTag() != null) {
+//			commandSummary = commandSummary + " Tag: " + parserResultInstance.getTag() + "\n";
+//		} 
+//		
+//		if(parserResultInstance.getPriority() != null) {
+//			commandSummary = commandSummary + " Priority: " + parserResultInstance.getPriority() + "\n";
+//		} 
 	}
 
 	private void createResultObject() {
