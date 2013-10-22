@@ -121,7 +121,7 @@ public class GUIManager {
 	}
 	
 	private void configureDefaultDisplay(){
-//		executeUserInputCommand(CommandType.DISPLAY + " all");
+		executeUserInputCommand(CommandType.DISPLAY + " all");
 	}
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
