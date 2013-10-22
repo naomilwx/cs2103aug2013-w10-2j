@@ -16,14 +16,14 @@ public class UpdateParserTest {
 	public void test(){
 		ParserResult expectedUpdate1 = new ParserResult();
 		
-		expectedUpdate1.setTaskID(12);
+//		expectedUpdate1.setTaskID(12);
 		expectedUpdate1.setCommand(CommandType.UPDATE);
 		
-		testExecuteName("CS Assignment 2","Name CS Assignment 2");
-		testExecuteTag("#Work#", "Tag #Work#");
-		testExecuteTaskPriority("LOW", "Priority LOW");
-		testExecuteStartTime("11 Feb 2013", "StartTime feb 11 2013");
-		testExecuteEndTime("11 Feb 2013", "endtime feb 11 2013");
+		testExecuteName("CS Assignment 2","12 Name CS Assignment 2");
+		testExecuteTag("#Work#", "12 Tag #Work#");
+		testExecuteTaskPriority("LOW", "12 Priority LOW");
+		testExecuteStartTime("11 Feb 2013", "12 Start feb 11 2013");
+		testExecuteEndTime("11 Feb 2013", "12 end feb 11 2013");
 		
 	}
 	
