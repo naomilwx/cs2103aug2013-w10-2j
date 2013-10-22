@@ -29,7 +29,7 @@ public class CommandAdd extends Command{
 	private boolean isUndoSuccess;
 	private boolean isRedoSuccess;
 	
-	private static final String SUCCESS_MSG = "Task: %1s [ID: %2d] has been successfully added";
+	private static final String SUCCESS_MSG = "Task: %1s has been successfully added";
 	
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {
@@ -80,7 +80,7 @@ public class CommandAdd extends Command{
 	}
 
 	private void createResultObject() {
-		String notificationStr = String.format(SUCCESS_MSG, taskName, taskID);
+		String notificationStr = String.format(SUCCESS_MSG, taskName);
 		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, notificationStr, taskPassedToStorer, null, null);
 	}
 
