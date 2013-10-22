@@ -208,7 +208,7 @@ public class CommandManager {
 			if(commandToUndo.undoSuccessfully()) {
 				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
 				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
-				resultToPassToGUI = createResultForUndoSuccessfully();
+				resultToPassToGUI = createResultForUndoSuccessfully(commandToUndo);
 			} else {
 				resultToPassToGUI = createResultForUndoFailure();
 			}
@@ -218,8 +218,9 @@ public class CommandManager {
 
 	
 
-	private Result createResultForUndoSuccessfully() {
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo successfully.", null, currentTaskList, null);
+	private Result createResultForUndoSuccessfully(Command commandToUndo) {
+		String commandSummary = commandToUndo.getCommandString();
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
 	}
 
 	private void updateCurrentListAfterUndo(Command commandToUndo) {
