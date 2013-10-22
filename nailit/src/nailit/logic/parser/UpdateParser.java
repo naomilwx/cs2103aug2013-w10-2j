@@ -31,12 +31,12 @@ public class UpdateParser extends Parser {
 			resultExecution.setName(answer.substring(0, answer.length()-1));
 		}else if (listOfCommand[1].equalsIgnoreCase("tag")){
 			resultExecution.setTag(listOfCommand[2]);
-		}else if (listOfCommand[1].equalsIgnoreCase("StartTime")){
+		}else if (listOfCommand[1].equalsIgnoreCase("Start")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
 			resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
-		}else if (listOfCommand[1].equalsIgnoreCase("EndTime")){
+		}else if (listOfCommand[1].equalsIgnoreCase("End")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
