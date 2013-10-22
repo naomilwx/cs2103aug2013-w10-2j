@@ -10,8 +10,8 @@ public class ParserResult{
 	//ArrayList<String> command = new ArrayList<String> ();
 
 	private int taskID;
-	private static CommandType command;
-	private static String name;
+	private CommandType command;
+	private String name;
 	private TaskPriority priority;
 	private String tag;
 	

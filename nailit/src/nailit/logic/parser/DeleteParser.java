@@ -20,7 +20,7 @@ public class DeleteParser extends Parser {
 		if (Parser.isNumber(userCommand))
 			resultExecution.setTaskID(Integer.parseInt(userCommand));
 		else 
-			System.out.println("Wrong Format");
+			throw new Error("Wrong Format");
 		
 		return resultExecution;
 	}

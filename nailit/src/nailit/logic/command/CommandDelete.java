@@ -5,13 +5,14 @@ import java.util.Vector;
 import test.storage.StorageManagerStub;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
-	private String commandType;
+	private CommandType commandType;
 	private String commandSummary;
 	private Result executedResult;
 	private Task taskToRemove;
@@ -22,6 +23,9 @@ public class CommandDelete extends Command{
 	
 	// task list, in which the task is to delete
 	private Vector<Task> taskList;
+	
+	private boolean isUndoSuccess;
+	private boolean isRedoSuccess;
 
 	private static final String SUCCESS_MSG = "Task: [ID %1s]has been successfully deleted.";
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
@@ -33,8 +37,10 @@ public class CommandDelete extends Command{
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
-		commandType = "delete";
+		commandType = CommandType.DELETE;
 		this.taskList = taskList;
+		isUndoSuccess = false;
+		isRedoSuccess = false;
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class CommandDelete extends Command{
 		} else {
 			try {
 				if(isExistToDeleteTaskInTaskList()) {
-					removeTheTaskOnStorage();
+					removeTheTaskOnStorage(); // inside the method, taskToRemove is defined
 				} else {
 					deleteSuccessfully = false;
 					createResultObjectForTaskToDeleteNotExistingInTaskList();
@@ -120,7 +126,7 @@ public class CommandDelete extends Command{
 			FileCorruptionException {
 	
 		taskToDeleteID = retrieveTheTaskID();
-		storer.remove(taskToDeleteID);
+		storer.remove(taskToDeleteID, false);
 	}
 
 	private int retrieveTheTaskID() {
@@ -138,7 +144,52 @@ public class CommandDelete extends Command{
 		return deleteSuccessfully;
 	}
 
+	public CommandType getCommandType() {
+		return commandType;
+	}
+	
+	public Task getTaskDeleted() {
+		if(this.deleteSuccess()) {
+			return taskToRemove;
+		} else {
+			return null;
+		}
+	}
 
+	@Override
+	public void undo() {
+		if(this.deleteSuccess()) { // in fact cannot happen
+			storer.add(taskToRemove);
+			isUndoSuccess = true;
+		} else {
+			isUndoSuccess = false;
+		}
+	}
+
+	@Override
+	public boolean undoSuccessfully() {
+		return isUndoSuccess;
+	}
+
+	@Override
+	public String getCommandString() {
+		return commandSummary;
+	}
+
+	@Override
+	public void redo() {
+		try {
+			storer.remove(taskToDeleteID, false);
+		} catch (NoTaskFoundException e) {
+			isRedoSuccess = false;
+		}
+		
+	}
+
+	@Override
+	public boolean isSuccessRedo() {
+		return isRedoSuccess;
+	}
 	
 	
 }

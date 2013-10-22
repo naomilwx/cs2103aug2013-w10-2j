@@ -30,6 +30,7 @@ public class StorageManager {
 		inMemory = new DataManager(nextValidIDWhenSessionStarts, originalTaskList);
 	}
 	
+	
 	public int add(Task task){
 		Task taskToBeAdded = task.copy();
 				
@@ -52,16 +53,22 @@ public class StorageManager {
 		return task;
 	}
 	
-	public Task remove(int ID) throws NoTaskFoundException{
+	public Task remove(int ID,boolean isUndoAdd) throws NoTaskFoundException{
+		
 		Task task = inMemory.remove(ID);
 		if(TaskNotFound(task)){
 			throw new NoTaskFoundException("The task cannot be found");
+		}	
+		
+		if(isUndoAdd){
+			releaseID(ID);
 		}
 		saveToFile();
 		return task;
-		
 	}
 	
+	
+		
 	public Vector<Task> retrieveAll() {
 		
 		HashMap<Integer,Task> hashTable = inMemory.getHashMap();
@@ -177,7 +184,16 @@ public class StorageManager {
 		}
 				
 	}
+	private void releaseID(int ID){
+		int nextValidID = inMemory.getNextValidID();
+		if(isJustAdded(ID,nextValidID)){
+			inMemory.setNextValidID(nextValidID-1);
+		}
+	}
 	
+	private boolean isJustAdded(int ID,int nextValidID){
+		return ID == nextValidID-1;
+	}
 	private Task stringToTask(String taskString) throws Exception{
 		String[] result = taskString.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);
 		
@@ -253,9 +269,7 @@ public class StorageManager {
 		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
 	}
 	
-	private boolean isEvent(Task task){
-		return task.getStartTime() !=null &&task.getEndTime() != null;
-	}
+
 	private boolean TimeNotMatch(Task task,FilterObject ftobj){
 		
 		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
