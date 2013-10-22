@@ -186,7 +186,10 @@ public class DisplayArea extends JLayeredPane {
 			addContent(textDisplay, false);
 		}
 	}
-	
+	protected void showDeletedTaskInTaskListTable(Task task){
+		Vector<String> row = formatTaskForRowDisplay(task, GUIManager.DELETED_TASK_DISPLAY_ID);
+		taskTable.addContentToTable(0, row);
+	}
 	protected void displayTaskList(Vector<Task> tasks){
 		taskTable = new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		addAdditionalKeyListenerToTaskTable();

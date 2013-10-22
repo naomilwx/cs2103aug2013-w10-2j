@@ -257,6 +257,9 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected int getSelectedRowDisplayID(){
 		return table.getSelectedRow() + 1;
 	}
+	protected void addContentToTable(int pos, Vector<String> row){
+		tableRows.add(pos, row);
+	}
 	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
 	}
