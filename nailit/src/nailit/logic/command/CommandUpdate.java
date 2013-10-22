@@ -183,7 +183,7 @@ public class CommandUpdate extends Command{
 			updatedTask.setTag(taskRetrieved.getTag());
 		}
 		
-		if(!parserResultInstance.isNullPriority()) {
+		if(parserResultInstance.isSearchPriority()) { // currently use this method, although the name is not suitable
 			TaskPriority newPriority = parserResultInstance.getPriority();
 			updatedTask.setPriority(newPriority);
 			updatedContent = updatedContent + "Priority: " + newPriority + " ";
