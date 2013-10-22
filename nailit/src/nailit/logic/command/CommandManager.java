@@ -2,6 +2,7 @@ package nailit.logic.command;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Stack;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -30,7 +31,7 @@ public class CommandManager {
 	private ParserResult parserResultInstance;
 	
 	// the vector object is used to store the done operations
-	private Vector<Command> operationsHistory;
+	private Stack<Command> operationsHistory;
 	
 	// the current displaying task list in the GUI
 	private Vector<Task> currentTaskList;
@@ -40,7 +41,7 @@ public class CommandManager {
 	private FilterObject filterContentForCurrentTaskList;
 	
 	// store the commands that have been undoed
-	private Vector<Command> redoCommandsList;
+	private Stack<Command> redoCommandsList;
 	
 	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has been executed yet, so no undo command can be done.";
 	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the command history. You can undo Add, delete, or Update command.";
@@ -53,11 +54,11 @@ public class CommandManager {
 		//for testing
 		//storer = new StorageStub();
 		storer = new StorageManager();
-		operationsHistory = new Vector<Command>();
+		operationsHistory = new Stack<Command>();
 		currentTaskList = new Vector<Task>();
 		filterContentForCurrentTaskList = new FilterObject();
 		parserResultInstance = null;
-		redoCommandsList = new Vector<Command>();
+		redoCommandsList = new Stack<Command>();
 	}
 	
 	public Result executeCommand(ParserResult parserResultInstance) throws Exception
@@ -164,7 +165,6 @@ public class CommandManager {
 		} else {
 			int count = -1;
 			Iterator<Task> itr = currentTaskList.iterator();
-			
 			while(itr.hasNext()) {
 				count++;
 				Task currentTask = itr.next();
@@ -176,6 +176,7 @@ public class CommandManager {
 						currentTaskList.add(cu.getUpdatedTask());
 						sort();
 					}
+					break;
 				} 
 			}
 		}
@@ -183,12 +184,10 @@ public class CommandManager {
 	}
 
 	private Command getTheCommandToRedo() {
-		int size = redoCommandsList.size();
-		if(size == 0) {
+		if(redoCommandsList.isEmpty()) {
 			return null;
 		} else {
-			Command commandToRedo = redoCommandsList.get(size-1);
-			redoCommandsList.remove(size-1);
+			Command commandToRedo = redoCommandsList.pop();
 			return commandToRedo;
 		}
 	}
@@ -207,7 +206,7 @@ public class CommandManager {
 		} else { // three situations
 			commandToUndo.undo();
 			if(commandToUndo.undoSuccessfully()) {
-				redoCommandsList.add(commandToUndo); // add the undone command into the redo list
+				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
 				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
 				resultToPassToGUI = createResultForUndoSuccessfully();
 			} else {
@@ -236,7 +235,6 @@ public class CommandManager {
 		} else {
 			int count = -1;
 			Iterator<Task> itr = currentTaskList.iterator();
-			
 			while(itr.hasNext()) {
 				count++;
 				Task currentTask = itr.next();
@@ -261,26 +259,14 @@ public class CommandManager {
 	}
 
 	private Command getTheCommandToUndo() {
-		
-//		Iterator<Command> itr = operationsHistory.iterator();
-//		while(itr.hasNext()) {
-//			Command currentCommand = itr.next();
-//			CommandType currentCommandType = currentCommand.getCommandType();
-//			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
-//				return currentCommand;
-//			} 
-//		}
-		int size = operationsHistory.size();
-		for(int i = size-1; i >= 0; i--) {
-			Command currentCommand = operationsHistory.get(i);
-			CommandType currentCommandType = currentCommand.getCommandType();
-			// this gurantee that only conmmand add, delete and update will be popped
-			if((currentCommandType == CommandType.ADD) || (currentCommandType == CommandType.DELETE) || (currentCommandType == CommandType.UPDATE)) {
-				return currentCommand;
-			}
+		// it is guaranteed that in the operation 
+		// history, only add, delete and update command objects will be contained
+		if(operationsHistory.isEmpty()) {
+			return null;
+		} else {
+			Command commandToUndo = operationsHistory.pop();
+			return commandToUndo;
 		}
-		// no undoable command
-		return null;
 	}
 	
 	private Result createResultForEmptyCommandsHistory() {

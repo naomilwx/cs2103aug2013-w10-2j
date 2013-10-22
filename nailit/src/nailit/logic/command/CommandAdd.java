@@ -92,6 +92,7 @@ public class CommandAdd extends Command{
 		try {
 			storer.remove(taskID, true);
 			isUndoSuccess = true;
+			isRedoSuccess = false; //means now you can redo again, if redone before
 		} catch (NoTaskFoundException e) {
 			isUndoSuccess = false;
 		}
@@ -109,9 +110,10 @@ public class CommandAdd extends Command{
 
 	@Override
 	public void redo() {
-		taskPassedToStorer.setID(Task.TASKID_NULL);
+		taskPassedToStorer.setID(Task.TASKID_NULL);  
 		storer.add(taskPassedToStorer); // will the storer redo a delete here?
 		this.isRedoSuccess = true;
+		this.isUndoSuccess = false;
 	}
 
 	@Override
