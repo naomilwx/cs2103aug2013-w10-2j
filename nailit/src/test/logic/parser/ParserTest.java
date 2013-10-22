@@ -1,13 +1,15 @@
 package test.logic.parser;
 
 import static org.junit.Assert.assertEquals;
-
 import nailit.logic.parser.Parser;
 import nailit.common.NIConstants;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+import test.logic.command.CommandTest;
+@Category(CommandTest.class)
 public class ParserTest {
 	@Test
 	public void test(){

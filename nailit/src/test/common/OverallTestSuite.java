@@ -1,6 +1,7 @@
 package test.common;
 
 import test.logic.LogicManagerTest;
+import test.logic.parser.ParserTest;
 import test.storage.StorageManagerTest;
 import static org.junit.Assert.*;
 
@@ -10,9 +11,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	LogicManagerTest.class,
 	StorageManagerTest.class,
 	TaskTest.class,
+	TaskTest.class,
+	ParserTest.class,
 })
 
 public class OverallTestSuite {

@@ -13,7 +13,8 @@ import nailit.logic.command.CommandManager;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-
+import org.junit.experimental.categories.Category;
+@Category(CommandTest.class)
 public class UndoAfterDeleteTest {
 	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
