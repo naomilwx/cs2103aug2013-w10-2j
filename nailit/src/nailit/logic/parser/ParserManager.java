@@ -48,6 +48,8 @@ public class ParserManager {
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
 		case UNDO:
+			if (commandToExecute.equalsIgnoreCase("UNDO"))
+				commandToExecute = "";
 			UndoParser undoParserManager = new UndoParser(commandToExecute);
 			return undoParserManager.execute();
 		case UPDATE:
