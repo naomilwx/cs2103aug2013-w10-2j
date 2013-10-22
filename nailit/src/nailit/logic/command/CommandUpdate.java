@@ -210,6 +210,7 @@ public class CommandUpdate extends Command{
 	public void undo() {
 		storer.add(taskRetrieved); // update back to the previous version
 		isUndoSuccess = true;
+		this.isRedoSuccess = false;
 	}
 
 	@Override
@@ -233,7 +234,8 @@ public class CommandUpdate extends Command{
 	@Override
 	public void redo() {
 		storer.add(updatedTask);
-		isUndoSuccess = true;
+		isRedoSuccess = true;
+		this.isUndoSuccess = false;
 	}
 
 	@Override
