@@ -161,6 +161,7 @@ public class CommandDelete extends Command{
 		if(this.deleteSuccess()) { // in fact cannot happen
 			storer.add(taskToRemove);
 			isUndoSuccess = true;
+			this.isRedoSuccess = false;
 		} else {
 			isUndoSuccess = false;
 		}
@@ -180,6 +181,8 @@ public class CommandDelete extends Command{
 	public void redo() {
 		try {
 			storer.remove(taskToDeleteID, false);
+			this.isRedoSuccess = true;
+			this.isUndoSuccess = false;
 		} catch (NoTaskFoundException e) {
 			isRedoSuccess = false;
 		}
