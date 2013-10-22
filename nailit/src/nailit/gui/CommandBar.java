@@ -113,9 +113,10 @@ public class CommandBar extends JPanel {
 		textBarWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         textBarWrapper.setHorizontalScrollBar(null);
 	}
-	private void addNewLineOfText(){
+	private void addNewLineOfTextFromPos(){
 		numOfTextLines += 1;
-		textBar.append("\n");
+		int pos = textBar.getCaretPosition();
+		textBar.insert("\n", pos);
 	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
@@ -130,7 +131,7 @@ public class CommandBar extends JPanel {
 				int keyCode = keyStroke.getKeyCode();
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineToTextField();
-					addNewLineOfText();
+					addNewLineOfTextFromPos();
 					GUIBoss.resizeMainDisplayArea();
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					GUIBoss.executeUserInputCommand(getUserInput());
