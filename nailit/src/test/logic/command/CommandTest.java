@@ -30,7 +30,7 @@ public class CommandTest {
 
 	@Test
 	public void testCommandAdd() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
 //		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
@@ -42,7 +42,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandDelete() throws Exception { //TODO:Implement working test
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
 		prForCommandDelete.setTaskID(123);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
@@ -54,7 +54,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandUpdateNotExistingTask() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE); 
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskID(123);
@@ -66,7 +66,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandUpdate() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE);
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskID(123);
@@ -78,7 +78,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandDisplayNotExistingTask() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
@@ -88,7 +88,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandAddAgain() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
@@ -98,7 +98,7 @@ public class CommandTest {
 	
 	@Test
 	public void testCommandDisplayExistingTask() throws Exception {
-		CommandManager cm = new CommandManagerStub();
+		CommandManager cm = new CommandManager();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
 		prForCommandDisplay.setTaskID(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
