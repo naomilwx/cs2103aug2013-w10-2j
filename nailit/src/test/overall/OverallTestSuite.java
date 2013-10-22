@@ -1,5 +1,6 @@
-package test.common;
+package test.overall;
 
+import test.common.TaskTest;
 import test.logic.LogicManagerTest;
 import test.logic.command.CommandTest;
 import test.logic.parser.ParserTest;
@@ -17,6 +18,7 @@ import org.junit.runners.Suite;
 	TaskTest.class,
 	ParserTest.class,
 	CommandTest.class,
+	OverallTestAdd.class,
 })
 
 public class OverallTestSuite {
