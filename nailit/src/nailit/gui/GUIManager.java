@@ -120,7 +120,7 @@ public class GUIManager {
 	}
 	
 	private void configureDefaultDisplay(){
-		executeUserInputCommand(CommandType.DISPLAY + " all");
+//		executeUserInputCommand(CommandType.DISPLAY + " all");
 	}
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
@@ -200,6 +200,7 @@ public class GUIManager {
 			assert executionResult != null;
 			commandBar.clearUserInput();
 			processAndDisplayExecutionResult(executionResult);
+			resizeMainDisplayArea();
 		}catch(Error err){
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
