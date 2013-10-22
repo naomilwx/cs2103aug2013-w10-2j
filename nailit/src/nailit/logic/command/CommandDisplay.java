@@ -31,6 +31,7 @@ public class CommandDisplay extends Command{
 	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found in the task list. Please check and try again.";
 	private static final String FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL = "Sorry, the system fails to retrieve all the tasks in the storage. Please try again.";
 	private static final String NO_DISPLAY_ID_WARNING = "The parserResult does not have DisplayID.";
+	private static final String NO_TASKS_FOUND_MSG = "There are no tasks to display!";
 	private static final String TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST = "The task to display does not exist in the display list.";
 	
 	public CommandDisplay(ParserResult resultInstance,
@@ -60,7 +61,7 @@ public class CommandDisplay extends Command{
 			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
 			// if the retrieved content is empty or null, return notification instead
 			if(vectorOfTasks == null || vectorOfTasks.isEmpty()) {
-				
+				createResultObject(false, true, Result.LIST_DISPLAY, NO_TASKS_FOUND_MSG, null, new Vector<Task>(), null);
 			} else {
 				createResultObject(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, vectorOfTasks, null);
 				// since successfully retrieve all the task on the storage
