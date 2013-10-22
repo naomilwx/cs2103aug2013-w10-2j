@@ -125,7 +125,8 @@ public class CommandUpdate extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = String.format(UPDATE_SUCCESSFUL_FEEDBACK, taskToRetrieveID) + updatedContent;
+//		commandSummary = String.format(UPDATE_SUCCESSFUL_FEEDBACK, taskToRetrieveID) + updatedContent;
+		commandSummary = updatedContent + "\n";
 		
 	}
 

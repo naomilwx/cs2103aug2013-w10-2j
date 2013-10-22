@@ -3,6 +3,7 @@ package nailit.logic.command;
 import java.util.Vector;
 
 import test.storage.StorageManagerStub;
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -118,23 +119,25 @@ public class CommandDelete extends Command{
 		
 		commandSummary = "delete";
 		if(taskToRemove.getName() != null) {
-			commandSummary = commandSummary + " Name: " + taskToRemove.getName() + "/";
+			commandSummary = commandSummary + " Name: " + taskToRemove.getName() + "\n";
 		} 
 		
 		if(taskToRemove.getStartTime() != null) {
-			commandSummary = commandSummary + " Start time: " + taskToRemove.getStartTime() + "/";
+			commandSummary = commandSummary + " Start time: " + 
+		taskToRemove.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
 		} 
 		
 		if(taskToRemove.getEndTime() != null) {
-			commandSummary = commandSummary + " End time: " + taskToRemove.getEndTime() + "/";
+			commandSummary = commandSummary + " End time: " + 
+		taskToRemove.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
 		} 
 		
 		if(taskToRemove.getTag() != null) {
-			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "/";
+			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "\n";
 		} 
 		
 		if(taskToRemove.getPriority() != null) {
-			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "/";
+			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "\n";
 		} 
 	}
 
