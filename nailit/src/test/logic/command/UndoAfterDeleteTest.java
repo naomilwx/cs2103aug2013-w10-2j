@@ -64,11 +64,13 @@ public class UndoAfterDeleteTest {
 		cm.executeCommand(parserResultAdd2);
 		cm.executeCommand(parserResultDisplayAll);
 		cm.executeCommand(parserResultDelete);
-		Result resultOfDelete = cm.executeCommand(parserResultUndo);
+		
+		cm.executeCommand(parserResultUndo);
+		Result resultOfDelete = cm.executeCommand(parserResultUndo); // undo one delete one add
 		
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-		currentTaskList.add(task2);
+//		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
 				"Undo successfully.", null, currentTaskList, null);

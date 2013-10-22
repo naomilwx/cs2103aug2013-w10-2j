@@ -20,7 +20,7 @@ public class UndoParser extends Parser {
 			resultExecution.setTaskID(-1);
 			return resultExecution;
 		}
-		resultExecution.setTaskID(Integer.parseInt(userCommand));
+//		resultExecution.setTaskID(Integer.parseInt(userCommand));
 		return resultExecution;
 	}
 }
