@@ -46,6 +46,7 @@ public class Task {
 	public Task(String taskName, DateTime start, DateTime end, String t, TaskPriority p){
 		ID = TASKID_NULL;
 		name = taskName;
+		description = ""; //TODO: replace with constant
 		startTime = start;
 		endTime = end;
 		isCompleted = false;
@@ -63,7 +64,9 @@ public class Task {
 		startTime = start;
 		endTime = end;
 		priority = p;
-		description = desc;
+		if(description != null){
+			description = desc;
+		}
 		this.isCompleted = isCompleted;
 		if(t == null){
 			tag = "";
@@ -139,7 +142,9 @@ public class Task {
 		name = taskName;
 	}
 	public void setDescription(String taskDesc){
-		description = taskDesc;
+		if(description != null){
+			description = taskDesc;
+		}
 	}
 	public void setTag(String taskTag){
 		if(taskTag != null){

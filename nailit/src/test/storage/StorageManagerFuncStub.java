@@ -57,4 +57,9 @@ public class StorageManagerFuncStub extends StorageManager {
 		return task;
 	}
 	
+	@Override
+	public void clear(){
+		nextID = 1;
+		taskMap.clear();
+	}
 }
