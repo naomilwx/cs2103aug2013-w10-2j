@@ -404,7 +404,7 @@ public class CommandManager {
 	}
 
 	private void addNewCommandObjToOperationsHistory(Command commandObjToAdd) {
-		operationsHistory.add(commandObjToAdd);
+		operationsHistory.push(commandObjToAdd);
 	}
 	
 	public Vector<Command> getOperationsHistory() {
