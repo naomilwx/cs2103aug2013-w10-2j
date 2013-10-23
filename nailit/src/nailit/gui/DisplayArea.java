@@ -2,6 +2,9 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -35,6 +38,7 @@ public class DisplayArea extends JLayeredPane {
 	private static final double DISPLAY_AREA_SCALE = 0.8;
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	private static final int NULL_FOCUS = -1;
+	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
@@ -45,6 +49,8 @@ public class DisplayArea extends JLayeredPane {
 	
 	private int displayWidth;
 	private int displayHeight;
+	private int defaultPaneWidth;
+	private int defaultPaneHeight;
 	private int containerHeight;
 	private int currentFocusElement = NULL_FOCUS;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
@@ -85,16 +91,38 @@ public class DisplayArea extends JLayeredPane {
 	 * This method initialises and adds the 2 layers to the DisplayArea instance
 	 */
 	private void initialiseLayers() {
+		initialiseDefaultPane();
+		initialisePopupPane();
+	}
+	private void initialiseDefaultPane(){
+		defaultPaneWidth = displayWidth;
+		defaultPaneHeight = displayHeight;
 		defaultPane = new JPanel();
 		defaultPane.setLayout(new BoxLayout(defaultPane,BoxLayout.Y_AXIS));
 		setLayerToDefaultSettings(defaultPane);
 		defaultPane.setFocusable(true);
 		add(defaultPane,JLayeredPane.DEFAULT_LAYER);
-		
+	}
+	private void initialisePopupPane(){
 		popupPane = new JPanel();
 		popupPane.setLayout(null);
 		setLayerToDefaultSettings(popupPane);
 		add(popupPane, JLayeredPane.POPUP_LAYER);
+		popupPane.addComponentListener(new ComponentAdapter(){
+
+			@Override
+			public void componentHidden(ComponentEvent event) {
+				shiftDefaultLayer(GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
+			}
+			@Override
+			public void componentShown(ComponentEvent event) {
+				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
+					System.out.println("here");
+					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+				}
+			}
+			
+		});
 	}
 	/**
 	 * Sets given JPanel to span the whole container (DisplayArea)
@@ -113,14 +141,23 @@ public class DisplayArea extends JLayeredPane {
 	protected void dynamicallyResizeDisplayArea(int additionalOffset){
 		adjustDisplayHeight(additionalOffset);
 		this.setSize(displayWidth, displayHeight);
-		defaultPane.setSize(displayWidth, displayHeight);
+		dynamicallyResizeDefaultPaneHeight();
 		popupPane.setSize(displayWidth, displayHeight);
 		revalidate();
 	}
 	
-	private void shiftLayer(JPanel layer, int xpos, int ypos){
-		layer.setLocation(xpos, ypos);
-		layer.setSize(layer.getWidth() - xpos, layer.getHeight() - ypos);
+	private void shiftDefaultLayer(int xpos, int ypos){
+		defaultPane.setLocation(xpos, ypos);
+		dynamicallyResizeDefaultPaneHeight();
+		revalidate();
+	}
+	private void dynamicallyResizeDefaultPaneHeight(){
+		if(popupPane.isVisible()){
+			defaultPaneHeight = displayHeight - NOTIFICATION_OFFSET;
+		}else{
+			defaultPaneHeight = displayHeight;
+		}
+		defaultPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
 	private void configureDisplayArea(){
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -160,12 +197,6 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.setVisible(true);
 	}
 	protected void addContent(Component component, boolean replace){
-		if(popupPane.isVisible()){
-			shiftLayer(defaultPane, defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
-		}else{
-			shiftLayer(defaultPane, GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
-		}
-		
 		if(replace){
 			defaultPane.removeAll();
 			items.clear();
