@@ -73,7 +73,6 @@ public class DisplayArea extends JLayeredPane {
 		items = new LinkedList<Component>();
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		this.containerHeight = containerHeight;
-//		displayHeight = (int) Math.ceil(containerHeight*DISPLAY_AREA_SCALE);
 		adjustDisplayHeight(offset);
 		configureDisplayArea();
 		initialiseLayers();
@@ -108,7 +107,7 @@ public class DisplayArea extends JLayeredPane {
 	}
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
-		displayHeight = containerHeight - 2 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
+		displayHeight = containerHeight - 3 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
 	}
 	
 	protected void dynamicallyResizeDisplayArea(int additionalOffset){
@@ -187,7 +186,13 @@ public class DisplayArea extends JLayeredPane {
 			addContent(textDisplay, false);
 		}
 	}
-	
+	protected void showDeletedTaskInTaskListTable(Task task){
+		Vector<String> row = formatTaskForRowDisplay(task, GUIManager.DELETED_TASK_DISPLAY_ID);
+		taskTable.addDeletedTaskToTable(row);
+	}
+	protected void removeDeletedTasksFromTaskListTable(){
+		taskTable.clearDeletedTaskRowsFromTable();
+	}
 	protected void displayTaskList(Vector<Task> tasks){
 		taskTable = new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		addAdditionalKeyListenerToTaskTable();

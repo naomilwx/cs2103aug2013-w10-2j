@@ -28,7 +28,7 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 		addFocusListener(displayFocusListener);		
 	}
 	private void createAndConfigureTextPane(){
-		preferredHeight = containerWidth/2;
+		preferredHeight = containerHeight/2;
 		textPane = new JTextPane();
 		textPane.setEditable(false);
 		textPane.setPreferredSize(new Dimension(containerWidth, preferredHeight));

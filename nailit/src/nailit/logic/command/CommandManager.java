@@ -286,19 +286,23 @@ public class CommandManager {
 		// the new added task may or may not should exist in the currentTaskList,
 		// check whether the added task fit the filterContentForCurrentTaskList
 		// if fit, add it and sort the current task list
-		if(isTheTaskFitTheFilter(resultToPassToGUI)) {
+		//Begin amend by Naomi
+//		if(isTheTaskFitTheFilter(resultToPassToGUI)) {
 			addTaskToCurrentTaskList(resultToPassToGUI);
 			sort();
-		}
+//		}
+		
+		
 		
 		// deal with the case that when user add a task while nothing in the task list.
 		// in this situation, instead of giving a display type Execution_Display, we give task display
-		if(currentTaskList.isEmpty()) {
-			resultToPassToGUI.setDisplayType(Result.TASK_DISPLAY);
-		} else {
+//		if(currentTaskList.isEmpty()) {
+//			resultToPassToGUI.setDisplayType(Result.TASK_DISPLAY);
+//		} else {
 			// add the searchResult into the resultToPassToGUI
 			resultToPassToGUI.setTaskList(currentTaskList);
-		}
+//		}
+		//end amend
 		return resultToPassToGUI;
 	}
 	

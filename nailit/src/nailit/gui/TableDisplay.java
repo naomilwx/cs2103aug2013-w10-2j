@@ -52,6 +52,8 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	private TableDisplay selfRef = this; //for AbstractAction
 	
 	private int noOfCols;
+	
+	int deletedTaskRowsNum = 0;
 	//listeners
 	
 	private KeyAdapter moreTableMainFrameKeyEventListener = new KeyAdapter(){
@@ -256,6 +258,20 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	
 	protected int getSelectedRowDisplayID(){
 		return table.getSelectedRow() + 1;
+	}
+	protected void addDeletedTaskToTable(Vector<String> row){
+		deletedTaskRowsNum += 1;
+		addContentToTable(0, row);
+	}
+	protected void clearDeletedTaskRowsFromTable(){
+		while(deletedTaskRowsNum>0){
+			tableRows.remove(0);
+			deletedTaskRowsNum -= 1;
+		}
+		revalidate();
+	}
+	protected void addContentToTable(int pos, Vector<String> row){
+		tableRows.add(pos, row);
 	}
 	protected void addContentToTable(Vector<String> row){
 		tableRows.add(row);
