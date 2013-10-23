@@ -41,8 +41,15 @@ public class ExtendedWindow extends JFrame{
 		setResizable(false);
 	}
 	private void positionFrameBasedOnMainWindowPos(){
+		recalculateExtendedWindowPosition();
 		setLocation(windowXPos, windowYPos);
 		setSize(windowWidth, EXTENDED_WINDOW_HEIGHT);
+	}
+	private void recalculateExtendedWindowPosition(){
+		int mainWindowXPos = GUIBoss.getMainWindowLocationCoordinates().width;
+		int mainWindowYPos = GUIBoss.getMainWindowLocationCoordinates().height;
+		windowXPos = mainWindowXPos + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
+		windowYPos = mainWindowYPos;
 	}
 	private void createAndInitialiseContentPane(){
 		contentPane = new JPanel();
