@@ -107,7 +107,7 @@ public class DisplayArea extends JLayeredPane {
 	}
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
-		displayHeight = containerHeight - 3 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
+		displayHeight = containerHeight - 2 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
 	}
 	
 	protected void dynamicallyResizeDisplayArea(int additionalOffset){
@@ -120,6 +120,7 @@ public class DisplayArea extends JLayeredPane {
 	
 	private void shiftLayer(JPanel layer, int xpos, int ypos){
 		layer.setLocation(xpos, ypos);
+		layer.setSize(layer.getWidth() - xpos, layer.getHeight() - ypos);
 	}
 	private void configureDisplayArea(){
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
@@ -181,7 +182,9 @@ public class DisplayArea extends JLayeredPane {
 	protected void displayTaskDetails(Task task){
 		if(task!=null){
 			String details = TaskDetailsFormatter.formatTaskForDisplay(task);
-			textDisplay = new TextDisplay(displayWidth, displayHeight);
+			int textDisplayWidth = defaultPane.getWidth()/2;
+			int textDisplayHeight = defaultPane.getHeight()/2;
+			textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
 			textDisplay.displayHTMLFormattedText(details);
 			addContent(textDisplay, false);
 		}
