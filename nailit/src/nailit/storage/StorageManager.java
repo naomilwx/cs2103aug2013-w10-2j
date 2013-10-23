@@ -38,7 +38,7 @@ public class StorageManager {
 		
 		Task taskToBeAdded = task.copy();
 		
-		reformatTaskDescription(task);
+//		reformatTaskDescription(task);
 				
 		int ID = inMemory.add(taskToBeAdded);
 				
@@ -209,16 +209,14 @@ public class StorageManager {
 		DateTime startTime;
 		if(result[2].compareTo("null") == 0){
 			startTime = null;
-		}
-		else{
+		}else{
 			startTime = new DateTime(result[2]);
 		}
 		
 		DateTime endTime;
 		if(result[3].compareTo("null") == 0){
 			endTime = null;
-		}
-		else{
+		}else{
 			endTime = new DateTime(result[3]);
 		}
 		
@@ -284,79 +282,61 @@ public class StorageManager {
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
-				}
-				else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
-				}
-				else{
+				}else{
 					return false;
 				}
-			}
-			else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
-				}
-				else{
+				}else{
 					return false;
 				}
 				
-			}
-			else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
 				}
-				else{
-					return false;
+				else{	return false;
 				}
-			}
-			else{
+			}else{
 				return false;
 			}
 
-		}
-		else if(task.isFloatingTask()){
+		}else if(task.isFloatingTask()){
 			if(!isStartTimeEmpty(ftobj)||!isEndTimeEmpty(ftobj)){
 				return true;
-			}
-			else{
+			}else{
 				return false;
 			}
-		}
-		else if(task.isNormalTask()){
+		}else if(task.isNormalTask()){
 			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
-				}
-				else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
-				}
-				else{
+				}else{
 					return false;
 				}
-			}
-			else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
 					return true;
-				}
-				else{
+				}else{
 					return false;
 				}
 				
-			}
-			else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
 				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
 					return true;
-				}
-				else{
+				}else{
 					return false;
 				}
-			}
-			else{
+			}else{
 				return false;
 			}
 
-		}
-		else{
+		}else{
 			return true;//TODO: check the standard for those tasks that does not belong to any category
 		}
 	}
