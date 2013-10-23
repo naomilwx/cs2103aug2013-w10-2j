@@ -9,6 +9,7 @@ import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import test.common.TaskStub;
@@ -30,6 +31,10 @@ public class OverallTestAdd {
 		}
 	}
 	@Test
+	public void run(){
+		test();
+		test2();
+	}
 	public void test() {
 		Task expectedTask = new TaskStub();
 		String commandString = "add "+ expectedTask.getName() +"," 
@@ -39,12 +44,13 @@ public class OverallTestAdd {
 				+expectedTask.getTag();
 		executeAddAndCheckResult(expectedTask, commandString);
 	}
-//	@Test
+
 	public void test2() {
 		try {
 			Task expectedTask = new TaskStub();
 			String commandString = "add "
 					+expectedTask.getPriority() + "," 
+					+expectedTask.getTag() + ","
 					+expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
 					+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
 					+expectedTask.getName();
