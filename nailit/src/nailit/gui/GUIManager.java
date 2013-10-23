@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.Point;
@@ -182,6 +183,9 @@ public class GUIManager {
 	}
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
+	}
+	protected Dimension getMainWindowLocationCoordinates(){
+		return new Dimension(mainWindow.getX(), mainWindow.getY());
 	}
 	protected void resizeMainDisplayArea(){
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
