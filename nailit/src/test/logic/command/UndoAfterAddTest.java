@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import nailit.common.Result;
 import nailit.common.Task;
@@ -14,7 +15,7 @@ import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.command.CommandManager;
 import nailit.storage.FileCorruptionException;
-
+@Category(CommandTest.class)
 public class UndoAfterAddTest {
 
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 

@@ -8,7 +8,10 @@ import nailit.logic.parser.ParserManager;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+import test.logic.command.CommandTest;
+@Category(CommandTest.class)
 public class ParserManagerTest {
 	@Test
 	public void test(){

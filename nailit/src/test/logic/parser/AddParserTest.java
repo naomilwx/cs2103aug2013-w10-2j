@@ -2,15 +2,17 @@ package test.logic.parser;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.experimental.categories.Category;
 
+import test.logic.command.CommandTest;
+import static org.junit.Assert.*;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.parser.AddParser;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
-
+@Category(ParserTest.class)
 public class AddParserTest {
 
 		@Test

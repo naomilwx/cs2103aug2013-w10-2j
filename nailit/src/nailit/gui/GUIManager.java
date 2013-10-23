@@ -86,6 +86,7 @@ public class GUIManager {
 		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME};
 	protected static final String[] COMMAND_HISTORY_HEADER =
 		{ID_COL_NAME, COMMAND_COL_NAME};
+	public static final String DELETED_TASK_DISPLAY_ID = "DEL";
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
@@ -174,6 +175,7 @@ public class GUIManager {
 		}
 	}
 	public void setFocusOnDisplay(){
+		removeDeletedTaskFromTaskListDisplay();
 		displayArea.setFocus();
 	}
 	public void setFocusOnCommandBar(){
@@ -200,6 +202,7 @@ public class GUIManager {
 			assert executionResult != null;
 			commandBar.clearUserInput();
 			processAndDisplayExecutionResult(executionResult);
+			resizeMainDisplayArea();
 		}catch(Error err){
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
@@ -240,6 +243,9 @@ public class GUIManager {
 	}
 	//
 	
+	protected void removeDeletedTaskFromTaskListDisplay(){
+		displayArea.removeDeletedTasksFromTaskListTable();
+	}
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
 			exit();
@@ -263,7 +269,11 @@ public class GUIManager {
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
 				displayArea.displayTaskList(result.getTaskList());
-				displayArea.displayTaskDetails(result.getTaskToDisplay());
+				if(result.getDeleteStatus() == true){
+					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
+				}else{
+					displayArea.displayTaskDetails(result.getTaskToDisplay());
+				}
 				break;
 			default:
 				break;
