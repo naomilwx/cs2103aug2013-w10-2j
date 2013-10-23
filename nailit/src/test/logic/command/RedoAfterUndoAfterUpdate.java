@@ -49,7 +49,7 @@ public class RedoAfterUndoAfterUpdate {
 			
 	private static Task task2 = createTask("task2", 
 					"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
-					createDateTime(2013, 4, 2, 1, 0), 2);
+					createDateTime(2013, 4, 2, 1, 0), 1);
 	
 	
 	
@@ -58,7 +58,7 @@ public class RedoAfterUndoAfterUpdate {
 	public void testUndoAfterUpdate() throws Exception {
 		
 		// execute
-		CommandManager cm = new CommandManager();
+		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultDisplayAll);
 		cm.executeCommand(parserResultUpdate);
@@ -68,7 +68,7 @@ public class RedoAfterUndoAfterUpdate {
 		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
-				"Undo successfully.", null, currentTaskList, null);
+				"Redo successfully.", null, currentTaskList, null);
 		
 		testTwoResultObj(resultOfRedo, expectedResult);
 		

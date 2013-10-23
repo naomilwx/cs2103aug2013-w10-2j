@@ -70,7 +70,7 @@ public class RedoAfterUndoAfterAdd {
 		public void testRedoAfterUndoAfterAdd() throws Exception {
 			
 			// execute
-			CommandManager cm = new CommandManager();
+			CommandManagerStub cm = new CommandManagerStub();
 			cm.executeCommand(parserResultAdd1);
 			cm.executeCommand(parserResultAdd2);
 			cm.executeCommand(parserResultAdd3);
