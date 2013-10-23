@@ -51,8 +51,7 @@ public class GUIManager {
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 100;
-	protected static final int EXTENDED_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
-	protected static final int EXTENDED_WINDOW_Y_POS = MAIN_WINDOW_Y_POS;
+	
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
