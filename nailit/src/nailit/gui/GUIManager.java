@@ -313,7 +313,6 @@ public class GUIManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			try{
 				UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK);
 			}catch(Exception e1){
@@ -328,12 +327,12 @@ public class GUIManager {
 			Image trayImage = TRAY_ICON_IMG.getImage();
 			final TrayIcon trayIcon = new TrayIcon(trayImage, NAILIT_TRAY_TOOLTIP_TEXT);
 
-			MenuItem showMain = new MenuItem("Open");
-			MenuItem showAll = new MenuItem("Home");
+			MenuItem showMain = new MenuItem("Main");
+			MenuItem showHome = new MenuItem("Home");
 			MenuItem exitApp = new MenuItem("Exit");
 			final PopupMenu menu = new PopupMenu();
 			menu.add(showMain);
-			menu.add(showAll);
+			menu.add(showHome);
 			menu.add(exitApp);
 
 			trayIcon.setPopupMenu(menu);
@@ -346,11 +345,11 @@ public class GUIManager {
 				}
 			});
 			
-			showAll.addActionListener(new ActionListener(){
+			showHome.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GUIBoss.setVisible(true);
+					homeWindow.setVisible(true);
 				}
 				
 			});
