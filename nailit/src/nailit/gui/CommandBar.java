@@ -166,6 +166,8 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
 					GUIBoss.toggleHistoryWindow();
 					GUIBoss.setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
+					GUIBoss.removeTaskDisplay();
 				}
 			}
 			@Override

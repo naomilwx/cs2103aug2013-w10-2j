@@ -1,6 +1,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -91,12 +92,21 @@ public class TaskTable extends TableDisplay{
 		row.add(timeEndDet);
 		return row;
 	}
-	protected void displayTaskList(Vector<Task> tasks){
+	protected void displayTaskList(Vector<Task> tasks, Task taskToLookOutFor){
+		int taskIDToLookOutFor = Task.TASKID_NULL;
+		if(taskToLookOutFor != null){
+			taskIDToLookOutFor = taskToLookOutFor.getID();
+		}
 		Vector<String> row;
 		for(int i = 0; i < tasks.size(); i++){
+			Task currTask = tasks.get(i);
 			String IDVal = i+1 + "";
-			row = formatTaskForRowDisplay(tasks.get(i), IDVal);
-			addContentToTable(row);	
+			row = formatTaskForRowDisplay(currTask, IDVal);
+			addContentToTable(row);
+			if(taskIDToLookOutFor != Task.TASKID_NULL && taskIDToLookOutFor == currTask.getID()){
+				table.changeSelection(i, noOfCols, false, false);
+				getViewport().setViewPosition(new Point(0, i * TABLE_ROW_HEIGHT));
+			}
 		}
 	}
 }

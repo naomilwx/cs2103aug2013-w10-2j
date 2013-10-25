@@ -250,6 +250,13 @@ public class DisplayArea extends JLayeredPane {
 			addContent(textDisplay, false);
 		}
 	}
+	protected void removeTaskDisplay(){
+		if(textDisplay != null){
+			defaultPane.remove(textDisplay);
+			items.remove(textDisplay);
+		}
+		revalidate();
+	}
 	protected void showDeletedTaskInTaskListTable(Task task){
 		if(task != null){
 			taskTable.addDeletedTaskToTable(task);
@@ -260,13 +267,15 @@ public class DisplayArea extends JLayeredPane {
 			taskTable.clearDeletedTaskRowsFromTable();
 		}
 	}
-	protected void displayTaskList(Vector<Task> tasks){
+	protected void displayTaskList(Result result){
+		Vector<Task>  tasks = result.getTaskList();
 		if(tasks == null){
 			return;
 		}
+		Task task = result.getTaskToDisplay();
 		taskTable = new TaskTable(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		addAdditionalKeyListenerToTaskTable();
-		taskTable.displayTaskList(tasks);
+		taskTable.displayTaskList(tasks, task);
 		addContent(taskTable, false);
 	}
 	private void addAdditionalKeyListenerToTaskTable(){
