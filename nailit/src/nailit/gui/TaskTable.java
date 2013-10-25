@@ -16,6 +16,10 @@ import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class TaskTable extends TableDisplay{
+	private static final int TIMER_INTERVAL = 80;
+	private static final int TIMER_DELAY = 3000; //amount of time before item starts fading out
+	private static final float OPACITY_INTERVAL_STEP = 0.1f;
+	
 	private int deletedTaskRowsNum = 0;
 	
 	public TaskTable(int width, int height, int displayType) {
@@ -52,6 +56,10 @@ public class TaskTable extends TableDisplay{
 				}
 			}
 		};
+	}
+	@Override
+	protected int getSelectedRowDisplayID(){
+		return table.getSelectedRow() + 1 - deletedTaskRowsNum;
 	}
 	@Override
 	protected void setHeaderText(){

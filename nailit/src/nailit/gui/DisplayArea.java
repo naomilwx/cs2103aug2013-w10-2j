@@ -2,6 +2,9 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -15,13 +18,17 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import com.sun.java.swing.SwingUtilities3;
 
 import nailit.common.NIConstants;
 import nailit.common.Result;
@@ -37,9 +44,15 @@ public class DisplayArea extends JLayeredPane {
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	private static final int NULL_FOCUS = -1;
 	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
-	private static final int TIMER_INTERVAL = 200;
+	
+	private static final int TIMER_INTERVAL = 80;
 	private static final int TIMER_DELAY = 3000; //amount of time before item starts fading out
 	private static final float OPACITY_INTERVAL_STEP = 0.1f;
+	protected static final float FULL_OPACITY = 1.0f;
+	protected static final float NO_OPACITY = 0.5f;
+	public static final float MAX_OPACITY_VALUE = 255;
+	
+	private final Timer fadeOutTimer = new Timer(0, null);
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
@@ -196,7 +209,14 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void showNotifications(){
 		popupPane.setVisible(true);
-		Utilities.fadeOutComponent(popupPane.getComponent(0), TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
+				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
+				new Callable(){
+					public Boolean call() throws Exception {
+						removeDeletedTasksFromTaskListTable();
+						return true;
+					}
+		});
 	}
 	
 	protected void addContent(Component component, boolean replace){
@@ -220,6 +240,13 @@ public class DisplayArea extends JLayeredPane {
 			int textDisplayHeight = defaultPane.getHeight()/2;
 			textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
 			textDisplay.displayHTMLFormattedText(details);
+			SwingUtilities.invokeLater(new Runnable(){
+				@Override
+				public void run() {
+					textDisplay.getViewport().setViewPosition(new Point(0, 0));
+				}
+				
+			});
 			addContent(textDisplay, false);
 		}
 	}
@@ -229,7 +256,9 @@ public class DisplayArea extends JLayeredPane {
 		}
 	}
 	protected void removeDeletedTasksFromTaskListTable(){
-		taskTable.clearDeletedTaskRowsFromTable();
+		if(taskTable != null){
+			taskTable.clearDeletedTaskRowsFromTable();
+		}
 	}
 	protected void displayTaskList(Vector<Task> tasks){
 		if(tasks == null){
@@ -269,15 +298,24 @@ public class DisplayArea extends JLayeredPane {
 	}
 	private void taskTableOnDeleteEvent() {
 		GUIBoss.setFocusOnCommandBar();
-		GUIBoss.executeTriggeredTaskDelete(taskTable.getSelectedRowDisplayID());
+		int displayID = taskTable.getSelectedRowDisplayID();
+		if(displayID >= 1){
+			GUIBoss.executeTriggeredTaskDelete(displayID);
+		}
 	}
 	protected void taskTableOnEnterEvent(){
 		GUIBoss.setFocusOnCommandBar();
-		GUIBoss.executeTriggeredTaskDisplay(taskTable.getSelectedRowDisplayID());
+		int displayID = taskTable.getSelectedRowDisplayID();
+		if(displayID >= 1){
+			GUIBoss.executeTriggeredTaskDisplay(displayID);
+		}
 	}
 	protected void taskTableOnCtrlEnterEvent(){
 		GUIBoss.setFocusOnCommandBar();
-		GUIBoss.loadExistingTaskDescriptionInCommandBar(taskTable.getSelectedRowDisplayID());
+		int displayID = taskTable.getSelectedRowDisplayID();
+		if(displayID >= 1){
+			GUIBoss.loadExistingTaskDescriptionInCommandBar(displayID);
+		}
 	}
 	
 	//function to keep top displayed component if it is a table and new display is not a table
@@ -295,5 +333,39 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void setFocus(){
 		defaultPane.requestFocus();
+	}
+	protected void stopAllTimers(){
+		fadeOutTimer.stop();
+	}
+	private void fadeOutComponentAndPerformActionOnComplete(final Component component, final Timer timer,
+			int displayTime, int timeInterval, final float opacityStep, final Callable<?> func){
+		timer.setInitialDelay(displayTime);
+		timer.setDelay(timeInterval);
+		timer.addActionListener(new ActionListener(){
+			int originalOpacity = Utilities.getComponentOpacity(component);
+			float nextOpacityRatio = ((float) originalOpacity)/MAX_OPACITY_VALUE;
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				// TODO Auto-generated method stub
+				nextOpacityRatio -= opacityStep;
+				if(nextOpacityRatio <= NO_OPACITY){
+					timer.stop();
+					component.getParent().setVisible(false);
+					//restore original opacity so component's original background settings is restored when it is made visible again
+					Utilities.setComponenetOpacity(component, originalOpacity);
+					timer.removeActionListener(this);
+					try {
+						func.call();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					int nextOpacity = Math.round(nextOpacityRatio*MAX_OPACITY_VALUE);
+					Utilities.setComponenetOpacity(component, nextOpacity);
+				}
+			}
+			
+		});
+		timer.restart();
 	}
 }
