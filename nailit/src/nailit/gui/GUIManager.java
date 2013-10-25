@@ -203,7 +203,7 @@ public class GUIManager {
 				System.out.println("die!");
 			}
 			assert executionResult != null;
-			commandBar.clearUserInput();
+			clearUserInputAndCleanUpDisplay();
 			processAndDisplayExecutionResult(executionResult);
 			resizeMainDisplayArea();
 		}catch(Error err){
@@ -223,7 +223,11 @@ public class GUIManager {
 		}
 		return executionResult;
 	}
-	
+	private void clearUserInputAndCleanUpDisplay(){
+		commandBar.clearUserInput();
+		displayArea.stopAllTimers();
+		displayArea.removeDeletedTasksFromTaskListTable();
+	}
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
 		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
