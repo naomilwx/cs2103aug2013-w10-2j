@@ -52,8 +52,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected TableDisplay selfRef = this; //for AbstractAction
 	
 	protected int noOfCols;
-	
-//	int deletedTaskRowsNum = 0;
+
 	//listeners
 	
 	private KeyAdapter moreTableMainFrameKeyEventListener = new KeyAdapter(){
@@ -131,10 +130,15 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int col){
 				String colName = "";
-				colName = GUIManager.COMMAND_HISTORY_HEADER[col];
-				if(colName.equals(GUIManager.ID_COL_NAME)){
-					return idDisplayRenderer;
-				}else{
+				switch(tableDisplayType){
+				case Result.HISTORY_DISPLAY:
+					colName = GUIManager.COMMAND_HISTORY_HEADER[col];
+					if(colName.equals(GUIManager.ID_COL_NAME)){
+						return idDisplayRenderer;
+					}else{
+						return super.getCellRenderer(row, col);
+					}
+				default:
 					return super.getCellRenderer(row, col);
 				}
 			}
@@ -228,17 +232,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected int getSelectedRowDisplayID(){
 		return table.getSelectedRow() + 1;
 	}
-//	protected void addDeletedTaskToTable(Vector<String> row){
-//		deletedTaskRowsNum += 1;
-//		addContentToTable(0, row);
-//	}
-//	protected void clearDeletedTaskRowsFromTable(){
-//		while(deletedTaskRowsNum>0){
-//			tableRows.remove(0);
-//			deletedTaskRowsNum -= 1;
-//		}
-//		revalidate();
-//	}
+
 	protected void addContentToTable(int pos, Vector<String> row){
 		tableRows.add(pos, row);
 	}
