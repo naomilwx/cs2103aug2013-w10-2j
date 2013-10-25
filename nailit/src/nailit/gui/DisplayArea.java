@@ -19,15 +19,14 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskDetailsFormatter;
-import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
@@ -38,6 +37,9 @@ public class DisplayArea extends JLayeredPane {
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	private static final int NULL_FOCUS = -1;
 	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
+	private static final int TIMER_INTERVAL = 200;
+	private static final int TIMER_DELAY = 3000; //amount of time before item starts fading out
+	private static final float OPACITY_INTERVAL_STEP = 0.1f;
 	
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
@@ -51,6 +53,7 @@ public class DisplayArea extends JLayeredPane {
 	private int defaultPaneWidth;
 	private int defaultPaneHeight;
 	private int containerHeight;
+	
 	private int currentFocusElement = NULL_FOCUS;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
@@ -193,7 +196,9 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void showNotifications(){
 		popupPane.setVisible(true);
+		Utilities.fadeOutComponent(popupPane.getComponent(0), TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
+	
 	protected void addContent(Component component, boolean replace){
 		if(replace){
 			defaultPane.removeAll();
@@ -220,8 +225,7 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void showDeletedTaskInTaskListTable(Task task){
 		if(task != null){
-			Vector<String> row = formatTaskForRowDisplay(task, GUIManager.DELETED_TASK_DISPLAY_ID);
-			taskTable.addDeletedTaskToTable(row);
+			taskTable.addDeletedTaskToTable(task);
 		}
 	}
 	protected void removeDeletedTasksFromTaskListTable(){
@@ -233,12 +237,7 @@ public class DisplayArea extends JLayeredPane {
 		}
 		taskTable = new TaskTable(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		addAdditionalKeyListenerToTaskTable();
-		Vector<String> row;
-		for(int i = 0; i < tasks.size(); i++){
-			String IDVal = i+1 + "";
-			row = formatTaskForRowDisplay(tasks.get(i), IDVal);
-			taskTable.addContentToTable(row);	
-		}
+		taskTable.displayTaskList(tasks);
 		addContent(taskTable, false);
 	}
 	private void addAdditionalKeyListenerToTaskTable(){
@@ -279,17 +278,6 @@ public class DisplayArea extends JLayeredPane {
 	protected void taskTableOnCtrlEnterEvent(){
 		GUIBoss.setFocusOnCommandBar();
 		GUIBoss.loadExistingTaskDescriptionInCommandBar(taskTable.getSelectedRowDisplayID());
-	}
-	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
-		Vector<String> row = new Vector<String>();
-		row.add(IDVal);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
-		row.add(nameAndTag);
-		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
-		row.add(timeStartDet);
-		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime());
-		row.add(timeEndDet);
-		return row;
 	}
 	
 	//function to keep top displayed component if it is a table and new display is not a table
