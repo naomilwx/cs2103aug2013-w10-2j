@@ -43,7 +43,7 @@ public class DisplayArea extends JLayeredPane {
 	private JPanel defaultPane;
 	private JPanel popupPane;
 	private LinkedList<Component> items;
-	private TableDisplay taskTable;
+	private TaskTable taskTable;
 	private TextDisplay textDisplay;
 	
 	private int displayWidth;
@@ -231,7 +231,7 @@ public class DisplayArea extends JLayeredPane {
 		if(tasks == null){
 			return;
 		}
-		taskTable = new TableDisplay(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		taskTable = new TaskTable(displayWidth, displayHeight , Result.LIST_DISPLAY);
 		addAdditionalKeyListenerToTaskTable();
 		Vector<String> row;
 		for(int i = 0; i < tasks.size(); i++){
@@ -297,7 +297,7 @@ public class DisplayArea extends JLayeredPane {
 		Component first = items.peekFirst();
 		items.clear();
 		defaultPane.removeAll();
-		if((first instanceof TableDisplay) && !(newComponent instanceof TableDisplay)){
+		if((first instanceof TaskTable) && !(newComponent instanceof TaskTable)){
 			items.add(first);
 			defaultPane.add(first);
 		}
