@@ -2,13 +2,17 @@ package nailit.gui;
 
 import java.awt.Color;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.BoxLayout;
+import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.InputEvent;
@@ -88,6 +92,7 @@ public class CommandBar extends JPanel {
 		textBar = new JTextArea();
 		configureTextBarWrapper();
 		configureTextInputField();
+		addTextInputFieldKeyBindings();
 		addListenersToTextInputField();
 		
 		textBarWrapper.setViewportView(textBar);
@@ -119,6 +124,18 @@ public class CommandBar extends JPanel {
 		int pos = textBar.getCaretPosition();
 		textBar.insert("\n", pos);
 	}
+	
+	private void addTextInputFieldKeyBindings(){
+		InputMap textFieldInputMap = textBar.getInputMap();
+		ActionMap textFieldActionMap = textBar.getActionMap();
+		textFieldInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "key enter");
+		textFieldActionMap.put("key enter", new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent event){
+				GUIBoss.executeUserInputCommand(getUserInput());
+			}
+		});
+	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
 			private boolean ctrlPressed = false;
@@ -133,8 +150,6 @@ public class CommandBar extends JPanel {
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineOfTextFromPos();
 					GUIBoss.resizeMainDisplayArea();
-				}else if(keyCode == KeyEvent.VK_ENTER){
-					GUIBoss.executeUserInputCommand(getUserInput());
 				}else if(keyCode == KeyEvent.VK_TAB){
 					resetKeys();
 					GUIBoss.setFocusOnDisplay();
@@ -143,14 +158,12 @@ public class CommandBar extends JPanel {
 				}else if(keyCode == KeyEvent.VK_SHIFT){
 					shiftDown = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
-					resetKeys();
 					GUIBoss.toggleHomeWindow();
 					GUIBoss.setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
 					resetKeys();
 					GUIBoss.setVisible(false);
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
-					resetKeys();
 					GUIBoss.toggleHistoryWindow();
 					GUIBoss.setFocusOnCommandBar();
 				}
