@@ -249,7 +249,9 @@ public class GUIManager {
 		}
 	}
 	//
-	
+	protected void removeTaskDisplay(){
+		displayArea.removeTaskDisplay();
+	}
 	protected void removeDeletedTaskFromTaskListDisplay(){
 		displayArea.removeDeletedTasksFromTaskListTable();
 	}
@@ -268,14 +270,14 @@ public class GUIManager {
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
-				displayArea.displayTaskList(result.getTaskList());
+				displayArea.displayTaskList(result);
 				break;
 			case Result.HISTORY_DISPLAY:
 				historyWindow.displayHistoryList(result.getHistoryList());
 				historyWindow.setVisible(true);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
-				displayArea.displayTaskList(result.getTaskList());
+				displayArea.displayTaskList(result);
 				if(result.getDeleteStatus() == true){
 					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
 				}else{
