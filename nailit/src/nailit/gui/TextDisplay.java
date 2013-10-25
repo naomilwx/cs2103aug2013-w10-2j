@@ -9,6 +9,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
 
 public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
@@ -42,6 +43,8 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 	}
 	protected void displayHTMLFormattedText(String text){
 		textPane.setContentType("text/html");
+		HTMLEditorKit htmlEditorKit = new HTMLEditorKit();
+		textPane.setEditorKit(htmlEditorKit);
 		displayText(text);
 	}
 	protected void centeriseTextDisplay(){

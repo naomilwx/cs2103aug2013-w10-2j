@@ -2,6 +2,7 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -194,7 +195,8 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		if(tableRows.isEmpty()){
 			table.getParent().requestFocus();
 		}else{
-			int selectedRow = table.getSelectedRow();
+			int currentRow = table.getSelectedRow();
+			int selectedRow =currentRow;
 			
 			if(selectedRow == NO_SELECTED_ROW){
 				selectedRow = 0;
@@ -209,6 +211,14 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 				selectedRow = 0;
 				table.changeSelection(selectedRow, noOfCols, false, false);
 			}else{
+				Point viewPos = getViewport().getViewPosition();
+				int XPos = viewPos.x;
+				int YPos = viewPos.y;
+				YPos += (selectedRow - currentRow) * TABLE_ROW_HEIGHT;
+				if(YPos < 0){
+					YPos = 0;
+				}
+				getViewport().setViewPosition(new Point(XPos, YPos));
 				table.changeSelection(selectedRow, noOfCols, false, false);
 			}
 		}
