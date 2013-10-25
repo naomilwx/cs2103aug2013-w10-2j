@@ -63,8 +63,9 @@ public class TaskTable extends TableDisplay{
 	protected void setRowWidths(){
 		setRowWidths(table, GUIManager.TASKS_TABLE_COLUMN_WIDTH);
 	}
-	protected void addDeletedTaskToTable(Vector<String> row){
+	protected void addDeletedTaskToTable(Task task){
 		deletedTaskRowsNum += 1;
+		Vector<String> row = formatTaskForRowDisplay(task, GUIManager.DELETED_TASK_DISPLAY_ID);
 		addContentToTable(0, row);
 	}
 	protected void clearDeletedTaskRowsFromTable(){
@@ -73,5 +74,24 @@ public class TaskTable extends TableDisplay{
 			deletedTaskRowsNum -= 1;
 		}
 		revalidate();
+	}
+	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
+		Vector<String> row = new Vector<String>();
+		row.add(IDVal);
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
+		row.add(nameAndTag);
+		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
+		row.add(timeStartDet);
+		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime());
+		row.add(timeEndDet);
+		return row;
+	}
+	protected void displayTaskList(Vector<Task> tasks){
+		Vector<String> row;
+		for(int i = 0; i < tasks.size(); i++){
+			String IDVal = i+1 + "";
+			row = formatTaskForRowDisplay(tasks.get(i), IDVal);
+			addContentToTable(row);	
+		}
 	}
 }
