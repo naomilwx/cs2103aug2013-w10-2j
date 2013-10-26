@@ -63,5 +63,18 @@ public class HelpWindowConstants {
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
 	}
-	
+	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	static{
+		DISPLAYAREA_KEYBOARD_COMMANDS.put("Shift", "Toggle focus between elements in display area");
+		DISPLAYAREA_KEYBOARD_COMMANDS.put("ESC", "Set focus on command bar");
+		DISPLAYAREA_KEYBOARD_COMMANDS.put("TAB", "Set focus on task table (when focus is on pane with task table");
+	}
+	public static final HashMap<String, String> TASKTABLE_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	static{
+		TASKTABLE_KEYBOARD_COMMANDS.put("Down", "Scrolldown");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Up", "Scrollup");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Deleted Highlighted Task");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put updated task details in command bar");
+	}
 }
