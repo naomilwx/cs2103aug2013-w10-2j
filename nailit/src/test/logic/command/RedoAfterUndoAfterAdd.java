@@ -76,6 +76,8 @@ public class RedoAfterUndoAfterAdd {
 			cm.executeCommand(parserResultAdd3);
 			cm.executeCommand(parserResultDisplayAll);
 			cm.executeCommand(parserResultUndo);
+			cm.executeCommand(parserResultUndo);
+			cm.executeCommand(parserResultRedo);
 			Result resultOfRedo = cm.executeCommand(parserResultRedo);
 			Vector<Task> currentTaskList = new Vector<Task>();
 			currentTaskList.add(task1);
