@@ -1,11 +1,17 @@
 package nailit.logic;
 
 import nailit.common.TaskPriority;
+import org.apache.commons.lang3.StringUtils;
 
 public enum CommandType {
-	ADD, COMPLETE, DELETE, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
+	ADD, ADDREMINDER, COMPLETE, DELETE, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
 
-
+	public static final int DELETE_COST = 1;
+	public static final int INSERT_COST = 1;
+	public static final int REPLACE_COST = 2;
+	public static final int TWIDDLE_COST = 2;
+	
+	
 	public static boolean isCommandType(String p){
 		for(CommandType type: CommandType.values()){
 			if(p.equalsIgnoreCase(type.toString())){
@@ -13,5 +19,20 @@ public enum CommandType {
 			}
 		}
 		return false;
+	}
+	
+	
+	public static CommandType isApproximateCommandType(String p){
+		int min = Integer.MAX_VALUE;
+		CommandType answer = CommandType.INVALID;
+		for(CommandType type: CommandType.values()){
+			if (StringUtils.getLevenshteinDistance(type.values().toString(), p) < min){
+				min = StringUtils.getLevenshteinDistance(type.values().toString(), p);
+				if (min<p.length()){
+					answer = type;
+				}
+			}
+		}
+		return answer;
 	}
 }
