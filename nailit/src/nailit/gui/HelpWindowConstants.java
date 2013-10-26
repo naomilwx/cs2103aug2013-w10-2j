@@ -21,7 +21,7 @@ public class HelpWindowConstants {
 	public static final String[] ADDREM_SYNTAX = {"Add Reminder for Task", "addReminder <ID>, <start date>"};
 	public static final String[] DELREM_SYNTAX = {"Remove Task Reminder", "delReminder <ID>"};
 	
-	public static HashMap<String, Vector<String[]>> COMMAND_SYNTAX_LIST = new HashMap<String, Vector<String[]>>();
+	public static final HashMap<String, Vector<String[]>> COMMAND_SYNTAX_LIST = new HashMap<String, Vector<String[]>>();
 	static{
 		Vector<String[]> addCommandSyntax = new Vector<String[]>();
 		addCommandSyntax.add(ADD_SYNTAX);
@@ -54,5 +54,14 @@ public class HelpWindowConstants {
 //		COMMAND_SYNTAX_LIST.put(CommandType.DELETEREMINDER.toString(), delremCommandSyntax);
 	}
 	
+	public static final HashMap<String, String> COMMANDBAR_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	static{
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+H", "Toggle Home Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+,", "Toggle Main Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+J", "Toggle History Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+W", "Hide Task Details Display");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
+	}
 	
 }
