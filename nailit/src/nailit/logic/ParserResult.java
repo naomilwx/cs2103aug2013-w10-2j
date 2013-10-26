@@ -14,6 +14,7 @@ public class ParserResult{
 	private String name;
 	private TaskPriority priority;
 	private String tag;
+	private String description;
 	
 	private DateTime startTime;
 	private DateTime endTime;
@@ -32,6 +33,7 @@ public class ParserResult{
 		endTime = null;
 		isDisplayAll = false;
 		isSetPriority = false;
+		description = null;
 	}
 	
 	public void setCommand(CommandType commandExternal){
@@ -156,6 +158,22 @@ public class ParserResult{
 	
 	public boolean isNullTag(){
 		if (tag == "" || tag == null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void setDescription(String descriptionExternal){
+		description = descriptionExternal;
+	}
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	public boolean isNullDescription(){
+		if (description == "" || description == null){
 			return true;
 		}else{
 			return false;
