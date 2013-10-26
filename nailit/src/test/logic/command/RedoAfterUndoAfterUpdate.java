@@ -56,13 +56,15 @@ public class RedoAfterUndoAfterUpdate {
 	
 	@Test
 	public void testUndoAfterUpdate() throws Exception {
-		
+		// add, update, undo, undo, redo, redo
 		// execute
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultDisplayAll);
 		cm.executeCommand(parserResultUpdate);
 		cm.executeCommand(parserResultUndo);
+		cm.executeCommand(parserResultUndo);
+		cm.executeCommand(parserResultRedo);
 		Result resultOfRedo = cm.executeCommand(parserResultRedo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task2);
