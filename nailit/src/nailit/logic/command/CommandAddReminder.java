@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.joda.time.DateTime;
 
 import nailit.common.NIConstants;
+import nailit.common.Reminder;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -74,6 +75,7 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void addReminderDate() {
+		// set the reminder date in the task
 		storer.addReminder(taskID, reminderDateToAdd); // add reminder to the storage
 	}
 
