@@ -44,9 +44,17 @@ public class ParserManager {
 		case DISPLAY:
 			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
 			return displayParserManager.execute();
+		case REDO:
+			if (commandToExecute.equalsIgnoreCase("REDO"))
+				commandToExecute = "";
+			RedoParser redoParserManager = new RedoParser(commandToExecute);
+			return redoParserManager.execute();
 		case SEARCH:
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
+		case UNCOMPLETE:
+			UncompleteParser uncompleteParserManager = new UncompleteParser(commandToExecute);
+			return uncompleteParserManager.execute();
 		case UNDO:
 			if (commandToExecute.equalsIgnoreCase("UNDO"))
 				commandToExecute = "";
