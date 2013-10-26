@@ -66,6 +66,9 @@ public class ParserManager {
 		case UPDATE:
 			UpdateParser updateParserManager = new UpdateParser(commandToExecute);
 			return updateParserManager.execute();
+		case ADDREMINDER:
+			AddReminderParser AddReminderParserManager = new AddReminderParser(commandToExecute);
+			return AddReminderParserManager.execute();
 		case EXIT:
 			ExitParser exitParserManager = new ExitParser(commandToExecute);
 			return exitParserManager.execute();
