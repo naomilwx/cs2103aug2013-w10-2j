@@ -130,10 +130,9 @@ public class CommandManager {
 	}
 	
 	private Result addReminder() throws Exception {
-		CommandAddReminder carObj = new CommandAddReminder(parserResultInstance, storer);
+		CommandAddReminder carObj = new CommandAddReminder(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = carObj.executeCommand(); // the result display 
 		Vector<Task> reminderList = storer.getTodayReminderList(); // provided by storage api
-		
 		return new Result();
 	}
 	
