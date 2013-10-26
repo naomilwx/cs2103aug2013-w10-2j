@@ -14,4 +14,13 @@ public enum CommandType {
 		}
 		return false;
 	}
+	
+	public static boolean isApproximateCommandType(String p){
+		for(CommandType type: CommandType.values()){
+			if(p,type.toString())){
+				return true;
+			}
+		}
+		return false;
+	}
 }
