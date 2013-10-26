@@ -14,9 +14,11 @@ public class Result {
 	private boolean isExit;
 	private boolean isSuccessful;
 	private boolean isDelete = false;
+	private boolean updateReminderList = false;
 	private int displayType = NULL_DISPLAY;
 	private String notificationPrintOut = EMPTY_DISPLAY;
 	private Vector<Task> taskList = new Vector<Task>();
+	private Vector<Task> reminderList = new Vector<Task>();
 	private Vector<String> historyList = new Vector<String>();
 	private Task task = null;
 	
@@ -83,6 +85,12 @@ public class Result {
 	public void setDeleteStatus(boolean isDeleteCommand){
 		isDelete = isDeleteCommand;
 	}
+	public void setUpdateReminderList(boolean updateReminder){
+		updateReminderList = updateReminder;
+	}
+	public void setReminderList(Vector<Task> reminders){
+		reminderList = reminders;
+	}
 	//getters
 	public boolean getExitStatus(){
 		return isExit;
@@ -93,6 +101,9 @@ public class Result {
 	public boolean getExecutionSuccess(){
 		return isSuccessful;
 	}
+	public boolean isUpdateReminderList(){
+		return updateReminderList;
+	}
 	public int getCommandType(){
 		return displayType;
 	}
@@ -101,6 +112,9 @@ public class Result {
 	}
 	public Vector<Task> getTaskList(){
 		return taskList;
+	}
+	public Vector<Task> getReminderList(){
+		return reminderList;
 	}
 	public Vector<String> getHistoryList(){
 		return historyList;
