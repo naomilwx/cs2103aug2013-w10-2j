@@ -7,7 +7,6 @@ import nailit.logic.ParserResult;
 public class ShowHistoryParser extends Parser {
 	
 	private String userCommand;
-	private String[] listOfCommand;
 	
 	public ShowHistoryParser (String command){
 		userCommand = command;
@@ -16,10 +15,8 @@ public class ShowHistoryParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 	
 		resultExecution.setCommand(CommandType.SHOWHISTORY);
-		resultExecution.setTaskID(Integer.parseInt(userCommand));
 		
 		return resultExecution;
 	}
