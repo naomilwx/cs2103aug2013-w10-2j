@@ -18,12 +18,17 @@ public class AddParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		resultExecution.setCommand(CommandType.ADD);
 		if (userCommand.equals(""))
 			throw new Error("Wrong Format");
+		int startIndex=-1, endIndex;
+		for (startIndex=0; startIndex<userCommand.length(); startIndex++){
+			if (userCommand.charAt(startIndex) == '(' && userCommand.substring(startIndex).contains(")"))
+				break;
+		}
 		
+		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommand.length; i++) {
 			listOfCommand[i] = listOfCommand[i].trim();
 			System.out.println(listOfCommand[i]);

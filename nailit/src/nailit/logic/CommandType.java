@@ -3,7 +3,7 @@ package nailit.logic;
 import nailit.common.TaskPriority;
 
 public enum CommandType {
-	ADD, ADDDESCRIPTION, COMPLETE, DELETE, DISPLAY, EXIT, SEARCH, SHOWHISTORY, UNDO, UPDATE, INVALID, REDO;
+	ADD, ADDDESCRIPTION, COMPLETE, DELETE, DISPLAY, EXIT, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, INVALID, REDO;
 
 
 	public static boolean isCommandType(String p){
