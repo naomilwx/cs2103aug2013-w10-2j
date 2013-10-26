@@ -65,42 +65,14 @@ public class DataManager {
 		return taskTable.remove(ID);
 	}
 	
-	public void addReminder(Reminder reminder){
-		assert(isValidReminderToBeAdded(reminder));
-		int ID = reminder.getID();
-		Task task = taskTable.get(ID);
-		task.setReminder(reminder);
-		taskTable.put(ID, task);
-	}
 	
-	public void delReminder(int ID){
-		assert(isValidReminderToBeDelete(ID));
-		
-	}
-	
-	public void markAsCompleted(int ID){
-		
-	}
 	public int getNextValidID(){
 		return nextValidID;
 	}
 	public HashMap<Integer,Task> getTaskList(){
 		return taskTable;
 	}
-	public HashMap<Integer,Reminder> getRemindersList(){
-		Set<Integer> keys = taskTable.keySet();
-		Iterator<Integer> iterator = keys.iterator();
-		HashMap<Integer,Reminder> reminderTable = new HashMap<Integer,Reminder>();
-		
-		while(iterator.hasNext()){
-			int key = iterator.next();
-			
-			Task task = taskTable.get(key);
-			
-			reminderTable.put(task.getID(),task.getReminder());
-		}
-		return reminderTable;
-	}
+	
 	public void setTaskList(HashMap<Integer,Task> h){
 		taskTable = h;
 	}
@@ -131,11 +103,4 @@ public class DataManager {
 		return ID>=1&&ID<nextValidID;
 	}
 	
-	private boolean isValidReminderToBeAdded(Reminder reminder){
-		return taskTable.containsKey(reminder.getID());
-	}
-	
-	private boolean isValidReminderToBeDelete(int ID){
-		return taskTable.containsKey(ID)&&taskTable.get(ID)!=null&&taskTable.get(ID).getReminder()!=null;
-	}
 }
