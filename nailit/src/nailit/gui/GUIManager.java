@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.Point;
@@ -51,8 +52,7 @@ public class GUIManager {
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 100;
-	protected static final int EXTENDED_WINDOW_X_POS = MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + WINDOW_RIGHT_BUFFER;
-	protected static final int EXTENDED_WINDOW_Y_POS = MAIN_WINDOW_Y_POS;
+	
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
@@ -184,6 +184,9 @@ public class GUIManager {
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
 	}
+	protected Dimension getMainWindowLocationCoordinates(){
+		return new Dimension(mainWindow.getX(), mainWindow.getY());
+	}
 	protected void resizeMainDisplayArea(){
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
@@ -200,7 +203,7 @@ public class GUIManager {
 				System.out.println("die!");
 			}
 			assert executionResult != null;
-			commandBar.clearUserInput();
+			clearUserInputAndCleanUpDisplay();
 			processAndDisplayExecutionResult(executionResult);
 			resizeMainDisplayArea();
 		}catch(Error err){
@@ -220,7 +223,11 @@ public class GUIManager {
 		}
 		return executionResult;
 	}
-	
+	private void clearUserInputAndCleanUpDisplay(){
+		commandBar.clearUserInput();
+		displayArea.stopAllTimers();
+		displayArea.removeDeletedTasksFromTaskListTable();
+	}
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
 		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
@@ -242,7 +249,9 @@ public class GUIManager {
 		}
 	}
 	//
-	
+	protected void removeTaskDisplay(){
+		displayArea.removeTaskDisplay();
+	}
 	protected void removeDeletedTaskFromTaskListDisplay(){
 		displayArea.removeDeletedTasksFromTaskListTable();
 	}
@@ -261,14 +270,14 @@ public class GUIManager {
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
-				displayArea.displayTaskList(result.getTaskList());
+				displayArea.displayTaskList(result);
 				break;
 			case Result.HISTORY_DISPLAY:
 				historyWindow.displayHistoryList(result.getHistoryList());
 				historyWindow.setVisible(true);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
-				displayArea.displayTaskList(result.getTaskList());
+				displayArea.displayTaskList(result);
 				if(result.getDeleteStatus() == true){
 					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
 				}else{
@@ -310,7 +319,6 @@ public class GUIManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			try{
 				UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK);
 			}catch(Exception e1){
@@ -325,12 +333,12 @@ public class GUIManager {
 			Image trayImage = TRAY_ICON_IMG.getImage();
 			final TrayIcon trayIcon = new TrayIcon(trayImage, NAILIT_TRAY_TOOLTIP_TEXT);
 
-			MenuItem showMain = new MenuItem("Open");
-			MenuItem showAll = new MenuItem("Home");
+			MenuItem showMain = new MenuItem("Main");
+			MenuItem showHome = new MenuItem("Home");
 			MenuItem exitApp = new MenuItem("Exit");
 			final PopupMenu menu = new PopupMenu();
 			menu.add(showMain);
-			menu.add(showAll);
+			menu.add(showHome);
 			menu.add(exitApp);
 
 			trayIcon.setPopupMenu(menu);
@@ -343,11 +351,11 @@ public class GUIManager {
 				}
 			});
 			
-			showAll.addActionListener(new ActionListener(){
+			showHome.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GUIBoss.setVisible(true);
+					homeWindow.setVisible(true);
 				}
 				
 			});

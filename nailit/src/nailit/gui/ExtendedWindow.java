@@ -24,7 +24,8 @@ public class ExtendedWindow extends JFrame{
 	protected int contentWidth;
 	protected int contentHeight;
 	
-	
+	protected int windowXPos = GUIManager.MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
+	protected int windowYPos = GUIManager.MAIN_WINDOW_Y_POS;
 	public ExtendedWindow(final GUIManager GUIMain, int width){
 		GUIBoss = GUIMain;
 		windowWidth = width;
@@ -36,9 +37,19 @@ public class ExtendedWindow extends JFrame{
 	}
 	private void configureHomeWindowFrame(){
 		setUndecorated(true);
-		setLocation(GUIManager.EXTENDED_WINDOW_X_POS, GUIManager.EXTENDED_WINDOW_Y_POS);
-		setSize(windowWidth, EXTENDED_WINDOW_HEIGHT);
+		positionFrameBasedOnMainWindowPos();
 		setResizable(false);
+	}
+	private void positionFrameBasedOnMainWindowPos(){
+		recalculateExtendedWindowPosition();
+		setLocation(windowXPos, windowYPos);
+		setSize(windowWidth, EXTENDED_WINDOW_HEIGHT);
+	}
+	private void recalculateExtendedWindowPosition(){
+		int mainWindowXPos = GUIBoss.getMainWindowLocationCoordinates().width;
+		int mainWindowYPos = GUIBoss.getMainWindowLocationCoordinates().height;
+		windowXPos = mainWindowXPos + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
+		windowYPos = mainWindowYPos;
 	}
 	private void createAndInitialiseContentPane(){
 		contentPane = new JPanel();
@@ -51,5 +62,10 @@ public class ExtendedWindow extends JFrame{
 	}
 	protected void setFocus() {
 		displayPane.requestFocus();
+	}
+	@Override
+	public void setVisible(boolean isVisible){
+		positionFrameBasedOnMainWindowPos();
+		super.setVisible(isVisible);
 	}
 }
