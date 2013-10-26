@@ -58,7 +58,9 @@ public class UndoAfterAddTest {
 	
 	
 	
-	
+	/*
+	 * This test tests using use cases: add->add->add->displayAll->undo->undo
+	 * */
 	@Test
 	public void testUndoAfterAdd() throws Exception {
 		

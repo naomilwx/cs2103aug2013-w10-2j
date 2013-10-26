@@ -171,13 +171,20 @@ public class CommandManager {
 				int currentTaskID = currentTask.getID();
 				if(currentTaskID == taskID) {
 					currentTaskList.remove(count);
-					if(commandType == CommandType.UPDATE) {
-						CommandUpdate cu = (CommandUpdate)commandToRedo;
-						currentTaskList.add(cu.getUpdatedTask());
-						sort();
-					}
 					break;
 				} 
+			}
+			
+			if(commandType == CommandType.UPDATE) {
+				CommandUpdate cu = (CommandUpdate)commandToRedo;
+				currentTaskList.add(cu.getUpdatedTask());
+				sort();
+			} else if(commandType == CommandType.COMPLETE) {
+				CommandMarkOrUnmarkCompleted cMOrUM = (CommandMarkOrUnmarkCompleted)commandToUndo;
+				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
+					currentTaskList.add(cMOrUM.getTaskRelated());
+					sort();
+				}
 			}
 		}
 		
@@ -242,13 +249,23 @@ public class CommandManager {
 				int currentTaskID = currentTask.getID();
 				if(currentTaskID == taskID) {
 					currentTaskList.remove(count);
-					if(commandType == CommandType.UPDATE) {
-						CommandUpdate cu = (CommandUpdate)commandToUndo;
-						currentTaskList.add(cu.getRetrievedTask());
-						sort();
-					}
 					break;
 				} 
+			}
+			
+			// add it to the task list if the task fit the filter after the undo
+			if(commandType == CommandType.UPDATE) {
+				CommandUpdate cu = (CommandUpdate)commandToUndo;
+				if(isTheTaskFitTheFilter(cu.getRetrievedTask())) { // if updated task fit the filter, add it back
+					currentTaskList.add(cu.getRetrievedTask());
+					sort();
+				}
+			} else if(commandType == CommandType.COMPLETE) {
+				CommandMarkOrUnmarkCompleted cMOrUM = (CommandMarkOrUnmarkCompleted)commandToUndo;
+				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
+					currentTaskList.add(cMOrUM.getTaskRelated());
+					sort();
+				}
 			}
 		}
 	}
@@ -384,11 +401,30 @@ public class CommandManager {
 		}
 	}
 
-	private Result complete() {
-		return null;
-		// TODO Auto-generated method stub
+	private Result complete() throws Exception {
+		CommandMarkOrUnmarkCompleted newMOrUnMCompletedObj = new CommandMarkOrUnmarkCompleted(parserResultInstance, storer, currentTaskList);
+		Result resultToPassToGUI = newMOrUnMCompletedObj.executeCommand();
+		// need to attach currentTaskList to the resultToPassToGUI, if success
+		if(newMOrUnMCompletedObj.isCompleted()) { // successfully mark as completed, the task must be in the 
+			updateCurrentTaskListAfterMarkCompleted(newMOrUnMCompletedObj);
+			// add to history
+			addNewCommandObjToOperationsHistory(newMOrUnMCompletedObj);
+		}
+		resultToPassToGUI.setTaskList(currentTaskList);
+		return resultToPassToGUI;
 	}
 	
+	// guaranteed that the task display ID is valid
+	private void updateCurrentTaskListAfterMarkCompleted(
+			CommandMarkOrUnmarkCompleted newMOrUnMCompletedObj) {
+		int displayID = newMOrUnMCompletedObj.getDisplayID();
+		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
+		taskToMarkAsCompleted.setCompleted(true);
+		if(!isTheTaskFitTheFilter(taskToMarkAsCompleted)) { // does not fit the filter after being marked
+			currentTaskList.remove(displayID - 1);
+		}
+	}
+
 	private Result exit() {
 		CommandExit newExitCommandObj = new CommandExit(parserResultInstance, storer);
 		Result resultToPassToGUI = newExitCommandObj.executeCommand();
