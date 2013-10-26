@@ -98,7 +98,7 @@ public class StorageManagerTest {
 		testRemoveCommand("",1);
 		Task taskRemoveUndo = task1.copy();
 		taskRemoveUndo.setID(1);
-		testAddCommand("" +
+		testUndoRemoveCommand("" +
 					   "1,first task,null,null,1,,,0\n",1,taskRemoveUndo);
 		
 	}
@@ -245,7 +245,7 @@ public class StorageManagerTest {
 	public void testAddCommand(String expected,int expectedID,Task task) throws FileCorruptionException{
 		String out;
 		try{
-			int ID = sto.add(task);
+			int ID = sto.add(task,false);
 			Vector<Task> v = sto.retrieveAll();
 			try{
 				assertEquals(expectedID,ID);
@@ -260,7 +260,23 @@ public class StorageManagerTest {
 		assertEquals(expected,out);
 	}
 	
-
+	public void testUndoRemoveCommand(String expected,int expectedID,Task task){
+		String out;
+		try{
+			int ID = sto.add(task,true);
+			Vector<Task> v = sto.retrieveAll();
+			try{
+				assertEquals(expectedID,ID);
+				out = printVector(v);
+			}catch(AssertionError a1){
+				out = "The number is not match!"; 
+			}
+		}catch(AssertionError a2){
+			out = "The ID "+task.getID()+" is out of the range";
+		}
+		
+		assertEquals(expected,out);
+	}
 	public void testRemoveCommand(String expected,int ID) {
 		String out;
 		try {

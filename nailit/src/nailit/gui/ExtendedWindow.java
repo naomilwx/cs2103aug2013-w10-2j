@@ -1,3 +1,4 @@
+//@author A0091372H
 package nailit.gui;
 
 import java.awt.Component;
@@ -8,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import nailit.common.Result;
+
 public class ExtendedWindow extends JFrame{
 	protected static final int EXTENDED_WINDOW_HEIGHT = MainWindow.WINDOW_HEIGHT;
 	protected static final int EXTENDED_WINDOW_BORDER_WIDTH = 3;
@@ -15,47 +18,62 @@ public class ExtendedWindow extends JFrame{
 	protected static final int EXTENDED_WINDOW_X_BUFFER = 10;
 	protected static final int EXTENDED_WINDOW_Y_BUFFER = 10;
 	
+	
 	protected GUIManager GUIBoss;
 	protected JPanel contentPane;
 	protected ScrollableFocusableDisplay displayPane;
 	protected int displayPaneWidth;
 	protected int displayPaneHeight;
 	protected int windowWidth;
+	protected int windowHeight = EXTENDED_WINDOW_HEIGHT;
 	protected int contentWidth;
 	protected int contentHeight;
 	
-	protected int windowXPos = GUIManager.MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
-	protected int windowYPos = GUIManager.MAIN_WINDOW_Y_POS;
+	protected int defaultXPos = GUIManager.MAIN_WINDOW_X_POS + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
+	protected int defaultYPos = GUIManager.MAIN_WINDOW_Y_POS;
+	protected int windowXPos = defaultXPos;
+	protected int windowYPos = defaultYPos;
+	
 	public ExtendedWindow(final GUIManager GUIMain, int width){
 		GUIBoss = GUIMain;
 		windowWidth = width;
 		initialiseHomeWindow();
 	}
-	private void initialiseHomeWindow(){
+	protected void initialiseHomeWindow(){
 		configureHomeWindowFrame();
 		createAndInitialiseContentPane();
 	}
-	private void configureHomeWindowFrame(){
+	protected void configureHomeWindowFrame(){
 		setUndecorated(true);
 		positionFrameBasedOnMainWindowPos();
 		setResizable(false);
 	}
-	private void positionFrameBasedOnMainWindowPos(){
+	protected void positionFrameBasedOnMainWindowPos(){
 		recalculateExtendedWindowPosition();
 		setLocation(windowXPos, windowYPos);
-		setSize(windowWidth, EXTENDED_WINDOW_HEIGHT);
+		setSize(windowWidth, windowHeight);
 	}
-	private void recalculateExtendedWindowPosition(){
+	protected void recalculateExtendedWindowPosition(){
 		int mainWindowXPos = GUIBoss.getMainWindowLocationCoordinates().width;
 		int mainWindowYPos = GUIBoss.getMainWindowLocationCoordinates().height;
 		windowXPos = mainWindowXPos + MainWindow.WINDOW_WIDTH + GUIManager.WINDOW_RIGHT_BUFFER;
 		windowYPos = mainWindowYPos;
 	}
-	private void createAndInitialiseContentPane(){
+	protected void createAndInitialiseContentPane(){
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		contentPane.setBorder(EXTENDED_WINDOW_BORDER);
 		setContentPane(contentPane);
+	}
+	protected void setWindowContentSize(){
+		contentHeight = windowHeight - 2 * EXTENDED_WINDOW_Y_BUFFER;
+		contentWidth = windowWidth - 2 * EXTENDED_WINDOW_X_BUFFER;
+	}
+	protected void initialiseAndConfigureWindowContent(){
+		setWindowContentSize();
+		displayPane = new TextDisplay(contentWidth, contentHeight);
+		displayPane.setLocation(EXTENDED_WINDOW_X_BUFFER, EXTENDED_WINDOW_Y_BUFFER);
+		addItem(displayPane);
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
@@ -65,7 +83,11 @@ public class ExtendedWindow extends JFrame{
 	}
 	@Override
 	public void setVisible(boolean isVisible){
-		positionFrameBasedOnMainWindowPos();
+		if(GUIBoss.getMainWindowVisibility()){
+			positionFrameBasedOnMainWindowPos();
+		}else{
+			setLocation(defaultXPos, defaultYPos);
+		}
 		super.setVisible(isVisible);
 	}
 }

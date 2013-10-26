@@ -1,3 +1,4 @@
+//@author A0091372H
 package nailit.gui;
 
 import java.awt.Color;
@@ -368,9 +369,11 @@ public class DisplayArea extends JLayeredPane {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}else{
+				}else if(component.getParent().isVisible()){
 					int nextOpacity = Math.round(nextOpacityRatio*MAX_OPACITY_VALUE);
 					Utilities.setComponenetOpacity(component, nextOpacity);
+				}else{
+					timer.stop();
 				}
 			}
 			
