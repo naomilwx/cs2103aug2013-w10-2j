@@ -4,19 +4,20 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Vector;
 
+import org.joda.time.DateTime;
+import org.junit.Test;
+
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.command.CommandManager;
+import nailit.storage.FileCorruptionException;
 
-import org.joda.time.DateTime;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-@Category(CommandTest.class)
-public class UndoAfterDeleteTest {
-	
+
+
+public class CommandAddTest {
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
 			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0);
@@ -25,24 +26,11 @@ public class UndoAfterDeleteTest {
 			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 0);
 	
-	private static ParserResult parserResultAdd3 = createPR(CommandType.ADD, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-			createDateTime(2013, 1, 9, 1, 0), false, 0);
-	
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
-	
-	private static ParserResult parserResultDelete = createPR(CommandType.DELETE, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-			createDateTime(2013, 1, 9, 1, 0), false, 2);
-	
-	// undo parserResult
-	private static ParserResult parserResultUndo = createPR(CommandType.UNDO, "task3", 
-				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-				createDateTime(2013, 1, 9, 1, 0), false, 0); // only the command type matter
 	
 	// create the expected result
 			// create task objs
@@ -56,31 +44,31 @@ public class UndoAfterDeleteTest {
 					createDateTime(2013, 4, 2, 1, 0), 2);
 	
 	
+	
 	/*
-	 * This test tests using use cases: add->add->displayAll->delete->undo->undo
+	 * This test tests using use cases: add->add->add->displayAll->undo->undo
 	 * */
 	@Test
-	public void testUndoAfterDelete() throws Exception {
+	public void testAdd() throws Exception {
 		
 		// execute
+		// undo twice
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultAdd2);
-		cm.executeCommand(parserResultDisplayAll);
-		cm.executeCommand(parserResultDelete);
-		
-		cm.executeCommand(parserResultUndo);
-		Result resultOfDelete = cm.executeCommand(parserResultUndo); // undo one delete one add
-		
+		Result resultOfUndo = cm.executeCommand(parserResultDisplayAll);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-//		currentTaskList.add(task2);
+		currentTaskList.add(task2);
 		
-		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
+		Result expectedResult = new Result(false, true, Result.LIST_DISPLAY, 
 				"Undo successfully.", null, currentTaskList, null);
 		
-		testTwoResultObj(resultOfDelete, expectedResult);
+		testTwoResultObj(resultOfUndo, expectedResult);
+		
 	}
+	
+	
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
 			String tag, TaskPriority priority, DateTime st, DateTime et, boolean isDisplayAll, int id) {
@@ -119,4 +107,5 @@ public class UndoAfterDeleteTest {
 //		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
+	
 }

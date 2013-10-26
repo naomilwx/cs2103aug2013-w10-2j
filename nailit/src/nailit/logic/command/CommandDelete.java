@@ -179,7 +179,7 @@ public class CommandDelete extends Command{
 	@Override
 	public void undo() {
 		if(this.deleteSuccess()) { // in fact cannot happen
-			storer.add(taskToRemove);
+			storer.add(taskToRemove, true);
 			isUndoSuccess = true;
 			this.isRedoSuccess = false;
 		} else {

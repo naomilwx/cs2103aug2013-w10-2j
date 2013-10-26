@@ -44,7 +44,7 @@ public class CommandAdd extends Command{
 		System.out.println("execute");
 		getContentFromParserResult();
 		createTaskObject();
-		taskID = storer.add(taskPassedToStorer);
+		taskID = storer.add(taskPassedToStorer, false);
 		taskPassedToStorer.setID(taskID); //temp fix here. will it be better if storage returns task object instead of id?
 		createResultObject();
 		createCommandSummary();
@@ -129,7 +129,7 @@ public class CommandAdd extends Command{
 	@Override
 	public void redo() {
 		taskPassedToStorer.setIDToNull();  
-		storer.add(taskPassedToStorer); // will the storer redo a delete here?
+		storer.add(taskPassedToStorer, false); // will the storer redo a delete here?
 		this.isRedoSuccess = true;
 		this.isUndoSuccess = false;
 	}
