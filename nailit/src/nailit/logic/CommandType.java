@@ -1,9 +1,10 @@
 package nailit.logic;
 
 import nailit.common.TaskPriority;
+import org.apache.commons.lang3.StringUtils;
 
 public enum CommandType {
-	ADD, COMPLETE, DELETE, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
+	ADD, ADDREMINDER, COMPLETE, DELETE, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
 
 	public static final int DELETE_COST = 1;
 	public static final int INSERT_COST = 1;
@@ -22,7 +23,7 @@ public enum CommandType {
 	
 	public static int calculateDistance(String a, String b){
 		int answer=0;
-		
+		StringUtils.getLevenshteinDistance(a,b)
 		return answer;
 	}
 	
@@ -30,8 +31,8 @@ public enum CommandType {
 		int min = Integer.MAX_VALUE;
 		CommandType answer = CommandType.INVALID;
 		for(CommandType type: CommandType.values()){
-			if (calculateDistance(p,type.toString()) > min){
-				answer = type;
+			if (StringUtils.getLevenshteinDistance(type.values().toString(), p) < min){
+				min = StringUtils.getLevenshteinDistance(type.values().toString(), p);
 			}
 		}
 		return answer;
