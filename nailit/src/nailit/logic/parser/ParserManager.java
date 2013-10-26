@@ -85,7 +85,7 @@ public class ParserManager {
 		if (CommandType.isCommandType(commandTypeString))
 			return CommandType.valueOf(commandTypeString.toUpperCase());
 		else
-			return CommandType.INVALID;
+			return CommandType.isApproximateCommandType(commandTypeString);
 	}
 	
 }
