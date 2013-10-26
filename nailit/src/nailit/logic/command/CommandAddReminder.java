@@ -80,7 +80,7 @@ public class CommandAddReminder extends Command{
 		// create a dateTime obj representing today
 		DateTime today = new DateTime();
 		if(today.compareTo(reminderDateToAdd) == 0) { // means that the reminder is today, reminder list needs update
-			Vector<Task> todayReminderList = storer.getTodayReminderList();
+			Vector<Task> todayReminderList = storer.getReminderListForToday();
 			executedResult.setUpdateReminderList(true);
 			executedResult.setReminderList(todayReminderList);
 		} else {
