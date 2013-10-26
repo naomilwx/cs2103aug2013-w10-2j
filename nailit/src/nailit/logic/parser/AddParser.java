@@ -22,7 +22,7 @@ public class AddParser extends Parser {
 		resultExecution.setCommand(CommandType.ADD);
 		if (userCommand.equals(""))
 			throw new Error("Wrong Format");
-		int startIndex = -1, endIndex;
+		int startIndex = -1, endIndex = userCommand.length();
 		for (startIndex=0; startIndex<userCommand.length(); startIndex++){
 			if (userCommand.charAt(startIndex) == '(' && userCommand.substring(startIndex).contains(")")){
 				break;
@@ -34,7 +34,9 @@ public class AddParser extends Parser {
 					endIndex = i;
 				}
 		}
-		
+		if (endIndex == userCommand.length())
+			throw new Error ("Wrong Format: Bracket is not matched");
+		userCommand = userCommand.substring(0,startIndex)+userCommand.substring(endIndex+1,userCommand.length());
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommand.length; i++) {
 			listOfCommand[i] = listOfCommand[i].trim();
