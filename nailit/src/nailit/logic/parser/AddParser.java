@@ -36,6 +36,8 @@ public class AddParser extends Parser {
 		}
 		if (endIndex == userCommand.length())
 			throw new Error ("Wrong Format: Bracket is not matched");
+		resultExecution.setDescription(userCommand.substring(startIndex+1, endIndex));
+		userCommand = userCommand+" ";
 		userCommand = userCommand.substring(0,startIndex)+userCommand.substring(endIndex+1,userCommand.length());
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommand.length; i++) {
