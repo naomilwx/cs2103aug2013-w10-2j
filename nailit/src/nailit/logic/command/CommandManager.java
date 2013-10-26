@@ -107,6 +107,10 @@ public class CommandManager {
 			Result resultToReturn = uncomplete();
 			return resultToReturn;
 		}
+		case ADDREMINDER: {
+			Result resultToReturn = addReminder();
+			return resultToReturn;
+		}
 		case UNDO: {
 			Result resultToReturn = undo();
 			return resultToReturn;
@@ -129,12 +133,6 @@ public class CommandManager {
 		return null;
 	}
 	
-	private Result addReminder() throws Exception {
-		CommandAddReminder carObj = new CommandAddReminder(parserResultInstance, storer, currentTaskList);
-		Result resultToPassToGUI = carObj.executeCommand(); // the result display 
-		Vector<Task> reminderList = storer.getTodayReminderList(); // provided by storage api
-		return new Result();
-	}
 	
 	private Result redo() {
 		Command commandToRedo = getTheCommandToRedo();
@@ -384,6 +382,17 @@ public class CommandManager {
 		resultToPassToGUI.setTaskList(currentTaskList);
 		// clear the redo command list
 		redoCommandsList.clear();
+		return resultToPassToGUI;
+	}
+	
+	private Result addReminder() throws Exception { // no need to update the currentTaskList, since no influence
+		CommandAddReminder carObj = new CommandAddReminder(parserResultInstance, storer, currentTaskList);
+		Result resultToPassToGUI = carObj.executeCommand(); // the result display 
+		if(carObj.isSuccess()) {
+			addNewCommandObjToOperationsHistory(carObj);
+			// clear the redo command list
+			redoCommandsList.clear();
+		}
 		return resultToPassToGUI;
 	}
 
