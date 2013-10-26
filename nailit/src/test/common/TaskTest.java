@@ -155,6 +155,58 @@ public class TaskTest {
 		assertTrue(event.isBeforeDateTime(testDate));
 	}
 	@Test
+	public void isInDateRangeSingleDateNullStartRangeTest(){
+		//Tasks with single
+		DateTime time = new DateTime(2013, 5, 2, 10, 30);
+		Task task1 = new Task();
+		task1.setStartTime(time);
+		
+		Task task2 = new Task();
+		task2.setEndTime(time);
+		//Test case 1: end time of range before task time
+		//should return false
+		DateTime testStart = null;
+		DateTime testEnd = new DateTime(2013, 4, 1, 0, 0);
+		assertFalse(task1.isInDateRange(testStart, testEnd));
+		assertFalse(task2.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testEnd = new DateTime(2013, 5, 2, 10, 30);
+		assertTrue(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task2.isInDateRange(testStart, testEnd));
+		//Test case 2: end time after task time
+		//should return true
+		testStart = null;
+		testEnd = new DateTime(2013, 5, 15 , 0, 0);
+		assertTrue(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task2.isInDateRange(testStart, testEnd));
+	}
+	@Test
+	public void isInDateRangeSingleDateNullEndRangeTest(){
+		//Tasks with single
+		DateTime time = new DateTime(2013, 5, 2, 10, 30);
+		Task task1 = new Task();
+		task1.setStartTime(time);
+		
+		Task task2 = new Task();
+		task2.setEndTime(time);
+		//Test case 1: start of range before task time
+		//should return true
+		DateTime testStart = new DateTime(2013, 1, 1, 0, 0);
+		DateTime testEnd = null;
+		assertTrue(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task2.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testStart = new DateTime(2013, 5, 2, 10, 30);
+		assertTrue(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task2.isInDateRange(testStart, testEnd));
+		//test case 2: start time after task time
+		//should return false
+		testStart = new DateTime(2013, 5, 3, 0 , 0);
+		testEnd = null;
+		assertFalse(task1.isInDateRange(testStart, testEnd));
+		assertFalse(task2.isInDateRange(testStart, testEnd));
+	}
+	@Test
 	public void isInDateRangeSingleDateTest(){
 		//Tasks with single
 		DateTime time = new DateTime(2013, 5, 2, 10, 30);
@@ -185,6 +237,65 @@ public class TaskTest {
 		testEnd = new DateTime(2013, 6, 1 , 0, 0);
 		assertFalse(task1.isInDateRange(testStart, testEnd));
 		assertFalse(task2.isInDateRange(testStart, testEnd));
+	}
+	@Test
+	public void isInDateRangeNullStartTest(){
+		//Tasks with start and end time
+		DateTime startTime = new DateTime(2013, 5, 2, 10, 30);
+		DateTime endTime = new DateTime(2013, 6, 2, 10, 30);
+		Task event = new Task();
+		event.setStartTime(startTime);
+		event.setEndTime(endTime);
+		//Test case 1: end time of range before task startTime
+		//should return false
+		DateTime testStart = null;
+		DateTime testEnd = new DateTime(2013, 4, 1, 0, 0);
+		assertFalse(event.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testEnd = new DateTime(2013, 5, 2, 10, 30);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//Test case 2:end time of range after task endTime
+		//should return true
+		testStart = null;
+		testEnd = new DateTime(2013, 8, 1, 0, 0);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testEnd = new DateTime(2013, 6, 2, 10, 30);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//Test case 3: end time between task startTime and endTime
+		//should return true
+		testStart = null;
+		testEnd = new DateTime(2013, 5, 15 , 0, 0);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+	}
+	@Test
+	public void isInDateRangeNullEndTest(){
+		//Tasks with start and end time
+		DateTime startTime = new DateTime(2013, 5, 2, 10, 30);
+		DateTime endTime = new DateTime(2013, 6, 2, 10, 30);
+		Task event = new Task();
+		event.setStartTime(startTime);
+		event.setEndTime(endTime);
+		//Test case 1: start of range before task startTime
+		//should return true
+		DateTime testStart = new DateTime(2013, 1, 1, 0, 0);
+		DateTime testEnd = null;
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testStart = new DateTime(2013, 5, 2, 10, 30);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//Test case 2: start of range after task endTime
+		//should return false
+		testStart = new DateTime(2013, 7, 1, 0, 0);
+		testEnd = null;
+		assertFalse(event.isInDateRange(testStart, testEnd));
+		//test boundary case
+		testStart = new DateTime(2013, 6, 2, 10, 30);
+		assertTrue(event.isInDateRange(testStart, testEnd));
+		//test case 3: start between task startTime and taskEnd time
+		//should return true
+		testStart = new DateTime(2013, 5, 3, 0 , 0);
+		assertTrue(event.isInDateRange(testStart, testEnd));
 	}
 	@Test
 	public void isInDateRangeTest(){
