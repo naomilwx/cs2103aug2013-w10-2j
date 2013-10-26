@@ -269,35 +269,39 @@ public class Task {
 		}
 	}
 	public boolean isAfterDateTime(DateTime dateTime){
+		//true if event starts AFTER (exclusive) date or task is due after date
 		if(dateTime == null){
 			return true; //TODO: check if this should happen
 		}
 		if(startTime != null){
-			return (startTime.compareTo(dateTime) >=0);//startTime is after given date
+			return (startTime.compareTo(dateTime) > 0);//startTime is after given date
 		}else if(endTime != null){
-			return (endTime.compareTo(dateTime) >= 0);
+			return (endTime.compareTo(dateTime) > 0);
 		}else{
 			return false;
 		}
 	}
 	public boolean isBeforeDateTime(DateTime dateTime){
+		//returns if event starts BEFORE (exclusive) date or task is due before date
 		if(dateTime == null){
 			return true;
 		}
 		if(startTime != null){
-			return (startTime.compareTo(dateTime) <= 0);
+			return (startTime.compareTo(dateTime) < 0);
 		}else if(endTime != null){
-			return (endTime.compareTo(dateTime) <= 0);
+			return (endTime.compareTo(dateTime) < 0);
 		}else{
 			return false;
 		}
 	}
 	public boolean isInDateRange(DateTime start, DateTime end){
+		//checks if event or deadline is within date range (inclusive)
+		//boundary case: ie event or task time is exactly the same as start or end, should return true
 		if(start != null && end != null){
 			if(isEvent()){
 				if(isAfterDateTime(start) && isAfterDateTime(end)){
 					return false;
-				}else if((endTime.compareTo(start) <= 0) && (endTime.compareTo(end) <= 0)){
+				}else if((endTime.compareTo(start) < 0) && (endTime.compareTo(end) < 0)){
 					return false;
 				}else{
 					return true;
@@ -312,9 +316,25 @@ public class Task {
 				}
 			}
 		}else if(start == null){
-			return isBeforeDateTime(end);
+			if(isBeforeDateTime(end)){
+				return true;
+			}else if(startTime != null){
+				return startTime.equals(end);
+			}else if(endTime != null){
+				return endTime.equals(end);
+			}else{
+				return false;
+			}
 		}else{
-			return isAfterDateTime(start);
+			if(isAfterDateTime(start)){
+				return true;
+			}else if(startTime != null){
+				return startTime.equals(start);
+			}else if(endTime != null){
+				return endTime.equals(start);
+			}else{
+				return false;
+			}
 		}
 	}
 	//end of task utility functions
