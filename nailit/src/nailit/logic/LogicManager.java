@@ -1,7 +1,10 @@
 package nailit.logic;
 
+import java.util.Vector;
+
 import nailit.common.NIConstants;
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
@@ -24,5 +27,10 @@ public class LogicManager{
 //		System.out.println(parserResultInstance.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
+	}
+	
+	// api for giving the reminder on today
+	public Vector<Task> getReminderList() {
+		return new Vector<Task>();
 	}
 }
