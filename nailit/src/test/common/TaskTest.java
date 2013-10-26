@@ -97,18 +97,18 @@ public class TaskTest {
 		//start time set.
 		Task task = new Task();
 		task.setStartTime(start);
-		assertFalse(event.isAfterDateTime(testDate)); //testdate at 2/6/13 10:30
+		assertFalse(task.isAfterDateTime(testDate)); //testdate at 2/6/13 10:30
 		testDate = new DateTime(2013, 5, 1, 10, 30);
-		assertTrue(event.isAfterDateTime(testDate));
+		assertTrue(task.isAfterDateTime(testDate));
 		//end time set.
 		task.setStartTime(null);
 		task.setEndTime(start);
-		assertTrue(event.isAfterDateTime(testDate)); //testdate at 1/5/13 10:30
+		assertTrue(task.isAfterDateTime(testDate)); //testdate at 1/5/13 10:30
 		testDate = new DateTime(2013, 6, 2, 10, 30);
-		assertFalse(event.isAfterDateTime(testDate));
+		assertFalse(task.isAfterDateTime(testDate));
 		//floating task
 		task.setEndTime(null);
-		assertFalse(event.isAfterDateTime(testDate));
+		assertFalse(task.isAfterDateTime(testDate));
 	}
 	@Test
 	public void isBeforeDateTimeTest(){
@@ -141,18 +141,18 @@ public class TaskTest {
 		//start time set.
 		Task task = new Task();
 		task.setStartTime(start);
-		assertTrue(event.isBeforeDateTime(testDate)); //testdate at 2/6/13 10:30
+		assertTrue(task.isBeforeDateTime(testDate)); //testdate at 2/6/13 10:30
 		testDate = new DateTime(2013, 5, 1, 10, 30);
-		assertFalse(event.isBeforeDateTime(testDate));
+		assertFalse(task.isBeforeDateTime(testDate));
 		//end time set.
 		task.setStartTime(null);
 		task.setEndTime(start);
-		assertFalse(event.isBeforeDateTime(testDate)); //testdate at 1/5/13 10:30
+		assertFalse(task.isBeforeDateTime(testDate)); //testdate at 1/5/13 10:30
 		testDate = new DateTime(2013, 6, 2, 10, 30);
-		assertTrue(event.isBeforeDateTime(testDate));
+		assertTrue(task.isBeforeDateTime(testDate));
 		//floating task
 		task.setEndTime(null);
-		assertTrue(event.isBeforeDateTime(testDate));
+		assertFalse(task.isBeforeDateTime(testDate));
 	}
 	@Test
 	public void isInDateRangeSingleDateNullStartRangeTest(){
@@ -203,7 +203,7 @@ public class TaskTest {
 		//should return false
 		testStart = new DateTime(2013, 5, 3, 0 , 0);
 		testEnd = null;
-		assertFalse(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task1.isInDateRange(testStart, testEnd)); //task1 goes on indefinitely from 2/5/13, 10:30
 		assertFalse(task2.isInDateRange(testStart, testEnd));
 	}
 	@Test
@@ -215,7 +215,7 @@ public class TaskTest {
 		
 		Task task2 = new Task();
 		task2.setEndTime(time);
-		//Test case 1: start and end time of range before task startTime
+		//Test case 1: start and end time of range before task time
 		//should return false
 		DateTime testStart = new DateTime(2013, 1, 1, 0, 0);
 		DateTime testEnd = new DateTime(2013, 4, 1, 0, 0);
@@ -225,17 +225,16 @@ public class TaskTest {
 		testEnd = new DateTime(2013, 5, 2, 10, 30);
 		assertTrue(task1.isInDateRange(testStart, testEnd));
 		assertTrue(task2.isInDateRange(testStart, testEnd));
-		//Test case 2: start time before task startTime, end time after task startTime
+		//Test case 2: start time before task startTime, end time after task time
 		//should return true
 		testStart = new DateTime(2013, 4, 1, 0 , 0);
 		testEnd = new DateTime(2013, 5, 15 , 0, 0);
 		assertTrue(task1.isInDateRange(testStart, testEnd));
 		assertTrue(task2.isInDateRange(testStart, testEnd));
-		//test case 3: start and end time after task startTime
-		//should return false
+		//test case 3: start and end time after task time
 		testStart = new DateTime(2013, 5, 3, 0 , 0);
 		testEnd = new DateTime(2013, 6, 1 , 0, 0);
-		assertFalse(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task1.isInDateRange(testStart, testEnd)); //true because end time null means go on indefinitely
 		assertFalse(task2.isInDateRange(testStart, testEnd));
 	}
 	@Test
