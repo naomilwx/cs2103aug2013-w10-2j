@@ -31,8 +31,8 @@ public class AddParserTest {
 			expectedAdd.setTag("#study#");
 			
 			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, 11 Sep 2013, LOW");
-			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
-			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
+			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW");
+			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW");
 			testExecuteTag(expectedAdd.getTag(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
 			testExecuteStartTime(expectedAdd.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT),"CSAssignment,#study#, 11 Sep 2013, LOW");
 			
