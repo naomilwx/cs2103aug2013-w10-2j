@@ -130,10 +130,12 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	private void markAsCompletedOrUncompleted() {
 		if(isCommandMarkAsCompleted) {
-			storer.markAsCompleted(taskID);
+			taskRelated.setCompleted(true);
+			storer.add(taskRelated);
 			isSuccess = true;
 		} else {
-			storer.markAsUncompleted(taskID);
+			taskRelated.setCompleted(false);
+			storer.add(taskRelated);
 			isSuccess = true;
 		}
 	}
@@ -165,11 +167,11 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	@Override
 	public void undo() { // I need to set the isComplete field here, because when undo, will be used directly
 		if(isCommandMarkAsCompleted) { // undo the marking as completed operation
-			storer.markAsUncompleted(taskID);
 			taskRelated.setCompleted(false);
+			storer.add(taskRelated);
 		} else { // undo the marking as uncompleted operation
-			storer.markAsCompleted(taskID);
 			taskRelated.setCompleted(true);
+			storer.add(taskRelated);
 		}
 		redoSuccess = false;
 		undoSuccess = true;
@@ -178,11 +180,11 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	@Override
 	public void redo() {
 		if(isCommandMarkAsCompleted) { // undo the marking as completed operation
-			storer.markAsCompleted(taskID);
 			taskRelated.setCompleted(true);
+			storer.add(taskRelated);
 		} else { // undo the marking as uncompleted operation
-			storer.markAsUncompleted(taskID);
 			taskRelated.setCompleted(false);
+			storer.add(taskRelated);
 		}
 		redoSuccess = true;
 		undoSuccess = false;

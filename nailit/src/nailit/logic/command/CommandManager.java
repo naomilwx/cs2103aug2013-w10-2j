@@ -181,7 +181,15 @@ public class CommandManager {
 				Task currentTask = itr.next();
 				int currentTaskID = currentTask.getID();
 				if(currentTaskID == taskID) {
-					currentTaskList.remove(count);
+					if((commandType == CommandType.DELETE) || commandType == (CommandType.UPDATE)) {
+						currentTaskList.remove(count);
+					} else {
+						if(commandType == CommandType.COMPLETE) {
+							currentTask.setCompleted(true);
+						} else if(commandType == CommandType.UNCOMPLETE) {
+							currentTask.setCompleted(false);
+						}
+					}
 					break;
 				} 
 			}
@@ -191,13 +199,7 @@ public class CommandManager {
 				CommandUpdate cu = (CommandUpdate)commandToRedo;
 				currentTaskList.add(cu.getUpdatedTask());
 				sort();
-			} else if((commandType == CommandType.COMPLETE) || (commandType == CommandType.UNCOMPLETE)) {
-				CommandMarkCompletedOrUncompleted cMOrUM = (CommandMarkCompletedOrUncompleted)commandToRedo;
-				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
-					currentTaskList.add(cMOrUM.getTaskRelated());
-					sort();
-				}
-			}
+			} 
 		}
 		
 	}
@@ -260,7 +262,15 @@ public class CommandManager {
 				Task currentTask = itr.next();
 				int currentTaskID = currentTask.getID();
 				if(currentTaskID == taskID) {
-					currentTaskList.remove(count);
+					if((commandType == CommandType.DELETE) || commandType == (CommandType.UPDATE)) {
+						currentTaskList.remove(count);
+					} else {
+						if(commandType == CommandType.COMPLETE) {
+							currentTask.setCompleted(true);
+						} else if(commandType == CommandType.UNCOMPLETE) {
+							currentTask.setCompleted(false);
+						}
+					}
 					break;
 				} 
 			}
@@ -272,13 +282,7 @@ public class CommandManager {
 					currentTaskList.add(cu.getRetrievedTask());
 					sort();
 				}
-			} else if((commandType == CommandType.COMPLETE) || (commandType == CommandType.UNCOMPLETE)) {
-				CommandMarkCompletedOrUncompleted cMOrUM = (CommandMarkCompletedOrUncompleted)commandToUndo;
-				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
-					currentTaskList.add(cMOrUM.getTaskRelated());
-					sort();
-				}
-			}
+			} 
 		}
 	}
 

@@ -76,7 +76,8 @@ public class CommandAddReminder extends Command{
 
 	private void addReminderDate() {
 		// set the reminder date in the task
-		storer.addReminder(taskID, reminderDateToAdd); // add reminder to the storage
+		taskRelated.setReminder(this.reminderDateToAdd);
+		storer.add(taskRelated); // add reminder to the storage
 	}
 
 	private void setTaskRelated() {
