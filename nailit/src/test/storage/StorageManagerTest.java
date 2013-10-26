@@ -48,16 +48,16 @@ public class StorageManagerTest {
 		 * Test with valid ID
 		 */
 		Task task5 = new Task("fifth task");
-		testAddCommand("1,fifth task,null,null,1,,,0\n",1,task5);
+		testAddCommand("1,fifth task,null,null,1,,,0,null\n",1,task5);
 		Task task6 = new Task(Task.TASKID_NULL,"sixth task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
-				"1,fifth task,null,null,1,,,0\n" +
-				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,fifth task,null,null,1,,,0,null\n" +
+				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",2,task6);
 		Task task7 = new Task(2,"seventh task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
-				"1,fifth task,null,null,1,,,0\n" +
-				"2,seventh task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,fifth task,null,null,1,,,0,null\n" +
+				"2,seventh task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",2,task7);
 
 	}
@@ -79,11 +79,11 @@ public class StorageManagerTest {
 		 * Test for operations on non-empty storage
 		 * */
 		Task task5 = new Task("fifth task");
-		testAddCommand("1,fifth task,null,null,1,,,0\n",1,task5);
+		testAddCommand("1,fifth task,null,null,1,,,0,null\n",1,task5);
 		Task task6 = new Task(Task.TASKID_NULL,"sixth task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
-				"1,fifth task,null,null,1,,,0\n" +
-				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,fifth task,null,null,1,,,0,null\n" +
+				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",2,task6);
 		
 		
@@ -93,13 +93,13 @@ public class StorageManagerTest {
 		sto.clear();
 		Task task1 = new Task("first task");
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
 				"",1,task1);
 		testRemoveCommand("",1);
 		Task taskRemoveUndo = task1.copy();
 		taskRemoveUndo.setID(1);
 		testUndoRemoveCommand("" +
-					   "1,first task,null,null,1,,,0\n",1,taskRemoveUndo);
+					   "1,first task,null,null,1,,,0,null\n",1,taskRemoveUndo);
 		
 	}
 	
@@ -130,11 +130,11 @@ public class StorageManagerTest {
 		Task task1 = new Task("first task");
 		Task task2 = new Task(Task.TASKID_NULL,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
 				"",1,task1);
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",2,task2);
 
 		/**
@@ -142,8 +142,8 @@ public class StorageManagerTest {
 		 * */
 		testFilterCommand("",null);
 		testFilterCommand("" +
-				"1,first task,null,null,1,,,0\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",new FilterObject());
 		
 		/**
@@ -151,12 +151,12 @@ public class StorageManagerTest {
 		 * */
 		FilterObject fo = new FilterObject("first",null,null,null,null,null);
 		testFilterCommand("" +
-				"1,first task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
 				"",fo);
 		
 		FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
 		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo1);
 		
 		FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
@@ -164,12 +164,13 @@ public class StorageManagerTest {
 		
 		FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
 		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo3);
 		
 		FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
 		testFilterCommand("" +
-				"1,first task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo4);		
 	}
 	@Test
@@ -179,58 +180,59 @@ public class StorageManagerTest {
 		Task task1 = new Task("first task");
 		Task task2 = new Task("second task");
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
 				"",1,task1);
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
-				"2,second task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,second task,null,null,1,,,0,null\n" +
 				"",2,task2);
 		Task task3 = new Task(2,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
-				"1,first task,null,null,1,,,0\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",2,task3);
 //		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
 //		testAddCommand("",task4);
 		FilterObject fo = new FilterObject("first",null,null,null,null,null);
 		testFilterCommand("" +
-				"1,first task,null,null,1,,,0\n" +
+				"1,first task,null,null,1,,,0,null\n" +
 				"",fo);
 		FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
 		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo1);
 		FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
 		testFilterCommand("",fo2);
 		FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
 		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo3);
 		FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
 		testFilterCommand("" +
-				"1,first task,null,null,1,,,0\n2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"1,first task,null,null,1,,,0,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",fo4);
 		testRemoveCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",1);
 		Task task6 = new Task(Task.TASKID_NULL,"testForUndo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
 		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
-				"3,testForUndo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"3,testForUndo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
 				"",3,task6);
 		testUndoAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
 				"",3);
 		Task task7 = new Task(Task.TASKID_NULL,"Add New Task After Undo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
 		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
-				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
 				"",3,task7);
 		Task task8 = new Task(Task.TASKID_NULL,"test for add new task",new DateTime("2013-01-02"),null,TaskPriority.LOW,"school","no more description",false);
 		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1\n" +
-				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0\n" +
-				"4,test for add new task,2013-01-02T00:00:00.000+08:00,null,0,school,no more description,0\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
+				"4,test for add new task,2013-01-02T00:00:00.000+08:00,null,0,school,no more description,0,null\n" +
 				"",4,task8);
 
 	} 
@@ -245,7 +247,7 @@ public class StorageManagerTest {
 	public void testAddCommand(String expected,int expectedID,Task task) throws FileCorruptionException{
 		String out;
 		try{
-			int ID = sto.add(task,false);
+			int ID = sto.add(task);
 			Vector<Task> v = sto.retrieveAll();
 			try{
 				assertEquals(expectedID,ID);
@@ -263,7 +265,7 @@ public class StorageManagerTest {
 	public void testUndoRemoveCommand(String expected,int expectedID,Task task){
 		String out;
 		try{
-			int ID = sto.add(task,true);
+			int ID = sto.add(task);
 			Vector<Task> v = sto.retrieveAll();
 			try{
 				assertEquals(expectedID,ID);

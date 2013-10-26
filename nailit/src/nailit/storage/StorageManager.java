@@ -237,7 +237,13 @@ public class StorageManager {
 		String desc = result[6];
 		boolean isCompleted = Integer.parseInt(result[7]) == 1;
 		
-		Task task = new Task(task_ID, name,startTime,endTime,priority, tag,desc,isCompleted);
+		DateTime reminder;
+		if(result[8].compareTo("null") == 0){
+			reminder = null;
+		}else{
+			reminder = new DateTime(result[8]);
+		}
+		Task task = new Task(task_ID, name,startTime,endTime,priority, tag,desc,isCompleted,reminder);
 		return task;
 	}
 	

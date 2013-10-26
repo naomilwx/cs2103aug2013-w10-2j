@@ -64,6 +64,23 @@ public class Task {
 			tag = t;
 		}
 	}
+	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String t, String desc, boolean isCompleted,DateTime reminder){
+		this.ID = ID;
+		name = taskName;
+		startTime = start;
+		endTime = end;
+		priority = p;
+		if(description != null){
+			description = desc;
+		}
+		this.isCompleted = isCompleted;
+		if(t == null){
+			tag = "";
+		}else{
+			tag = t;
+		}
+		this.reminderStartDate = reminder;
+	}
 	public boolean isAdded(){
 		return added;
 	}
@@ -363,8 +380,14 @@ public class Task {
 		int completeStatus = parseCompleteStatus(this.isCompleted);
 		assert(isValidCompleteStatus(completeStatus));
 		
+		String reminderDate;
+		if(this.getReminder()==null){
+			reminderDate = null;
+		}else{
+			reminderDate = reminderStartDate.toString();
+		}
 		
-		String taskString = name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus;
+		String taskString = name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus + NIConstants.NORMAL_FIELD_SPLITTER + reminderDate;
 		
 		return taskString;
 	}
