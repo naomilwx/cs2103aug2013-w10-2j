@@ -103,6 +103,10 @@ public class CommandManager {
 			Result resultToReturn = complete();
 			return resultToReturn;
 		}
+		case UNCOMPLETE: {
+			Result resultToReturn = uncomplete();
+			return resultToReturn;
+		}
 		case UNDO: {
 			Result resultToReturn = undo();
 			return resultToReturn;
@@ -175,12 +179,13 @@ public class CommandManager {
 				} 
 			}
 			
+			// add it to the task list if the task fit the filter after the redo
 			if(commandType == CommandType.UPDATE) {
 				CommandUpdate cu = (CommandUpdate)commandToRedo;
 				currentTaskList.add(cu.getUpdatedTask());
 				sort();
-			} else if(commandType == CommandType.COMPLETE) {
-				CommandMarkOrUnmarkCompleted cMOrUM = (CommandMarkOrUnmarkCompleted)commandToUndo;
+			} else if((commandType == CommandType.COMPLETE) || (commandType == CommandType.UNCOMPLETE)) {
+				CommandMarkCompletedOrUncompleted cMOrUM = (CommandMarkCompletedOrUncompleted)commandToRedo;
 				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
 					currentTaskList.add(cMOrUM.getTaskRelated());
 					sort();
@@ -260,8 +265,8 @@ public class CommandManager {
 					currentTaskList.add(cu.getRetrievedTask());
 					sort();
 				}
-			} else if(commandType == CommandType.COMPLETE) {
-				CommandMarkOrUnmarkCompleted cMOrUM = (CommandMarkOrUnmarkCompleted)commandToUndo;
+			} else if((commandType == CommandType.COMPLETE) || (commandType == CommandType.UNCOMPLETE)) {
+				CommandMarkCompletedOrUncompleted cMOrUM = (CommandMarkCompletedOrUncompleted)commandToUndo;
 				if(isTheTaskFitTheFilter(cMOrUM.getTaskRelated())) { // if updated task fit the filter, add it back
 					currentTaskList.add(cMOrUM.getTaskRelated());
 					sort();
@@ -402,11 +407,11 @@ public class CommandManager {
 	}
 
 	private Result complete() throws Exception {
-		CommandMarkOrUnmarkCompleted newMOrUnMCompletedObj = new CommandMarkOrUnmarkCompleted(parserResultInstance, storer, currentTaskList);
+		CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj = new CommandMarkCompletedOrUncompleted(parserResultInstance, storer, currentTaskList, true);
 		Result resultToPassToGUI = newMOrUnMCompletedObj.executeCommand();
 		// need to attach currentTaskList to the resultToPassToGUI, if success
-		if(newMOrUnMCompletedObj.isCompleted()) { // successfully mark as completed, the task must be in the 
-			updateCurrentTaskListAfterMarkCompleted(newMOrUnMCompletedObj);
+		if(newMOrUnMCompletedObj.isSuccess()) { // successfully mark as completed, the task must be in the 
+			updateCurrentTaskListAfterMarkCompleted(newMOrUnMCompletedObj); // update the related task in the currentTaskList
 			// add to history
 			addNewCommandObjToOperationsHistory(newMOrUnMCompletedObj);
 		}
@@ -416,10 +421,34 @@ public class CommandManager {
 	
 	// guaranteed that the task display ID is valid
 	private void updateCurrentTaskListAfterMarkCompleted(
-			CommandMarkOrUnmarkCompleted newMOrUnMCompletedObj) {
+			CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj) {
 		int displayID = newMOrUnMCompletedObj.getDisplayID();
 		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
 		taskToMarkAsCompleted.setCompleted(true);
+		if(!isTheTaskFitTheFilter(taskToMarkAsCompleted)) { // does not fit the filter after being marked
+			currentTaskList.remove(displayID - 1);
+		}
+	}
+	
+	private Result uncomplete() throws Exception {
+		CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj = new CommandMarkCompletedOrUncompleted(parserResultInstance, storer, currentTaskList, true);
+		Result resultToPassToGUI = newMOrUnMCompletedObj.executeCommand();
+		// need to attach currentTaskList to the resultToPassToGUI, if success
+		if(newMOrUnMCompletedObj.isSuccess()) { // successfully mark as completed, the task must be in the 
+			updateCurrentTaskListAfterMarkUncompleted(newMOrUnMCompletedObj); // update the related task in the currentTaskList
+			// add to history
+			addNewCommandObjToOperationsHistory(newMOrUnMCompletedObj);
+		}
+		resultToPassToGUI.setTaskList(currentTaskList);
+		return resultToPassToGUI;
+	}
+	
+	// guaranteed that the task display ID is valid
+	private void updateCurrentTaskListAfterMarkUncompleted(
+			CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj) {
+		int displayID = newMOrUnMCompletedObj.getDisplayID();
+		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
+		taskToMarkAsCompleted.setCompleted(false);
 		if(!isTheTaskFitTheFilter(taskToMarkAsCompleted)) { // does not fit the filter after being marked
 			currentTaskList.remove(displayID - 1);
 		}
