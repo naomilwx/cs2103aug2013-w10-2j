@@ -144,6 +144,7 @@ public class CommandManager {
 		} else {
 			commandToRedo.redo();
 			if(commandToRedo.isSuccessRedo()) {
+				operationsHistory.push(commandToRedo);
 				updateCurrentListAfterRedo(commandToRedo);
 				resultToPassToGUI = createResultForRndoSuccessfully();
 			} else {
