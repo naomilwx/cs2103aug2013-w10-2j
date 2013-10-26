@@ -311,6 +311,8 @@ public class CommandManager {
 		// the resultToPassToGUI does not have the currentTaskList
 		Result resultToPassToGUI = newAddCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newAddCommandObj);
+		// clear the redo command list
+		redoCommandsList.clear();
 		// the new added task may or may not should exist in the currentTaskList,
 		// check whether the added task fit the filterContentForCurrentTaskList
 		// if fit, add it and sort the current task list
@@ -334,6 +336,8 @@ public class CommandManager {
 			int taskDeletedDisplayID = newDeleteCommandObj.getTaskDisplayID();
 			deleteTheTaskInCurrentTaskList(taskDeletedDisplayID);
 			addNewCommandObjToOperationsHistory(newDeleteCommandObj); // only add the sucessful command to the command stack
+			// clear the redo command list
+			redoCommandsList.clear();
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
@@ -351,6 +355,8 @@ public class CommandManager {
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
+		// clear the redo command list
+		redoCommandsList.clear();
 		return resultToPassToGUI;
 	}
 	
@@ -361,6 +367,8 @@ public class CommandManager {
 		// one on the returned result object
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
+		// clear the redo command list
+		redoCommandsList.clear();
 		return resultToPassToGUI;
 	}
 	
@@ -374,6 +382,8 @@ public class CommandManager {
 		// the current task list and then add it to the result obj
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
+		// clear the redo command list
+		redoCommandsList.clear();
 		return resultToPassToGUI;
 	}
 
@@ -404,6 +414,8 @@ public class CommandManager {
 			updateCurrentTaskListAfterMarkCompleted(newMOrUnMCompletedObj); // update the related task in the currentTaskList
 			// add to history
 			addNewCommandObjToOperationsHistory(newMOrUnMCompletedObj);
+			// clear the redo command list
+			redoCommandsList.clear();
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
@@ -426,6 +438,8 @@ public class CommandManager {
 			updateCurrentTaskListAfterMarkUncompleted(newMOrUnMCompletedObj); // update the related task in the currentTaskList
 			// add to history
 			addNewCommandObjToOperationsHistory(newMOrUnMCompletedObj);
+			// clear the redo command list
+			redoCommandsList.clear();
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
