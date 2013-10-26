@@ -66,6 +66,11 @@ public class AddParser extends Parser {
 			throw new Error ("Wrong format: No name");
 		}
 		resultExecution.setName(name);
+		
+		if (!resultExecution.isNullStartTime() && resultExecution.isNullEndTime()){
+			resultExecution.setEndTime(resultExecution.getStartTime());
+			resultExecution.setStartTime(null);
+		}
 		return resultExecution;
 	}
 }
