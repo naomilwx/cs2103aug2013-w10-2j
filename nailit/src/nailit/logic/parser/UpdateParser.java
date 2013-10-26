@@ -28,21 +28,42 @@ public class UpdateParser extends Parser {
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+ " ";
-			resultExecution.setName(answer.substring(0, answer.length()-1));
+			if (answer == ""){
+				resultExecution.setName(null);
+			} else{
+				resultExecution.setName(answer.substring(0, answer.length()-1));
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("tag")){
-			resultExecution.setTag(listOfCommand[2]);
+			if (listOfCommand.length<2){
+				resultExecution.setTag(null);
+			}else{
+				resultExecution.setTag(listOfCommand[2]);
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Start")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
-			resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			if (answer == ""){
+				resultExecution.setStartTime(null);
+			}else{
+				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("End")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
-			resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			if (answer == ""){
+				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}else{
+				resultExecution.setEndTime(null);
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
-			resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2].toUpperCase()));
+			if (listOfCommand.length<2){
+				resultExecution.setSetPriority(false);
+			}else{
+				resultExecution.setSetPriority(true);
+				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2].toUpperCase()));
+			}
 		}
 		
 		return resultExecution;
