@@ -3,6 +3,7 @@ package nailit.common;
 import nailit.common.NIConstants;
 
 import org.joda.time.DateTime;
+//@author A0091372H
 public class Task {
 	public static final int TASKID_NULL = -1;
 	private static final String BASIC_PRINTOUT_FORMAT = "[%1d] Name: %2s";
@@ -15,8 +16,8 @@ public class Task {
 	private String tag = NIConstants.EMPTY_STRING;
 	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted = false;
-
 	private TaskPriority priority;
+	private Reminder reminder = null;
 
 	public static final int COMPLETED_IN_HARDDISK = 1;
 	public static final int INCOMPLETE_IN_HARDDISK = 0;
@@ -92,6 +93,10 @@ public class Task {
 	public DateTime getEndTime(){
 		return endTime;
 	}
+	
+	public Reminder getReminder(){
+		return reminder;
+	}
 	public boolean isNormalTask(){
 		if(startTime != null && endTime == null){
 			return true;
@@ -153,6 +158,10 @@ public class Task {
 	}
 	public void setEndTime(DateTime end){
 		endTime = end;
+	}
+	
+	public void setReminder(Reminder reminder){
+		this.reminder = reminder;
 	}
 	
 	//Functions to format Task details for printout
