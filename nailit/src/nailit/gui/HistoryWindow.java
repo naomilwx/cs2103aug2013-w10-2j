@@ -10,9 +10,9 @@ public class HistoryWindow extends ExtendedWindow{
 		super(GUIMain, width);
 		initialiseAndConfigureWindowContent();
 	}
-	private void initialiseAndConfigureWindowContent(){
-		contentHeight = EXTENDED_WINDOW_HEIGHT - 2 * EXTENDED_WINDOW_Y_BUFFER;
-		contentWidth = windowWidth - 2 * EXTENDED_WINDOW_X_BUFFER;
+	@Override
+	protected void initialiseAndConfigureWindowContent(){
+		setWindowContentSize();
 		displayPane = new TableDisplay(contentWidth, contentHeight, Result.HISTORY_DISPLAY);
 		displayPane.setLocation(EXTENDED_WINDOW_X_BUFFER, EXTENDED_WINDOW_Y_BUFFER);
 		addItem(displayPane);

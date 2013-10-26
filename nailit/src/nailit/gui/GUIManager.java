@@ -95,6 +95,7 @@ public class GUIManager {
 	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
 	private HistoryWindow historyWindow;
+	private HelpWindow helpWindow;
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
@@ -124,28 +125,15 @@ public class GUIManager {
 	private void configureDefaultDisplay(){
 		executeUserInputCommand(CommandType.DISPLAY + " all");
 	}
+	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
 		historyWindow = new HistoryWindow(this, HISTORY_WINDOW_WIDTH);
+		helpWindow = new HelpWindow(this, MainWindow.WINDOW_WIDTH);
 	}
 	private void createAndDisplayHomeWindow() {
 		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
 		homeWindow.setVisible(true);
-	}
-	public void toggleHomeWindow(){
-		if(homeWindow != null){
-			boolean currentVisibility = homeWindow.isVisible();
-			homeWindow.setVisible(!currentVisibility);
-		}
-	}
-	protected void toggleHistoryWindow(){
-		if(historyWindow != null){
-			boolean currentVisibility = historyWindow.isVisible();
-			historyWindow.setVisible(!currentVisibility);
-		}
-	}
-	protected void hideHistoryWindow(){
-		historyWindow.setVisible(false);
 	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
@@ -163,6 +151,16 @@ public class GUIManager {
 		mainWindow.addItem(commandBar);
 		mainWindow.addItem(displayArea);
 	}
+	protected void resizeMainDisplayArea(){
+		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
+	}
+	public void enableGlobalKeyListener(){
+		if(!globalKeyListener.isEnabled()){
+			globalKeyListener.registerGlobalKeyHook();
+		}
+	}
+	
+	//functions to manipulate visiblitiy of GUI Components
 	public void setVisible(boolean isVisible){
 //		if(!isVisible){
 //			enableGlobalKeyListener();
@@ -170,11 +168,28 @@ public class GUIManager {
 		mainWindow.setVisible(isVisible);
 //		homeWindow.setVisible(isVisible);
 	}
-	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
-			globalKeyListener.registerGlobalKeyHook();
+	public void toggleHomeWindow(){
+		if(homeWindow != null){
+			boolean currentVisibility = homeWindow.isVisible();
+			homeWindow.setVisible(!currentVisibility);
 		}
 	}
+	protected void toggleHistoryWindow(){
+		if(historyWindow != null){
+			boolean currentVisibility = historyWindow.isVisible();
+			historyWindow.setVisible(!currentVisibility);
+		}
+	}
+	protected void hideHistoryWindow(){
+		historyWindow.setVisible(false);
+	}
+	protected void showHelpWindow(){
+		helpWindow.setVisible(true);
+	}
+	protected void hideHelpWindow(){
+		helpWindow.setVisible(false);
+	}
+	//functions to set focus of GUI Components
 	public void setFocusOnDisplay(){
 		removeDeletedTaskFromTaskListDisplay();
 		displayArea.setFocus();
@@ -185,12 +200,15 @@ public class GUIManager {
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
 	}
+	
 	protected Dimension getMainWindowLocationCoordinates(){
 		return new Dimension(mainWindow.getX(), mainWindow.getY());
 	}
-	protected void resizeMainDisplayArea(){
-		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
+	protected boolean getMainWindowVisibility(){
+		return mainWindow.isVisible();
 	}
+	
+	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
 	 * @param input
