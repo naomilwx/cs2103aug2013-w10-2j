@@ -259,7 +259,7 @@ public class CommandManager {
 				Task currentTask = itr.next();
 				int currentTaskID = currentTask.getID();
 				if(currentTaskID == taskID) {
-					if((commandType == CommandType.DELETE) || commandType == (CommandType.UPDATE)) {
+					if(commandType == (CommandType.UPDATE) || commandType == (CommandType.ADD)) {
 						currentTaskList.remove(count);
 					} else {
 						if(commandType == CommandType.COMPLETE) {
