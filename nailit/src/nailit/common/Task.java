@@ -217,6 +217,7 @@ public class Task {
 		newTask.setDescription(description);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
+		newTask.setReminder(reminder);
 		return newTask;
 	}
 	
