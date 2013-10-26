@@ -53,7 +53,9 @@ public class UndoAfterUpdateTest {
 	
 	
 	
-	
+	/*
+	 * This test tests using use cases: add->add->displayAll->update->undo->undo
+	 * */
 	@Test
 	public void testUndoAfterUpdate() throws Exception {
 		

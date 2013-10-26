@@ -56,6 +56,9 @@ public class UndoAfterDeleteTest {
 					createDateTime(2013, 4, 2, 1, 0), 2);
 	
 	
+	/*
+	 * This test tests using use cases: add->add->displayAll->delete->undo->undo
+	 * */
 	@Test
 	public void testUndoAfterDelete() throws Exception {
 		
