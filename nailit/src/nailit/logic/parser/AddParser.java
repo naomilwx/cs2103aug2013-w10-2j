@@ -22,10 +22,17 @@ public class AddParser extends Parser {
 		resultExecution.setCommand(CommandType.ADD);
 		if (userCommand.equals(""))
 			throw new Error("Wrong Format");
-		int startIndex=-1, endIndex;
+		int startIndex = -1, endIndex;
 		for (startIndex=0; startIndex<userCommand.length(); startIndex++){
-			if (userCommand.charAt(startIndex) == '(' && userCommand.substring(startIndex).contains(")"))
+			if (userCommand.charAt(startIndex) == '(' && userCommand.substring(startIndex).contains(")")){
 				break;
+			}
+		}
+		if (startIndex!=-1 && startIndex != userCommand.length()-1){
+			for (int i=startIndex+1; i<userCommand.length(); i++)
+				if (userCommand.charAt(i)==')'){
+					endIndex = i;
+				}
 		}
 		
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
