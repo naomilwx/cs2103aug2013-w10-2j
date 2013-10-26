@@ -33,6 +33,11 @@ public class CommandAddReminder extends Command{
 	private String commandSummary;
 	
 	private boolean isSuccess;
+	
+	private boolean undoSuccess;
+	private boolean redoSuccess;
+	
+	private CommandType commandType;
 
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
@@ -43,6 +48,9 @@ public class CommandAddReminder extends Command{
 		taskRelated = new Task();
 		commandSummary = "";
 		isSuccess = false;
+		undoSuccess = false;
+		redoSuccess = false;
+		commandType = CommandType.ADDREMINDER;
 	}
 
 	@Override
@@ -121,7 +129,7 @@ public class CommandAddReminder extends Command{
 	}
 
 	private boolean isValidDisplayID() {
-		displayID = parserResultInstance.getTaskID();
+		setDisplayID();
 		int size = taskList.size();
 		if((size == 0) || (displayID < 1) || (displayID > size) ) {
 			return false;
@@ -131,54 +139,56 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void setDisplayID() {
-		// TODO Auto-generated method stub
-		
+		displayID = parserResultInstance.getTaskID();
 	}
 
 	@Override
 	public int getTaskID() {
-		// TODO Auto-generated method stub
-		return 0;
+		return taskID;
 	}
 
 	@Override
 	public CommandType getCommandType() {
-		// TODO Auto-generated method stub
-		return null;
+		return commandType;
 	}
 
 	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-		
+	public void undo() { // update it by setting reminder date as null
+		taskRelated.setReminder(null); 
+		storer.add(taskRelated);
+		this.undoSuccess = true;
+		this.redoSuccess = false;
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		taskRelated.setReminder(this.reminderDateToAdd); 
+		storer.add(taskRelated);
+		this.undoSuccess = false;
+		this.redoSuccess = true;
 	}
 
 	@Override
 	public boolean undoSuccessfully() {
-		// TODO Auto-generated method stub
-		return false;
+		return undoSuccess;
 	}
 
 	@Override
 	public boolean isSuccessRedo() {
-		// TODO Auto-generated method stub
-		return false;
+		return redoSuccess;
 	}
 
 	@Override
 	public String getCommandString() {
-		// TODO Auto-generated method stub
-		return null;
+		return commandSummary;
 	}
 	
 	public boolean isSuccess() {
 		return isSuccess;
+	}
+	
+	public DateTime getReminderDateToAdd() {
+		return this.reminderDateToAdd;
 	}
 
 }
