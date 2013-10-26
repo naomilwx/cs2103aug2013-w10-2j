@@ -20,7 +20,7 @@ public class StorageManagerFuncStub extends StorageManager {
 	}
 	
 	@Override
-	public int add(Task newTask) {
+	public int add(Task newTask, boolean isUndoremove) {
 		int IDToReturn  = nextID;
 		if(newTask.getID() == Task.TASKID_NULL){
 			Task taskToStore = newTask.copy();
