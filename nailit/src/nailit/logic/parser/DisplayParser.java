@@ -25,7 +25,7 @@ public class DisplayParser extends Parser {
 		}else if (Parser.isTaskID(userCommand)){
 			resultExecution.setTaskID(Integer.parseInt(userCommand));
 		}else if (Parser.isDateTime(userCommand)){
-			resultExecution.setStartTime(Parser.retrieveDateTime(userCommand));
+			resultExecution.setEndTime(Parser.retrieveDateTime(userCommand));
 		}else
 			System.out.println("Wrong Format");
 		

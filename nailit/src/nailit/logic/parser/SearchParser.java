@@ -44,6 +44,11 @@ public class SearchParser extends Parser {
 			
 		}
 		
+		if (!resultExecution.isNullStartTime() && resultExecution.isNullEndTime()){
+			resultExecution.setEndTime(resultExecution.getStartTime());
+			resultExecution.setStartTime(null);
+		}
+		
 		return resultExecution;
 	}
 }
