@@ -9,29 +9,35 @@ import org.joda.time.DateTime;
 
 import nailit.common.FilterObject;
 import nailit.common.NIConstants;
+import nailit.common.Reminder;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
  
 public class StorageManager {
-	private FileManager hardDisk;
+	private FileManager taskFile;
+	private FileManager reminderFile;
 	private DataManager inMemory;
-	private final String DATAPATH = "database.txt";
+	private final String TASK_PATH = "database.txt";
+	private final String REMINDER_PATH = "reminders.txt";
 	private int nextValidIDWhenSessionStarts;
 	private HashMap<Integer,Task> originalTaskList;
+	private HashMap<Integer,Reminder> originalRemindersList; 
 	/**
 	 * Constructor
 	 * @throws FileCorruptionException 
 	 * */
 	public StorageManager() throws FileCorruptionException{
-		hardDisk = new FileManager(DATAPATH);
-		interpretFileContents(hardDisk.getFileContents());
+		taskFile = new FileManager(TASK_PATH);
+		reminderFile = new FileManager(REMINDER_PATH);
+		interpretTaskFileContents(taskFile.getFileContents());
+		interpretReminderFileContents(reminderFile.getFileContents());
 		inMemory = new DataManager(nextValidIDWhenSessionStarts, originalTaskList);
 	}
 	
 	
-	public int add(Task task){
+	public int add(Task task,boolean isUndoRemove){
 		if(task == null){
 			return Task.TASKID_NULL;
 		}
@@ -40,15 +46,18 @@ public class StorageManager {
 		
 //		reformatTaskDescription(task);
 				
-		int ID = inMemory.add(taskToBeAdded);
-				
-		saveToFile();
+		int ID = inMemory.add(taskToBeAdded);		
+		
+		if(isUndoRemove){
+			reminderRecovering(ID);
+		}
+		
+		saveToFile(taskFile);
 		
 		return ID;
 	}
 
 
-	//update stub
 	public Task retrieve(int ID) throws NoTaskFoundException{
 		Task task = inMemory.retrieve(ID);
 		
@@ -69,7 +78,7 @@ public class StorageManager {
 		if(isUndoAdd){
 			releaseID(ID);
 		}
-		saveToFile();
+		saveToFile(taskFile);
 		return task;
 	}
 	
@@ -77,15 +86,17 @@ public class StorageManager {
 		
 	public Vector<Task> retrieveAll() {
 		
-		HashMap<Integer,Task> hashTable = inMemory.getHashMap();
+		HashMap<Integer,Task> hashTable = inMemory.getTaskList();
 		
 		return toTaskVector(hashTable);
 	}
 	
 	public Vector<Task> filter(FilterObject ftobj){
+		
 		if(ftobj == null){
 			return new Vector<Task>();
 		}
+		
 		Vector<Task> taskList = retrieveAll();
 		Vector<Task> filteredTaskList = new Vector<Task>();
 		
@@ -98,22 +109,36 @@ public class StorageManager {
 		
 		return filteredTaskList;
 	}
+	
+	public void addReminder(int ID,DateTime date){
+		Reminder reminder = new Reminder(ID,date);
+		inMemory.addReminder(reminder);
+		saveToFile(reminderFile);
+	}
+	
+	public void delReminder(int ID){
+		inMemory.delReminder(ID);
+		saveToFile(reminderFile);
+	}
+	
 	public void clear(){
-		inMemory.setHashMap(new HashMap<Integer,Task>());
+		inMemory.setTaskList(new HashMap<Integer,Task>());
 		inMemory.setNextValidID(1);
-		saveToFile();
+		saveToFile(taskFile);
+		saveToFile(reminderFile);//TODO: clear reminders
+		
 	}
 	/**
 	 * Private Methods
 	 * */
 
-	private void saveToFile(){
+	private void saveToFile(FileManager file){
 				
-		hardDisk.writingProcessInit();
+		file.writingProcessInit();
 		
-		prepareWritingContents();
+		prepareWritingContents(file);
 		
-		hardDisk.save();
+		file.save();
 	}
 	
 	private Vector<Task> toTaskVector(HashMap<Integer,Task> hashTable){
@@ -136,20 +161,39 @@ public class StorageManager {
 
 	}
 	
-	private void prepareWritingContents(){
+	private void prepareWritingContents(FileManager file){
 		
+		if(isTaskFile(file)){
+			prepareWritingContentsForTaskFile();
+		}
+		else{
+			prepareWritingContentsForReminderFile();
+		}
+		
+	}
+	
+	private boolean isTaskFile(FileManager file){
+		return file.equals(taskFile);
+	}
+	
+	private void prepareWritingContentsForTaskFile(){
 		Vector<String> dataList = new Vector<String>();
 
-		HashMap<Integer,Task> hashTable = inMemory.getHashMap();
+		HashMap<Integer,Task> taskList = inMemory.getTaskList();
 
 		dataList.add(""+inMemory.getNextValidID());
 		
-		toStringVector(hashTable,dataList);
+		taskListToStringVector(taskList,dataList);
 		
-		hardDisk.setDataListForWriting(dataList);
+		taskFile.setDataListForWriting(dataList);
 	}
 	
-	private void toStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
+	private void prepareWritingContentsForReminderFile(){
+		Vector<String> dataList = new Vector<String>();
+		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+		reminderListToStringVector(taskList, dataList);
+	}
+	private void taskListToStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
 		
 		Set<Integer> keys = hashTable.keySet();
 		
@@ -159,17 +203,49 @@ public class StorageManager {
 			
 			int key = iterator.next();
 			
-			Task task = hashTable.get(key).copy();
+			Task task = hashTable.get(key);
 			
 			dataList.add(task.getID()+NIConstants.NORMAL_FIELD_SPLITTER+task.changeToDiskFormat());
 		}
 		
 	}
+	
+	private void reminderListToStringVector(HashMap<Integer,Task> taskTable, Vector<String> dataList){
+		Set<Integer> keys = taskTable.keySet();
+		
+		Iterator<Integer> iterator = keys.iterator();
+		
+		while(iterator.hasNext()){
+			
+			int key = iterator.next();
+			
+			Reminder reminder = taskTable.get(key).getReminder();
+			
+			dataList.add(reminder.changeToDiskFormat());
+		}
+	}
+	
+	private void reminderRecovering(int ID){
+		HashMap<Integer,Reminder> reminderList = inMemory.getRemindersList();
+		if(containsReminder(reminderList,ID)){
+			recoverReminder(reminderList,ID);
+		}
+	}
+	
+	private boolean containsReminder(HashMap<Integer,Reminder> reminderList,int ID){
+		return reminderList.containsKey(ID);
+	}
+	
+	private void recoverReminder(HashMap<Integer,Reminder> reminderList,int ID){
+		Reminder reminder = reminderList.get(ID);
+		reminder.recover();
+	}
+	
 	private boolean TaskNotFound(Task task){
 		return task == null;
 	}
 	
-	private void interpretFileContents(Vector<String> fileContents) throws FileCorruptionException{
+	private void interpretTaskFileContents(Vector<String> fileContents) throws FileCorruptionException{
 		originalTaskList = new HashMap<Integer,Task>();
 		try{
 			if(isEmptyFile(fileContents)){
@@ -185,9 +261,21 @@ public class StorageManager {
 
 		}
 		catch(Exception e){
-			throw new FileCorruptionException("The file is corrupted");
+			throw new FileCorruptionException("The file " + TASK_PATH +" is corrupted");
 		}
 				
+	}
+	private void interpretReminderFileContents(Vector<String> fileContents) throws FileCorruptionException{
+		originalRemindersList = new HashMap<Integer,Reminder>();
+		try{
+			for(int i=1;i<fileContents.size();i++){
+				Reminder reminder = stringToReminder(fileContents.get(i));
+				originalRemindersList.put(reminder.getID(), reminder);
+			}
+
+		}catch(Exception e){
+			throw new FileCorruptionException("The file " + REMINDER_PATH +" is corrupted");
+		}
 	}
 	private void releaseID(int ID){
 		int nextValidID = inMemory.getNextValidID();
@@ -229,6 +317,22 @@ public class StorageManager {
 		return task;
 	}
 	
+	private Reminder stringToReminder (String reminderString) throws Exception{
+		String[] result = reminderString.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);	
+		
+		int task_ID = Integer.parseInt(result[0]);
+				
+		DateTime date;
+		
+		if(result[1].compareTo("null") == 0){
+			date = null;
+		}
+		else{
+			date = new DateTime(result[1]);
+		}
+		
+		return new Reminder(task_ID,date);
+	}
 	private boolean isEmptyFile(Vector<String> fileContents){
 		return fileContents.size() == 0;
 	}
@@ -375,6 +479,5 @@ public class StorageManager {
 		StorageManager sto =new StorageManager();
 		Task task1 = new Task("frist task");
 		Task task2 = new Task("second task");
-		sto.add(task1);
 	}
 }
