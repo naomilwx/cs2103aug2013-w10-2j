@@ -1,3 +1,4 @@
+//@author A0091372H
 package nailit.gui;
 
 import nailit.AppLauncher;
@@ -223,11 +224,12 @@ public class GUIManager {
 		}
 		return executionResult;
 	}
+	
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
-		displayArea.stopAllTimers();
 		displayArea.removeDeletedTasksFromTaskListTable();
 	}
+	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
 		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
