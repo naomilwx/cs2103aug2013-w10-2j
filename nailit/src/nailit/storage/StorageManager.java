@@ -49,7 +49,7 @@ public class StorageManager {
 		int ID = inMemory.add(taskToBeAdded);		
 		
 		if(isUndoRemove){
-			reminderRecovering(ID);
+//			reminderRecovering(ID);
 		}
 		
 		saveToFile(taskFile);
