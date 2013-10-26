@@ -8,7 +8,6 @@ import nailit.common.Result;
 public class HistoryWindow extends ExtendedWindow{
 	public HistoryWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
-		initialiseAndConfigureWindowContent();
 	}
 	@Override
 	protected void initialiseAndConfigureWindowContent(){
