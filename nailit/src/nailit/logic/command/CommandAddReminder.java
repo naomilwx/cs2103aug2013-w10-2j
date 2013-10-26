@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -23,6 +24,8 @@ public class CommandAddReminder extends Command{
 	private DateTime reminderDateToAdd;
 	
 	private Task taskRelated;
+	
+	private String commandSummary;
 
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
@@ -31,6 +34,7 @@ public class CommandAddReminder extends Command{
 		executedResult = new Result();
 		reminderDateToAdd = new DateTime();
 		taskRelated = new Task();
+		commandSummary = "";
 	}
 
 	@Override
@@ -50,6 +54,16 @@ public class CommandAddReminder extends Command{
 		return executedResult;
 	}
 	
+	private void createResultForFailure() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void createCommandSummary() {
+		commandSummary = "Add reminder to the Task: " + taskRelated.getName() + 
+				" to the date " + reminderDateToAdd.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
+	}
+
 	private void createResult() {
 		// TODO Auto-generated method stub
 		
