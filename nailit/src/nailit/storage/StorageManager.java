@@ -101,11 +101,30 @@ public class StorageManager {
 	}
 	
 		
-
 	
-	public Vector<Task> getTodayReminderList(){
+	public Vector<Task> getReminderListForToday(){
+		Vector<Task> v = new Vector<Task>();
+		
+		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+		
+		Set<Integer> keys = taskList.keySet();
+		
+		Iterator<Integer> iterator = keys.iterator();
+		
+		while(iterator.hasNext()){
+			
+			int key = iterator.next();
+			
+			Task task = taskList.get(key).copy();
+			
+			if(haveReminder(task)&&isReminderForToday(task)){
+				v.add(task);
+			}
+		}
+
 		return null;
 	}
+	
 	public void clear(){
 		inMemory.setTaskList(new HashMap<Integer,Task>());
 		inMemory.setNextValidID(1);
@@ -114,7 +133,15 @@ public class StorageManager {
 	/**
 	 * Private Methods
 	 * */
-
+	private boolean isReminderForToday(Task task){
+		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
+		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
+		DateTime reminder = task.getReminder();
+		return reminder.compareTo(startOfToday)>=0&&reminder.compareTo(endOfToday)<=0;
+	}
+	private boolean haveReminder(Task task){
+		return task!=null&&task.getReminder()!=null;
+	}
 	private void saveToFile(FileManager file){
 				
 		file.writingProcessInit();
@@ -389,5 +416,6 @@ public class StorageManager {
 		StorageManager sto =new StorageManager();
 		Task task1 = new Task("frist task");
 		Task task2 = new Task("second task");
+		sto.getReminderListForToday();
 	}
 }
