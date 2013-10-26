@@ -318,6 +318,8 @@ public class Task {
 		}else if(start == null){
 			if(isBeforeDateTime(end)){
 				return true;
+			}else if(startTime != null && endTime != null){
+				return (startTime.equals(end)||endTime.equals(end));
 			}else if(startTime != null){
 				return startTime.equals(end);
 			}else if(endTime != null){
@@ -328,6 +330,8 @@ public class Task {
 		}else{
 			if(isAfterDateTime(start)){
 				return true;
+			}else if(startTime != null && endTime != null){
+				return (startTime.compareTo(start) <= 0 && endTime.compareTo(start) >= 0);
 			}else if(startTime != null){
 				return startTime.equals(start);
 			}else if(endTime != null){
