@@ -282,7 +282,7 @@ public class Task {
 		}
 	}
 	public boolean isBeforeDateTime(DateTime dateTime){
-		//returns if event starts BEFORE (exclusive) date or task is due before date
+		//returns true if event starts BEFORE (exclusive) date or task is due before date
 		if(dateTime == null){
 			return true;
 		}
@@ -309,6 +309,8 @@ public class Task {
 			}else{
 				if(isAfterDateTime(start) && isAfterDateTime(end)){
 					return false;
+				}else if(endTime == null){ //start and no end: we treat as an event that goes on indefinitely
+					return (!isAfterDateTime(end));
 				}else if(isBeforeDateTime(start) && isBeforeDateTime(end)){
 					return false;
 				}else{
@@ -319,8 +321,9 @@ public class Task {
 			if(isBeforeDateTime(end)){
 				return true;
 			}else if(startTime != null && endTime != null){
-				return (startTime.equals(end)||endTime.equals(end));
+				return (startTime.equals(end));
 			}else if(startTime != null){
+				//treat as event which goes on indefinitely
 				return startTime.equals(end);
 			}else if(endTime != null){
 				return endTime.equals(end);
@@ -333,7 +336,8 @@ public class Task {
 			}else if(startTime != null && endTime != null){
 				return (startTime.compareTo(start) <= 0 && endTime.compareTo(start) >= 0);
 			}else if(startTime != null){
-				return startTime.equals(start);
+				//start time null and end time is not null: treat as event which goes on indefinitely
+				return (startTime.compareTo(start) <= 0);
 			}else if(endTime != null){
 				return endTime.equals(start);
 			}else{
