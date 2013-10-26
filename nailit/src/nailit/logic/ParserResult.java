@@ -60,7 +60,7 @@ public class ParserResult{
 		return isDisplayHistory;
 	}
 	
-	public void setSearchPriority (boolean flag){
+	public void setSetPriority (boolean flag){
 		isSetPriority = flag;
 	}
 	
