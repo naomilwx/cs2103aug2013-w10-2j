@@ -53,9 +53,9 @@ public class UpdateParser extends Parser {
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
 			if (answer == ""){
-				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
-			}else{
 				resultExecution.setEndTime(null);
+			}else{
+				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
 			if (listOfCommand.length<2){
@@ -65,7 +65,7 @@ public class UpdateParser extends Parser {
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2].toUpperCase()));
 			}
 		}
-		
+		System.out.println(resultExecution.getEndTime());
 		return resultExecution;
 	}
 }

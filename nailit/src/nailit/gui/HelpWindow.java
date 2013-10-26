@@ -14,7 +14,6 @@ public class HelpWindow extends ExtendedWindow{
 	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		initialiseAndConfigureWindowContent();
 	}
 	
 	@Override
@@ -33,7 +32,7 @@ public class HelpWindow extends ExtendedWindow{
 	protected void configureHomeWindowFrame(){
 		super.configureHomeWindowFrame();
 		setBackground(HELP_WINDOW_DEFAULT_COLOR);
-		setOpacity(HELP_WINDOW_OPACITY);
+//		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		setAlwaysOnTop(true);
 	}
 }

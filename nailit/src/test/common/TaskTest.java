@@ -80,13 +80,13 @@ public class TaskTest {
 		assertTrue(event.isAfterDateTime(testDate));
 		//test boundary case
 		testDate = new DateTime(2013, 5, 2, 10, 30);
-		assertTrue(event.isAfterDateTime(testDate));
+		assertFalse(event.isAfterDateTime(testDate));
 		
 		//test case 2: given time is between start and end time
 		testDate = new DateTime(2013, 5, 15, 10, 30);
 		assertFalse(event.isAfterDateTime(testDate));
 		
-		//test case 3: givent time is after both start and end time
+		//test case 3: given time is after both start and end time
 		testDate = new DateTime(2013, 6, 15, 10, 30);
 		assertFalse(event.isAfterDateTime(testDate));
 		//test boundary case
@@ -124,7 +124,7 @@ public class TaskTest {
 		assertFalse(event.isBeforeDateTime(testDate));
 		//test boundary case
 		testDate = new DateTime(2013, 5, 2, 10, 30);
-		assertTrue(event.isAfterDateTime(testDate));
+		assertFalse(event.isBeforeDateTime(testDate));
 		
 		//test case 2: given time is between start and end time
 		testDate = new DateTime(2013, 5, 15, 10, 30);
@@ -171,8 +171,8 @@ public class TaskTest {
 		assertFalse(task2.isInDateRange(testStart, testEnd));
 		//test boundary case
 		testEnd = new DateTime(2013, 5, 2, 10, 30);
-		assertFalse(task1.isInDateRange(testStart, testEnd));
-		assertFalse(task2.isInDateRange(testStart, testEnd));
+		assertTrue(task1.isInDateRange(testStart, testEnd));
+		assertTrue(task2.isInDateRange(testStart, testEnd));
 		//Test case 2: start time before task startTime, end time after task startTime
 		//should return true
 		testStart = new DateTime(2013, 4, 1, 0 , 0);
@@ -186,7 +186,7 @@ public class TaskTest {
 		assertFalse(task1.isInDateRange(testStart, testEnd));
 		assertFalse(task2.isInDateRange(testStart, testEnd));
 	}
-	
+	@Test
 	public void isInDateRangeTest(){
 		//Tasks with start and end time
 		DateTime startTime = new DateTime(2013, 5, 2, 10, 30);
@@ -201,7 +201,7 @@ public class TaskTest {
 		assertFalse(event.isInDateRange(testStart, testEnd));
 		//test boundary case
 		testEnd = new DateTime(2013, 5, 2, 10, 30);
-		assertFalse(event.isInDateRange(testStart, testEnd));
+		assertTrue(event.isInDateRange(testStart, testEnd));
 		//Test case 2: start and end time of range after task endTime
 		//should return false
 		testStart = new DateTime(2013, 7, 1, 0, 0);
@@ -209,7 +209,7 @@ public class TaskTest {
 		assertFalse(event.isInDateRange(testStart, testEnd));
 		//test boundary case
 		testEnd = new DateTime(2013, 6, 2, 10, 30);
-		assertFalse(event.isInDateRange(testStart, testEnd));
+		assertTrue(event.isInDateRange(testStart, testEnd));
 		//Test case 3: start time before task startTime, end time between task startTime and endTime
 		//should return true
 		testStart = new DateTime(2013, 4, 1, 0 , 0);

@@ -95,7 +95,7 @@ public class GUIManager {
 	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
 	private HistoryWindow historyWindow;
-//	private HelpWindow helpWindow;
+	private HelpWindow helpWindow;
 	
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
@@ -112,7 +112,7 @@ public class GUIManager {
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
-			configureDefaultDisplay();
+			showDefaultDisplay();
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -122,14 +122,14 @@ public class GUIManager {
 		}
 	}
 	
-	private void configureDefaultDisplay(){
+	private void showDefaultDisplay(){
 		executeUserInputCommand(CommandType.DISPLAY + " all");
 	}
 	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){
 		createAndDisplayHomeWindow();
 		historyWindow = new HistoryWindow(this, HISTORY_WINDOW_WIDTH);
-//		helpWindow = new HelpWindow(this, MainWindow.WINDOW_WIDTH);
+		helpWindow = new HelpWindow(this, MainWindow.WINDOW_WIDTH);
 	}
 	private void createAndDisplayHomeWindow() {
 		homeWindow = new HomeWindow(this, HOME_WINDOW_WIDTH);
@@ -184,10 +184,10 @@ public class GUIManager {
 		historyWindow.setVisible(false);
 	}
 	protected void showHelpWindow(){
-//		helpWindow.setVisible(true);
+		helpWindow.setVisible(true);
 	}
 	protected void hideHelpWindow(){
-//		helpWindow.setVisible(false);
+		helpWindow.setVisible(false);
 	}
 	//functions to set focus of GUI Components
 	public void setFocusOnDisplay(){
