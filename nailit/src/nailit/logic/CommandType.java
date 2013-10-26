@@ -21,11 +21,6 @@ public enum CommandType {
 		return false;
 	}
 	
-	public static int calculateDistance(String a, String b){
-		int answer=0;
-		StringUtils.getLevenshteinDistance(a,b)
-		return answer;
-	}
 	
 	public static CommandType isApproximateCommandType(String p){
 		int min = Integer.MAX_VALUE;
@@ -33,6 +28,9 @@ public enum CommandType {
 		for(CommandType type: CommandType.values()){
 			if (StringUtils.getLevenshteinDistance(type.values().toString(), p) < min){
 				min = StringUtils.getLevenshteinDistance(type.values().toString(), p);
+				if (min<p.length()){
+					answer = type;
+				}
 			}
 		}
 		return answer;
