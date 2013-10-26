@@ -169,10 +169,9 @@ public class CommandManager {
 		if(commandType == CommandType.ADD) {
 			CommandAdd ca = (CommandAdd)commandToRedo;
 			Task taskAddedBack = ca.getTaskAdded();
-			if(isTheTaskFitTheFilter(taskAddedBack)) {
-				currentTaskList.add(taskAddedBack);
-				sort();
-			}
+			currentTaskList.add(taskAddedBack);
+			sort();
+			
 		} else {
 			int count = -1;
 			Iterator<Task> itr = currentTaskList.iterator();
@@ -250,10 +249,8 @@ public class CommandManager {
 		if(commandType == CommandType.DELETE) {
 			CommandDelete cd = (CommandDelete)commandToUndo;
 			Task taskAddedBack = cd.getTaskDeleted();
-			if(isTheTaskFitTheFilter(taskAddedBack)) {
-				currentTaskList.add(taskAddedBack);
-				sort();
-			}
+			currentTaskList.add(taskAddedBack);
+			sort();
 		} else {
 			int count = -1;
 			Iterator<Task> itr = currentTaskList.iterator();
@@ -266,22 +263,19 @@ public class CommandManager {
 						currentTaskList.remove(count);
 					} else {
 						if(commandType == CommandType.COMPLETE) {
-							currentTask.setCompleted(true);
-						} else if(commandType == CommandType.UNCOMPLETE) {
 							currentTask.setCompleted(false);
+						} else if(commandType == CommandType.UNCOMPLETE) {
+							currentTask.setCompleted(true);
 						}
 					}
 					break;
 				} 
 			}
-			
 			// add it to the task list if the task fit the filter after the undo
 			if(commandType == CommandType.UPDATE) {
 				CommandUpdate cu = (CommandUpdate)commandToUndo;
-				if(isTheTaskFitTheFilter(cu.getRetrievedTask())) { // if updated task fit the filter, add it back
-					currentTaskList.add(cu.getRetrievedTask());
-					sort();
-				}
+				currentTaskList.add(cu.getRetrievedTask());
+				sort();
 			} 
 		}
 	}
@@ -319,23 +313,11 @@ public class CommandManager {
 		// the new added task may or may not should exist in the currentTaskList,
 		// check whether the added task fit the filterContentForCurrentTaskList
 		// if fit, add it and sort the current task list
-		//Begin amend by Naomi
-//		if(isTheTaskFitTheFilter(resultToPassToGUI)) {
-			addTaskToCurrentTaskList(resultToPassToGUI);
-			sort();
-//		}
-		
-		
-		
+		addTaskToCurrentTaskList(resultToPassToGUI);
+		sort();
 		// deal with the case that when user add a task while nothing in the task list.
 		// in this situation, instead of giving a display type Execution_Display, we give task display
-//		if(currentTaskList.isEmpty()) {
-//			resultToPassToGUI.setDisplayType(Result.TASK_DISPLAY);
-//		} else {
-			// add the searchResult into the resultToPassToGUI
-			resultToPassToGUI.setTaskList(currentTaskList);
-//		}
-		//end amend
+		resultToPassToGUI.setTaskList(currentTaskList);
 		return resultToPassToGUI;
 	}
 	
@@ -353,9 +335,7 @@ public class CommandManager {
 			addNewCommandObjToOperationsHistory(newDeleteCommandObj); // only add the sucessful command to the command stack
 		}
 		resultToPassToGUI.setTaskList(currentTaskList);
-		
 		return resultToPassToGUI;
-
 	}
 	
 	private Result update() throws Exception {
@@ -380,14 +360,12 @@ public class CommandManager {
 		// one on the returned result object
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-//		addNewCommandObjToOperationsHistory(newDisplayCommandObj);
 		return resultToPassToGUI;
 	}
 	
 	private Result search() {
 		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
 		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
-//		addNewCommandObjToOperationsHistory(newSearchCommandObj);
 		// update the currentTaskList and filter Object
 		updateCurrentTaskList(newSearchCommandObj);
 		updateCurrentFilterObj(newSearchCommandObj);
@@ -436,9 +414,7 @@ public class CommandManager {
 		int displayID = newMOrUnMCompletedObj.getDisplayID();
 		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
 		taskToMarkAsCompleted.setCompleted(true);
-		if(!isTheTaskFitTheFilter(taskToMarkAsCompleted)) { // does not fit the filter after being marked
-			currentTaskList.remove(displayID - 1);
-		}
+		sort();
 	}
 	
 	private Result uncomplete() throws Exception {
@@ -460,9 +436,7 @@ public class CommandManager {
 		int displayID = newMOrUnMCompletedObj.getDisplayID();
 		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
 		taskToMarkAsCompleted.setCompleted(false);
-		if(!isTheTaskFitTheFilter(taskToMarkAsCompleted)) { // does not fit the filter after being marked
-			currentTaskList.remove(displayID - 1);
-		}
+		sort();
 	}
 
 	private Result exit() {
@@ -498,128 +472,6 @@ public class CommandManager {
 		Collections.sort(currentTaskList, newComparator);
 	}
 	
-	private boolean isTheTaskFitTheFilter(Result resultToPassToGUI) {
-		Task taskToCompare = resultToPassToGUI.getTaskToDisplay();
-		// date in filter
-		DateTime filterST = filterContentForCurrentTaskList.getStartTime();
-		DateTime filterET = filterContentForCurrentTaskList.getEndTime();
-		
-		// date in the task
-		DateTime taskST = taskToCompare.getStartTime();
-		DateTime taskET = taskToCompare.getEndTime();
-		
-		if (filterContentForCurrentTaskList.getIsSearchAll()) {
-			return true;
-		} 
-		
-		if (filterContentForCurrentTaskList.getName() != null) {
-			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
-				return true;
-			} 
-		} 
-		
-		if(filterContentForCurrentTaskList.getPriority() != null) {
-			if(taskToCompare.getPriority() == filterContentForCurrentTaskList.getPriority()) {
-				return true;
-			}
-		} 
-		
-		if(filterContentForCurrentTaskList.getTag() != null) {
-			if(taskToCompare.getTag() == filterContentForCurrentTaskList.getTag()) {
-				return true;
-			}
-		}
-
-
-		if (filterContentForCurrentTaskList.isCompleted() != null) { // means the field is searched
-			if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()){
-				return true;
-			}
-		}
-
-		if (filterST != null && filterET != null) { // a time range, meaning
-													// that start time needs to
-													// be within the range
-			if ((filterST.compareTo(taskST) < 0) && (filterET.compareTo(taskST) > 0)) {
-				return true;
-			}
-		} 
-		
-		if(filterST != null && filterET == null) { // from a time, taskST needs to after it
-			if(filterST.compareTo(taskST) < 0) {
-				return true;
-			}
-		}
-		
-		if(filterST == null && filterET != null) { // to a time, taskST needs to before it
-			if(filterET.compareTo(taskST) > 0) {
-				return true;
-			}
-		} 
-		return false;
-	}
-	
-	private boolean isTheTaskFitTheFilter(Task taskAddedBack) {
-		Task taskToCompare = taskAddedBack;
-		// date in filter
-		DateTime filterST = filterContentForCurrentTaskList.getStartTime();
-		DateTime filterET = filterContentForCurrentTaskList.getEndTime();
-		
-		// date in the task
-		DateTime taskST = taskToCompare.getStartTime();
-		DateTime taskET = taskToCompare.getEndTime();
-		
-		if (filterContentForCurrentTaskList.getIsSearchAll()) {
-			return true;
-		} 
-		
-		if (filterContentForCurrentTaskList.getName() != null) {
-			if(taskToCompare.getName() == filterContentForCurrentTaskList.getName()) {
-				return true;
-			} 
-		} 
-		
-		if(filterContentForCurrentTaskList.getPriority() != null) {
-			if(taskToCompare.getPriority() == filterContentForCurrentTaskList.getPriority()) {
-				return true;
-			}
-		} 
-		
-		if(filterContentForCurrentTaskList.getTag() != null) {
-			if(taskToCompare.getTag() == filterContentForCurrentTaskList.getTag()) {
-				return true;
-			}
-		}
-
-
-		if (filterContentForCurrentTaskList.isCompleted() != null) { // means the field is searched
-			if(taskToCompare.checkCompleted() == filterContentForCurrentTaskList.isCompleted()){
-				return true;
-			}
-		}
-
-		if (filterST != null && filterET != null) { // a time range, meaning
-													// that start time needs to
-													// be within the range
-			if ((filterST.compareTo(taskST) < 0) && (filterET.compareTo(taskST) > 0)) {
-				return true;
-			}
-		} 
-		
-		if(filterST != null && filterET == null) { // from a time, taskST needs to after it
-			if(filterST.compareTo(taskST) < 0) {
-				return true;
-			}
-		}
-		
-		if(filterST == null && filterET != null) { // to a time, taskST needs to before it
-			if(filterET.compareTo(taskST) > 0) {
-				return true;
-			}
-		} 
-		return false;
-	}
-
 	public Vector<Task> getCurrentTaskList() {
 		return currentTaskList;
 	}

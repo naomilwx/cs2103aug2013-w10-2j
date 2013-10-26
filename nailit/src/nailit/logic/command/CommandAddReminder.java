@@ -40,11 +40,11 @@ public class CommandAddReminder extends Command{
 
 	@Override
 	public Result executeCommand() throws Exception {
-		setReminderDateToAdd();
-		if(isValidDisplayID()) {
+		setReminderDateToAdd(); // the added reminder date set here
+		if(isValidDisplayID()) { // set displayID here
 			setTaskRelated();
 			setTaskID();
-			if(isValidReminderDateTime()) { // the added reminder can be set
+			if(isValidReminderDateTime()) { 
 				addReminderDate(); // add reminder in storage
 				createResult();
 				createCommandSummary();
@@ -103,7 +103,7 @@ public class CommandAddReminder extends Command{
 	}
 
 	private boolean isValidDisplayID() {
-		int displayID = parserResultInstance.getTaskID();
+		displayID = parserResultInstance.getTaskID();
 		int size = taskList.size();
 		if((size == 0) || (displayID < 1) || (displayID > size) ) {
 			return false;

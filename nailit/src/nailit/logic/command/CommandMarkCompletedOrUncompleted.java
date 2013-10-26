@@ -63,7 +63,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	@Override
 	public Result executeCommand() throws Exception {
-		if(isValidDisplayID()) {
+		if(isValidDisplayID()) { // also set the displayID
 			setTaskRelated();
 			setTaskID();
 			markAsCompletedOrUncompleted();
@@ -119,7 +119,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	}
 
 	private boolean isValidDisplayID() {
-		int displayID = parserResultInstance.getTaskID();
+		displayID = parserResultInstance.getTaskID();
 		int size = taskList.size();
 		if((size == 0) || (displayID < 1) || (displayID > size) ) {
 			return false;
