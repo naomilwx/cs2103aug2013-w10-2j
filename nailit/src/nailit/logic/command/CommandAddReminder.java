@@ -14,6 +14,10 @@ import nailit.storage.StorageManager;
 
 public class CommandAddReminder extends Command{
 	
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is not added successfully. " +
+																		"The reason may be: the display ID is invalid" +
+																		" or the reminder date is invalid";
+
 	private int displayID;
 	
 	private int taskID;
@@ -27,6 +31,8 @@ public class CommandAddReminder extends Command{
 	private Task taskRelated;
 	
 	private String commandSummary;
+	
+	private boolean isSuccess;
 
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
@@ -36,6 +42,7 @@ public class CommandAddReminder extends Command{
 		reminderDateToAdd = new DateTime();
 		taskRelated = new Task();
 		commandSummary = "";
+		isSuccess = false;
 	}
 
 	@Override
@@ -48,6 +55,7 @@ public class CommandAddReminder extends Command{
 				addReminderDate(); // add reminder in storage
 				createResult();
 				createCommandSummary();
+				isSuccess = true;
 			}
 		} else {
 			createResultForFailure();
@@ -56,8 +64,8 @@ public class CommandAddReminder extends Command{
 	}
 	
 	private void createResultForFailure() {
-		// TODO Auto-generated method stub
-		
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
+		executedResult.setUpdateReminderList(false);
 	}
 
 	private void createCommandSummary() {
@@ -66,8 +74,18 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void createResult() {
-		// TODO Auto-generated method stub
-		
+		String notificationStr = "Add reminder to the Task: " + taskRelated.getName() + 
+				" to the date " + reminderDateToAdd.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
+		// create a dateTime obj representing today
+		DateTime today = new DateTime();
+		if(today.compareTo(reminderDateToAdd) == 0) { // means that the reminder is today, reminder list needs update
+			Vector<Task> todayReminderList = storer.getTodayReminderList();
+			executedResult.setUpdateReminderList(true);
+			executedResult.setReminderList(todayReminderList);
+		} else {
+			executedResult.setUpdateReminderList(false);
+		}
 	}
 
 	private void setTaskID() {
@@ -157,6 +175,10 @@ public class CommandAddReminder extends Command{
 	public String getCommandString() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public boolean isSuccess() {
+		return isSuccess;
 	}
 
 }
