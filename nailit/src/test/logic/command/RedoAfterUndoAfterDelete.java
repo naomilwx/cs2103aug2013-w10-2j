@@ -26,7 +26,7 @@ public class RedoAfterUndoAfterDelete {
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), false, 0);
 	
-	private static ParserResult parserResultDelete1 = createPR(CommandType.ADD, "task3", 
+	private static ParserResult parserResultDelete1 = createPR(CommandType.DELETE, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), false, 2); // delete the last one, which is task 2
 	
@@ -83,7 +83,7 @@ public class RedoAfterUndoAfterDelete {
 		Result resultOfRedo = cm.executeCommand(parserResultRedo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-		currentTaskList.add(task3);
+//		currentTaskList.add(task3);
 		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
