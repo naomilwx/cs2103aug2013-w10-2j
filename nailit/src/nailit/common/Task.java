@@ -17,7 +17,7 @@ public class Task {
 	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted = false;
 	private TaskPriority priority;
-	private Reminder reminder = null;
+	private DateTime reminderStartDate = null;
 
 	public static final int COMPLETED_IN_HARDDISK = 1;
 	public static final int INCOMPLETE_IN_HARDDISK = 0;
@@ -94,9 +94,10 @@ public class Task {
 		return endTime;
 	}
 	
-	public Reminder getReminder(){
-		return reminder;
+	public DateTime getReminder(){
+		return reminderStartDate;
 	}
+	
 	public boolean isNormalTask(){
 		if(startTime != null && endTime == null){
 			return true;
@@ -160,8 +161,8 @@ public class Task {
 		endTime = end;
 	}
 	
-	public void setReminder(Reminder reminder){
-		this.reminder = reminder;
+	public void setReminder(DateTime reminder){
+		this.reminderStartDate = reminder;
 	}
 	
 	//Functions to format Task details for printout
@@ -217,7 +218,7 @@ public class Task {
 		newTask.setDescription(description);
 		newTask.setID(ID);
 		newTask.setCompleted(isCompleted);
-		newTask.setReminder(reminder);
+		newTask.setReminder(reminderStartDate);
 		return newTask;
 	}
 	
