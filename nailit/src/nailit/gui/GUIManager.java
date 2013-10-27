@@ -112,8 +112,7 @@ public class GUIManager {
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
-			showDefaultDisplay();
-//			helpWindow.setVisible(true);
+			showDefaultDisplayAndReminders();
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -123,8 +122,16 @@ public class GUIManager {
 		}
 	}
 	
-	private void showDefaultDisplay(){
+	private void showDefaultDisplayAndReminders(){
+		getAndDisplayReminders();
 		executeUserInputCommand(CommandType.DISPLAY + " all");
+	}
+	private void getAndDisplayReminders(){
+		Vector<Task> reminderList = logicExecutor.getReminderList();
+		updateReminderDisplay(reminderList);
+	}
+	private void updateReminderDisplay(Vector<Task> reminders){
+		homeWindow.displayReminders(reminders);
 	}
 	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){

@@ -10,7 +10,9 @@ public class HelpWindowConstants {
 		{"from <start date> to <end date>",
 		"<start date>, <end date>"
 		};
-	public static final String[] ADD_SYNTAX = {"Add Task", "add <name>, <date>, #<tag>#, <priority>, [<description>]"};
+	public static final int COMMAND_DESC_POS = 0;
+	public static final int COMMAND_SYNTAX_POS = 1;
+	public static final String[] ADD_SYNTAX = {"Add Task", "add <name>, <date>, #<tag>#, <priority>, (<description>)"};
 	public static final String[] UPDATE_SYNTAX = {"Update Task", "update <ID> <field name> <updated details>"};
 	public static final String[] DELETE_SYNTAX = {"Delete Task", "delete <ID>"};
 	public static final String[] DISPLAY_SYNTAX = {"Display all tasks", "display all"};
@@ -76,5 +78,15 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Deleted Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put updated task details in command bar");
+	}
+	
+	public static String generateListOfSupportedCommands(){
+		String list = "Supported Commands: ";
+		for(CommandType type: CommandType.values()){
+			if(!type.equals(CommandType.INVALID)){
+				list += type.toString().toLowerCase() + " | ";
+			}
+		}
+		return list;
 	}
 }
