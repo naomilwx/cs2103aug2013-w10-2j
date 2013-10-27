@@ -1,6 +1,8 @@
 //@author A0091372H
 package nailit.gui;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -10,8 +12,32 @@ import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskDetailsFormatter;
 
 public class HomeWindow extends ExtendedWindow{
+	private final HomeWindow selfRef = this;
+	private final KeyAdapter keyEventListener = new KeyAdapter(){
+		private boolean ctrlPressed = false;
+		@Override
+		public void keyPressed(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_CONTROL){
+				System.out.println("down");
+				ctrlPressed = true;
+			}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+				ctrlPressed = false;
+				selfRef.setVisible(false);
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = false;
+			}
+		}
+	};
+	
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
+		addKeyListener(keyEventListener);
 	}
 	
 	protected void displayReminders(Vector<Task> tasks){
