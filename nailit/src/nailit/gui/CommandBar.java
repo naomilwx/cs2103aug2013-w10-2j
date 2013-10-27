@@ -171,6 +171,7 @@ public class CommandBar extends JPanel {
 					GUIBoss.removeTaskDisplay();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					GUIBoss.displayCommandSyantaxHelpWindow();
+					GUIBoss.setFocusOnHelpWindow();
 				}
 			}
 			@Override
