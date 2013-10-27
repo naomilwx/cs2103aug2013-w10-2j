@@ -6,29 +6,40 @@ import java.util.Vector;
 import nailit.logic.CommandType;
 
 public class HelpWindowConstants {
-	public static final String ACCEPTABLE_DATE_SYNTAX[] = 
-		{"from <start date> to <end date>",
-		"<start date>, <end date>"
-		};
+	public static final String TEXT_DISPLAY_STYLE = "<head><style type = \"text/css\">"
+			+ "em {font-weight: bold; }"
+			+ "p.title {font-weight: bold; text-decoration:underline;}"
+			+ "</style></head>"; 
+	public static final String TITLE_TEXT_HTML_FORMAT = "<tr><p class =\"title\"> %1s </p></tr>";
+	public static final String[] PRIORITY_TYPES = {"low", "medium", "high"};
+	
+	public static final String[] ACCEPTABLE_DATE_SYNTAX = 
+		{"Accepted <b>date</b> field formats:", 
+		"[end] &ensp"
+		+ "|&ensp [start], [end] &ensp"
+		+ "|&ensp <em>from</em> [start] <em>to</em> [end]", 
+		"date"};
 	public static final int COMMAND_DESC_POS = 0;
 	public static final int COMMAND_SYNTAX_POS = 1;
-	public static final String[] ADD_SYNTAX = {"Add Task", "add <name>, <date>, #<tag>#, <priority>, (<description>)"};
-	public static final String[] UPDATE_SYNTAX = {"Update Task", "update <ID> <field name> <updated details>"};
-	public static final String[] DELETE_SYNTAX = {"Delete Task", "delete <ID>"};
-	public static final String[] DISPLAY_SYNTAX = {"Display all tasks", "display all"};
-	public static final String[] DISPLAY_TASK_SYNTAX = {"Display Task Details", "display <ID>"};
-	public static final String[] SEARCH_SYNTAX = {"Task Search", "search <name>, <date>, #<tag>#"};
-	public static final String[] COMPLETE_SYNTAX = {"Mark Task As Completed", "complete <ID>"};
-	public static final String[] UNCOMPLETE_SYNTAX = {"Unmark Completed Task", "uncomplete <ID>"};
-	public static final String[] ADDREM_SYNTAX = {"Add Reminder for Task", "addReminder <ID>, <start date>"};
-	public static final String[] DELREM_SYNTAX = {"Remove Task Reminder", "delReminder <ID>"};
+	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
+	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
+	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete [ID]</em>"};
+	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
+	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display [ID]</em>"};
+	public static final String[] SEARCH_SYNTAX = {"<b>Task Search</b>", "<em>search</em> [name], [date], #[tag]#"};
+	public static final String[] COMPLETE_SYNTAX = {"<b>Mark Task As Completed</b>", "<em>complete [ID]</em>"};
+	public static final String[] UNCOMPLETE_SYNTAX = {"<b>Unmark Completed Task</b>", "<em>uncomplete [ID]</em>"};
+	public static final String[] ADDREM_SYNTAX = {"<b>Add Reminder for Task</b>", "<em>addReminder [ID]</em>, [start date]"};
+	public static final String[] DELREM_SYNTAX = {"<b>Remove Task Reminder</b>", "<em>delReminder [ID]</em>"};
 	
 	public static final HashMap<String, Vector<String[]>> COMMAND_SYNTAX_LIST = new HashMap<String, Vector<String[]>>();
 	static{
 		Vector<String[]> addCommandSyntax = new Vector<String[]>();
 		addCommandSyntax.add(ADD_SYNTAX);
+		addCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> updateCommandSyntax = new Vector<String[]>();
 		updateCommandSyntax.add(UPDATE_SYNTAX);
+		updateCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> deleteCommandSyntax = new Vector<String[]>();
 		deleteCommandSyntax.add(DELETE_SYNTAX);
 		Vector<String[]> displayCommandSyntax = new Vector<String[]>();
@@ -36,6 +47,7 @@ public class HelpWindowConstants {
 		displayCommandSyntax.add(DISPLAY_TASK_SYNTAX);
 		Vector<String[]> searchCommandSyntax = new Vector<String[]>();
 		searchCommandSyntax.add(SEARCH_SYNTAX);
+		searchCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> completeCommandSyntax = new Vector<String[]>();
 		completeCommandSyntax.add(COMPLETE_SYNTAX);
 		Vector<String[]> uncompleteCommandSyntax = new Vector<String[]>();
@@ -64,6 +76,7 @@ public class HelpWindowConstants {
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+W", "Hide Task Details Display");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
+//		COMMANDBAR_KEYBOARD_COMMANDS.put("F1", "Show Help Window"); //not implemented yet
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
@@ -76,8 +89,8 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Down", "Scrolldown");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Up", "Scrollup");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Deleted Highlighted Task");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put updated task details in command bar");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Delete Highlighted Task");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put task description in command bar");
 	}
 	
 	public static String generateListOfSupportedCommands(){

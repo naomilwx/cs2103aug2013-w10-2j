@@ -52,7 +52,7 @@ public class GUIManager {
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
 	protected static final int MAIN_WINDOW_X_POS = 100;
-	protected static final int MAIN_WINDOW_Y_POS = 100;
+	protected static final int MAIN_WINDOW_Y_POS = 150;
 	
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
@@ -113,6 +113,9 @@ public class GUIManager {
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
+//			helpWindow.displayListOfAvailableCommands(); //testing: to be removed later
+//			helpWindow.displaySyntaxForSupportedCommands(); //testing: to be removed later
+//			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);

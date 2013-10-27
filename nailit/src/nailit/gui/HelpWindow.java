@@ -12,8 +12,15 @@ import javax.swing.Timer;
 import nailit.logic.CommandType;
 
 public class HelpWindow extends ExtendedWindow{
+	protected static final String HTML_FORMATTED_STRING = "<html>" + HelpWindowConstants.TEXT_DISPLAY_STYLE + "%1s</html>";
+	protected static final String COMMAND_SYNTAX_HTML_FORMAT = "<tr><td>%1s  </td><td>%2s</td></tr>";
+	
 	private static final int DEFAULT_Y_TOP_OFFSET = 22;
 	private static final int DEFAULT_WINDOW_HEIGHT = 70;
+	private static final int EXTRA_LINE_HEIGHT = 20;
+	private static final int MAX_COMMAND_SYNTAX_WINDOW_HEIGHT = 150;
+	
+	private static final int FULL_WINDOW_HEIGHT = 200;
 	
 	private static final float HELP_WINDOW_OPACITY = 0.9f;
 	private static final Color HELP_WINDOW_DEFAULT_COLOR = Color.white;
@@ -24,6 +31,7 @@ public class HelpWindow extends ExtendedWindow{
 	protected static final float NO_OPACITY = 0.5f;
 	
 	private final Timer fadeOutTimer = new Timer(0, null);
+	private int offSet;
 	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
@@ -47,32 +55,66 @@ public class HelpWindow extends ExtendedWindow{
 		setBackground(HELP_WINDOW_DEFAULT_COLOR);
 		setAlwaysOnTop(true);
 	}
+	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
+		fadeOutTimer.setInitialDelay(displayTime);
+		fadeOutTimer.setDelay(timeInterval);
+		fadeOutTimer.addActionListener(new ActionListener(){
+			float nextOpacity = HELP_WINDOW_OPACITY;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				nextOpacity -= opacityStep;
+				if(nextOpacity <= NO_OPACITY){
+					fadeOutTimer.stop();
+					setVisible(false);
+				}else{
+//					setOpacity(nextOpacity);
+				}
+			}
+		});
+		fadeOutTimer.restart();
+	}
 	
+	//Methods to format and display help window contents
 	protected String getSyntaxDisplayStringForCommandType(String command){
 		String commandToGet = command.toUpperCase().trim();
 		Vector<String[]> syntaxString = HelpWindowConstants.COMMAND_SYNTAX_LIST.get(commandToGet);
 		String textStr = "";
+		offSet = 0;
 		if(syntaxString != null){
 			for(String[] strArr: syntaxString){
 				if(!textStr.isEmpty()){
-					textStr += "\n";
+					textStr += "<br>";
 				}
-				textStr += strArr[HelpWindowConstants.COMMAND_DESC_POS] + " : " + strArr[HelpWindowConstants.COMMAND_SYNTAX_POS];
+				textStr += String.format(COMMAND_SYNTAX_HTML_FORMAT, strArr[HelpWindowConstants.COMMAND_DESC_POS], 
+						strArr[HelpWindowConstants.COMMAND_SYNTAX_POS]);
+				offSet = offSet + 1;
 			}
 		}
 		return textStr;
 	}
+	protected void formatDisplayForSupportedCommandsSyntax(){
+		
+	}
+	protected void displaySyntaxForSupportedCommands(){
+		
+		adjustAndshowHelpWindow(FULL_WINDOW_HEIGHT);
+	}
 	protected void displaySyntaxForCommandType(String command){
-		String display = getSyntaxDisplayStringForCommandType(command);
-		((TextDisplay) displayPane).displayText(display);
-		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
-		showHelpWindow(DEFAULT_WINDOW_HEIGHT);
+		String displayText = String.format(HelpWindowConstants.TITLE_TEXT_HTML_FORMAT, "Syntax for "+ command + " command")
+				+ getSyntaxDisplayStringForCommandType(command);
+		String display = String.format(HTML_FORMATTED_STRING, displayText);
+		((TextDisplay) displayPane).displayHTMLFormattedText(display);
+		
+		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
+				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
+		adjustHelpWindowLocation(defaultYPos - newWindowHeight);
+		adjustAndshowHelpWindow(newWindowHeight);
 	}
 	
 	protected void displayListOfAvailableCommands(){
 		((TextDisplay) displayPane).displayText(HelpWindowConstants.generateListOfSupportedCommands());
 		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
-		showHelpWindow(DEFAULT_WINDOW_HEIGHT);
+		adjustAndshowHelpWindow(DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
 	
@@ -86,27 +128,10 @@ public class HelpWindow extends ExtendedWindow{
 		setSize(windowWidth, windowHeight);
 		refreshContentSize();
 	}
-	private void showHelpWindow(int height){
+	private void adjustAndshowHelpWindow(int height){
 		adjustHelpWindowHeight(height);
-		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
+//		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		showWindowAsItIs();
 	}
-	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
-		fadeOutTimer.setInitialDelay(displayTime);
-		fadeOutTimer.setDelay(timeInterval);
-		fadeOutTimer.addActionListener(new ActionListener(){
-			float nextOpacity = HELP_WINDOW_OPACITY;
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				nextOpacity -= opacityStep;
-				if(nextOpacity <= NO_OPACITY){
-					fadeOutTimer.stop();
-					setVisible(false);
-				}else{
-					setOpacity(nextOpacity);
-				}
-			}
-		});
-		fadeOutTimer.restart();
-	}
+	
 }
