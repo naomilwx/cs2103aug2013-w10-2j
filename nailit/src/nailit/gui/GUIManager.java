@@ -383,7 +383,7 @@ public class GUIManager {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					homeWindow.setVisible(true);
+					toggleHomeWindow();
 				}
 				
 			});

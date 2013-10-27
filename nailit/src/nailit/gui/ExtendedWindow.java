@@ -4,6 +4,8 @@ package nailit.gui;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,6 +36,30 @@ public abstract class ExtendedWindow extends JFrame{
 	protected int windowXPos = defaultXPos;
 	protected int windowYPos = defaultYPos;
 	
+	protected final MouseAdapter extendedWindowMouseListener = new MouseAdapter(){
+		int initialMouseX;
+		int initialMouseY;
+		int currX;
+		int currY;
+		@Override
+		public void mousePressed(MouseEvent mouseEvent){
+			mouseEvent.getComponent().requestFocus();
+			initialMouseX = mouseEvent.getXOnScreen();
+			initialMouseY = mouseEvent.getYOnScreen();
+			currX = getX();
+			currY = getY();
+		}
+		@Override
+		public void mouseDragged(MouseEvent mouseEvent){
+			if((mouseEvent.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0){
+				int XShift = mouseEvent.getXOnScreen() - initialMouseX;
+				int YShift = mouseEvent.getYOnScreen() - initialMouseY;
+				((ExtendedWindow) mouseEvent.getComponent()).setLocation(currX + XShift,
+																		currY + YShift);
+			}
+		}
+	};
+	
 	public ExtendedWindow(final GUIManager GUIMain, int width){
 		GUIBoss = GUIMain;
 		windowWidth = width;
@@ -43,6 +69,8 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void initialiseHomeWindow(){
 		configureHomeWindowFrame();
 		createAndInitialiseContentPane();
+		addMouseListener(extendedWindowMouseListener);
+		addMouseMotionListener(extendedWindowMouseListener);
 	}
 	protected void configureHomeWindowFrame(){
 		setUndecorated(true);
@@ -83,6 +111,7 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void addItem(Component component) {
 		contentPane.add(component);
 	}
+	
 	protected void setFocus() {
 		displayPane.requestFocus();
 	}
