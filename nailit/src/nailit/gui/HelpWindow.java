@@ -15,6 +15,7 @@ public class HelpWindow extends ExtendedWindow{
 	protected static final String HTML_FORMATTED_STRING = "<html>" + HelpWindowConstants.TEXT_DISPLAY_STYLE + "%1s</html>";
 	protected static final String COMMAND_SYNTAX_HTML_FORMAT = "<tr><td>%1s  </td><td>%2s</td></tr>";
 	
+	private static final String ALL_COMMAND_SYNTAX_TITLE = "Command Syntax";
 	private static final int DEFAULT_Y_TOP_OFFSET = 22;
 	private static final int DEFAULT_WINDOW_HEIGHT = 70;
 	private static final int EXTRA_LINE_HEIGHT = 20;
@@ -82,28 +83,51 @@ public class HelpWindow extends ExtendedWindow{
 		offSet = 0;
 		if(syntaxString != null){
 			for(String[] strArr: syntaxString){
-				if(!textStr.isEmpty()){
-					textStr += "<br>";
-				}
-				textStr += String.format(COMMAND_SYNTAX_HTML_FORMAT, strArr[HelpWindowConstants.COMMAND_DESC_POS], 
-						strArr[HelpWindowConstants.COMMAND_SYNTAX_POS]);
+				textStr += formatCommandSyntaxRowText(strArr);
 				offSet = offSet + 1;
 			}
 		}
 		return textStr;
 	}
-	protected void formatDisplayForSupportedCommandsSyntax(){
-		
+	private String formatCommandSyntaxRowText(String[] strArr){
+		return String.format(COMMAND_SYNTAX_HTML_FORMAT, strArr[HelpWindowConstants.COMMAND_DESC_POS], 
+				strArr[HelpWindowConstants.COMMAND_SYNTAX_POS]);
+	}
+	private String formatTitleForDisplay(String title){
+		return String.format(HelpWindowConstants.TITLE_TEXT_HTML_FORMAT, title);
+	}
+	protected String formatDisplayForSupportedCommandsSyntax(){
+		StringBuilder overallStr = new StringBuilder();
+		for(CommandType commandType: CommandType.values()){
+			if(!commandType.equals(CommandType.INVALID)){
+				Vector<String[]> syntaxString = HelpWindowConstants.COMMAND_SYNTAX_LIST.get(commandType.toString());
+				if(syntaxString != null){
+					for(String[] strArr: syntaxString){
+						if(strArr.length >= 3 && strArr[2].equals(HelpWindowConstants.DATE_SYNTAX_LABEL)){
+							continue;
+						}else{
+							overallStr.append(formatCommandSyntaxRowText(strArr));
+						}
+					}
+				}
+			}
+		}
+		return overallStr.toString();
 	}
 	protected void displaySyntaxForSupportedCommands(){
+		String displayText = formatTitleForDisplay(ALL_COMMAND_SYNTAX_TITLE)
+							+ formatDisplayForSupportedCommandsSyntax();
+		String display = formatStringforDisplay(displayText);
+		displayFormattedText(display);
 		
 		adjustAndshowHelpWindow(FULL_WINDOW_HEIGHT);
+		Utilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForCommandType(String command){
-		String displayText = String.format(HelpWindowConstants.TITLE_TEXT_HTML_FORMAT, "Syntax for "+ command + " command")
+		String displayText = formatTitleForDisplay("Syntax for "+ command + " command")
 				+ getSyntaxDisplayStringForCommandType(command);
-		String display = String.format(HTML_FORMATTED_STRING, displayText);
-		((TextDisplay) displayPane).displayHTMLFormattedText(display);
+		String display = formatStringforDisplay(displayText);
+		displayFormattedText(display);
 		
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
@@ -112,12 +136,18 @@ public class HelpWindow extends ExtendedWindow{
 	}
 	
 	protected void displayListOfAvailableCommands(){
-		((TextDisplay) displayPane).displayText(HelpWindowConstants.generateListOfSupportedCommands());
+		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
+		displayFormattedText(display);
 		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
 		adjustAndshowHelpWindow(DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
-	
+	private String formatStringforDisplay(String displayText){
+		return String.format(HTML_FORMATTED_STRING, displayText);
+	}
+	private void displayFormattedText(String text){
+		((TextDisplay) displayPane).displayHTMLFormattedText(text);
+	}
 	private void adjustHelpWindowLocation(int newYPos){
 		windowYPos = newYPos;
 		setLocation(windowXPos, windowYPos);
