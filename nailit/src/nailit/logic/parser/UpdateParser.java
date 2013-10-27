@@ -34,7 +34,7 @@ public class UpdateParser extends Parser {
 				resultExecution.setName(answer.substring(0, answer.length()-1));
 			}
 		}else if (listOfCommand[1].equalsIgnoreCase("tag")){
-			if (listOfCommand.length<2){
+			if (listOfCommand.length<=2){
 				resultExecution.setTag(null);
 			}else{
 				resultExecution.setTag(listOfCommand[2]);
@@ -58,7 +58,7 @@ public class UpdateParser extends Parser {
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
-			if (listOfCommand.length<2){
+			if (listOfCommand.length<=2){
 				resultExecution.setSetPriority(false);
 			}else{
 				resultExecution.setSetPriority(true);
