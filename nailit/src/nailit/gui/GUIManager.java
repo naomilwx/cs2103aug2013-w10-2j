@@ -113,8 +113,6 @@ public class GUIManager {
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
-//			helpWindow.displayListOfAvailableCommands(); //testing: to be removed later
-//			helpWindow.displaySyntaxForSupportedCommands(); //testing: to be removed later
 //			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
@@ -219,6 +217,9 @@ public class GUIManager {
 		return mainWindow.isVisible();
 	}
 	
+	protected void displayCommandSyantaxHelpWindow(){
+		helpWindow.displaySyntaxForSupportedCommands();
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
@@ -243,6 +244,11 @@ public class GUIManager {
 				err.printStackTrace(); //TODO:
 			}
 			if(!notificationStr.isEmpty()){
+				//temp code to change after better exception handling in parser is implemented
+				if(notificationStr.equals("Unrecognized command type")){
+					helpWindow.displayListOfAvailableCommands();
+				}
+				//end of temp code
 				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
 				displayNotification(notificationStr, false);
 			}

@@ -12,25 +12,25 @@ public class HelpWindowConstants {
 			+ "</style></head>"; 
 	public static final String TITLE_TEXT_HTML_FORMAT = "<tr><p class =\"title\"> %1s </p></tr>";
 	public static final String[] PRIORITY_TYPES = {"low", "medium", "high"};
-	
+	public static final String DATE_SYNTAX_LABEL = "date";
 	public static final String[] ACCEPTABLE_DATE_SYNTAX = 
 		{"Accepted <b>date</b> field formats:", 
 		"[end] &ensp"
 		+ "|&ensp [start], [end] &ensp"
 		+ "|&ensp <em>from</em> [start] <em>to</em> [end]", 
-		"date"};
+		DATE_SYNTAX_LABEL};
 	public static final int COMMAND_DESC_POS = 0;
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
-	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete [ID]</em>"};
+	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
-	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display [ID]</em>"};
+	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
 	public static final String[] SEARCH_SYNTAX = {"<b>Task Search</b>", "<em>search</em> [name], [date], #[tag]#"};
-	public static final String[] COMPLETE_SYNTAX = {"<b>Mark Task As Completed</b>", "<em>complete [ID]</em>"};
-	public static final String[] UNCOMPLETE_SYNTAX = {"<b>Unmark Completed Task</b>", "<em>uncomplete [ID]</em>"};
-	public static final String[] ADDREM_SYNTAX = {"<b>Add Reminder for Task</b>", "<em>addReminder [ID]</em>, [start date]"};
-	public static final String[] DELREM_SYNTAX = {"<b>Remove Task Reminder</b>", "<em>delReminder [ID]</em>"};
+	public static final String[] COMPLETE_SYNTAX = {"<b>Mark Task As Completed</b>", "<em>complete</em> [<em>ID</em>]"};
+	public static final String[] UNCOMPLETE_SYNTAX = {"<b>Unmark Completed Task</b>", "<em>uncomplete</em> [<em>ID</em>]"};
+	public static final String[] ADDREM_SYNTAX = {"<b>Add Reminder for Task</b>", "<em>addReminder</em> [<em>ID</em>], [start date]"};
+	public static final String[] DELREM_SYNTAX = {"<b>Remove Task Reminder</b>", "<em>delReminder</em> [<em>ID</em>]"};
 	
 	public static final HashMap<String, Vector<String[]>> COMMAND_SYNTAX_LIST = new HashMap<String, Vector<String[]>>();
 	static{
@@ -94,12 +94,12 @@ public class HelpWindowConstants {
 	}
 	
 	public static String generateListOfSupportedCommands(){
-		String list = "Supported Commands: ";
+		String list = "<center><b>Supported Commands</b><br>";
 		for(CommandType type: CommandType.values()){
 			if(!type.equals(CommandType.INVALID)){
 				list += type.toString().toLowerCase() + " | ";
 			}
 		}
-		return list;
+		return list +"</center>";
 	}
 }
