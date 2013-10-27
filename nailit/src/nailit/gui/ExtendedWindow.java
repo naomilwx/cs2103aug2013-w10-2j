@@ -66,6 +66,10 @@ public abstract class ExtendedWindow extends JFrame{
 		contentPane.setBorder(EXTENDED_WINDOW_BORDER);
 		setContentPane(contentPane);
 	}
+	protected void refreshContentSize(){
+		setWindowContentSize();
+		displayPane.setSize(contentWidth, contentHeight);
+	}
 	protected void setWindowContentSize(){
 		contentHeight = windowHeight - 2 * EXTENDED_WINDOW_Y_BUFFER;
 		contentWidth = windowWidth - 2 * EXTENDED_WINDOW_X_BUFFER;
@@ -84,11 +88,16 @@ public abstract class ExtendedWindow extends JFrame{
 	}
 	@Override
 	public void setVisible(boolean isVisible){
-		if(GUIBoss.getMainWindowVisibility()){
-			positionFrameBasedOnMainWindowPos();
-		}else{
-			setLocation(defaultXPos, defaultYPos);
+		if(isVisible){
+			if(GUIBoss.getMainWindowVisibility()){
+				positionFrameBasedOnMainWindowPos();
+			}else{
+				setLocation(defaultXPos, defaultYPos);
+			}
 		}
 		super.setVisible(isVisible);
+	}
+	public void showWindowAsItIs(){
+		super.setVisible(true);
 	}
 }

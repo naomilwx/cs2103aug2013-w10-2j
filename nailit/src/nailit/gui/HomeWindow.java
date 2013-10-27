@@ -15,31 +15,36 @@ public class HomeWindow extends ExtendedWindow{
 	}
 	
 	protected void displayReminders(Vector<Task> tasks){
-		//TODO:
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
-		String dateDetails;
 		int count = 1;
 		for(Task task: tasks){
-			if(task.isEvent()){
-				dateDetails = String.format(TaskDetailsFormatter.TASK_DOUBLE_CONCISE_DATE, 
-						TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()),
-						TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
-			}else if(task.getStartTime() != null){
-				dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
-						TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()));
-			}else if(task.getEndTime() != null){
-				dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
-						TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
-			}else{
-				dateDetails = "";
-			}
 			str.append("<tr>");
-			str.append(String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT,
-				"" + count++ , task.getName(),dateDetails));
+			str.append(formatTasksForReminderDisplay(task, count));
 			str.append("</tr>");
+			count = count + 1;
 		}
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
+	}
+	protected String formatTasksForReminderDisplay(Task task, int number){
+		String taskDetails;
+		String dateDetails;
+		if(task.isEvent()){
+			dateDetails = String.format(TaskDetailsFormatter.TASK_DOUBLE_CONCISE_DATE, 
+					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()),
+					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
+		}else if(task.getStartTime() != null){
+			dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
+					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()));
+		}else if(task.getEndTime() != null){
+			dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
+					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
+		}else{
+			dateDetails = "";
+		}
+		taskDetails = String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT,
+				"" + number , task.getName(), dateDetails);
+		return taskDetails;
 	}
 }
