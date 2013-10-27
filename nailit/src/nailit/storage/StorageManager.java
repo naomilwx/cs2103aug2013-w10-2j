@@ -318,74 +318,82 @@ public class StorageManager {
 		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
 	}
 	
-
-	private boolean TimeNotMatch(Task task,FilterObject ftobj){
-		
-		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
-		//For tasks, we only check whether taskEndTime is in the time period
-		
-		if(task.isEvent()){
-			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-					return true;
-				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-					return true;
-				}else{
-					return false;
-				}
-			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-					return true;
-				}else{
-					return false;
-				}
-				
-			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-					return true;
-				}
-				else{	return false;
-				}
-			}else{
-				return false;
-			}
-
-		}else if(task.isFloatingTask()){
-			if(!isStartTimeEmpty(ftobj)||!isEndTimeEmpty(ftobj)){
-				return true;
-			}else{
-				return false;
-			}
-		}else if(task.isNormalTask()){
-			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-					return true;
-				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-					return true;
-				}else{
-					return false;
-				}
-			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-					return true;
-				}else{
-					return false;
-				}
-				
-			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-					return true;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-
-		}else{
-			return true;//TODO: check the standard for those tasks that does not belong to any category
-		}
-	}
+/**
+ * @author A0105683E
+ * */
+private boolean TimeNotMatch(Task task,FilterObject ftobj){
+	DateTime start = ftobj.getStartTime();
+	DateTime end = ftobj.getEndTime();
+	
+	return !task.isInDateRange(start,end);
+}
+//	private boolean TimeNotMatch(Task task,FilterObject ftobj){
+//		
+//		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
+//		//For tasks, we only check whether taskEndTime is in the time period
+//		
+//		if(task.isEvent()){
+//			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+//					return true;
+//				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+//					return true;
+//				}else{
+//					return false;
+//				}
+//			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+//					return true;
+//				}else{
+//					return false;
+//				}
+//				
+//			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+//					return true;
+//				}
+//				else{	return false;
+//				}
+//			}else{
+//				return false;
+//			}
+//
+//		}else if(task.isFloatingTask()){
+//			if(!isStartTimeEmpty(ftobj)||!isEndTimeEmpty(ftobj)){
+//				return true;
+//			}else{
+//				return false;
+//			}
+//		}else if(task.isNormalTask()){
+//			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+//					return true;
+//				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+//					return true;
+//				}else{
+//					return false;
+//				}
+//			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
+//					return true;
+//				}else{
+//					return false;
+//				}
+//				
+//			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
+//				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
+//					return true;
+//				}else{
+//					return false;
+//				}
+//			}else{
+//				return false;
+//			}
+//
+//		}else{
+//			return true;//TODO: check the standard for those tasks that does not belong to any category
+//		}
+//	}
 
 	private boolean matchTask(Task task, FilterObject ftobj){
 		if(nameNotMatch(task,ftobj)){
