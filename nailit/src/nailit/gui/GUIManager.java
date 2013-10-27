@@ -209,6 +209,9 @@ public class GUIManager {
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
 	}
+	public void setFocusOnHelpWindow(){
+		helpWindow.setFocus();
+	}
 	
 	protected Dimension getMainWindowLocationCoordinates(){
 		return new Dimension(mainWindow.getX(), mainWindow.getY());

@@ -3,6 +3,8 @@ package nailit.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -34,10 +36,24 @@ public class HelpWindow extends ExtendedWindow{
 	private final Timer fadeOutTimer = new Timer(0, null);
 	private int offSet;
 	
+	private final KeyAdapter keyListener = new KeyAdapter(){
+		@Override
+		public void keyPressed(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_ESCAPE){
+				setVisible(false);
+				GUIBoss.setFocusOnCommandBar();
+			}
+		}
+	};
+	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
+		addListenersToDisplayPane();
 	}
-	
+	private void addListenersToDisplayPane(){
+		displayPane.addKeyListener(keyListener);
+	}
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;
