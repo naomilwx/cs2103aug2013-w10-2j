@@ -61,6 +61,10 @@ public class CommandManager {
 		redoCommandsList = new Stack<Command>();
 	}
 	
+	public Vector<Task> getTodayReminder() {
+		return storer.getReminderListForToday();
+	}
+	
 	public Result executeCommand(ParserResult parserResultInstance) throws Exception
 	{
 		if(parserResultInstance == null) {
