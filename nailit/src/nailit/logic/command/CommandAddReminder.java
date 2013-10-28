@@ -64,6 +64,8 @@ public class CommandAddReminder extends Command{
 				createResult();
 				createCommandSummary();
 				isSuccess = true;
+			} else {
+				createResultForFailure();
 			}
 		} else {
 			createResultForFailure();
