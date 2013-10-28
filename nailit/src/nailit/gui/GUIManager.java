@@ -52,7 +52,7 @@ public class GUIManager {
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
 	protected static final int MAIN_WINDOW_X_POS = 100;
-	protected static final int MAIN_WINDOW_Y_POS = 100;
+	protected static final int MAIN_WINDOW_Y_POS = 150;
 	
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
@@ -112,8 +112,8 @@ public class GUIManager {
 			showInSystemTray(this);
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
-			showDefaultDisplay();
-//			helpWindow.setVisible(true);
+			showDefaultDisplayAndReminders();
+//			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
@@ -123,8 +123,16 @@ public class GUIManager {
 		}
 	}
 	
-	private void showDefaultDisplay(){
+	private void showDefaultDisplayAndReminders(){
+		getAndDisplayReminders();
 		executeUserInputCommand(CommandType.DISPLAY + " all");
+	}
+	private void getAndDisplayReminders(){
+		Vector<Task> reminderList = logicExecutor.getReminderList();
+		updateReminderDisplay(reminderList);
+	}
+	private void updateReminderDisplay(Vector<Task> reminders){
+		homeWindow.displayReminders(reminders);
 	}
 	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){
@@ -201,6 +209,9 @@ public class GUIManager {
 	public void setFocusOnHomeWindow(){
 		homeWindow.setFocus();
 	}
+	public void setFocusOnHelpWindow(){
+		helpWindow.setFocus();
+	}
 	
 	protected Dimension getMainWindowLocationCoordinates(){
 		return new Dimension(mainWindow.getX(), mainWindow.getY());
@@ -209,6 +220,9 @@ public class GUIManager {
 		return mainWindow.isVisible();
 	}
 	
+	protected void displayCommandSyantaxHelpWindow(){
+		helpWindow.displaySyntaxForSupportedCommands();
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
@@ -233,6 +247,11 @@ public class GUIManager {
 				err.printStackTrace(); //TODO:
 			}
 			if(!notificationStr.isEmpty()){
+				//temp code to change after better exception handling in parser is implemented
+				if(notificationStr.equals("Unrecognized command type")){
+					helpWindow.displayListOfAvailableCommands();
+				}
+				//end of temp code
 				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
 				displayNotification(notificationStr, false);
 			}
@@ -376,7 +395,7 @@ public class GUIManager {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					homeWindow.setVisible(true);
+					toggleHomeWindow();
 				}
 				
 			});
