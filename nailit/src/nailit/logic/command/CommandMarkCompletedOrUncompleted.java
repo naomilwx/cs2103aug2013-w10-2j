@@ -2,6 +2,8 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
+import org.joda.time.DateTime;
+
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -42,6 +44,9 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	private boolean isCommandMarkAsCompleted;
 	
 	private CommandType CommandType;
+	
+	// the description, used to future undo and redo
+	private DateTime taskReminderDate;
 
 	public CommandMarkCompletedOrUncompleted(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList, boolean isMarkAsCompleted) {
@@ -59,12 +64,13 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 		} else {
 			CommandType = CommandType.UNCOMPLETE;
 		}
+		taskReminderDate = null;
 	}
 
 	@Override
 	public Result executeCommand() throws Exception {
 		if(isValidDisplayID()) { // also set the displayID
-			setTaskRelated();
+			setTaskRelated(); // also set the task description
 			setTaskID();
 			markAsCompletedOrUncompleted();
 			createExecutedResult();
@@ -116,6 +122,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	private void setTaskRelated() {
 		taskRelated = taskList.get(displayID - 1);
+		taskReminderDate = taskRelated.getReminder();
 	}
 
 	private boolean isValidDisplayID() {
@@ -131,6 +138,8 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	private void markAsCompletedOrUncompleted() {
 		if(isCommandMarkAsCompleted) {
 			taskRelated.setCompleted(true);
+			// the task does not need reminder date
+			taskRelated.setReminder(null);
 			storer.add(taskRelated);
 			isSuccess = true;
 		} else {
@@ -168,9 +177,12 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	public void undo() { // I need to set the isComplete field here, because when undo, will be used directly
 		if(isCommandMarkAsCompleted) { // undo the marking as completed operation
 			taskRelated.setCompleted(false);
+			// add the reminder date back if has before
+			taskRelated.setReminder(taskReminderDate);
 			storer.add(taskRelated);
 		} else { // undo the marking as uncompleted operation
 			taskRelated.setCompleted(true);
+			taskRelated.setReminder(null);
 			storer.add(taskRelated);
 		}
 		redoSuccess = false;
@@ -181,9 +193,11 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	public void redo() {
 		if(isCommandMarkAsCompleted) { // undo the marking as completed operation
 			taskRelated.setCompleted(true);
+			taskRelated.setReminder(null); // the reminder is gone also
 			storer.add(taskRelated);
 		} else { // undo the marking as uncompleted operation
 			taskRelated.setCompleted(false);
+			taskRelated.setReminder(taskReminderDate);
 			storer.add(taskRelated);
 		}
 		redoSuccess = true;
@@ -216,5 +230,12 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	public Task getTaskRelated() {
 		return taskRelated;
 	}
+	
+	public boolean hasReminderDate() {
+		return taskReminderDate != null;
+	}
 
+	public DateTime getReminderDate() {
+		return taskReminderDate;
+	}
 }
