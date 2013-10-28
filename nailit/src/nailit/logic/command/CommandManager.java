@@ -183,8 +183,13 @@ public class CommandManager {
 					} else {
 						if(commandType == CommandType.COMPLETE) {
 							currentTask.setCompleted(true);
+							currentTask.setReminder(null);
 						} else if(commandType == CommandType.UNCOMPLETE) {
 							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToRedo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
 						} else if(commandType == CommandType.ADDREMINDER) {
 							CommandAddReminder car = (CommandAddReminder)commandToRedo;
 							DateTime reminderDateToAdd = car.getReminderDateToAdd();
@@ -266,8 +271,14 @@ public class CommandManager {
 					} else {
 						if(commandType == CommandType.COMPLETE) {
 							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToUndo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
+							
 						} else if(commandType == CommandType.UNCOMPLETE) {
 							currentTask.setCompleted(true);
+							currentTask.setReminder(null); // remove the reminder date if has
 						} else if(commandType == CommandType.ADDREMINDER) {
 							currentTask.setReminder(null);
 						}
