@@ -196,6 +196,7 @@ public class CommandManager {
 							currentTask.setReminder(reminderDateToAdd);
 						}
 					}
+					sort();
 					break;
 				} 
 			}
@@ -283,6 +284,7 @@ public class CommandManager {
 							currentTask.setReminder(null);
 						}
 					}
+					sort();
 					break;
 				} 
 			}
