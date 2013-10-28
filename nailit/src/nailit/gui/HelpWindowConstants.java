@@ -76,6 +76,7 @@ public class HelpWindowConstants {
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+W", "Hide Task Details Display");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+/", "Display Help Window For all KeyBoard Commands");
 //		COMMANDBAR_KEYBOARD_COMMANDS.put("F1", "Show Help Window"); //not implemented yet
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
@@ -92,7 +93,18 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Delete Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put task description in command bar");
 	}
+	public static final HashMap<String, String> HELPWINDOW_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	static{
+		HELPWINDOW_KEYBOARD_COMMANDS.put("ESC", "Close Help Window");
+	}
 	
+	public static final HashMap<String, HashMap<String, String>> ALL_KEYBOARD_COMMANDS = new HashMap<String, HashMap<String, String>>();
+	static{
+		ALL_KEYBOARD_COMMANDS.put("Command Bar Keyboard Shortcuts", COMMANDBAR_KEYBOARD_COMMANDS);
+		ALL_KEYBOARD_COMMANDS.put("Display Area Keyboard Shortcuts", DISPLAYAREA_KEYBOARD_COMMANDS);
+		ALL_KEYBOARD_COMMANDS.put("Task Table Keyboard Shortcuts", TASKTABLE_KEYBOARD_COMMANDS);
+		ALL_KEYBOARD_COMMANDS.put("Help Window Keyboard Shortcuts", HELPWINDOW_KEYBOARD_COMMANDS);
+	}
 	public static String generateListOfSupportedCommands(){
 		String list = "<center><b>Supported Commands</b><br>";
 		for(CommandType type: CommandType.values()){
