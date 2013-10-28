@@ -190,6 +190,7 @@ public class CommandUpdate extends Command{
 		} else { // means name use the original one, since no update
 			updatedTask.setPriority(taskRetrieved.getPriority());
 		}
+		
 		if(!parserResultInstance.isNullDescription()) {
 			String newDesc = parserResultInstance.getDescription();
 			updatedTask.setDescription(newDesc);
