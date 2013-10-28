@@ -199,6 +199,9 @@ public class CommandUpdate extends Command{
 			updatedTask.setDescription(taskRetrieved.getDescription());
 		}
 		
+		// no update for the reminder
+		updatedTask.setReminder(taskRetrieved.getReminder());
+		
 		updatedTask.setID(taskRetrieved.getID());
 	}
 
