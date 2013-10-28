@@ -370,8 +370,7 @@ public class CommandManager {
 		// one on the returned result object
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		// clear the redo command list
-		redoCommandsList.clear();
+		
 		return resultToPassToGUI;
 	}
 	
@@ -385,8 +384,7 @@ public class CommandManager {
 		// the current task list and then add it to the result obj
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		// clear the redo command list
-		redoCommandsList.clear();
+		
 		return resultToPassToGUI;
 	}
 	
