@@ -26,8 +26,7 @@ public class TaskDetailsFormatter {
 			"<td><p class = \"title\">Status: </p></td><td><p class = \"status\">"
 			+ "%1s</p></td><td></td><td></td>";
 	private static final String TASK_REMINDER_FORMAT = 
-			"<td><p class = \"title\">Reminder Set On: </p></td><p class =\"reminder\">"
-			+ "%1s</p></td>";
+			"<td><p class = \"title\">Reminder Set On: </p></td>%1s</td>";
 	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 1 rowspan = %1d>"
 			+ "<p class = \"title\"> Description: </p></td>"
 			+ "<td rowspan = %2d>"
@@ -71,7 +70,8 @@ public class TaskDetailsFormatter {
 		
 		otherDetails += "</tr>" + String.format(TASK_PRIORITY_FORMAT, task.getPriority());
 		if(task.getReminder() != null){
-			otherDetails += String.format(TASK_REMINDER_FORMAT, task.getReminder());
+			String reminderDate = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getReminder());
+			otherDetails += String.format(TASK_REMINDER_FORMAT, reminderDate);
 		}
 		
 		otherDetails += "</tr>";
