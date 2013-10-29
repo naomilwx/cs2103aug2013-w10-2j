@@ -76,13 +76,13 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void configureHomeWindowFrame(){
 		setUndecorated(true);
 		positionFrameBasedOnMainWindowPos();
+		setSize(windowWidth, windowHeight);
 		setResizable(false);
 	}
 	protected void positionFrameBasedOnMainWindowPos(){
 		recalculateExtendedWindowPosition();
 //		setShape(new RoundRectangle2D.Double(10, 10, windowWidth, windowHeight, 50, 50));
 		setLocation(windowXPos, windowYPos);
-		setSize(windowWidth, windowHeight);
 	}
 	protected void recalculateExtendedWindowPosition(){
 		int mainWindowXPos = GUIBoss.getMainWindowLocationCoordinates().width;
