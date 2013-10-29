@@ -177,7 +177,7 @@ public class HelpWindow extends ExtendedWindow{
 	private void adjustAndshowHelpWindow(int height){
 		adjustHelpWindowHeight(height);
 //		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
-		showWindowAsItIs();
+		setVisible(true);
 	}
 	
 }
