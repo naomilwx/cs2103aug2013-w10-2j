@@ -41,6 +41,7 @@ public class AddReminderParser extends Parser{
 			resultExecution.setEndTime(resultExecution.getStartTime());
 			resultExecution.setStartTime(null);
 		}
+		System.out.println(resultExecution.getTaskID() + " ID");
 		return resultExecution;
 	}
 
