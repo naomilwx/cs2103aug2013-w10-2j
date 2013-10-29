@@ -131,7 +131,7 @@ public class CommandAddReminder extends Command{
 
 	private void setReminderDateToAdd() {
 		// the dateTime to add is stored in the endTime
-		this.reminderDateToAdd = parserResultInstance.getEndTime();
+		this.reminderDateToAdd = parserResultInstance.getReminderTime();
 	}
 
 	private boolean isValidDisplayID() {

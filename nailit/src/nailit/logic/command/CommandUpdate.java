@@ -183,7 +183,7 @@ public class CommandUpdate extends Command{
 			updatedTask.setTag(taskRetrieved.getTag());
 		}
 		
-		if(parserResultInstance.isSetPriority()) { // currently use this method, although the name is not suitable
+		if(!parserResultInstance.isNullPriority()) { // currently use this method, although the name is not suitable
 			TaskPriority newPriority = parserResultInstance.getPriority();
 			updatedTask.setPriority(newPriority);
 			updatedContent = updatedContent + "Priority: " + newPriority + " ";
@@ -199,8 +199,15 @@ public class CommandUpdate extends Command{
 			updatedTask.setDescription(taskRetrieved.getDescription());
 		}
 		
-		// no update for the reminder
-		updatedTask.setReminder(taskRetrieved.getReminder());
+		if(!parserResultInstance.isNullDescription()) {
+			DateTime newReminder = parserResultInstance.getReminderTime();
+			updatedTask.setReminder(newReminder);
+			updatedContent = updatedContent + "Reminder Date: " + newReminder.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+		} else { // means name use the original one, since no update
+			// no update for the reminder
+			updatedTask.setReminder(taskRetrieved.getReminder());
+		}
+		
 		
 		updatedTask.setID(taskRetrieved.getID());
 	}
