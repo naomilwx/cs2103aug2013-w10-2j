@@ -61,7 +61,7 @@ public class CommandDisplay extends Command{
 			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
 			// if the retrieved content is empty or null, return notification instead
 			if(vectorOfTasks == null || vectorOfTasks.isEmpty()) {
-				createResultObject(false, true, Result.LIST_DISPLAY, NO_TASKS_FOUND_MSG, null, new Vector<Task>(), null);
+				createResultObject(false, false, Result.LIST_DISPLAY, NO_TASKS_FOUND_MSG, null, new Vector<Task>(), null);
 			} else {
 				createResultObject(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, vectorOfTasks, null);
 				// since successfully retrieve all the task on the storage
