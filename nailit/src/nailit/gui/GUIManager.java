@@ -309,6 +309,7 @@ public class GUIManager {
 		}else{
 			if(historyWindow.isVisible()){
 				getAndDisplayReminders();
+				homeWindow.repaint();
 			}
 			displayExecutionResult(result);
 		}
