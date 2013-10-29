@@ -102,7 +102,11 @@ public class Task {
 		return tag;
 	}
 	public boolean checkCompleted(){
-		return isCompleted;
+		if(isEvent()){
+			return isPastEvent();
+		}else{
+			return isCompleted;
+		}
 	}
 	public DateTime getStartTime(){
 		return startTime;
@@ -134,6 +138,15 @@ public class Task {
 	public boolean isEvent(){
 		if(startTime != null && endTime != null){
 			return true;
+		}else{
+			return false;
+		}
+	}
+	//check if event is over
+	public boolean isPastEvent(){
+		if(isEvent()){
+			DateTime now = new DateTime();
+			return isBeforeDateTime(now);
 		}else{
 			return false;
 		}
