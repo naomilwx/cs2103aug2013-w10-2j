@@ -415,7 +415,7 @@ public class Task {
 			reminderDate = reminderStartDate.toString();
 		}
 		
-		String taskString = name + NIConstants.NORMAL_FIELD_SPLITTER + startDate + NIConstants.NORMAL_FIELD_SPLITTER + endDate + NIConstants.NORMAL_FIELD_SPLITTER + priority + NIConstants.NORMAL_FIELD_SPLITTER + tag + NIConstants.NORMAL_FIELD_SPLITTER +desc +NIConstants.NORMAL_FIELD_SPLITTER + completeStatus + NIConstants.NORMAL_FIELD_SPLITTER + reminderDate;
+		String taskString = name + NIConstants.HARDDISK_FIELD_SPLITTER + startDate + NIConstants.HARDDISK_FIELD_SPLITTER + endDate + NIConstants.HARDDISK_FIELD_SPLITTER + priority + NIConstants.HARDDISK_FIELD_SPLITTER + tag + NIConstants.HARDDISK_FIELD_SPLITTER +desc +NIConstants.HARDDISK_FIELD_SPLITTER + completeStatus + NIConstants.HARDDISK_FIELD_SPLITTER + reminderDate;
 		
 		return taskString;
 	}
