@@ -534,14 +534,14 @@ public class CommandManager {
 		DateTime now = new DateTime();
 		DateTime startOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);
 		DateTime endOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 23, 59);
-		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, "", null , null);
-		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), "", null, false); //1 sec before start of today
+		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
+		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), null, null, false); //1 sec before start of today
 		Vector<Task> dateList = storer.filter(dateFilter);
-		Vector<Task> uncompletedList = storer.filter(uncompletedFilter);
-		dateList.addAll(uncompletedList);
+		Vector<Task> retList = storer.filter(uncompletedFilter);
+		retList.addAll(dateList);
 		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
-		currentTaskList = dateList;
-		ret.setTaskList(dateList);
+		currentTaskList = retList;
+		ret.setTaskList(retList);
 		return ret;
 	}
 }
