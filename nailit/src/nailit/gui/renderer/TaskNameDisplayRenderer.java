@@ -11,7 +11,8 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 			+ "p.name {font-size: 14px;}"
 			+ "p.tag {font-size: 10px; color: gray;}"
 			+ "</style></head>";
-	private static final String PRIORITY_DISPLAY_FORMAT = "<p class = \"priority\" style = \"color: %1s\">%2s</p>";
+	private static final String PRIORITY_DISPLAY_FORMAT = "<td width = \" 40px\">"
+			+ "<p class = \"priority\" style = \"color: %1s\">%2s</p><p></p</td>";
 	private static final String TASK_DONE_CODE = "&#10004  ";
 	private static final String TASK_NOT_DONE_CODE = "&nbsp;   ";
 	private static final String HIGH_PRIORITY_CODE = "&#x25B2 &#x25B2 &#x25B2";

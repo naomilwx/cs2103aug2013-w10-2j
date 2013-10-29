@@ -41,6 +41,9 @@ public class HomeWindow extends ExtendedWindow{
 	}
 	
 	protected void displayReminders(Vector<Task> tasks){
+		if(tasks == null){
+			return;
+		}
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
 		int count = 1;
@@ -70,7 +73,7 @@ public class HomeWindow extends ExtendedWindow{
 			dateDetails = "";
 		}
 		taskDetails = String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT,
-				"" + number , task.getName(), dateDetails);
+			 "[" + number + "]" , task.getName(), dateDetails);
 		return taskDetails;
 	}
 }
