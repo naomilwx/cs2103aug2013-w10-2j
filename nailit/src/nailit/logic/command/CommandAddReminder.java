@@ -122,6 +122,9 @@ public class CommandAddReminder extends Command{
 		}
 		
 		DateTime endTimeOfTask = taskRelated.getEndTime();
+		if(endTimeOfTask == null){
+			return true;
+		}
 		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
 			return false;
 		}
