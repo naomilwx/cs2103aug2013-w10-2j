@@ -29,6 +29,16 @@ public class LogicManager{
 		return  executeCommandResult;
 	}
 	
+	//API to execute delete/display commands from GUI
+	public Result executeDirectIDCommand(CommandType command, int ID) throws Exception{
+		Result executeCommandResult = new Result();
+		ParserResult parserResultInstance = new ParserResult();
+		parserResultInstance.setCommand(command);
+		parserResultInstance.setTaskID(ID);
+		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
+		return  executeCommandResult;
+	}
+	
 	// api for giving the reminder on today
 	public Vector<Task> getReminderList() {
 		return commandInstance.getTodayReminder();

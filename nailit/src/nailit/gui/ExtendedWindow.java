@@ -81,7 +81,6 @@ public abstract class ExtendedWindow extends JFrame{
 	}
 	protected void positionFrameBasedOnMainWindowPos(){
 		recalculateExtendedWindowPosition();
-//		setShape(new RoundRectangle2D.Double(10, 10, windowWidth, windowHeight, 50, 50));
 		setLocation(windowXPos, windowYPos);
 	}
 	protected void recalculateExtendedWindowPosition(){

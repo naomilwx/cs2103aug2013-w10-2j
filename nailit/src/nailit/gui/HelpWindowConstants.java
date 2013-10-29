@@ -23,6 +23,7 @@ public class HelpWindowConstants {
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
+	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] reminder [updated details]"};
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
@@ -39,6 +40,7 @@ public class HelpWindowConstants {
 		addCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> updateCommandSyntax = new Vector<String[]>();
 		updateCommandSyntax.add(UPDATE_SYNTAX);
+		updateCommandSyntax.add(UPDATE_REMINDER_SYNTAX);
 		updateCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> deleteCommandSyntax = new Vector<String[]>();
 		deleteCommandSyntax.add(DELETE_SYNTAX);

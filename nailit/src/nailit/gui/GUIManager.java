@@ -181,6 +181,9 @@ public class GUIManager {
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
 			homeWindow.setVisible(!currentVisibility);
+			if(homeWindow.isVisible()){
+				getAndDisplayReminders();
+			}
 		}
 	}
 	protected void toggleHistoryWindow(){
@@ -300,6 +303,9 @@ public class GUIManager {
 		if(result.getExitStatus()){
 			exit();
 		}else{
+			if(historyWindow.isVisible()){
+				getAndDisplayReminders();
+			}
 			displayExecutionResult(result);
 		}
 	}
