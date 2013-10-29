@@ -239,7 +239,17 @@ public class StorageManagerTest {
 	
 	@Test
 	public void testForRealisticTasks(){
-//		Task task1 = Task(,"",new DateTime(""),new DateTime(""),)
+//		Task task1 = new Task(Task.TASKID_NULL,"CS2103 REVIEW",new DateTime("2013-02-13"),new DateTime("2013-02-15"),TaskPriority.HIGH,"Exam preparation","Be well prepared",false,new DateTime("2013-02-10"));
+//		Task task2 = new Task(Task.TASKID_NULL,"CS2103 Project Demo",null,new DateTime("2013-11-07"),TaskPriority.HIGH,"Project","Be confident",false,new DateTime("2013-11-02"));
+//		Task task3 = new Task(Task.TASKID_NULL,"CS2105 REVIEW",new DateTime("2013-11-12"),new DateTime("2013-11-26"),TaskPriority.MEDIUM,"Exam preparation","Be brave",false,new DateTime("2013-11-10"));
+//		Task task4 = new Task(Task.TASKID_NULL,"CS3230 ONLINE ASSIGNMENT",null,new DateTime("2103-11-06"),TaskPriority.HIGH,"Assignment","BE Smart",false,new DateTime("2013-10-31"));
+//		Task task5 = new Task(Task.TASKID_NULL,"CS3230 FINAL REVIEW",new DateTime(""),new DateTime(""),TaskPriority.MEDIUM,"Exam preparation","Be something",false,new DateTime("2013-12-02"));
+//		Task task6 = new Task(Task.TASKID_NULL,"GO HOME",new DateTime("2013-12-03"),new DateTime("2014-01-09"),TaskPriority.MEDIUM,"","",false,new DateTime(""));
+//		Task task7 = new Task(Task.TASKID_NULL,"WU HAN JOURNEY",new DateTime("2013-12-10"),new DateTime("2013-12-15"),TaskPriority.LOW,"TRAVEL","BE CAREFUL",false,new DateTime("2013-12-08"));
+//		Task task8 = new Task(Task.TASKID_NULL,"SHANGHAI JOURNEY",new DateTime("2013-12-16"),new DateTime("2013-12-18"),TaskPriority.LOW,"TRAVEL","BE OPEN-MINDED",false,new DateTime("2013-12-02"));
+//		Task task9 = new Task(Task.TASKID_NULL,"ALICE'S magic journey",new DateTime("2013-12-20"),new DateTime("2013-12-25"),TaskPriority.LOW,"","",false,new DateTime(""));
+//		Task task10 = new Task(Task.TASKID_NULL,"2103 V0.3",null,new DateTime("2013-10-30"),TaskPriority.HIGH,"Project","Be well-prepared",false,new DateTime("2013-02"));
+
 	}
 	
 	public String printVector(Vector<Task> v){

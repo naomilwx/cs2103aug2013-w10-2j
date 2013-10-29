@@ -217,7 +217,8 @@ public class StorageManager {
 			}
 			
 			for(int i=1;i<fileContents.size();i++){
-				Task task = stringToTask(fileContents.get(i));
+				String taskString = fileContents.get(i);
+				Task task = stringToTask(taskString);
 				originalTaskList.put(task.getID(), task);
 			}
 
