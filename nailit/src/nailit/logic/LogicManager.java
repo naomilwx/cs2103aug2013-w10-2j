@@ -28,7 +28,9 @@ public class LogicManager{
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
 	}
-	
+	public Result getListOfTasksForTheDay(){
+		return commandInstance.getListOfTasksForTheDay();
+	}
 	//API to execute delete/display commands from GUI
 	public Result executeDirectIDCommand(CommandType command, int ID) throws Exception{
 		Result executeCommandResult = new Result();
