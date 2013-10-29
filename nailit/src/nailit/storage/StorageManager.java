@@ -197,7 +197,7 @@ public class StorageManager {
 			
 			Task task = hashTable.get(key);
 			
-			dataList.add(task.getID()+NIConstants.NORMAL_FIELD_SPLITTER+task.changeToDiskFormat());
+			dataList.add(task.getID()+NIConstants.HARDDISK_FIELD_SPLITTER+task.changeToDiskFormat());
 		}
 		
 	}
@@ -239,7 +239,7 @@ public class StorageManager {
 		return ID == nextValidID-1;
 	}
 	private Task stringToTask(String taskString) throws Exception{
-		String[] result = taskString.split("\\" + NIConstants.NORMAL_FIELD_SPLITTER);
+		String[] result = taskString.split("\\" + NIConstants.HARDDISK_FIELD_SPLITTER);
 		
 		int task_ID = Integer.parseInt(result[0]);
 		
