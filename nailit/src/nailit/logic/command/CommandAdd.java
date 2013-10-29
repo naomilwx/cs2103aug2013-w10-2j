@@ -21,6 +21,7 @@ public class CommandAdd extends Command{
 	private DateTime endTime;
 	private TaskPriority taskPriority;
 	private String taskTag;
+	private String taskDescription;
 	private int taskID;
 	
 	// this is used for the command history
@@ -86,6 +87,7 @@ public class CommandAdd extends Command{
 
 	private void createTaskObject() {
 		taskPassedToStorer = new Task(taskName, startTime, endTime, taskTag, taskPriority);
+		taskPassedToStorer.setDescription(taskDescription);
 	}
 
 	private void getContentFromParserResult() {
@@ -95,6 +97,7 @@ public class CommandAdd extends Command{
 		endTime = parserResultInstance.getEndTime();
 		taskPriority = parserResultInstance.getPriority();
 		taskTag = parserResultInstance.getTag();
+		taskDescription = parserResultInstance.getDescription();
 	}
 	
 	public int getTaskID() {
