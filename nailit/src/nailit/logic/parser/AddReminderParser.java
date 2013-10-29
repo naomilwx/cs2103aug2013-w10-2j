@@ -21,8 +21,8 @@ public class AddReminderParser extends Parser{
 		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommand.length; i++) {
 			listOfCommand[i] = listOfCommand[i].trim();
-			if (Parser.isNumber(userCommand)){
-				resultExecution.setTaskID(Integer.parseInt(userCommand));
+			if (Parser.isNumber(listOfCommand[i])){
+				resultExecution.setTaskID(Integer.parseInt(listOfCommand[i]));
 			}else if (Parser.isDateTime(listOfCommand[i])) {
 				if (resultExecution.getEndTime() == null) {
 					if (Parser.numberOfTime(listOfCommand[i]) == 2) {

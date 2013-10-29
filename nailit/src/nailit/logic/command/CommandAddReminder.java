@@ -64,6 +64,8 @@ public class CommandAddReminder extends Command{
 				createResult();
 				createCommandSummary();
 				isSuccess = true;
+			} else {
+				createResultForFailure();
 			}
 		} else {
 			createResultForFailure();
@@ -72,7 +74,7 @@ public class CommandAddReminder extends Command{
 	}
 	
 	private void createResultForFailure() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
 		executedResult.setUpdateReminderList(false);
 	}
 
@@ -115,6 +117,10 @@ public class CommandAddReminder extends Command{
 			return false;
 		} 
 		
+		if(reminderDateToAdd == null) { // handle the null reminder time situation
+			return false;
+		}
+		
 		DateTime endTimeOfTask = taskRelated.getEndTime();
 		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
 			return false;
@@ -125,7 +131,7 @@ public class CommandAddReminder extends Command{
 
 	private void setReminderDateToAdd() {
 		// the dateTime to add is stored in the endTime
-		this.reminderDateToAdd = parserResultInstance.getEndTime();
+		this.reminderDateToAdd = parserResultInstance.getReminderTime();
 	}
 
 	private boolean isValidDisplayID() {

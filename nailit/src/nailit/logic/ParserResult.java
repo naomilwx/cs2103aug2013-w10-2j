@@ -18,6 +18,7 @@ public class ParserResult{
 	
 	private DateTime startTime;
 	private DateTime endTime;
+	private DateTime reminderTime;
 	
 	private boolean isDisplayAll = false;
 	private boolean isDisplayHistory = false;
@@ -31,6 +32,7 @@ public class ParserResult{
 		tag = null;
 		startTime = null;
 		endTime = null;
+		reminderTime = null;
 		isDisplayAll = false;
 		isSetPriority = false;
 		description = null;
@@ -58,14 +60,6 @@ public class ParserResult{
 	
 	public boolean isDisplayHistory(){
 		return isDisplayHistory;
-	}
-	
-	public void setSetPriority (boolean flag){
-		isSetPriority = flag;
-	}
-	
-	public boolean isSetPriority(){
-		return isSetPriority;
 	}
 	
 	public void setName(String nameExternal){
@@ -114,6 +108,21 @@ public class ParserResult{
 			return false;
 		}
 	}
+	public void setReminderTime(DateTime reminderTimeExternal){
+		reminderTime = reminderTimeExternal;
+	}
+	
+	public DateTime getReminderTime(){
+		return reminderTime;
+	}
+	
+	public boolean isNullReminderTime(){
+		if (reminderTime == null){
+			return true;
+		}else{ 
+			return false;
+		}
+	}
 	
 	public void setEndTime(DateTime endTimeExternal){
 		endTime = endTimeExternal;
@@ -140,8 +149,12 @@ public class ParserResult{
 		return priority;
 	}
 	
+	public void resetPriority(){
+		isSetPriority = false;
+	}
+	
 	public boolean isNullPriority(){
-		if (priority == null){
+		if (isSetPriority == false){
 			return true;
 		}else{
 			return false;

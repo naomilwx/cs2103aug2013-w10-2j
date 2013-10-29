@@ -31,6 +31,6 @@ public class LogicManager{
 	
 	// api for giving the reminder on today
 	public Vector<Task> getReminderList() {
-		return new Vector<Task>();
+		return commandInstance.getTodayReminder();
 	}
 }

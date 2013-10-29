@@ -61,12 +61,15 @@ public class CommandManager {
 		redoCommandsList = new Stack<Command>();
 	}
 	
+	public Vector<Task> getTodayReminder() {
+		return storer.getReminderListForToday();
+	}
+	
 	public Result executeCommand(ParserResult parserResultInstance) throws Exception
 	{
 		if(parserResultInstance == null) {
 			throw new Exception("The parserResult Instance is a null object.");
 		} else {
-			
 			this.parserResultInstance = parserResultInstance;
 			Result executedResult = doExecution();
 			return executedResult;
@@ -184,14 +187,20 @@ public class CommandManager {
 					} else {
 						if(commandType == CommandType.COMPLETE) {
 							currentTask.setCompleted(true);
+							currentTask.setReminder(null);
 						} else if(commandType == CommandType.UNCOMPLETE) {
 							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToRedo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
 						} else if(commandType == CommandType.ADDREMINDER) {
 							CommandAddReminder car = (CommandAddReminder)commandToRedo;
 							DateTime reminderDateToAdd = car.getReminderDateToAdd();
 							currentTask.setReminder(reminderDateToAdd);
 						}
 					}
+					sort();
 					break;
 				} 
 			}
@@ -267,12 +276,19 @@ public class CommandManager {
 					} else {
 						if(commandType == CommandType.COMPLETE) {
 							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToUndo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
+							
 						} else if(commandType == CommandType.UNCOMPLETE) {
 							currentTask.setCompleted(true);
+							currentTask.setReminder(null); // remove the reminder date if has
 						} else if(commandType == CommandType.ADDREMINDER) {
 							currentTask.setReminder(null);
 						}
 					}
+					sort();
 					break;
 				} 
 			}
@@ -371,8 +387,7 @@ public class CommandManager {
 		// one on the returned result object
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		// clear the redo command list
-		redoCommandsList.clear();
+		
 		return resultToPassToGUI;
 	}
 	
@@ -386,8 +401,7 @@ public class CommandManager {
 		// the current task list and then add it to the result obj
 		sort();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		// clear the redo command list
-		redoCommandsList.clear();
+		
 		return resultToPassToGUI;
 	}
 	
