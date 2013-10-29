@@ -122,7 +122,7 @@ public class StorageManager {
 			}
 		}
 
-		return null;
+		return v;
 	}
 	
 	public void clear(){
