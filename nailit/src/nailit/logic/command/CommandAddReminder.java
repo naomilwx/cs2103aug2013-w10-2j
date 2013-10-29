@@ -74,7 +74,7 @@ public class CommandAddReminder extends Command{
 	}
 	
 	private void createResultForFailure() {
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
 		executedResult.setUpdateReminderList(false);
 	}
 
