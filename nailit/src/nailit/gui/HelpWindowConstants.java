@@ -8,9 +8,11 @@ import nailit.logic.CommandType;
 public class HelpWindowConstants {
 	public static final String TEXT_DISPLAY_STYLE = "<head><style type = \"text/css\">"
 			+ "em {font-weight: bold; }"
-			+ "p.title {font-weight: bold; text-decoration:underline;}"
+			+ "p.title {font-size: 14px; font-weight: bold; text-decoration:underline;}"
+			+ "p.subtitle {font-weight: bold; text-decoration:underline;}"
 			+ "</style></head>"; 
 	public static final String TITLE_TEXT_HTML_FORMAT = "<tr><p class =\"title\"> %1s </p></tr>";
+	public static final String SUBTITLE_TEXT_HTML_FORMAT = "<tr><p class =\"subtitle\"> %1s </p></tr>";
 	public static final String[] PRIORITY_TYPES = {"low", "medium", "high"};
 	public static final String DATE_SYNTAX_LABEL = "date";
 	public static final String[] ACCEPTABLE_DATE_SYNTAX = 

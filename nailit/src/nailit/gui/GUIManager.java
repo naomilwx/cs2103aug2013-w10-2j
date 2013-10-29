@@ -226,6 +226,10 @@ public class GUIManager {
 	protected void displayCommandSyantaxHelpWindow(){
 		helpWindow.displaySyntaxForSupportedCommands();
 	}
+	
+	protected void displayFullHelpWindow(){
+		helpWindow.displayFullHelpWindow();
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
