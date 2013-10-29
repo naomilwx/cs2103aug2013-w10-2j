@@ -6,6 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -79,6 +80,7 @@ public abstract class ExtendedWindow extends JFrame{
 	}
 	protected void positionFrameBasedOnMainWindowPos(){
 		recalculateExtendedWindowPosition();
+//		setShape(new RoundRectangle2D.Double(10, 10, windowWidth, windowHeight, 50, 50));
 		setLocation(windowXPos, windowYPos);
 		setSize(windowWidth, windowHeight);
 	}

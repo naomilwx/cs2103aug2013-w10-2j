@@ -122,7 +122,7 @@ public class StorageManager {
 			}
 		}
 
-		return null;
+		return v;
 	}
 	
 	public void clear(){
@@ -137,7 +137,7 @@ public class StorageManager {
 		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
 		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
 		DateTime reminder = task.getReminder();
-		return reminder.compareTo(startOfToday)>=0&&reminder.compareTo(endOfToday)<=0;
+		return reminder.compareTo(endOfToday)<=0;
 	}
 	private boolean haveReminder(Task task){
 		return task!=null&&task.getReminder()!=null;
