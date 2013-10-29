@@ -8,12 +8,11 @@ import java.util.Vector;
 import org.joda.time.DateTime;
 
 import test.storage.StorageManagerStub;
-
 import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.common.TaskPriority;
 import nailit.logic.*;
-
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 import nailit.logic.CommandType;
@@ -531,5 +530,18 @@ public class CommandManager {
 	public void setCurrentFilterSearchAll() {
 		filterContentForCurrentTaskList.setIsSearchAll(true);
 	}
-	
+	public Result getListOfTasksForTheDay(){
+		DateTime now = new DateTime();
+		DateTime startOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);
+		DateTime endOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 23, 59);
+		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, "", null , null);
+		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), "", null, false); //1 sec before start of today
+		Vector<Task> dateList = storer.filter(dateFilter);
+		Vector<Task> uncompletedList = storer.filter(uncompletedFilter);
+		dateList.addAll(uncompletedList);
+		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
+		currentTaskList = dateList;
+		ret.setTaskList(dateList);
+		return ret;
+	}
 }

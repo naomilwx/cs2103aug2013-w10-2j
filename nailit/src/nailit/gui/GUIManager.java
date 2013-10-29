@@ -125,7 +125,7 @@ public class GUIManager {
 	
 	private void showDefaultDisplayAndReminders(){
 		getAndDisplayReminders();
-		executeUserInputCommand(CommandType.DISPLAY + " all");
+		processAndDisplayExecutionResult(logicExecutor.getListOfTasksForTheDay());
 	}
 	private void getAndDisplayReminders(){
 		Vector<Task> reminderList = logicExecutor.getReminderList();
