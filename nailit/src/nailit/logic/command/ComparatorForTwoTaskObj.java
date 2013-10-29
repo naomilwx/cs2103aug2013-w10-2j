@@ -16,8 +16,8 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 		int hostTaskPriorityCode = hostTask.getPriority().getPriorityCode();
 		int taskToComparePriorityCode = taskToCompare.getPriority().getPriorityCode();
 		
-		DateTime hostTaskDate = hostTask.getStartTime();
-		DateTime taskToCompareDate = taskToCompare.getStartTime();
+		DateTime hostTaskDate = hostTask.getEndTime();
+		DateTime taskToCompareDate = taskToCompare.getEndTime();
 		
 		String hostTaskName = hostTask.getName();
 		String taskToCompareName = taskToCompare.getName();
