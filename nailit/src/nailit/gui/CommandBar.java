@@ -154,6 +154,8 @@ public class CommandBar extends JPanel {
 				}else if(keyCode == KeyEvent.VK_TAB){
 					resetKeys();
 					GUIBoss.setFocusOnDisplay();
+				}else if(keyCode == KeyEvent.VK_F1){
+					GUIBoss.displayFullHelpWindow();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
