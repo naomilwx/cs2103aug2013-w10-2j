@@ -459,7 +459,7 @@ public class CommandManager {
 	}
 	
 	private Result uncomplete() throws Exception {
-		CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj = new CommandMarkCompletedOrUncompleted(parserResultInstance, storer, currentTaskList, true);
+		CommandMarkCompletedOrUncompleted newMOrUnMCompletedObj = new CommandMarkCompletedOrUncompleted(parserResultInstance, storer, currentTaskList, false);
 		Result resultToPassToGUI = newMOrUnMCompletedObj.executeCommand();
 		// need to attach currentTaskList to the resultToPassToGUI, if success
 		if(newMOrUnMCompletedObj.isSuccess()) { // successfully mark as completed, the task must be in the 
