@@ -237,6 +237,11 @@ public class StorageManagerTest {
 
 	} 
 	
+	@Test
+	public void testForRealisticTasks(){
+//		Task task1 = Task(,"",new DateTime(""),new DateTime(""),)
+	}
+	
 	public String printVector(Vector<Task> v){
 		String out = "";
 		for(int i=0;i<v.size();i++){
