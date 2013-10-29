@@ -59,10 +59,19 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
 			if (listOfCommand.length<=2){
-				resultExecution.setSetPriority(false);
+				resultExecution.resetPriority();
 			}else{
-				resultExecution.setSetPriority(true);
+				resultExecution.isNullPriority();
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[2].toUpperCase()));
+			}
+		}else if (listOfCommand[1].equalsIgnoreCase("Reminder")){
+			String answer = "";
+			for (int i=2; i<listOfCommand.length; i++)
+				answer += listOfCommand[i]+" ";
+			if (answer == ""){
+				resultExecution.setReminderTime(null);
+			}else{
+				resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
 		}
 		System.out.println(resultExecution.getEndTime());
