@@ -240,10 +240,46 @@ public class StorageManagerTest {
 	public String printVector(Vector<Task> v){
 		String out = "";
 		for(int i=0;i<v.size();i++){
-			out += v.get(i).getID()+NIConstants.NORMAL_FIELD_SPLITTER+v.get(i).changeToDiskFormat()+"\n";
+			out += v.get(i).getID()+","+changeToDiskFormat(v.get(i))+"\n";
 		}
 		return out;
 	}
+	public String changeToDiskFormat(Task task){
+		int priority = task.getPriority().getPriorityCode();
+		
+		String name = task.getName();
+		String startDate;
+		if(task.getStartTime() == null){
+			startDate = null;
+		}
+		else{
+			startDate = task.getStartTime().toString();
+		}
+		
+		String endDate;
+		if(task.getEndTime() == null){
+			endDate = null;
+		}
+		else{
+			endDate = task.getEndTime().toString();
+		}
+		String desc = task.getDescription();
+		String tag = task.getTag();
+		
+		int completeStatus = (task.checkCompleted())? 1:0;
+		
+		String reminderDate;
+		if(task.getReminder()==null){
+			reminderDate = null;
+		}else{
+			reminderDate = task.getReminder().toString();
+		}
+		
+		String taskString = name + "," + startDate + "," + endDate + ","+ priority + "," + tag + "," +desc +"," + completeStatus + "," + reminderDate;
+		
+		return taskString;
+	}
+
 	public void testAddCommand(String expected,int expectedID,Task task) throws FileCorruptionException{
 		String out;
 		try{
