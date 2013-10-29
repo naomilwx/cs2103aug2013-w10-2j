@@ -117,7 +117,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	private void createResultForFailure() {
 		String notificationStr = NOTIFICATION_STRING_FOR_MARK_COMPLETED_UNSUCCESS;
-		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
+		executedResult = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
 	}
 
 	private void setTaskRelated() {
