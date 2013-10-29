@@ -57,7 +57,7 @@ public class GUIManager {
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
-	protected static final int HOME_WINDOW_WIDTH = 450;
+	protected static final int HOME_WINDOW_WIDTH = 400;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
@@ -67,7 +67,7 @@ public class GUIManager {
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
 	protected static final int ID_COLUMN_WIDTH = 45;
-	protected static final int NAME_COLUMN_WIDTH = 380;
+	protected static final int NAME_COLUMN_WIDTH = 400;
 	protected static final int START_TIME_COLUMN_WIDTH = 130;
 	protected static final int END_TIME_COLUMN_WIDTH = 130;
 	protected static final int TOTAL_TABLE_WIDTH
@@ -266,6 +266,7 @@ public class GUIManager {
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
 		displayArea.removeDeletedTasksFromTaskListTable();
+		displayArea.removeTaskDisplay();
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
