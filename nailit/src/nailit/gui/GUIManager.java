@@ -307,9 +307,8 @@ public class GUIManager {
 		if(result.getExitStatus()){
 			exit();
 		}else{
-			if(historyWindow.isVisible()){
+			if(homeWindow.isVisible()){
 				getAndDisplayReminders();
-				homeWindow.repaint();
 			}
 			displayExecutionResult(result);
 		}
