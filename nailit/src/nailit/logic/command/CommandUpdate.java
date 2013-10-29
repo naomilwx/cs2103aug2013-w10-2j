@@ -199,7 +199,7 @@ public class CommandUpdate extends Command{
 			updatedTask.setDescription(taskRetrieved.getDescription());
 		}
 		
-		if(!parserResultInstance.isNullDescription()) {
+		if(!parserResultInstance.isNullReminderTime()) {
 			DateTime newReminder = parserResultInstance.getReminderTime();
 			updatedTask.setReminder(newReminder);
 			updatedContent = updatedContent + "Reminder Date: " + newReminder.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
