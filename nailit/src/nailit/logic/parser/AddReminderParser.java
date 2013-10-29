@@ -24,22 +24,8 @@ public class AddReminderParser extends Parser{
 			if (Parser.isNumber(listOfCommand[i])){
 				resultExecution.setTaskID(Integer.parseInt(listOfCommand[i]));
 			}else if (Parser.isDateTime(listOfCommand[i])) {
-				if (resultExecution.getEndTime() == null) {
-					if (Parser.numberOfTime(listOfCommand[i]) == 2) {
-						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommand[i]));
-						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommand[i]));
-					} else {
-						resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
-					}
-				} else { 
-					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
-				}
+				resultExecution.setReminderTime(Parser.retrieveDateTime(listOfCommand[i]));
 			} 
-		}
-		
-		if (!resultExecution.isNullStartTime() && resultExecution.isNullEndTime()){
-			resultExecution.setEndTime(resultExecution.getStartTime());
-			resultExecution.setStartTime(null);
 		}
 		return resultExecution;
 	}
