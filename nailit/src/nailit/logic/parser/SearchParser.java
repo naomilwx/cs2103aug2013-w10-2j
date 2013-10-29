@@ -27,7 +27,6 @@ public class SearchParser extends Parser {
 			System.out.println(listOfCommand[i]);
 			if (TaskPriority.isTaskPriority(listOfCommand[i])){
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i].toUpperCase()));
-				resultExecution.setSetPriority(true);
 			}else if (Parser.isTag(listOfCommand[i])){
 				resultExecution.setTag(listOfCommand[i]);
 			}else if (Parser.isDateTime(listOfCommand[i])){
