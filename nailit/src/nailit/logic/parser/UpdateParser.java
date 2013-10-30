@@ -33,6 +33,15 @@ public class UpdateParser extends Parser {
 			} else{
 				resultExecution.setName(answer.substring(0, answer.length()-1));
 			}
+		}else if (listOfCommand[1].equalsIgnoreCase("description")){
+			String answer = "";
+			for (int i=2; i<listOfCommand.length; i++)
+				answer += listOfCommand[i]+ " ";
+			if (answer == ""){
+				resultExecution.setDescription(null);
+			} else{
+				resultExecution.setDescription(answer.substring(0, answer.length()-1));
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("tag")){
 			if (listOfCommand.length<=2){
 				resultExecution.setTag(null);
