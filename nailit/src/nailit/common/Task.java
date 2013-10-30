@@ -151,6 +151,16 @@ public class Task {
 			return false;
 		}
 	}
+	//check if task is overdue
+	public boolean isOverDueTask(){
+		if(isEvent() || isFloatingTask()){
+			return false;
+		}else if(!isCompleted){
+			return isBeforeDateTime(new DateTime());
+		}else{
+			return false;
+		}
+	}
 	//setters
 	public boolean setID(int newID){
 		if(ID==Task.TASKID_NULL){
