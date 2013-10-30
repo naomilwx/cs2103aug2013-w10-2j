@@ -12,6 +12,8 @@ import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskDetailsFormatter;
 
 public class HomeWindow extends ExtendedWindow{
+	private static final String REMINDER_DISPLAY_HEADER 
+	= "<h1 style = \"padding-left: 5px\">Reminders: </h1>";
 	private final HomeWindow selfRef = this;
 	private final KeyAdapter keyEventListener = new KeyAdapter(){
 		private boolean ctrlPressed = false;
@@ -46,6 +48,7 @@ public class HomeWindow extends ExtendedWindow{
 		}
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
+		str.append(REMINDER_DISPLAY_HEADER);
 		int count = 1;
 		for(Task task: tasks){
 			str.append("<tr>");
