@@ -541,7 +541,8 @@ public class CommandManager {
 		retList.addAll(dateList);
 		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
 		currentTaskList = retList;
-		ret.setTaskList(retList);
+		sort();
+		ret.setTaskList(currentTaskList);
 		return ret;
 	}
 }
