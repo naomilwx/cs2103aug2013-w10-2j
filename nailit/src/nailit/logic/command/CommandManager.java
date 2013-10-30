@@ -537,10 +537,10 @@ public class CommandManager {
 		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
 		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), null, null, false); //1 sec before start of today
 		Vector<Task> dateList = storer.filter(dateFilter);
-		Vector<Task> retList = storer.filter(uncompletedFilter);
-		retList.addAll(dateList);
+		Vector<Task> overdueList = storer.filter(uncompletedFilter);
+		dateList.addAll(overdueList);
 		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
-		currentTaskList = retList;
+		currentTaskList = dateList;
 		sort();
 		ret.setTaskList(currentTaskList);
 		return ret;

@@ -146,7 +146,7 @@ public class Task {
 	public boolean isPastEvent(){
 		if(isEvent()){
 			DateTime now = new DateTime();
-			return isBeforeDateTime(now);
+			return (endTime.compareTo(now) < 0);
 		}else{
 			return false;
 		}
