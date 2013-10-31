@@ -1,12 +1,13 @@
 //@author A0091372H
 package nailit.gui.renderer;
 
+import nailit.common.NIConstants;
 import nailit.common.Task;
 
 public class TaskDetailsFormatter {
 	private static final String TASK_DISPLAY_STYLE = 
 			"<head><style type = \"text/css\">" 
-			+ "p {font-family: HelveticaNeue;}"
+			+ "p {font-family: HelveticaNeue; font-size: 11px}"
 			+ "p.name {font-size: 11px;}"
 			+ "p.tag {font-size: 9px; color: gray;}"
 			+ "p.date {font-size: 11px;}"
@@ -14,11 +15,11 @@ public class TaskDetailsFormatter {
 			+ "p.status {font-size: 10px;}"
 			+ "p.priority {font-size: 10px;}"
 			+ "p.title {font-size: 11px; font-weight: bold}"
-			+ "p.desc {font-size: 11px; vertical-align:middle; width: 230px}"
+			+ "p.desc {font-size: 11px; text-align:top;}"
 			+ "</style></head>";
 	private static final String TASK_NAME_AND_TAG_FORMAT = 
 			"<tr><td><p class = \"title\">Name: </p></td>"
-			+ "<td><p class = \"name\">%1s</p>%2s</td><td></td><td></td>";
+			+ "<td colspan = 7><p class = \"name\">%1s</p>%2s</td><td></td><td></td></tr>";
 	private static final String TASK_PRIORITY_FORMAT = 
 			"<tr><td><p class = \"title\">Priority: </p></td><td><p class = \"priority\">" 
 			+ "%1s</p></td>";
@@ -26,15 +27,18 @@ public class TaskDetailsFormatter {
 			"<td><p class = \"title\">Status: </p></td><td><p class = \"status\">"
 			+ "%1s</p></td>";
 	private static final String TASK_REMINDER_FORMAT = 
-			"<td><p class = \"title\">Reminder Set On: </p></td>%1s</td>";
-	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 1 rowspan = %1d>"
-			+ "<p class = \"title\"> Description: </p></td>"
-			+ "<td rowspan = %2d>"
+			"<td><p class = \"title\">Reminder: </p></td><p>%1s</p></td>";
+//	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 1 rowspan = %1d>"
+//			+ "<p class = \"title\"> Description: </p></td>"
+//			+ "<td rowspan = %2d>"
+//			+ "<p class = \"desc\">%3s</p></td>";
+	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 5 rowspan = %1d>"
+			+ "<p class = \"title\"> Description: </p>"
 			+ "<p class = \"desc\">%3s</p></td>";
 	private static final String EVENT_DATETIME_FORMAT ="<tr><td><p class = \"title\">Start: </p></td><td>"
 			 + "%1s</td><td><p class = \"title\">End: </p></td><td>" 
-			 + "%2s</td></tr>";
-	private static final String SINGLE_DATETIME_TASK_FORMAT = "<tr><td><p class = \"title\">%1s: </p></td><td>"
+			 + "%2s</td>";
+	private static final String SINGLE_DATETIME_TASK_FORMAT = "<td><p class = \"title\">%1s: </p></td><td>"
 			+ "%2s</td>";
 	public static final String TASK_CONCISE_FORMAT = "<td><p class = \"id\">%1s</p></td>"
 			+ "<td><p class = \"name\">%2s</p></td>"
@@ -53,35 +57,31 @@ public class TaskDetailsFormatter {
 		String otherDetails = formatTaskDateTimeForDisplay(task);
 		
 		if(!task.isEvent()){
-			if(task.isFloatingTask()){
-				rowCount += 1;
-			}else{
-				rowCount += 2; //including row for due date
-			}
-			
 			if(task.checkCompleted()){
 				otherDetails += String.format(TASK_STATUS_FORMAT, "Done");
 			}else{
 				otherDetails += String.format(TASK_STATUS_FORMAT, "Not Done");
 			}
-		}else{
-			rowCount += 2; //for start and end time
+			if(task.isFloatingTask()){
+				otherDetails += "<td></td><td></td>";
+			}
+		}
+
+		String taskDesc = task.getDescription();
+		if(taskDesc != null && !taskDesc.isEmpty() && !taskDesc.equals("null")){
+			otherDetails += formatTaskDescriptionForDisplay(taskDesc, rowCount);
 		}
 		
 		otherDetails += "</tr>" + String.format(TASK_PRIORITY_FORMAT, task.getPriority());
 		if(task.getReminder() != null){
-			String reminderDate = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getReminder());
+			String reminderDate = task.getReminder().toString(NIConstants.DISPLAY_DATE_FORMAT);
 			otherDetails += String.format(TASK_REMINDER_FORMAT, reminderDate);
 		}
 		
 		otherDetails += "</tr>";
-		
-		String taskDesc = task.getDescription();
-		if(taskDesc != null && !taskDesc.isEmpty()){
-			details += formatTaskDescriptionForDisplay(taskDesc, rowCount);
-		}
+		System.out.println(otherDetails);
 	
-		details += "</tr>" + otherDetails + "</table></html>";
+		details += otherDetails + "</table></html>";
 		return details;
 	}
 	
@@ -106,7 +106,7 @@ public class TaskDetailsFormatter {
 	}
 	
 	public static String formatTaskDescriptionForDisplay(String desc, int rowCount){
-		String details = String.format(TASK_DESCRIPTION_FORMAT, rowCount, rowCount, desc);
+		String details = String.format(TASK_DESCRIPTION_FORMAT, rowCount, desc);
 		return details;
 	}
 }
