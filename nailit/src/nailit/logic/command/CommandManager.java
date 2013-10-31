@@ -538,7 +538,11 @@ public class CommandManager {
 		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), null, null, false); //1 sec before start of today
 		Vector<Task> dateList = storer.filter(dateFilter);
 		Vector<Task> overdueList = storer.filter(uncompletedFilter);
-		dateList.addAll(overdueList);
+		for(Task task: overdueList){
+			if(!dateList.contains(task)){
+				dateList.add(task);
+			}
+		}
 		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
 		currentTaskList = dateList;
 		sort();
