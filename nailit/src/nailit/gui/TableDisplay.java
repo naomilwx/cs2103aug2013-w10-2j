@@ -41,7 +41,8 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int NO_SELECTED_ROW = -1;
 	protected static final int SINGLE_SCROLLDOWN = 1;
 	protected static final int SINGLE_SCROLLUP = -1;
-	protected static final int TAB_SCROLL_OFFSET = 5;
+	protected static final int QUICK_SCROLLDOWN_OFFSET = 6;
+	protected static final int QUICK_SCROLLUP_OFFSET = 6;
 	
 	protected int containerHeight;
 	protected int containerWidth;
@@ -67,10 +68,10 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		}
 	};
 	//actions
-	private final AbstractAction quickScrollToRowBelowOnTab = new AbstractAction(){
+	private final AbstractAction quickScrollToRowBelow = new AbstractAction(){
 		@Override
 		public void actionPerformed(ActionEvent event){
-			scrollToNextRow(TAB_SCROLL_OFFSET);
+			scrollToNextRow(QUICK_SCROLLDOWN_OFFSET);
 		}
 	};
 	private final AbstractAction scrollToRowBelowOnKeyEvent = new AbstractAction(){
@@ -192,6 +193,12 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			column.setPreferredWidth(widths[i]);
 		}
 	}
+	protected void quickScrollUp(){
+		scrollToNextRow(QUICK_SCROLLUP_OFFSET);
+	}
+	protected void quickScrollDown(){
+		scrollToNextRow(QUICK_SCROLLDOWN_OFFSET);
+	}
 	private void scrollToNextRow(int offSet){
 		if(tableRows.isEmpty()){
 			table.getParent().requestFocus();
@@ -233,7 +240,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "Down Key");
 		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "Up Key");
 		tableActionMap.put("Esc Event", focusOnMainTableOnShift);
-		tableActionMap.put("Tab Key", quickScrollToRowBelowOnTab);
+		tableActionMap.put("Tab Key", quickScrollToRowBelow);
 		tableActionMap.put("Down Key", scrollToRowBelowOnKeyEvent);
 		tableActionMap.put("Up Key", scrollToRowAboveOnKeyEvent);
 		table.setInputMap(JTable.WHEN_FOCUSED, tableInputMap);
