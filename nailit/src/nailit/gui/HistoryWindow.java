@@ -28,4 +28,8 @@ public class HistoryWindow extends ExtendedWindow{
 			((TableDisplay) displayPane).addContentToTable(row);
 		}
 	}
+	
+	@Override
+	protected void addListenersToDisplayPane(){
+	}
 }

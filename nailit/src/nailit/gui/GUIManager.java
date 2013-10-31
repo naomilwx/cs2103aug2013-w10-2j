@@ -175,8 +175,8 @@ public class GUIManager {
 //			enableGlobalKeyListener();
 //		}
 		mainWindow.setVisible(isVisible);
-//		homeWindow.setVisible(isVisible);
 	}
+	
 	public void toggleHomeWindow(){
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
@@ -210,10 +210,10 @@ public class GUIManager {
 		commandBar.setFocus();
 	}
 	public void setFocusOnHomeWindow(){
-		homeWindow.setFocus();
+		homeWindow.requestFocus();
 	}
 	public void setFocusOnHelpWindow(){
-		helpWindow.setFocus();
+		helpWindow.requestFocus();
 	}
 	
 	protected Dimension getMainWindowLocationCoordinates(){
