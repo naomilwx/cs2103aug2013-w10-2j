@@ -174,6 +174,10 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					GUIBoss.displayCommandSyantaxHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
+				}else if(keyCode == KeyEvent.VK_PAGE_UP){
+					GUIBoss.scrollToPrevPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
+					GUIBoss.scrollToNextPageInTaskTable();
 				}
 			}
 			@Override

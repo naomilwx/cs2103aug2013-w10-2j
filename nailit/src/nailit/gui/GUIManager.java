@@ -230,6 +230,13 @@ public class GUIManager {
 	protected void displayFullHelpWindow(){
 		helpWindow.displayFullHelpWindow();
 	}
+	
+	protected void scrollToNextPageInTaskTable(){
+		displayArea.quickTaskTableScroll(false);
+	}
+	protected void scrollToPrevPageInTaskTable(){
+		displayArea.quickTaskTableScroll(true);
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user

@@ -78,13 +78,27 @@ public class DisplayArea extends JLayeredPane {
 	};
 	
 	private KeyAdapter keyEventListener = new KeyAdapter(){
+		boolean ctrlPressed = false;
 		@Override
 		public void keyPressed(KeyEvent keyStroke){
 			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_SHIFT){
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = true;
+			}else if(keyCode == KeyEvent.VK_SHIFT){
 				defaultPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
 				GUIBoss.setFocusOnCommandBar();
+			}else if(keyCode == KeyEvent.VK_COMMA){
+				GUIBoss.setVisible(false);
+			}else if(keyCode == KeyEvent.VK_H){
+				GUIBoss.toggleHomeWindow();
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = false;
 			}
 		}
 	};
@@ -274,6 +288,15 @@ public class DisplayArea extends JLayeredPane {
 		taskTable.displayTaskList(tasks, task);
 		addContent(taskTable, false);
 	}
+	protected void quickTaskTableScroll(boolean up){
+		if(taskTable != null){
+			if(up){
+				taskTable.quickScrollUp();
+			}else{
+				taskTable.quickScrollDown();
+			}
+		}
+	}
 	private void addAdditionalKeyListenerToTaskTable(){
 		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
 			private boolean ctrlPressed = false;
@@ -289,6 +312,10 @@ public class DisplayArea extends JLayeredPane {
 					taskTableOnEnterEvent();
 				}else if(keyCode == KeyEvent.VK_DELETE){
 					taskTableOnDeleteEvent();
+				}else if(keyCode == KeyEvent.VK_COMMA){
+					GUIBoss.setVisible(false);
+				}else if(keyCode == KeyEvent.VK_H){
+					GUIBoss.toggleHomeWindow();
 				}
 			}
 			@Override
