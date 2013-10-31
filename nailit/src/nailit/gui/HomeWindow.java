@@ -39,9 +39,12 @@ public class HomeWindow extends ExtendedWindow{
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
-		addKeyListener(keyEventListener);
+		addListenersToDisplayPane();
 	}
-	
+	@Override
+	protected void addListenersToDisplayPane(){
+		displayPane.addKeyListener(keyEventListener);
+	}
 	protected void displayReminders(Vector<Task> tasks){
 		if(tasks == null){
 			return;

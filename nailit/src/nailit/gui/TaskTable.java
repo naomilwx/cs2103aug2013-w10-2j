@@ -89,7 +89,7 @@ public class TaskTable extends TableDisplay{
 		row.add(nameAndTag);
 		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
 		row.add(timeStartDet);
-		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime());
+		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime(), !task.isEvent());
 		row.add(timeEndDet);
 		return row;
 	}

@@ -112,8 +112,9 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void addItem(Component component) {
 		contentPane.add(component);
 	}
-	
-	protected void setFocus() {
+	abstract void addListenersToDisplayPane();
+	@Override
+	public void requestFocus() {
 		displayPane.requestFocus();
 	}
 	@Override

@@ -55,7 +55,8 @@ public class HelpWindow extends ExtendedWindow{
 		super(GUIMain, width);
 		addListenersToDisplayPane();
 	}
-	private void addListenersToDisplayPane(){
+	@Override
+	protected void addListenersToDisplayPane(){
 		displayPane.addKeyListener(keyListener);
 	}
 	@Override
