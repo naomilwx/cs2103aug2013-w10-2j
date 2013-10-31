@@ -53,13 +53,13 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 		boolean isCompleted = task.checkCompleted();
 		String statusFlag = "";
 		String tagRowFiller = "";
-		if(!task.isEvent()){
-			if(isCompleted){
-				statusFlag = TASK_DONE_CODE;
-			}else{
-				statusFlag = TASK_NOT_DONE_CODE;
-			}
+		
+		if(isCompleted){
+			statusFlag = TASK_DONE_CODE;
+		}else{
+			statusFlag = TASK_NOT_DONE_CODE;
 		}
+		
 		String nameAndTag = getNameHTMLTag(task) + taskName + "</p>";
 		if(!tag.isEmpty()){
 			nameAndTag += "<p class = \"tag\">" + tag + "</p>";
