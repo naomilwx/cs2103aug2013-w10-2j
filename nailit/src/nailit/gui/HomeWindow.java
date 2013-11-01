@@ -27,17 +27,15 @@ public class HomeWindow extends ExtendedWindow{
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
 		str.append(REMINDER_DISPLAY_HEADER);
-		int count = 1;
 		for(Task task: tasks){
 			str.append("<tr>");
-			str.append(formatTasksForReminderDisplay(task, count));
+			str.append(formatTasksForReminderDisplay(task));
 			str.append("</tr>");
-			count = count + 1;
 		}
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
 	}
-	protected String formatTasksForReminderDisplay(Task task, int number){
+	protected String formatTasksForReminderDisplay(Task task){
 		String taskDetails;
 		String dateDetails;
 		if(task.isEvent()){
@@ -53,8 +51,7 @@ public class HomeWindow extends ExtendedWindow{
 		}else{
 			dateDetails = "";
 		}
-		taskDetails = String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT,
-			 "[" + number + "]" , task.getName(), dateDetails);
+		taskDetails = String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT, task.getName(), dateDetails);
 		return taskDetails;
 	}
 }

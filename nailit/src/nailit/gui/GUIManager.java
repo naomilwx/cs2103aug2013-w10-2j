@@ -110,7 +110,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-			globalKeyListener = new NailItGlobalKeyListener(this);
+//			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
 //			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
@@ -165,9 +165,9 @@ public class GUIManager {
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
-			globalKeyListener.registerGlobalKeyHook();
-		}
+//		if(!globalKeyListener.isEnabled()){
+//			globalKeyListener.registerGlobalKeyHook();
+//		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components
