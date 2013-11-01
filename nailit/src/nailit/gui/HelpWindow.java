@@ -53,12 +53,9 @@ public class HelpWindow extends ExtendedWindow{
 	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addListenersToDisplayPane();
+		addListenersToDisplayPane(keyListener);
 	}
-	@Override
-	protected void addListenersToDisplayPane(){
-		displayPane.addKeyListener(keyListener);
-	}
+
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;

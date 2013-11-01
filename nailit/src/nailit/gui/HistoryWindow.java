@@ -29,7 +29,4 @@ public class HistoryWindow extends ExtendedWindow{
 		}
 	}
 	
-	@Override
-	protected void addListenersToDisplayPane(){
-	}
 }

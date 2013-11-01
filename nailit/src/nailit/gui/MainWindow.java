@@ -23,9 +23,6 @@ public class MainWindow extends JFrame {
 		public void windowClosing(WindowEvent event){
 			GUIBoss.setVisible(false);
 		}
-//		public void windowDeactivated(WindowEvent event){
-//			GUIBoss.enableGlobalKeyListener();
-//		}
 	};
 	
 	public MainWindow(final GUIManager GUIMain){

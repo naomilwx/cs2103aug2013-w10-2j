@@ -15,36 +15,11 @@ public class HomeWindow extends ExtendedWindow{
 	private static final String REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 5px\">Reminders: </h1>";
 	private final HomeWindow selfRef = this;
-	private final KeyAdapter keyEventListener = new KeyAdapter(){
-		private boolean ctrlPressed = false;
-		@Override
-		public void keyPressed(KeyEvent keyStroke){
-			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_CONTROL){
-				System.out.println("down");
-				ctrlPressed = true;
-			}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
-				ctrlPressed = false;
-				selfRef.setVisible(false);
-			}
-		}
-		@Override
-		public void keyReleased(KeyEvent keyStroke){
-			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_CONTROL){
-				ctrlPressed = false;
-			}
-		}
-	};
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
-		addListenersToDisplayPane();
 	}
-	@Override
-	protected void addListenersToDisplayPane(){
-		displayPane.addKeyListener(keyEventListener);
-	}
+	
 	protected void displayReminders(Vector<Task> tasks){
 		if(tasks == null){
 			return;

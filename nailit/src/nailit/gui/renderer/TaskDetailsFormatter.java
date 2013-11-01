@@ -79,7 +79,6 @@ public class TaskDetailsFormatter {
 		}
 		
 		otherDetails += "</tr>";
-		System.out.println(otherDetails);
 	
 		details += otherDetails + "</table></html>";
 		return details;

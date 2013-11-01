@@ -110,7 +110,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-//			globalKeyListener = new NailItGlobalKeyListener(this);
+			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
 //			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
@@ -146,6 +146,7 @@ public class GUIManager {
 	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
+		mainWindow.setIconImage(TRAY_ICON_IMG.getImage());
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
 		initialiseAndConfigureDisplayArea();
 		loadComponentsUntoMainFrame();
@@ -171,9 +172,11 @@ public class GUIManager {
 	
 	//functions to manipulate visiblitiy of GUI Components
 	public void setVisible(boolean isVisible){
-//		if(!isVisible){
-//			enableGlobalKeyListener();
-//		}
+		if(!isVisible){
+			enableGlobalKeyListener();
+		}else{
+			setFocusOnCommandBar();
+		}
 		mainWindow.setVisible(isVisible);
 	}
 	

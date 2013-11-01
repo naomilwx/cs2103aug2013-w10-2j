@@ -39,7 +39,7 @@ public class NailItGlobalKeyListener implements NativeKeyListener{
 				}
 			});
 		}else if(keyCode == NativeKeyEvent.VK_H){
-			GUI.toggleHomeWindow();;
+			GUI.toggleHomeWindow();
 		}   
 	}
 	
