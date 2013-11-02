@@ -7,39 +7,36 @@ import nailit.common.Task;
 public class TaskDetailsFormatter {
 	private static final String TASK_DISPLAY_STYLE = 
 			"<head><style type = \"text/css\">" 
-			+ "p {font-family: HelveticaNeue; font-size: 11px}"
+			+ "p {font-family: HelveticaNeue; font-size: 11px;}"
 			+ "p.name {font-size: 11px;}"
-			+ "p.tag {font-size: 9px; color: gray;}"
-			+ "p.date {font-size: 11px;}"
+			+ "p.date {font-size: 12x; font-weight:bold}"
 			+ "p.time {font-size: 10px;}"
-			+ "p.status {font-size: 10px;}"
+			+ "p.status {font-size: 11px;}"
 			+ "p.priority {font-size: 10px;}"
 			+ "p.title {font-size: 11px; font-weight: bold}"
 			+ "p.desc {font-size: 11px; text-align:top;}"
 			+ "</style></head>";
 	private static final String TASK_NAME_AND_TAG_FORMAT = 
 			"<tr><td><p class = \"title\">Name: </p></td>"
-			+ "<td colspan = 7><p class = \"name\">%1s</p>%2s</td><td></td><td></td></tr>";
+			+ "<td colspan = 7><p class = \"name\">%1s %2s</p></td><td></td><td></td></tr>";
 	private static final String TASK_PRIORITY_FORMAT = 
-			"<tr><td><p class = \"title\">Priority: </p></td><td><p class = \"priority\">" 
-			+ "%1s</p></td>";
+			"<tr><td><p class = \"title\">Priority: </p></td><td><p class = \"priority\">%1s</p></td>";
 	private static final String TASK_STATUS_FORMAT = 
-			"<td><p class = \"title\">Status: </p></td><td><p class = \"status\">"
-			+ "%1s</p></td>";
+			"<td><p class = \"title\">Status: </p></td><td><p class = \"status\">%1s</p></td>";
 	private static final String TASK_REMINDER_FORMAT = 
 			"<td><p class = \"title\">Reminder: </p></td><p>%1s</p></td>";
 //	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 1 rowspan = %1d>"
 //			+ "<p class = \"title\"> Description: </p></td>"
 //			+ "<td rowspan = %2d>"
 //			+ "<p class = \"desc\">%3s</p></td>";
-	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 5 rowspan = %1d>"
+	private static final String TASK_DESCRIPTION_FORMAT = "<td colspan = 5 rowspan = %1d style = \"padding-left:5px; padding-top: 0px\">"
 			+ "<p class = \"title\"> Description: </p>"
 			+ "<p class = \"desc\">%3s</p></td>";
-	private static final String EVENT_DATETIME_FORMAT ="<tr><td><p class = \"title\">Start: </p></td><td>"
-			 + "%1s</td><td><p class = \"title\">End: </p></td><td>" 
-			 + "%2s</td>";
-	private static final String SINGLE_DATETIME_TASK_FORMAT = "<td><p class = \"title\">%1s: </p></td><td>"
-			+ "%2s</td>";
+	private static final String EVENT_DATETIME_FORMAT ="<tr><td><p class = \"title\">Start: </p></td>"
+			+ "<td width = \"70px\">%1s</td><td><p class = \"title\">End: </p></td>"
+			+ "<td width = \"70px\">%2s</td>";
+	private static final String SINGLE_DATETIME_TASK_FORMAT = "<td><p class = \"title\">%1s: </p></td>"
+			+ "<td width = \"70px\">%2s</td>";
 	public static final String TASK_CONCISE_FORMAT = "<td></td>"
 			+ "<td><p class = \"name\">%1s</p></td>"
 			+ "%2s";
@@ -49,7 +46,7 @@ public class TaskDetailsFormatter {
 		int rowCount = 2;
 		String tagDetails = "";
 		if(!task.getTag().isEmpty()){
-			tagDetails += "<p class = \"tag\">" + task.getTag() + "<p>";
+			tagDetails += "<font color = \"gray\">" + task.getTag() + "</font>";
 		}
 		String details = "<html>" + TASK_DISPLAY_STYLE 
 						+ "<table>" + String.format(TASK_NAME_AND_TAG_FORMAT, task.getName(), tagDetails);
@@ -81,6 +78,7 @@ public class TaskDetailsFormatter {
 		otherDetails += "</tr>";
 	
 		details += otherDetails + "</table></html>";
+		System.out.println(details);
 		return details;
 	}
 	
