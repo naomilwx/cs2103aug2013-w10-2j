@@ -308,6 +308,8 @@ public class DisplayArea extends JLayeredPane {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
 					ctrlPressed = false;
 					taskTableOnCtrlEnterEvent();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					taskTableOnCtrlNEvent();
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					taskTableOnEnterEvent();
 				}else if(keyCode == KeyEvent.VK_DELETE){
@@ -347,6 +349,13 @@ public class DisplayArea extends JLayeredPane {
 		int displayID = taskTable.getSelectedRowDisplayID();
 		if(displayID >= 1){
 			GUIBoss.loadExistingTaskDescriptionInCommandBar(displayID);
+		}
+	}
+	protected void taskTableOnCtrlNEvent(){
+		GUIBoss.setFocusOnCommandBar();
+		int displayID = taskTable.getSelectedRowDisplayID();
+		if(displayID >= 1){
+			GUIBoss.loadExistingTaskNameInCommandBar(displayID);
 		}
 	}
 	
