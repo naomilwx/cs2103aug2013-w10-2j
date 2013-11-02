@@ -17,11 +17,11 @@ public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 			+ "</style></head>";
 
 	protected static final String TASK_DATETIME_DISPLAY_FORMAT = 
-			"<p class = \"date\"> %1s" + "</p>" + 
-			"<p class = \"time\"> %2s" + "</p>";
+			  "<p class = \"date\">%1s</p>"
+			+ "<p class = \"time\">%2s</p>";
 	protected static final String OVERDUE_TASK_DATETIME_DISPLAY_FORMAT = 
-			"<p class = \"odate\"> %1s" + "</p>" + 
-			"<p class = \"otime\"> %2s" + "</p>";
+			  "<p class = \"odate\">%1s" + "</p>"
+			+ "<p class = \"otime\">%2s" + "</p>";
 	protected static final String EMPTY_TIME_DISPLAY_FORMAT = "<p>" + "--" + "</p>";
 	
 	public TaskDateTimeDisplayRenderer(){
