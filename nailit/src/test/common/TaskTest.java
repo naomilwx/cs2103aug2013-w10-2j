@@ -343,15 +343,28 @@ public class TaskTest {
 	public void TaskCopyTest(){
 		DateTime start = new DateTime(2013, 9, 30, 10, 20);
 		DateTime end = new DateTime();
-		Task task = new Task("Test!",start,end,"School",TaskPriority.LOW);
-		task.setDescription("y");
-		task.setID(1);
+		Task event = new Task("Test!",start,end,"#School#",TaskPriority.LOW);
+		event.setDescription("y");
+		event.setReminder(new DateTime(2013, 9, 30, 9, 20));
+		event.setID(1);
+		assertEquals(event.getID(),1);
+		Task eventCopy = event.copy();
+		assertEquals(event.getDescription(),eventCopy.getDescription());
+		assertEquals(event.getTag(),eventCopy.getTag());
+		assertEquals(event.getReminder(), eventCopy.getReminder());
+		assertTrue(event.isAtSameEndTime(eventCopy));
+		assertTrue(event.equals(eventCopy));
+		assertEquals(event.toString(),eventCopy.toString());
+		assertTrue(event.isClone(eventCopy));
+		
+		Task task = new Task("task");
+		task.setID(2);
 		task.setCompleted(true);
-		assertEquals(task.getID(),1);
-		assertTrue(task.checkCompleted());
 		Task taskCopy = task.copy();
+		assertEquals(task, taskCopy);
 		assertEquals(task.getDescription(),taskCopy.getDescription());
 		assertEquals(task.getTag(),taskCopy.getTag());
+		assertEquals(task.getReminder(), taskCopy.getReminder());
 		assertTrue(task.isAtSameEndTime(taskCopy));
 		assertTrue(task.equals(taskCopy));
 		assertEquals(task.toString(),taskCopy.toString());

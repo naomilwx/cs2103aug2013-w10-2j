@@ -16,6 +16,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.Point;
@@ -28,6 +31,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -110,6 +114,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
+			loadRequiredFontsInGraphicsEnvironment();
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
@@ -387,7 +392,23 @@ public class GUIManager {
 			}
 		}
 	}
-	
+	private void loadRequiredFontsInGraphicsEnvironment(){
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		try {
+			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/HelveticaNeue_Lt.ttf"));
+			Font helveticaR = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Helvetica_Reg.ttf"));
+			Font Lucida = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Lucida_Grande.ttf"));
+			env.registerFont(helveticaN);
+			env.registerFont(helveticaR);
+			env.registerFont(Lucida);
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private void showInSystemTray(final GUIManager GUIBoss){
 		if(SystemTray.isSupported()){
 			final SystemTray systemTray = SystemTray.getSystemTray();
