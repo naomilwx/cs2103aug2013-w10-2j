@@ -253,15 +253,12 @@ public class GUIManager {
 	protected Result executeUserInputCommand(String input){
 		Result executionResult = null;
 		try{
-			displayArea.hideNotifications();
 			executionResult = logicExecutor.executeCommand(input);
 			if(executionResult == null){
 				System.out.println("die!");
 			}
 			assert executionResult != null;
-			clearUserInputAndCleanUpDisplay();
-			processAndDisplayExecutionResult(executionResult);
-			resizeMainDisplayArea();
+			displayCommandFeedback(executionResult);
 		}catch(Error err){
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
@@ -285,21 +282,36 @@ public class GUIManager {
 		return executionResult;
 	}
 	
+	private void displayCommandFeedback(Result executionResult){
+		clearUserInputAndCleanUpDisplay();
+		processAndDisplayExecutionResult(executionResult);
+		resizeMainDisplayArea();
+	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
+		displayArea.hideNotifications();
 		displayArea.removeDeletedTasksFromTaskListTable();
 		displayArea.removeTaskDisplay();
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
-		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
-		executeUserInputCommand(deleteCommand);
-		return;
+		try {
+			Result delCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DELETE, taskDisplayID);
+			displayCommandFeedback(delCommandResult);
+		} catch (Exception e) {
+			e.printStackTrace(); //TODO:
+		}
 	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
-		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
-		return executeUserInputCommand(displayCommand);
+		try {
+			Result displayCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DISPLAY, taskDisplayID);
+			displayCommandFeedback(displayCommandResult);
+			return displayCommandResult;
+		} catch (Exception e) {
+			e.printStackTrace(); //TODO:
+			return null;
+		}
 	}
 	protected void loadExistingTaskDescriptionInCommandBar(int taskDisplayID){
 		Result result = executeTriggeredTaskDisplay(taskDisplayID);
@@ -308,6 +320,16 @@ public class GUIManager {
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
 						+" " + "description " + task.getDescription());
+			}
+		}
+	}
+	protected void loadExistingTaskNameInCommandBar(int taskDisplayID){
+		Result result = executeTriggeredTaskDisplay(taskDisplayID);
+		if(result !=  null){
+			Task task = result.getTaskToDisplay();
+			if(task != null){
+				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
+						+" " + "name " + task.getName());
 			}
 		}
 	}
