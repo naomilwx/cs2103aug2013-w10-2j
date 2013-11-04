@@ -25,7 +25,6 @@ public class CommandDisplay extends Command{
 	// instance belongs to, since it may display the operations
 	// history
 	private CommandManager cm;
-	private FilterObject currentFilterObj;
 	
 	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, task [ID: %1d] cannot be found in the task list. Please check and try again.";
 	private static final String FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL = "Sorry, the system fails to retrieve all the tasks in the storage. Please try again.";
@@ -40,7 +39,6 @@ public class CommandDisplay extends Command{
 		commandType = CommandType.DISPLAY;
 		taskList = cm.getCurrentTaskList();
 		commandSummary = "Display operation";
-		currentFilterObj = cm.getCurrentFilterObj();
 	}
 
 	@Override
@@ -148,13 +146,20 @@ public class CommandDisplay extends Command{
 	}
 
 	private Vector<String> getCommandString(Vector<Command> commandList) {
-		Vector<String> commandString = new Vector<String>();
+		Vector<String> reversedCommandStringList = new Vector<String>();
 		Iterator<Command> itr = commandList.iterator();
 		
 		while(itr.hasNext()) {
-			commandString.add(itr.next().getCommandString());
+			reversedCommandStringList.add(itr.next().getCommandString());
 		}
-		return commandString;
+		
+		Vector<String> commandStringList  = new Vector<String>();
+		int size = reversedCommandStringList.size();
+		for(int i = 0; i < size; i++) {
+			commandStringList.add(reversedCommandStringList.get(size-i-1));
+		}
+		
+		return commandStringList;
 	}
 
 	private Vector<Task> retrieveAllTheTasks() {
