@@ -37,9 +37,7 @@ public class StorageManager {
 		}
 		
 		Task taskToBeAdded = task.copy();
-		
-//		reformatTaskDescription(task);
-				
+						
 		int ID = inMemory.add(taskToBeAdded);
 		
 		saveToFile(taskFile);
@@ -105,7 +103,7 @@ public class StorageManager {
 	public Vector<Task> getReminderListForToday(){
 		Vector<Task> v = new Vector<Task>();
 		
-		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+		HashMap<Integer,Task> taskList = getTaskInMemory();
 		
 		Set<Integer> keys = taskList.keySet();
 		
@@ -150,7 +148,9 @@ public class StorageManager {
 		
 		file.save();
 	}
-	
+	private HashMap<Integer,Task> getTaskInMemory(){
+		return inMemory.getTaskList();
+	}
 	private Vector<Task> toTaskVector(HashMap<Integer,Task> hashTable){
 		
 		Vector<Task> taskList = new Vector<Task>();
@@ -312,8 +312,19 @@ public class StorageManager {
 		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
 	}
 	
+	/**
+	 * This method will return true if and only if tag is not matched
+	 * accordingly and there is no matched cases when the tag contains 
+	 * the name in the filter.
+	 * */
 	private boolean tagNotMatch(Task task,FilterObject ftobj){
-		return !isTagEmpty(ftobj)&&!task.getTag().equalsIgnoreCase(ftobj.getTag());
+		if(!isTagEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getTag().toLowerCase())){
+			if(isNameEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getName().toLowerCase())){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
 		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
