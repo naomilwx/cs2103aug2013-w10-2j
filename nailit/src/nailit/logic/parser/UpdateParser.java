@@ -57,7 +57,7 @@ public class UpdateParser extends Parser {
 			}else{
 				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
-		}else if (listOfCommand[1].equalsIgnoreCase("End")){
+		}else if (listOfCommand[1].equalsIgnoreCase("End")|| listOfCommand[1].equalsIgnoreCase("Due")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)
 				answer += listOfCommand[i]+" ";
