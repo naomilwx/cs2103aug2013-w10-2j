@@ -1,6 +1,6 @@
 package nailit.logic;
 
-// @auther A0105559B
+// @author A0105559B
 import org.joda.time.DateTime;
 import nailit.common.TaskPriority;
 
