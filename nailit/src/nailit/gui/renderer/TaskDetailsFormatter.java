@@ -44,9 +44,6 @@ public class TaskDetailsFormatter {
 			+ "<td width = \"70px\">%2s</td>";
 	private static final String SINGLE_DATETIME_TASK_FORMAT = "<td><p class = \"title\">%1s: </p></td>"
 			+ "<td width = \"70px\">%2s</td>";
-	public static final String TASK_CONCISE_FORMAT = "<td></td>"
-			+ "<td><p class = \"name\">%1s</p></td>"
-			+ "%2s";
 	public static final String TASK_SINGLE_CONCISE_DATE = "<td>%1s</td>";
 	public static final String TASK_DOUBLE_CONCISE_DATE = "<td>%1s</td><td><p> - </p></td><td>%2s</td>";
 	public static String formatTaskForDisplay(Task task){

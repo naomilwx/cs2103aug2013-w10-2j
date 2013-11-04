@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 
-import edu.emory.mathcs.backport.java.util.Collections;
+import java.util.Collections;
 
 public class Utilities {
 	public static Comparator<Task> taskDateTimeComparator = new Comparator<Task>(){
@@ -13,9 +13,9 @@ public class Utilities {
 		@Override
 		public int compare(Task task1, Task task2) {
 			if(task1.getEndTime() == null){
-				return 1;
-			}else if(task2.getEndTime() == null){
 				return -1;
+			}else if(task2.getEndTime() == null){
+				return 1;
 			}else{
 				return task1.getEndTime().compareTo(task2.getEndTime());
 			}
