@@ -7,13 +7,9 @@ import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
 import org.joda.time.DateTime;
-
-import test.storage.StorageManagerStub;
 import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.common.TaskPriority;
-import nailit.logic.*;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 import nailit.logic.CommandType;
@@ -45,9 +41,7 @@ public class CommandManager {
 	
 	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has been executed yet, so no undo command can be done.";
 	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the command history. You can undo Add, delete, or Update command.";
-	private static String STORAGE_THROWING_EXCEPTION_FEEDBACK = "Sorry, storage throws exception. The command cannot be undone.";
 
-	
 	// constructor
 	public CommandManager () throws FileCorruptionException 
 	{
