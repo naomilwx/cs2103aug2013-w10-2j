@@ -37,9 +37,7 @@ public class StorageManager {
 		}
 		
 		Task taskToBeAdded = task.copy();
-		
-//		reformatTaskDescription(task);
-				
+						
 		int ID = inMemory.add(taskToBeAdded);
 		
 		saveToFile(taskFile);
@@ -150,7 +148,9 @@ public class StorageManager {
 		
 		file.save();
 	}
-	
+	private HashMap<Integer,Task> getTaskInMemory(){
+		return inMemory.getTaskList();
+	}
 	private Vector<Task> toTaskVector(HashMap<Integer,Task> hashTable){
 		
 		Vector<Task> taskList = new Vector<Task>();
@@ -312,8 +312,17 @@ public class StorageManager {
 		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
 	}
 	
+	/**
+	 * This method will return true if and only if both tag and name is not matched with the task's tag and name
+	 * */
 	private boolean tagNotMatch(Task task,FilterObject ftobj){
-		return !isTagEmpty(ftobj)&&!task.getTag().equalsIgnoreCase(ftobj.getTag());
+		if(!isTagEmpty(ftobj)&&!task.getTag().equalsIgnoreCase(ftobj.getTag())){
+			if(nameNotMatch(task,ftobj)){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
 		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
