@@ -1,5 +1,6 @@
 package nailit.logic.parser;
 
+//@author A0105559B
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
@@ -54,9 +55,6 @@ public class ParserManager {
 		case SEARCH:
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
-		case SHOWHISTORY:
-			ShowHistoryParser showHistoryParserManager = new ShowHistoryParser();
-			return showHistoryParserManager.execute();
 		case UNCOMPLETE:
 			UncompleteParser uncompleteParserManager = new UncompleteParser(commandToExecute);
 			return uncompleteParserManager.execute();
