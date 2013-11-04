@@ -41,6 +41,9 @@ public class ParserManager {
 			catch (Exception e) {
 				System.out.println(e);
 			}
+		case DELETEREMINDER:
+			DeleteReminderParser DeleteReminderParserManager = new DeleteReminderParser(commandToExecute);
+			return DeleteReminderParserManager.execute();
 		case DISPLAY:
 			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
 			return displayParserManager.execute();

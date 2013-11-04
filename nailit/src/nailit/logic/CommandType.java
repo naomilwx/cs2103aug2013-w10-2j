@@ -1,10 +1,9 @@
 package nailit.logic;
 
-import nailit.common.TaskPriority;
 import org.apache.commons.lang3.StringUtils;
 
 public enum CommandType {
-	ADD, ADDREMINDER, COMPLETE, DELETE, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
+	ADD, ADDREMINDER, COMPLETE, DELETE, DELETEREMINDER, DISPLAY, REDO, SEARCH, SHOWHISTORY, UNCOMPLETE, UNDO, UPDATE, EXIT, INVALID;
 
 	public static final int DELETE_COST = 1;
 	public static final int INSERT_COST = 1;
