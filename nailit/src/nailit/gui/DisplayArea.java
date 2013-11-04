@@ -189,7 +189,7 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
 	private void configureDisplayArea(){
-		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
+		this.setBorder(null);
 		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
