@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.joda.time.DateTime;
+
 import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
@@ -20,8 +22,14 @@ public class HomeWindow extends ExtendedWindow{
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
 	private static final String TASK_CONCISE_FORMAT = "<td></td>"
-            + "<td><p>%1s</p></td>";
-	public static final String TASK_SINGLE_CONCISE_DATE = "(%1s %2s)";
+            + "<td width = \"20px\">%1s<td></td>%2s</td><td>%3s</td>";
+	private static final String DONE_TASK_HEADER = "[&#10004;]";
+	private static final String UNDONE_TASK_HEADER = "[&emsp]";
+	public static final String TASK_SINGLE_CONCISE_DATE = "%1s, %2s]";
+	public static final String TODAYS_DEADLINE_DISPLAY = "[TODAY, %1s]";
+	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "[%1s, %2s - %3s]";
+	public static final String EVENT_DATE_DISPLAY = "[%1s  %2s<br>"
+													+ "- %3s %4s]";
 	private final HomeWindow selfRef = this;
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
@@ -37,54 +45,96 @@ public class HomeWindow extends ExtendedWindow{
 		Vector<Task> eventReminders = tasks.get(NIConstants.REMINDER_EVENTS_INDEX);
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
-		str.append(TASK_REMINDER_DISPLAY_HEADER);
-		str.append("<table>");
-		for(Task task: taskReminders){
-			str.append("<tr>");
-			str.append(formatTasksForReminderDisplay(task));
-			str.append("</tr>");
+		if(!taskReminders.isEmpty()){
+			str.append(TASK_REMINDER_DISPLAY_HEADER);
+			str.append("<table>");
+			for(Task task: taskReminders){
+				str.append("<tr>");
+				str.append(formatTasksForReminderDisplay(task));
+				str.append("</tr>");
+			}
 		}
 		str.append("</table>");
-		str.append(FLOATING_REMINDER_DISPLAY_HEADER);
-		str.append("<table>");
-		for(Task task: floatingTaskReminders){
-			str.append("<tr>");
-			str.append(formatTasksForReminderDisplay(task));
-			str.append("</tr>");
+		if(! floatingTaskReminders.isEmpty()){
+			str.append(FLOATING_REMINDER_DISPLAY_HEADER);
+			str.append("<table>");
+			for(Task task: floatingTaskReminders){
+				str.append("<tr>");
+				str.append(formatTasksForReminderDisplay(task));
+				str.append("</tr>");
+			}
+			str.append("</table>");
 		}
-		str.append("</table>");
+		if(!eventReminders.isEmpty()){
 		str.append(EVENT_REMINDER_DISPLAY_HEADER);
-		str.append("<table>");
-		for(Task task: eventReminders){
-			str.append("<tr>");
-			str.append(formatTasksForReminderDisplay(task));
-			str.append("</tr>");
+			str.append("<table>");
+			for(Task task: eventReminders){
+				str.append("<tr>");
+				str.append(formatTasksForReminderDisplay(task));
+				str.append("</tr>");
+			}
+			str.append("</table>");
 		}
-		str.append("</table>");
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
 	}
+	
 	protected String formatTasksForReminderDisplay(Task task){
 		String taskDetails;
 		String dateDetails;
 		if(task.isEvent()){
-			dateDetails = String.format(TaskDetailsFormatter.TASK_DOUBLE_CONCISE_DATE, 
-					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()),
-					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
-		}else if(task.getStartTime() != null){
-			dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
-					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime()));
+			dateDetails = formatEventDate(task);
 		}else if(task.getEndTime() != null){
-			dateDetails = String.format(TaskDetailsFormatter.TASK_SINGLE_CONCISE_DATE, 
-					TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime()));
+			dateDetails = formatDeadline(task);
 		}else{
 			dateDetails = "";
 		}
-		taskDetails = String.format(TASK_CONCISE_FORMAT, task.getName());
+		taskDetails = String.format(TASK_CONCISE_FORMAT, getTaskStatusSymbol(task), dateDetails, task.getName());
 		return taskDetails;
 	}
-	
-	protected String formatDeadLine(Task task){
-		return "";
+	private String getTaskStatusSymbol(Task task){
+		if(task.checkCompleted()){
+			return DONE_TASK_HEADER;
+		}else{
+			return UNDONE_TASK_HEADER;
+		}
+	}
+	protected String formatEventDate(Task task){
+		String dateString = "";
+		if(!task.isEvent()){
+			return dateString;
+		}
+		DateTime start = task.getStartTime();
+		DateTime end = task.getEndTime();
+		
+		if(task.isOneDayEvent()){
+			dateString = String.format(ONE_DAY_EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT), 
+					start.toString(NIConstants.DISPLAY_TIME_FORMAT), end.toString(NIConstants.DISPLAY_TIME_FORMAT));
+		}else{
+			dateString = String.format(EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT),
+									start.toString(NIConstants.DISPLAY_TIME_FORMAT), end.toString(NIConstants.DISPLAY_DATE_FORMAT),
+									end.toString(NIConstants.DISPLAY_TIME_FORMAT));
+		}
+		if(task.isHappeningToday()){
+			dateString = "<b>" + dateString + "</b>";
+		}
+		return dateString;
+	}
+	protected String formatDeadline(Task task){
+		DateTime date = task.getEndTime();
+		String deadline = "";
+		if(date == null){
+			return deadline;
+		}
+		if(task.isHappeningToday()){
+			deadline = "<b>" + String.format(TODAYS_DEADLINE_DISPLAY,date.toString(NIConstants.DISPLAY_TIME_FORMAT)) + "</b>";
+		}else{
+			deadline = String.format(TASK_SINGLE_CONCISE_DATE, date.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT), date.toString(NIConstants.DISPLAY_TIME_FORMAT));
+		}
+		
+		if(task.isOverDueTask()){
+			deadline = "<font style = \"color: red; font-weight: bold\">" + deadline + "</font>";
+		}
+		return deadline;
 	}
 }

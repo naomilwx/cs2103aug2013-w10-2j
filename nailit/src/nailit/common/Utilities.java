@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import java.util.Collections;
 
 public class Utilities {
-	public static Comparator<Task> taskDateTimeComparator = new Comparator<Task>(){
+	public static Comparator<Task> dueDateComparator = new Comparator<Task>(){
 
 		@Override
 		public int compare(Task task1, Task task2) {
@@ -18,6 +18,20 @@ public class Utilities {
 				return 1;
 			}else{
 				return task1.getEndTime().compareTo(task2.getEndTime());
+			}
+		}
+		
+	};
+	public static Comparator<Task> startDateComparator = new Comparator<Task>(){
+
+		@Override
+		public int compare(Task task1, Task task2) {
+			if(task1.getStartTime() == null){
+				return -1;
+			}else if(task2.getStartTime() == null){
+				return 1;
+			}else{
+				return task1.getStartTime().compareTo(task2.getStartTime());
 			}
 		}
 		
@@ -52,7 +66,10 @@ public class Utilities {
 		return s.charAt(s.length() - 1);
 	}
 	public static void sortTasksByEndDate(Vector<Task> tasks){
-		Collections.sort(tasks, taskDateTimeComparator);
+		Collections.sort(tasks, dueDateComparator);
+	}
+	public static void sortTasksByStartDate(Vector<Task> tasks){
+		Collections.sort(tasks, startDateComparator);
 	}
 	public static Vector<Vector <Task>> filterAndSortTaskList(Vector<Task> tasks){
 		Vector<Task> deadlineTasks = new Vector<Task>();
@@ -69,7 +86,7 @@ public class Utilities {
 		}
 		sortTasksByEndDate(deadlineTasks);
 		sortTasksByEndDate(floatingTasks);
-		sortTasksByEndDate(events);
+		sortTasksByStartDate(events);
 		Vector<Vector <Task>> filteredAndSortedList = new Vector<Vector <Task>>();
 		filteredAndSortedList.add(NIConstants.REMINDER_DEADLINE_TASKS_INDEX, deadlineTasks);
 		filteredAndSortedList.add(NIConstants.REMINDER_FLOATING_TASKS_INDEX, floatingTasks);
