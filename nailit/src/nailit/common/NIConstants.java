@@ -11,7 +11,7 @@ public class NIConstants {
 
 	public static final String EMPTY_STRING = "";
 	public static final String DISPLAY_DATE_FORMAT = "d MMM YYYY";
-	public static final String DISPLAY_DATE_SHORT_FORMAT = "d MMM YY";
+	public static final String DISPLAY_DATE_SHORT_FORMAT = "d MMM";
 	public static final String DISPLAY_TIME_FORMAT = "h:mma";
 	public static final String DISPLAY_FULL_DATETIME_FORMAT = "dd MMM YYYY h:mma";
 	public static final int REMINDER_DEADLINE_TASKS_INDEX = 0;
