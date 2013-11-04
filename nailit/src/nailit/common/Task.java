@@ -183,7 +183,7 @@ public class Task {
 	}
 	public void setTag(String taskTag){
 		if(taskTag != null){
-			tag = taskTag;
+			tag = Utilities.formatTaskTag(taskTag);
 		}else{
 			tag = "";
 		}

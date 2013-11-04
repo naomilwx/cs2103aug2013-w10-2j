@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2013-11-04T20:41:37</date>
-  <millis>1383568897035</millis>
+  <date>2013-11-04T20:58:11</date>
+  <millis>1383569891942</millis>
   <sequence>0</sequence>
   <logger>nailit.AppLauncher</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Start up</message>
 </record>
 <record>
-  <date>2013-11-04T20:41:48</date>
-  <millis>1383568908114</millis>
+  <date>2013-11-04T20:58:27</date>
+  <millis>1383569907817</millis>
   <sequence>1</sequence>
   <logger>nailit.AppLauncher</logger>
   <level>INFO</level>
