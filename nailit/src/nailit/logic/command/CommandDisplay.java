@@ -49,14 +49,22 @@ public class CommandDisplay extends Command{
 		} else if(parserResultInstance.isDisplayHistory()) {
 			return displayOperationsHistory();
 		} else if(false) { 
-			
+			return displayCompletedTasks();
 		} else if(false) {
-			
-		} else if(false) {
-			
+			return displayUncompletedTasks();
 		} else {
 			return displayTheTask();
 		}
+	}
+
+	private Result displayUncompletedTasks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Result displayCompletedTasks() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void displayAllTasks() {
@@ -116,8 +124,12 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createResultForDisplayOperationshistory() {
-		Vector<String> undoCommandString = getCommandString(cm.getOperationsHistory());
-		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, commandString);
+		Vector<String> undoableCommandStringList = getCommandString(cm.getOperationsHistory());
+		Vector<String> redoableCommandStringList = getCommandString(cm.getRedoableCommandList());
+		Vector<Vector<String>> twoCommandStringList = new Vector<Vector<String>>();
+		twoCommandStringList.add(undoableCommandStringList); // undoable list is the first
+		twoCommandStringList.add(redoableCommandStringList); // redoable list is the second
+		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, twoCommandStringList);
 		
 	}
 
