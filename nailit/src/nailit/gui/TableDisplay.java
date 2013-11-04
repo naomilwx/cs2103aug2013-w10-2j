@@ -171,6 +171,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		table.setFocusTraversalKeysEnabled(false);
+		table.setShowGrid(false);
 		createTableKeyBindings();
 		setRowWidths();
 		setViewportView(table);
@@ -191,6 +192,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	protected void configureTableHeader(){
 		JTableHeader header = table.getTableHeader();
+		header.setReorderingAllowed(false);
 		header.setDefaultRenderer(new TableHeaderRenderer());
 		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));
 	}
