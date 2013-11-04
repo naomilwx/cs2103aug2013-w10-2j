@@ -14,9 +14,12 @@ import nailit.gui.renderer.TaskDetailsFormatter;
 
 public class HomeWindow extends ExtendedWindow{
 	private static final String TASK_REMINDER_DISPLAY_HEADER 
-	= "<h1 style = \"padding-left: 5px\">Tasks: </h1>";
+	= "<h1 style = \"padding-left: 9px\">Tasks: </h1>";
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
-	= "<h1 style = \"padding-left: 5px\">Events: </h1>";
+	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
+	private static final String TASK_CONCISE_FORMAT = "<td></td>"
+            + "<td><p>%1s</p></td>";
+	public static final String TASK_SINGLE_CONCISE_DATE = "(%1s %2s)";
 	private final HomeWindow selfRef = this;
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
@@ -66,7 +69,7 @@ public class HomeWindow extends ExtendedWindow{
 		}else{
 			dateDetails = "";
 		}
-		taskDetails = String.format(TaskDetailsFormatter.TASK_CONCISE_FORMAT, task.getName(), dateDetails);
+		taskDetails = String.format(TASK_CONCISE_FORMAT, task.getName());
 		return taskDetails;
 	}
 }
