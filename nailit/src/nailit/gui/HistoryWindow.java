@@ -23,19 +23,23 @@ public class HistoryWindow extends ExtendedWindow{
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
 		str.append(COMMANDS_EXECUTED_HEADER);
+		str.append("<table>");
 		Vector<String> undidCommands = list.get(NIConstants.HISTORY_UNDO_INDEX);
 		for(String command: undidCommands){
 			str.append("<tr>");
 			str.append(command);
 			str.append("</tr>");
 		}
+		str.append("</table>");
 		Vector<String> redoableCommands = list.get(NIConstants.HISTORY_REDO_INDEX);
 		str.append(COMMANDS_UNDID_HEADER);
+		str.append("<table>");
 		for(String command: redoableCommands){
 			str.append("<tr>");
 			str.append(command);
 			str.append("</tr>");
 		}
+		str.append("</table>");
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
 	}

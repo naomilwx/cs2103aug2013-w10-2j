@@ -54,24 +54,27 @@ public class Utilities {
 	public static void sortTasksByEndDate(Vector<Task> tasks){
 		Collections.sort(tasks, taskDateTimeComparator);
 	}
-	public static Vector<Task> filterAndSortTasks(Vector<Task> tasks){
-		Vector<Task> filteredTasks = new Vector<Task>();
-		for(Task task: tasks){
-			if(!task.isEvent()){
-				filteredTasks.add(task);
-			}
-		}
-		sortTasksByEndDate(filteredTasks);
-		return filteredTasks;
-	}
-	public static Vector<Task> filterAndSortEvents(Vector<Task> tasks){
-		Vector<Task> filteredEvents = new Vector<Task>();
+	public static Vector<Vector <Task>> filterAndSortTaskList(Vector<Task> tasks){
+		Vector<Task> deadlineTasks = new Vector<Task>();
+		Vector<Task> floatingTasks = new Vector<Task>();
+		Vector<Task> events = new Vector<Task>();
 		for(Task task: tasks){
 			if(task.isEvent()){
-				filteredEvents.add(task);
+				events.add(task);
+			}else if(task.isFloatingTask()){
+				floatingTasks.add(task);
+			}else{
+				deadlineTasks.add(task);
 			}
 		}
-		sortTasksByEndDate(filteredEvents);
-		return filteredEvents;
+		sortTasksByEndDate(deadlineTasks);
+		sortTasksByEndDate(floatingTasks);
+		sortTasksByEndDate(events);
+		Vector<Vector <Task>> filteredAndSortedList = new Vector<Vector <Task>>();
+		filteredAndSortedList.add(NIConstants.REMINDER_DEADLINE_TASKS_INDEX, deadlineTasks);
+		filteredAndSortedList.add(NIConstants.REMINDER_FLOATING_TASKS_INDEX, floatingTasks);
+		filteredAndSortedList.add(NIConstants.REMINDER_EVENTS_INDEX, events);
+		return filteredAndSortedList;
 	}
+	
 }

@@ -48,11 +48,6 @@ public class LogicManager{
 	// api for giving the reminder on today
 	public Vector<Vector <Task>> getReminderList() {
 		Vector<Task> reminders = commandInstance.getTodayReminder();
-		Vector<Task> taskReminders = Utilities.filterAndSortTasks(reminders);
-		Vector<Task> eventReminders = Utilities.filterAndSortEvents(reminders);
-		Vector<Vector <Task>> reminderList = new Vector<Vector <Task>>();
-		reminderList.add(NIConstants.REMINDER_TASKS_INDEX, taskReminders);
-		reminderList.add(NIConstants.REMINDER_EVENTS_INDEX, eventReminders);
-		return reminderList;
+		return Utilities.filterAndSortTaskList(reminders);
 	}
 }

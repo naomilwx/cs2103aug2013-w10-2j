@@ -14,7 +14,9 @@ import nailit.gui.renderer.TaskDetailsFormatter;
 
 public class HomeWindow extends ExtendedWindow{
 	private static final String TASK_REMINDER_DISPLAY_HEADER 
-	= "<h1 style = \"padding-left: 9px\">Tasks: </h1>";
+	= "<h1 style = \"padding-left: 9px\">Deadlines: </h1>";
+	private static final String FLOATING_REMINDER_DISPLAY_HEADER
+	= "<h1 style = \"padding-left: 9px\">ToDo: </h1>";
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
 	private static final String TASK_CONCISE_FORMAT = "<td></td>"
@@ -30,13 +32,22 @@ public class HomeWindow extends ExtendedWindow{
 		if(tasks == null){
 			return;
 		}
-		Vector<Task> taskReminders = tasks.get(NIConstants.REMINDER_TASKS_INDEX);
+		Vector<Task> taskReminders = tasks.get(NIConstants.REMINDER_DEADLINE_TASKS_INDEX);
+		Vector<Task> floatingTaskReminders = tasks.get(NIConstants.REMINDER_FLOATING_TASKS_INDEX);
 		Vector<Task> eventReminders = tasks.get(NIConstants.REMINDER_EVENTS_INDEX);
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
 		str.append(TASK_REMINDER_DISPLAY_HEADER);
 		str.append("<table>");
 		for(Task task: taskReminders){
+			str.append("<tr>");
+			str.append(formatTasksForReminderDisplay(task));
+			str.append("</tr>");
+		}
+		str.append("</table>");
+		str.append(FLOATING_REMINDER_DISPLAY_HEADER);
+		str.append("<table>");
+		for(Task task: floatingTaskReminders){
 			str.append("<tr>");
 			str.append(formatTasksForReminderDisplay(task));
 			str.append("</tr>");
@@ -71,5 +82,9 @@ public class HomeWindow extends ExtendedWindow{
 		}
 		taskDetails = String.format(TASK_CONCISE_FORMAT, task.getName());
 		return taskDetails;
+	}
+	
+	protected String formatDeadLine(Task task){
+		return "";
 	}
 }
