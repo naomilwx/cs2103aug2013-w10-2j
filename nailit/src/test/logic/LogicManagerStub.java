@@ -18,14 +18,16 @@ public class LogicManagerStub extends LogicManager{
 	private Task task = new Task("New Task Test", startTime, null, "#test", TaskPriority.HIGH);
 	private Vector<Task> taskList = new Vector<Task>();
 	private Result res = new Result();
-	private Vector<String> historyList = new Vector<String>();
-	String history1 = "add history 1";
-	String history2 = "update history 2";
+	private Vector<Vector<String>> historyList = new Vector<Vector<String>>();
+	Vector<String> history1 = new Vector<String>();
+	Vector<String> history2 = new Vector<String>();
 	public LogicManagerStub() throws FileCorruptionException{
 		event.setID(1);
 		task.setID(2);
 		taskList.add(event);
 		taskList.add(task);
+		history1.add("task 1");
+		history2.add("task 2");
 		historyList.add(history1);
 		historyList.add(history2);
 	}
