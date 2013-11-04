@@ -29,7 +29,7 @@ public class DisplayParser extends Parser {
 		}if (listOfCommand[0].equalsIgnoreCase("UNCOMPLETE")){
 			resultExecution.setDisplayUncomplete(true);
 		}else if (Parser.isTaskID(userCommand)){
-			resultExecution.setTaskID(Integer.parseInt(userCommand));
+			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else if (Parser.isDateTime(userCommand)){
 			resultExecution.setEndTime(Parser.retrieveDateTime(userCommand));
 		}else

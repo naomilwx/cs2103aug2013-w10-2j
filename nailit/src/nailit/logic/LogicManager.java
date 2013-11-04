@@ -36,7 +36,7 @@ public class LogicManager{
 		Result executeCommandResult = new Result();
 		ParserResult parserResultInstance = new ParserResult();
 		parserResultInstance.setCommand(command);
-		parserResultInstance.setTaskID(ID);
+		parserResultInstance.setTaskId(ID);
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
 	}

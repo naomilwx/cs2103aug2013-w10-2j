@@ -1,6 +1,5 @@
 package nailit.logic.parser;
 
-import nailit.common.NIConstants;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
@@ -18,7 +17,7 @@ public class DeleteParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DELETE);
 		if (Parser.isNumber(userCommand))
-			resultExecution.setTaskID(Integer.parseInt(userCommand));
+			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		else 
 			throw new Error("Wrong Format");
 		
