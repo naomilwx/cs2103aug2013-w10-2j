@@ -191,6 +191,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	protected void configureTableHeader(){
 		JTableHeader header = table.getTableHeader();
+		header.setReorderingAllowed(false);
 		header.setDefaultRenderer(new TableHeaderRenderer());
 		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));
 	}
