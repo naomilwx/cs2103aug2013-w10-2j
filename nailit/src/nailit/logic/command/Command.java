@@ -8,11 +8,20 @@ import nailit.storage.StorageManager;
 
 public abstract class Command {
 
+	// the parserResutl instance given by parser
 	protected ParserResult parserResultInstance;
 	
+	// used for connecting with storage
 	protected StorageManager storer;
 	
-	private Result executedResult;
+	protected CommandType commandType;
+	
+	protected Result executedResult;
+	
+	// this is used for the command history
+	protected String commandSummary;
+	
+	
 	// constructor
 	public Command(ParserResult resultInstance, StorageManager storerToUse) {
 		parserResultInstance =  resultInstance;
