@@ -14,7 +14,7 @@ public class HistoryWindow extends ExtendedWindow{
 		super(GUIMain, width);
 	}
 	
-	protected void displayHistoryList(Vector<String> list){
+	protected void displayHistoryList(Vector<Vector <String>> list){
 		//TODO
 		
 	}

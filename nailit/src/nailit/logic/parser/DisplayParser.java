@@ -22,6 +22,12 @@ public class DisplayParser extends Parser {
 		
 		if (listOfCommand[0].equalsIgnoreCase("ALL")){
 			resultExecution.setDisplayAll(true);
+		}else if (listOfCommand[0].equalsIgnoreCase("HISTORY")){
+			resultExecution.setDisplayHistory(true);
+		}else if (listOfCommand[0].equalsIgnoreCase("COMPLETE")){
+			resultExecution.setDisplayComplete(true);
+		}if (listOfCommand[0].equalsIgnoreCase("UNCOMPLETE")){
+			resultExecution.setDisplayUncomplete(true);
 		}else if (Parser.isTaskID(userCommand)){
 			resultExecution.setTaskID(Integer.parseInt(userCommand));
 		}else if (Parser.isDateTime(userCommand)){
