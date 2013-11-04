@@ -27,7 +27,6 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	// the taskID of the task related
 	private int taskID;
 	
-	private Result executedResult;
 	
 	private Vector<Task> taskList;
 	
@@ -35,7 +34,6 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	
 	private Task taskRelated;
 	
-	private String commandSummary;
 	
 	private boolean undoSuccess;
 	
@@ -43,7 +41,6 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	
 	private boolean isCommandMarkAsCompleted;
 	
-	private CommandType CommandType;
 	
 	// the description, used to future undo and redo
 	private DateTime taskReminderDate;
@@ -60,9 +57,9 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 		redoSuccess = false;
 		isCommandMarkAsCompleted = isMarkAsCompleted;
 		if(isCommandMarkAsCompleted) {
-			CommandType = CommandType.COMPLETE;
+			commandType = CommandType.COMPLETE;
 		} else {
-			CommandType = CommandType.UNCOMPLETE;
+			commandType = CommandType.UNCOMPLETE;
 		}
 		taskReminderDate = null;
 	}
@@ -170,7 +167,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	@Override
 	public CommandType getCommandType() {
-		return CommandType;
+		return commandType;
 	}
 
 	@Override
