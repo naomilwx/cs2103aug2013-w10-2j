@@ -48,7 +48,7 @@ public class CommandDisplay extends Command{
 			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
 			return displayOperationsHistory();
-		} else if(false) {
+		} else if(false) { 
 			
 		} else if(false) {
 			
@@ -116,14 +116,14 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createResultForDisplayOperationshistory() {
-		Vector<String> commandString = getCommandString(cm.getOperationsHistory());
-		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "This is the commands you have made.", null, null, commandString);
+		Vector<String> undoCommandString = getCommandString(cm.getOperationsHistory());
+		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, commandString);
 		
 	}
 
-	private Vector<String> getCommandString(Vector<Command> operationsHistory) {
+	private Vector<String> getCommandString(Vector<Command> commandList) {
 		Vector<String> commandString = new Vector<String>();
-		Iterator<Command> itr = operationsHistory.iterator();
+		Iterator<Command> itr = commandList.iterator();
 		
 		while(itr.hasNext()) {
 			commandString.add(itr.next().getCommandString());
