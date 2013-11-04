@@ -45,26 +45,31 @@ public class CommandDisplay extends Command{
 	public Result executeCommand() throws Exception {
 		if(parserResultInstance.isDisplayAll()) {
 			displayAllTasks();
-			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
-			return displayOperationsHistory();
+			displayOperationsHistory();
 		} else if(false) { 
-			return displayCompletedTasks();
+			displayCompletedTasks();
 		} else if(false) {
-			return displayUncompletedTasks();
+			displayUncompletedTasks();
 		} else {
-			return displayTheTask();
+			displayTheTask();
 		}
+		
+		return executedResult;
 	}
 
-	private Result displayUncompletedTasks() {
-		// TODO Auto-generated method stub
-		
+	private void displayUncompletedTasks() {
+		FilterObject filterObjectForCompletedTasks = new FilterObject(null, null, null, null, null, true);
+		Vector<Task> completedTasks = storer.filter(filterObjectForCompletedTasks);
+		executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, completedTasks, null);
+		cm.setCurrentList(completedTasks);
 	}
 
-	private Result displayCompletedTasks() {
-		// TODO Auto-generated method stub
-		
+	private void displayCompletedTasks() {
+		FilterObject filterObjectForUncompletedTasks = new FilterObject(null, null, null, null, null, false);
+		Vector<Task> uncompletedTasks = storer.filter(filterObjectForUncompletedTasks);
+		executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, uncompletedTasks, null);
+		cm.setCurrentList(uncompletedTasks);
 	}
 
 	private void displayAllTasks() {
@@ -93,7 +98,7 @@ public class CommandDisplay extends Command{
 		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL, null, emptyTaskList, null);
 	}
 
-	private Result displayTheTask() throws Exception {
+	private void displayTheTask() throws Exception {
 		getDisplayID();
 		if(displayID == 0) { // currently, 0 means no display ID, needs changes later
 			throw new Exception(NO_DISPLAY_ID_WARNING);
@@ -102,12 +107,10 @@ public class CommandDisplay extends Command{
 				retrieveTheTask(); // let retrievedTask = the task to display, which is gotten from task list
 			} catch(Exception e) {
 				createUnsuccessfulResultObject();
-				return executedResult;
 			}
 			
 			createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, taskRetrieved, cm.getCurrentTaskList(), null);
 			createCommandSummary();
-			return executedResult;
 		}
 	}
 
@@ -116,11 +119,8 @@ public class CommandDisplay extends Command{
 		displayID = parserResultInstance.getTaskID();
 	}
 
-	private Result displayOperationsHistory() {
+	private void displayOperationsHistory() {
 		createResultForDisplayOperationshistory();
-		return executedResult;
-		
-		
 	}
 
 	private void createResultForDisplayOperationshistory() {
