@@ -1,7 +1,6 @@
 package nailit.logic.parser;
 
 import nailit.common.NIConstants;
-import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 

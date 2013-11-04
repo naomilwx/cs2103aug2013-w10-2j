@@ -1,8 +1,6 @@
 package nailit.logic.parser;
 
 import nailit.logic.ParserResult;
-import nailit.common.NIConstants;
-import nailit.common.Task;
 
 import org.joda.time.DateTime;
 
@@ -63,7 +61,6 @@ public abstract class Parser {
 	
 	public static boolean isDateTime(String p){
 		List<DateGroup> parseResult = nattyParser.parse(p);
-		int fromIndex;
 		
 		p = p.trim();
 	    if (p.length()>4 && p.substring(0,4).equalsIgnoreCase("from"))
