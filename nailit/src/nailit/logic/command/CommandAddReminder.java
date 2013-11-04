@@ -24,20 +24,17 @@ public class CommandAddReminder extends Command{
 	
 	private Vector<Task> taskList;
 	
-	private Result executedResult;
 	
 	private DateTime reminderDateToAdd;
 	
 	private Task taskRelated;
 	
-	private String commandSummary;
 	
 	private boolean isSuccess;
 	
 	private boolean undoSuccess;
 	private boolean redoSuccess;
 	
-	private CommandType commandType;
 
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
@@ -113,10 +110,11 @@ public class CommandAddReminder extends Command{
 	}
 
 	private boolean isValidReminderDateTime() {
-		if(taskRelated.checkCompleted()) { // cannot add a reminder to a completed task
-			return false;
-		} 
-		
+		// can add reminder for the completed task
+//		if(taskRelated.checkCompleted()) { // cannot add a reminder to a completed task
+//			return false;
+//		} 
+//		
 		if(reminderDateToAdd == null) { // handle the null reminder time situation
 			return false;
 		}

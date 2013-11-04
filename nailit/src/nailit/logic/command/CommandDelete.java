@@ -13,9 +13,6 @@ import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
-	private CommandType commandType;
-	private String commandSummary;
-	private Result executedResult;
 	private Task taskToRemove;
 	private int taskToDeleteID;
 	private boolean deleteSuccessfully;

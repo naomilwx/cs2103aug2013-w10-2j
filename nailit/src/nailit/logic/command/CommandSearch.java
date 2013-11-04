@@ -27,15 +27,11 @@ public class CommandSearch extends Command{
 	// vector of tasks retrieved from the storage according to the search requirements
 	private Vector<Task> filteredTasks;
 	
-	private Result executedResult;
 	
-	// for the command summary
-	private String commandSummary;
 	
 	// check whether has search content
 	private boolean isEmptySearch;
 	
-	private CommandType commandType;
 	
 	private final static String COMMAND_SUMMARY_CONTENT = "This is a search command. The search content is: "; 
 	private final static String SEARCH_NONE_WARNING = "This is a search command, but the search content is none.";

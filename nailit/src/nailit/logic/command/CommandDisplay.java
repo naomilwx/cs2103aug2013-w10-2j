@@ -12,9 +12,6 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDisplay extends Command{
-	private CommandType commandType;
-	private String commandSummary;
-	private Result executedResult;
 	private Task taskRetrieved;
 	private int taskToRetrieveID;
 	

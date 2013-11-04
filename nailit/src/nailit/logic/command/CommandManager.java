@@ -113,6 +113,10 @@ public class CommandManager {
 			Result resultToReturn = addReminder();
 			return resultToReturn;
 		}
+		case DELETEREMINDER: {
+			Result resultToReturn = deleteReminder();
+			return resultToReturn;
+		}
 		case UNDO: {
 			Result resultToReturn = undo();
 			return resultToReturn;
@@ -135,7 +139,7 @@ public class CommandManager {
 		return null;
 	}
 	
-	
+
 	private Result redo() {
 		Command commandToRedo = getTheCommandToRedo();
 		Result resultToPassToGUI = new Result();
@@ -197,6 +201,8 @@ public class CommandManager {
 							CommandAddReminder car = (CommandAddReminder)commandToRedo;
 							DateTime reminderDateToAdd = car.getReminderDateToAdd();
 							currentTask.setReminder(reminderDateToAdd);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							currentTask.setReminder(null);
 						}
 					}
 					sort();
@@ -285,6 +291,10 @@ public class CommandManager {
 							currentTask.setReminder(null); // remove the reminder date if has
 						} else if(commandType == CommandType.ADDREMINDER) {
 							currentTask.setReminder(null);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							CommandDeleteReminder cdrObj = (CommandDeleteReminder)commandToUndo;
+							DateTime reminderDateDeleted = cdrObj.getReminderDateDeleted();
+							currentTask.setReminder(reminderDateDeleted);
 						}
 					}
 					sort();
@@ -409,6 +419,17 @@ public class CommandManager {
 		Result resultToPassToGUI = carObj.executeCommand(); // the result display 
 		if(carObj.isSuccess()) {
 			addNewCommandObjToOperationsHistory(carObj);
+			// clear the redo command list
+			redoCommandsList.clear();
+		}
+		return resultToPassToGUI;
+	}
+	
+	private Result deleteReminder() throws Exception {
+		CommandDeleteReminder cdrObj = new CommandDeleteReminder(parserResultInstance, storer, currentTaskList);
+		Result resultToPassToGUI = cdrObj.executeCommand(); // the result display 
+		if(cdrObj.isSuccess()) {
+			addNewCommandObjToOperationsHistory(cdrObj);
 			// clear the redo command list
 			redoCommandsList.clear();
 		}
