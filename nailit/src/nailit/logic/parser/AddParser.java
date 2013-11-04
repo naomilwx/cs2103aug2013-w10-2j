@@ -25,6 +25,7 @@ public class AddParser extends Parser {
 		if (userCommand.equals("")){
 			throw new Error("Wrong Format");
 		}
+		
 		int startIndex = -1, endIndex = 0;
 		startIndex = userCommand.indexOf('(');
 		if (startIndex!=-1){
@@ -32,8 +33,9 @@ public class AddParser extends Parser {
 				if (userCommand.charAt(i)==')'){
 					endIndex = i;
 				}
-			if (endIndex == 0)
+			if (endIndex == 0){
 				throw new Error ("Wrong Format: Bracket is not matched");
+			}
 			resultExecution.setDescription(userCommand.substring(startIndex+1, endIndex));
 			userCommand = userCommand+" ";
 			
@@ -48,7 +50,6 @@ public class AddParser extends Parser {
 			if (index != -1){
 				userCommand = userCommand.substring(0,index);
 			}
-			
 			userCommand += temp;
 		}
 
