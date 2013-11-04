@@ -551,13 +551,18 @@ public class CommandManager {
 	public void setCurrentFilterSearchAll() {
 		filterContentForCurrentTaskList.setIsSearchAll(true);
 	}
-	public Result getListOfTasksForTheDay(){
+	public Vector<Task> getTasksHappeningOnDay(DateTime date){
+		DateTime startOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
+		DateTime endOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 23, 59);
+		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
+		Vector<Task> tasks = storer.filter(dateFilter);
+		return tasks;
+	}
+	public Result getDefaultListOfTasks(){
 		DateTime now = new DateTime();
 		DateTime startOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);
-		DateTime endOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 23, 59);
-		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
 		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), null, null, false); //1 sec before start of today
-		Vector<Task> dateList = storer.filter(dateFilter);
+		Vector<Task> dateList = getTasksHappeningOnDay(now);
 		Vector<Task> overdueList = storer.filter(uncompletedFilter);
 		for(Task task: overdueList){
 			if(!dateList.contains(task)){

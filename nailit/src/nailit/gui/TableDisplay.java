@@ -221,6 +221,12 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected void quickScrollDown(){
 		scrollToNextRow(QUICK_SCROLLDOWN_OFFSET);
 	}
+	protected void scrollUp(){
+		scrollToNextRow(SINGLE_SCROLLUP);
+	}
+	protected void scrollDown(){
+		scrollToNextRow(SINGLE_SCROLLDOWN);
+	}
 	private void scrollToNextRow(int offSet){
 		if(tableRows.isEmpty()){
 			table.getParent().requestFocus();

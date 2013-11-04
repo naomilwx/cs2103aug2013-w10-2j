@@ -297,6 +297,15 @@ public class DisplayArea extends JLayeredPane {
 			}
 		}
 	}
+	protected void taskTableScroll(boolean up){
+		if(taskTable != null){
+			if(up){
+				taskTable.scrollUp();
+			}else{
+				taskTable.scrollDown();
+			}
+		}
+	}
 	private void addAdditionalKeyListenerToTaskTable(){
 		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
 			private boolean ctrlPressed = false;
@@ -329,6 +338,13 @@ public class DisplayArea extends JLayeredPane {
 			}
 		};
 		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
+	}
+	protected int getTaskTableSelectedRow(){
+		if(taskTable != null){
+			return taskTable.getSelectedRowDisplayID();
+		}else{
+			return -1;
+		}
 	}
 	private void taskTableOnDeleteEvent() {
 		GUIBoss.setFocusOnCommandBar();
