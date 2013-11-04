@@ -48,6 +48,12 @@ public class CommandDisplay extends Command{
 			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
 			return displayOperationsHistory();
+		} else if(false) {
+			
+		} else if(false) {
+			
+		} else if(false) {
+			
 		} else {
 			return displayTheTask();
 		}
