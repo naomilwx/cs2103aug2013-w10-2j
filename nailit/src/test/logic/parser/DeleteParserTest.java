@@ -18,7 +18,7 @@ public class DeleteParserTest {
 	public void test(){
 		ParserResult expectedDelete = new ParserResult();
 		
-		expectedDelete.setTaskID(12);
+		expectedDelete.setTaskId(12);
 		expectedDelete.setCommand(CommandType.DELETE);
 		
 		testExecute(expectedDelete.getTaskID(),"12");

@@ -23,7 +23,7 @@ public class UpdateParser extends Parser {
 		
 		for (int i=0; i<listOfCommand.length; i++)
 			listOfCommand[i] = listOfCommand[i].trim();
-		resultExecution.setTaskID(Integer.parseInt(listOfCommand[0]));
+		resultExecution.setTaskId(Integer.parseInt(listOfCommand[0]));
 		if (listOfCommand[1].equalsIgnoreCase("name")){
 			String answer = "";
 			for (int i=2; i<listOfCommand.length; i++)

@@ -80,7 +80,7 @@ public class CommandAddTest {
 		pr.setEndTime(et);
 		pr.setTag(tag);
 		if(id != 0) {
-			pr.setTaskID(id);
+			pr.setTaskId(id);
 		}
 		
 		pr.setDisplayAll(isDisplayAll);
