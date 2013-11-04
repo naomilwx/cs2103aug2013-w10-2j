@@ -255,7 +255,7 @@ public class DisplayArea extends JLayeredPane {
 			int textDisplayHeight = defaultPane.getHeight()/2;
 			textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
 			textDisplay.displayHTMLFormattedText(details);
-			Utilities.scrollTextDisplayToTop(textDisplay);
+			GUIUtilities.scrollTextDisplayToTop(textDisplay);
 			
 			addContent(textDisplay, false);
 		}
@@ -399,7 +399,7 @@ public class DisplayArea extends JLayeredPane {
 		timer.setInitialDelay(displayTime);
 		timer.setDelay(timeInterval);
 		timer.addActionListener(new ActionListener(){
-			int originalOpacity = Utilities.getComponentOpacity(component);
+			int originalOpacity = GUIUtilities.getComponentOpacity(component);
 			float nextOpacityRatio = ((float) originalOpacity)/MAX_OPACITY_VALUE;
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -409,7 +409,7 @@ public class DisplayArea extends JLayeredPane {
 					timer.stop();
 					component.getParent().setVisible(false);
 					//restore original opacity so component's original background settings is restored when it is made visible again
-					Utilities.setComponenetOpacity(component, originalOpacity);
+					GUIUtilities.setComponenetOpacity(component, originalOpacity);
 					timer.removeActionListener(this);
 					try {
 						func.call();
@@ -418,7 +418,7 @@ public class DisplayArea extends JLayeredPane {
 					}
 				}else if(component.getParent().isVisible()){
 					int nextOpacity = Math.round(nextOpacityRatio*MAX_OPACITY_VALUE);
-					Utilities.setComponenetOpacity(component, nextOpacity);
+					GUIUtilities.setComponenetOpacity(component, nextOpacity);
 				}else{
 					timer.stop();
 				}
