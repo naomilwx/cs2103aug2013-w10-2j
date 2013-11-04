@@ -1,10 +1,11 @@
 package nailit.logic.command;
 
+//@author A0105789R
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
 
 import test.storage.StorageManagerStub;
@@ -555,6 +556,8 @@ public class CommandManager {
 	public void setCurrentFilterSearchAll() {
 		filterContentForCurrentTaskList.setIsSearchAll(true);
 	}
+	
+	//@author A0091372H
 	public Vector<Task> getTasksHappeningOnDay(DateTime date){
 		DateTime startOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
 		DateTime endOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 23, 59);
@@ -562,6 +565,7 @@ public class CommandManager {
 		Vector<Task> tasks = storer.filter(dateFilter);
 		return tasks;
 	}
+	
 	public Result getDefaultListOfTasks(){
 		DateTime now = new DateTime();
 		DateTime startOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);

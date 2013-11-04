@@ -6,9 +6,8 @@ import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.Utilities;
-import nailit.logic.*;
-import nailit.logic.command.*;
-import nailit.logic.parser.*;
+import nailit.logic.command.CommandManager;
+import nailit.logic.parser.ParserManager;
 import nailit.storage.FileCorruptionException;
 
 
@@ -21,17 +20,21 @@ public class LogicManager{
 		parserInstance = new ParserManager();
 		commandInstance = new CommandManager();
 	}
+	
+	// @author A0105559B
 	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
 		parserInstance.passCommand(OriginalCommand);
 		ParserResult parserResultInstance = parserInstance.execute();
-//		System.out.println(parserResultInstance.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		return  executeCommandResult;
 	}
+	
+	
 	public Result getListOfTasksForTheDay(){
 		return commandInstance.getDefaultListOfTasks();
 	}
+	
 	//API to execute delete/display commands from GUI
 	public Result executeDirectIDCommand(CommandType command, int ID) throws Exception{
 		Result executeCommandResult = new Result();

@@ -46,16 +46,6 @@ public class StorageManager {
 	}
 
 
-	public Task retrieve(int ID) throws NoTaskFoundException{
-		Task task = inMemory.retrieve(ID);
-		
-		if(TaskNotFound(task)){
-			throw new NoTaskFoundException("The task cannot be found");
-		}
-		
-		return task;
-	}
-	
 	public Task remove(int ID,boolean isUndoAdd) throws NoTaskFoundException{
 		
 		Task task = inMemory.remove(ID);
@@ -69,14 +59,16 @@ public class StorageManager {
 		saveToFile(taskFile);
 		return task;
 	}
-	
-	
+
+
+	public Task retrieve(int ID) throws NoTaskFoundException{
+		Task task = inMemory.retrieve(ID);
 		
-	public Vector<Task> retrieveAll() {
+		if(TaskNotFound(task)){
+			throw new NoTaskFoundException("The task cannot be found");
+		}
 		
-		HashMap<Integer,Task> hashTable = inMemory.getTaskList();
-		
-		return toTaskVector(hashTable);
+		return task;
 	}
 	
 	public Vector<Task> filter(FilterObject ftobj){
@@ -90,6 +82,9 @@ public class StorageManager {
 		
 		for(int i=0;i<taskList.size();i++){
 			Task task = taskList.get(i);
+			if(task.getID()==20){
+				int j=222;
+			}
 			if(matchTask(task,ftobj)){
 				filteredTaskList.add(taskList.get(i));
 			}
@@ -97,9 +92,15 @@ public class StorageManager {
 		
 		return filteredTaskList;
 	}
-	
-		
-	
+
+
+	public void clear(){
+		inMemory.setTaskList(new HashMap<Integer,Task>());
+		inMemory.setNextValidID(1);
+		saveToFile(taskFile);		
+	}
+
+
 	public Vector<Task> getReminderListForToday(){
 		Vector<Task> v = new Vector<Task>();
 		
@@ -119,27 +120,56 @@ public class StorageManager {
 				v.add(task);
 			}
 		}
-
+	
 		return v;
 	}
+
+
+	public Vector<Task> retrieveAll() {
+		
+		HashMap<Integer,Task> hashTable = inMemory.getTaskList();
+		
+		return toTaskVector(hashTable);
+	}
 	
-	public void clear(){
-		inMemory.setTaskList(new HashMap<Integer,Task>());
-		inMemory.setNextValidID(1);
-		saveToFile(taskFile);		
+	private void interpretTaskFileContents(Vector<String> fileContents) throws FileCorruptionException{
+		originalTaskList = new HashMap<Integer,Task>();
+		try{
+			if(isEmptyFile(fileContents)){
+				nextValidIDWhenSessionStarts = 1;
+			}else{
+				nextValidIDWhenSessionStarts = Integer.parseInt(fileContents.get(0));
+			}
+			
+			for(int i=1;i<fileContents.size();i++){
+				String taskString = fileContents.get(i);
+				Task task = stringToTask(taskString);
+				originalTaskList.put(task.getID(), task);
+			}
+	
+		}
+		catch(Exception e){
+			throw new FileCorruptionException("The file " + TASK_PATH +" is corrupted");
+		}
+				
 	}
-	/**
-	 * Private Methods
-	 * */
-	private boolean isReminderForToday(Task task){
-		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
-		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
-		DateTime reminder = task.getReminder();
-		return reminder.compareTo(endOfToday)<=0;
+
+
+	private void prepareWritingContents(FileManager file){
+		
+		Vector<String> dataList = new Vector<String>();
+	
+		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+	
+		dataList.add(""+inMemory.getNextValidID());
+		
+		taskListToStringVector(taskList,dataList);
+		
+		taskFile.setDataListForWriting(dataList);
+		
 	}
-	private boolean haveReminder(Task task){
-		return task!=null&&task.getReminder()!=null;
-	}
+
+
 	private void saveToFile(FileManager file){
 				
 		file.writingProcessInit();
@@ -148,9 +178,8 @@ public class StorageManager {
 		
 		file.save();
 	}
-	private HashMap<Integer,Task> getTaskInMemory(){
-		return inMemory.getTaskList();
-	}
+
+
 	private Vector<Task> toTaskVector(HashMap<Integer,Task> hashTable){
 		
 		Vector<Task> taskList = new Vector<Task>();
@@ -168,77 +197,10 @@ public class StorageManager {
 			taskList.add(task);
 		}
 		return taskList;
+	
+	}
 
-	}
-	
-	private void prepareWritingContents(FileManager file){
-		
-		Vector<String> dataList = new Vector<String>();
 
-		HashMap<Integer,Task> taskList = inMemory.getTaskList();
-
-		dataList.add(""+inMemory.getNextValidID());
-		
-		taskListToStringVector(taskList,dataList);
-		
-		taskFile.setDataListForWriting(dataList);
-		
-	}
-	
-	private void taskListToStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
-		
-		Set<Integer> keys = hashTable.keySet();
-		
-		Iterator<Integer> iterator = keys.iterator();
-		
-		while(iterator.hasNext()){
-			
-			int key = iterator.next();
-			
-			Task task = hashTable.get(key);
-			
-			dataList.add(task.getID()+NIConstants.HARDDISK_FIELD_SPLITTER+task.changeToDiskFormat());
-		}
-		
-	}
-	
-	
-	private boolean TaskNotFound(Task task){
-		return task == null;
-	}
-	
-	private void interpretTaskFileContents(Vector<String> fileContents) throws FileCorruptionException{
-		originalTaskList = new HashMap<Integer,Task>();
-		try{
-			if(isEmptyFile(fileContents)){
-				nextValidIDWhenSessionStarts = 1;
-			}else{
-				nextValidIDWhenSessionStarts = Integer.parseInt(fileContents.get(0));
-			}
-			
-			for(int i=1;i<fileContents.size();i++){
-				String taskString = fileContents.get(i);
-				Task task = stringToTask(taskString);
-				originalTaskList.put(task.getID(), task);
-			}
-
-		}
-		catch(Exception e){
-			throw new FileCorruptionException("The file " + TASK_PATH +" is corrupted");
-		}
-				
-	}
-	
-	private void releaseID(int ID){
-		int nextValidID = inMemory.getNextValidID();
-		if(isJustAdded(ID,nextValidID)){
-			inMemory.setNextValidID(nextValidID-1);
-		}
-	}
-	
-	private boolean isJustAdded(int ID,int nextValidID){
-		return ID == nextValidID-1;
-	}
 	private Task stringToTask(String taskString) throws Exception{
 		String[] result = taskString.split("\\" + NIConstants.HARDDISK_FIELD_SPLITTER);
 		
@@ -274,159 +236,146 @@ public class StorageManager {
 		Task task = new Task(task_ID, name,startTime,endTime,priority, tag,desc,isCompleted,reminder);
 		return task;
 	}
-	
-	
-	private boolean isEmptyFile(Vector<String> fileContents){
-		return fileContents.size() == 0;
-	}
-	
-	private boolean isNameEmpty (FilterObject ftobj){
-		return ftobj.getName() == null;
-	}
-	
-	private boolean isStartTimeEmpty(FilterObject ftobj){
-		return ftobj.getStartTime() == null;
-	}
-	
-	private boolean isEndTimeEmpty(FilterObject ftobj){
-		return ftobj.getEndTime() == null;
-	}
-	
-	private boolean isPriorityEmpty(FilterObject ftobj){
-		return ftobj.getPriority() == null;
-	}
-	
-	private boolean isTagEmpty(FilterObject ftobj){
-		return ftobj.getTag() == null;
-	}
-	
-	private boolean isCompleteStatusEmpty(FilterObject ftobj){
-		return ftobj.isCompleted() == null;
-	}
-	
-	private boolean nameNotMatch(Task task, FilterObject ftobj){
-		return !isNameEmpty(ftobj)&&!task.getName().toLowerCase().contains(ftobj.getName().toLowerCase());
-	}
-	
-	private boolean priorityNotMatch(Task task,FilterObject ftobj){
-		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
-	}
-	
-	/**
-	 * This method will return true if and only if tag is not matched
-	 * accordingly and there is no matched cases when the tag contains 
-	 * the name in the filter.
-	 * */
-	private boolean tagNotMatch(Task task,FilterObject ftobj){
-		if(!isTagEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getTag().toLowerCase())){
-			if(isNameEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getName().toLowerCase())){
-				return true;
-			}
+
+
+	private void taskListToStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
+		
+		Set<Integer> keys = hashTable.keySet();
+		
+		Iterator<Integer> iterator = keys.iterator();
+		
+		while(iterator.hasNext()){
+			
+			int key = iterator.next();
+			
+			Task task = hashTable.get(key);
+			
+			dataList.add(task.getID()+NIConstants.HARDDISK_FIELD_SPLITTER+task.changeToDiskFormat());
 		}
 		
-		return false;
 	}
-	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
-		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
-	}
-	
-/**
- * @author A0105683E
- * */
-private boolean TimeNotMatch(Task task,FilterObject ftobj){
-	DateTime start = ftobj.getStartTime();
-	DateTime end = ftobj.getEndTime();
-	
-	return !task.isInDateRange(start,end);
-}
-//	private boolean TimeNotMatch(Task task,FilterObject ftobj){
-//		
-//		//For event when startTime and endTime, we only check whether TaskStartTime is in the time period
-//		//For tasks, we only check whether taskEndTime is in the time period
-//		
-//		if(task.isEvent()){
-//			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-//					return true;
-//				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-//					return true;
-//				}else{
-//					return false;
-//				}
-//			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-//					return true;
-//				}else{
-//					return false;
-//				}
-//				
-//			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-//					return true;
-//				}
-//				else{	return false;
-//				}
-//			}else{
-//				return false;
-//			}
-//
-//		}else if(task.isFloatingTask()){
-//			if(!isStartTimeEmpty(ftobj)||!isEndTimeEmpty(ftobj)){
-//				return true;
-//			}else{
-//				return false;
-//			}
-//		}else if(task.isNormalTask()){
-//			if(!isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-//					return true;
-//				}else if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-//					return true;
-//				}else{
-//					return false;
-//				}
-//			}else if(!isStartTimeEmpty(ftobj)&&isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getStartTime())==-1){
-//					return true;
-//				}else{
-//					return false;
-//				}
-//				
-//			}else if(isStartTimeEmpty(ftobj)&&!isEndTimeEmpty(ftobj)){
-//				if(task.getStartTime().compareTo(ftobj.getEndTime())==1){
-//					return true;
-//				}else{
-//					return false;
-//				}
-//			}else{
-//				return false;
-//			}
-//
-//		}else{
-//			return true;//TODO: check the standard for those tasks that does not belong to any category
-//		}
-//	}
 
+
+	private boolean TaskNotFound(Task task){
+		return task == null;
+	}
+
+
+	private void releaseID(int ID){
+		int nextValidID = inMemory.getNextValidID();
+		if(isJustAdded(ID,nextValidID)){
+			inMemory.setNextValidID(nextValidID-1);
+		}
+	}
+
+
+	private boolean isJustAdded(int ID,int nextValidID){
+		return ID == nextValidID-1;
+	}
+
+
+	private boolean haveReminder(Task task){
+		return task!=null&&task.getReminder()!=null;
+	}
+
+
+	/**
+	 * Private Methods
+	 * */
+	private boolean isReminderForToday(Task task){
+		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
+		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
+		DateTime reminder = task.getReminder();
+		return reminder.compareTo(endOfToday)<=0;
+	}
+	private HashMap<Integer,Task> getTaskInMemory(){
+		return inMemory.getTaskList();
+	}
 	private boolean matchTask(Task task, FilterObject ftobj){
-		if(nameNotMatch(task,ftobj)){
+		
+		boolean nameTagMatch = nameTagMatching(task,ftobj);
+		if(nameNotMatch(task,ftobj)&&!nameTagMatch){
 			return false;
 		}
+		
+		if(tagNotMatch(task,ftobj)){
+			return false;
+		}
+		
 		if(TimeNotMatch(task,ftobj)){
 			return false;
 		}
 		if(priorityNotMatch(task,ftobj)){
 			return false;
 		}
-		if(tagNotMatch(task,ftobj)){
-			return false;
-		}
+		
 		if(completeStatusNotMatch(task,ftobj)){
 			return false;
 		}
 		
 		return true;
 	}
+
+	private boolean nameNotMatch(Task task, FilterObject ftobj){
+		return (!isNameEmpty(ftobj)&&!task.getName().toLowerCase().contains(ftobj.getName().toLowerCase()));
+	}
+	private boolean nameTagMatching(Task task,FilterObject ftobj){
+		if(isTagEmpty(ftobj)){
+			if(!isNameEmpty(ftobj)){
+				if(task.getTag().toLowerCase().contains(ftobj.getName().toLowerCase())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	private boolean priorityNotMatch(Task task,FilterObject ftobj){
+		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
+	}
 	
+
+	private boolean tagNotMatch(Task task,FilterObject ftobj){		
+		return !isTagEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getTag().toLowerCase());		
+	}
+	
+	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
+		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
+	}
+	
+	
+	private boolean TimeNotMatch(Task task,FilterObject ftobj){
+		DateTime start = ftobj.getStartTime();
+		DateTime end = ftobj.getEndTime();
+		
+		return !task.isInDateRange(start,end);
+	}
+
+
+	private boolean isTagEmpty(FilterObject ftobj){
+		return ftobj.getTag() == null;
+	}
+
+
+	private boolean isPriorityEmpty(FilterObject ftobj){
+		return ftobj.getPriority() == null;
+	}
+
+
+	private boolean isNameEmpty (FilterObject ftobj){
+		return ftobj.getName() == null;
+	}
+
+
+	private boolean isCompleteStatusEmpty(FilterObject ftobj){
+		return ftobj.isCompleted() == null;
+	}
+
+
+	private boolean isEmptyFile(Vector<String> fileContents){
+		return fileContents.size() == 0;
+	}
+
+
 	public static void main(String[] args) throws FileCorruptionException{
 		String s = "";
 		String[] results = s.split("\\,");
