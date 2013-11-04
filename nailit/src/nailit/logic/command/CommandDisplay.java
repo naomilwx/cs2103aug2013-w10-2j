@@ -3,8 +3,11 @@ package nailit.logic.command;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.joda.time.DateTime;
+
 
 import nailit.common.FilterObject;
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -45,14 +48,45 @@ public class CommandDisplay extends Command{
 	public Result executeCommand() throws Exception {
 		if(parserResultInstance.isDisplayAll()) {
 			displayAllTasks();
-			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
-			return displayOperationsHistory();
+			displayOperationsHistory();
+		} else if(parserResultInstance.isDisplayComplete()) { 
+			displayCompletedTasks();
+		} else if(parserResultInstance.isDisplayUncomplete()) {
+			displayUncompletedTasks();
+		} else if(isDisplayDay()) {
+			displayTasksOnTheDay();
 		} else {
-			return displayTheTask();
+			displayTheTask();
 		}
+		return executedResult;
 	}
 
+	private void displayTasksOnTheDay() {
+		DateTime chosenDay = parserResultInstance.getEndTime();
+		Vector<Task> tasksOnTheDay = cm.getTasksHappeningOnDay(chosenDay);
+		executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, tasksOnTheDay, null);
+		cm.setCurrentList(tasksOnTheDay);
+	}
+
+	private boolean isDisplayDay() {
+		return !parserResultInstance.isNullEndTime();
+	}
+
+	private void displayUncompletedTasks() {
+		FilterObject filterObjectForUncompletedTasks = new FilterObject(null, null, null, null, null, false);
+		Vector<Task> uncompletedTasks = storer.filter(filterObjectForUncompletedTasks);
+		executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, uncompletedTasks, null);
+		cm.setCurrentList(uncompletedTasks);
+	}
+
+	private void displayCompletedTasks() {
+		FilterObject filterObjectForCompletedTasks = new FilterObject(null, null, null, null, null, true);
+		Vector<Task> completedTasks = storer.filter(filterObjectForCompletedTasks);
+		executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, completedTasks, null);
+		cm.setCurrentList(completedTasks);
+	}
+	
 	private void displayAllTasks() {
 		try {
 			Vector<Task> vectorOfTasks = this.retrieveAllTheTasks();
@@ -79,7 +113,7 @@ public class CommandDisplay extends Command{
 		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL, null, emptyTaskList, null);
 	}
 
-	private Result displayTheTask() throws Exception {
+	private void displayTheTask() throws Exception {
 		getDisplayID();
 		if(displayID == 0) { // currently, 0 means no display ID, needs changes later
 			throw new Exception(NO_DISPLAY_ID_WARNING);
@@ -88,12 +122,10 @@ public class CommandDisplay extends Command{
 				retrieveTheTask(); // let retrievedTask = the task to display, which is gotten from task list
 			} catch(Exception e) {
 				createUnsuccessfulResultObject();
-				return executedResult;
 			}
 			
 			createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, taskRetrieved, cm.getCurrentTaskList(), null);
 			createCommandSummary();
-			return executedResult;
 		}
 	}
 
@@ -102,22 +134,23 @@ public class CommandDisplay extends Command{
 		displayID = parserResultInstance.getTaskID();
 	}
 
-	private Result displayOperationsHistory() {
+	private void displayOperationsHistory() {
 		createResultForDisplayOperationshistory();
-		return executedResult;
-		
-		
 	}
 
 	private void createResultForDisplayOperationshistory() {
-		Vector<String> commandString = getCommandString(cm.getOperationsHistory());
-		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "This is the commands you have made.", null, null, commandString);
+		Vector<String> undoableCommandStringList = getCommandString(cm.getOperationsHistory());
+		Vector<String> redoableCommandStringList = getCommandString(cm.getRedoableCommandList());
+		Vector<Vector<String>> twoCommandStringList = new Vector<Vector<String>>();
+		twoCommandStringList.add(NIConstants.HISTORY_UNDO_INDEX, undoableCommandStringList); // undoable list is the first
+		twoCommandStringList.add(NIConstants.HISTORY_REDO_INDEX, redoableCommandStringList); // redoable list is the second
+		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, twoCommandStringList);
 		
 	}
 
-	private Vector<String> getCommandString(Vector<Command> operationsHistory) {
+	private Vector<String> getCommandString(Vector<Command> commandList) {
 		Vector<String> commandString = new Vector<String>();
-		Iterator<Command> itr = operationsHistory.iterator();
+		Iterator<Command> itr = commandList.iterator();
 		
 		while(itr.hasNext()) {
 			commandString.add(itr.next().getCommandString());
@@ -135,7 +168,7 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createResultObject(boolean isExitCommand, boolean isSuccess, int displayType, 
-			String printOut, Task taskRetrieved, Vector<Task> tasks, Vector<String> history) {
+			String printOut, Task taskRetrieved, Vector<Task> tasks, Vector<Vector<String>> history) {
 		executedResult = new Result(isExitCommand, isSuccess, displayType, printOut, taskRetrieved, tasks, history);
 	}
 	
