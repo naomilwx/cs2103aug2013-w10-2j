@@ -48,9 +48,23 @@ public class CommandDisplay extends Command{
 			return executedResult;
 		} else if(parserResultInstance.isDisplayHistory()) {
 			return displayOperationsHistory();
+		} else if(false) { 
+			return displayCompletedTasks();
+		} else if(false) {
+			return displayUncompletedTasks();
 		} else {
 			return displayTheTask();
 		}
+	}
+
+	private Result displayUncompletedTasks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Result displayCompletedTasks() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void displayAllTasks() {
@@ -110,14 +124,18 @@ public class CommandDisplay extends Command{
 	}
 
 	private void createResultForDisplayOperationshistory() {
-		Vector<String> commandString = getCommandString(cm.getOperationsHistory());
-		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "This is the commands you have made.", null, null, commandString);
+		Vector<String> undoableCommandStringList = getCommandString(cm.getOperationsHistory());
+		Vector<String> redoableCommandStringList = getCommandString(cm.getRedoableCommandList());
+		Vector<Vector<String>> twoCommandStringList = new Vector<Vector<String>>();
+		twoCommandStringList.add(undoableCommandStringList); // undoable list is the first
+		twoCommandStringList.add(redoableCommandStringList); // redoable list is the second
+		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, twoCommandStringList);
 		
 	}
 
-	private Vector<String> getCommandString(Vector<Command> operationsHistory) {
+	private Vector<String> getCommandString(Vector<Command> commandList) {
 		Vector<String> commandString = new Vector<String>();
-		Iterator<Command> itr = operationsHistory.iterator();
+		Iterator<Command> itr = commandList.iterator();
 		
 		while(itr.hasNext()) {
 			commandString.add(itr.next().getCommandString());
