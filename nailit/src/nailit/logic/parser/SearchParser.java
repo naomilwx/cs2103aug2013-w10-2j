@@ -8,7 +8,7 @@ import nailit.logic.ParserResult;
 public class SearchParser extends Parser {
 
 	private String userCommand;
-	private String[] listOfCommand;
+	private String[] listOfCommands;
 	
 	public SearchParser (String command){
 		userCommand = command;
@@ -17,29 +17,29 @@ public class SearchParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
+		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		resultExecution.setCommand(CommandType.SEARCH);
 		
-		for (int i=0; i<listOfCommand.length; i++)
+		for (int i=0; i<listOfCommands.length; i++)
 		{
-			listOfCommand[i] = listOfCommand[i].trim();
-			System.out.println(listOfCommand[i]);
-			if (TaskPriority.isTaskPriority(listOfCommand[i])){
-				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i].toUpperCase()));
-			}else if (Parser.isTag(listOfCommand[i])){
-				resultExecution.setTag(listOfCommand[i]);
-			}else if (Parser.isDateTime(listOfCommand[i])){
+			listOfCommands[i] = listOfCommands[i].trim();
+			System.out.println(listOfCommands[i]);
+			if (TaskPriority.isTaskPriority(listOfCommands[i])){
+				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[i].toUpperCase()));
+			}else if (Parser.isTag(listOfCommands[i])){
+				resultExecution.setTag(listOfCommands[i]);
+			}else if (Parser.isDateTime(listOfCommands[i])){
 				if (resultExecution.getStartTime() == null){
-					if (Parser.numberOfTime(listOfCommand[i]) == 2){
-						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommand[i]));
-						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommand[i]));
+					if (Parser.numberOfTime(listOfCommands[i]) == 2){
+						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommands[i]));
+						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommands[i]));
 					}else
-						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
+						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommands[i]));
 				} else 
-					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
+					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommands[i]));
 			}else 
-				resultExecution.setName(listOfCommand[i]);
+				resultExecution.setName(listOfCommands[i]);
 			
 		}
 		
