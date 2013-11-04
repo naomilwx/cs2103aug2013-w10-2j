@@ -1,15 +1,12 @@
 package nailit.logic;
 
-import java.util.*;
-
+// @auther A0105559B
 import org.joda.time.DateTime;
-
 import nailit.common.TaskPriority;
 
 public class ParserResult{
-	//ArrayList<String> command = new ArrayList<String> ();
 
-	private int taskID;
+	private int taskId;
 	private CommandType command;
 	private String name;
 	private TaskPriority priority;
@@ -27,7 +24,7 @@ public class ParserResult{
 	private boolean isSetPriority = false;
 	
 	public ParserResult(){
-		taskID = 0;
+		taskId = 0;
 		command = CommandType.INVALID;
 		name = null;
 		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
@@ -100,19 +97,20 @@ public class ParserResult{
 		}
 	}
 	
-	public void setTaskID(int taskIDExternal) {
-		taskID = taskIDExternal;
+	public void setTaskId(int taskIdExternal) {
+		taskId = taskIdExternal;
 	}
 	
 	public int getTaskID() {
-		return taskID;
+		return taskId;
 	}
 	
 	public boolean isNullTaskID (){
-		if (taskID == 0)
+		if (taskId == 0){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 
 	public void setStartTime(DateTime startTimeExternal){

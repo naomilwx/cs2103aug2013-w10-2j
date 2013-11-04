@@ -17,7 +17,7 @@ public class DeleteReminderParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DELETEREMINDER);
 		if (Parser.isNumber(userCommand))
-			resultExecution.setTaskID(Integer.parseInt(userCommand));
+			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		else 
 			throw new Error("Wrong Format");
 		

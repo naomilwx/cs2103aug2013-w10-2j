@@ -17,7 +17,7 @@ public class RedoParser extends Parser {
 		
 		resultExecution.setCommand(CommandType.REDO);
 		if (userCommand.equalsIgnoreCase("")){
-			resultExecution.setTaskID(-1);
+			resultExecution.setTaskId(-1);
 			return resultExecution;
 		}
 		return resultExecution;

@@ -46,7 +46,7 @@ public class CommandTest {
 	public void testCommandDelete() throws Exception { //TODO:Implement working test
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
-		prForCommandDelete.setTaskID(123);
+		prForCommandDelete.setTaskId(123);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
 //		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 
@@ -59,7 +59,7 @@ public class CommandTest {
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE); 
 		// function update, taskToDeleteID needed
-		prForCommandUpdate.setTaskID(123);
+		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
@@ -71,7 +71,7 @@ public class CommandTest {
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandUpdate = createParserResult(CommandType.UPDATE);
 		// function update, taskToDeleteID needed
-		prForCommandUpdate.setTaskID(123);
+		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
 		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
@@ -82,7 +82,7 @@ public class CommandTest {
 	public void testCommandDisplayNotExistingTask() throws Exception {
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
-		prForCommandDisplay.setTaskID(123);
+		prForCommandDisplay.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback, null, null);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
@@ -102,7 +102,7 @@ public class CommandTest {
 	public void testCommandDisplayExistingTask() throws Exception { //TODO:
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandDisplay = createParserResult(CommandType.DISPLAY);
-		prForCommandDisplay.setTaskID(123);
+		prForCommandDisplay.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandDisplay);
 		Vector<Task> vectorOfTask = new Vector<Task>();
 		Task expectedDisplayTask = createTask();
