@@ -21,7 +21,9 @@ public class ParserResult{
 	private DateTime reminderTime;
 	
 	private boolean isDisplayAll = false;
+	private boolean isDisplayComplete = false;
 	private boolean isDisplayHistory = false;
+	private boolean isDisplayUncomplete = false;
 	private boolean isSetPriority = false;
 	
 	public ParserResult(){
@@ -33,9 +35,13 @@ public class ParserResult{
 		startTime = null;
 		endTime = null;
 		reminderTime = null;
-		isDisplayAll = false;
-		isSetPriority = false;
 		description = null;
+		
+		isDisplayAll = false;
+		isDisplayComplete = false;
+		isDisplayHistory = false;
+		isDisplayUncomplete = false;
+		isSetPriority = false;
 	}
 	
 	public void setCommand(CommandType commandExternal){
@@ -60,6 +66,22 @@ public class ParserResult{
 	
 	public boolean isDisplayHistory(){
 		return isDisplayHistory;
+	}
+	
+	public void setDisplayComplete (boolean flag){
+		isDisplayComplete = flag;
+	}
+	
+	public boolean isDisplayComplete(){
+		return isDisplayComplete;
+	}
+	
+	public void setDisplayUncomplete (boolean flag){
+		isDisplayUncomplete = flag;
+	}
+	
+	public boolean isDisplayUncomplete(){
+		return isDisplayUncomplete;
 	}
 	
 	public void setName(String nameExternal){
