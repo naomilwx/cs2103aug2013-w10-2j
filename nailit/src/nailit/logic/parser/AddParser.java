@@ -1,6 +1,6 @@
 package nailit.logic.parser;
 
-// @auther A0105559B
+// @author A0105559B
 
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
