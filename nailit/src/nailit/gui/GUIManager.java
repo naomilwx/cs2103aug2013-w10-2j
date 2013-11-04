@@ -245,6 +245,12 @@ public class GUIManager {
 	protected void scrollToPrevPageInTaskTable(){
 		displayArea.quickTaskTableScroll(true);
 	}
+	protected void taskTableScrollDown(){
+		displayArea.taskTableScroll(false);
+	}
+	protected void taskTableScollUp(){
+		displayArea.taskTableScroll(true);
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
@@ -313,6 +319,12 @@ public class GUIManager {
 			return null;
 		}
 	}
+	protected void loadExistingTaskDescriptionInCommandBar(){
+		int displayID = displayArea.getTaskTableSelectedRow();
+		if(displayID > 0){
+			loadExistingTaskDescriptionInCommandBar(displayID);
+		}
+	}
 	protected void loadExistingTaskDescriptionInCommandBar(int taskDisplayID){
 		Result result = executeTriggeredTaskDisplay(taskDisplayID);
 		if(result !=  null){
@@ -321,6 +333,12 @@ public class GUIManager {
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
 						+" " + "description " + task.getDescription());
 			}
+		}
+	}
+	protected void loadExistingTaskNameInCommandBar(){
+		int displayID = displayArea.getTaskTableSelectedRow();
+		if(displayID > 0){
+			loadExistingTaskNameInCommandBar(displayID);
 		}
 	}
 	protected void loadExistingTaskNameInCommandBar(int taskDisplayID){

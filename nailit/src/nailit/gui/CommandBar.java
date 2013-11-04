@@ -179,10 +179,18 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					GUIBoss.displayCommandSyantaxHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					GUIBoss.loadExistingTaskNameInCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
+					GUIBoss.loadExistingTaskNameInCommandBar();
 				}else if(keyCode == KeyEvent.VK_PAGE_UP){
 					GUIBoss.scrollToPrevPageInTaskTable();
 				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
 					GUIBoss.scrollToNextPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_UP){
+					GUIBoss.taskTableScollUp();
+				}else if(keyCode == KeyEvent.VK_DOWN){
+					GUIBoss.taskTableScrollDown();
 				}
 			}
 			@Override
