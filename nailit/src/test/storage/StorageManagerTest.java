@@ -103,6 +103,70 @@ public class StorageManagerTest {
 		
 	}
 	
+//	@Test
+//		public void integrateTest() throws FileCorruptionException, NoTaskFoundException {
+//			sto = new StorageManager();
+//			sto.clear();
+//			Task task1 = new Task("first task");
+//			Task task2 = new Task("second task");
+//			testAddCommand("" +
+//					"1,first task,null,null,1,,,0,null\n" +
+//					"",1,task1);
+//			testAddCommand("" +
+//					"1,first task,null,null,1,,,0,null\n" +
+//					"2,second task,null,null,1,,,0,null\n" +
+//					"",2,task2);
+//			Task task3 = new Task(2,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
+//			testAddCommand("" +
+//					"1,first task,null,null,1,,,0,null\n" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",2,task3);
+//	//		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
+//	//		testAddCommand("",task4);
+//			FilterObject fo = new FilterObject("first",null,null,null,null,null);
+//			testFilterCommand("" +
+//					"1,first task,null,null,1,,,0,null\n" +
+//					"",fo);
+//			FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
+//			testFilterCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",fo1);
+//			FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
+//			testFilterCommand("",fo2);
+//			FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
+//			testFilterCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",fo3);
+//			FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
+//			testFilterCommand("" +
+//					"1,first task,null,null,1,,,0,null\n" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",fo4);
+//			testRemoveCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",1);
+//			Task task6 = new Task(Task.TASKID_NULL,"testForUndo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
+//			testAddCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"3,testForUndo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
+//					"",3,task6);
+//			testUndoAddCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"",3);
+//			Task task7 = new Task(Task.TASKID_NULL,"Add New Task After Undo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
+//			testAddCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
+//					"",3,task7);
+//			Task task8 = new Task(Task.TASKID_NULL,"test for add new task",new DateTime("2013-01-02"),null,TaskPriority.LOW,"school","no more description",false);
+//			testAddCommand("" +
+//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+//					"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
+//					"4,test for add new task,2013-01-02T00:00:00.000+08:00,null,0,school,no more description,0,null\n" +
+//					"",4,task8);
+//	
+//		}
+
 	@Test 
 	public void filterTest() throws FileCorruptionException{
 		sto = new StorageManager();
@@ -149,97 +213,45 @@ public class StorageManagerTest {
 		/**
 		 * Testing when filter object is not null
 		 * */
-		FilterObject fo = new FilterObject("first",null,null,null,null,null);
-		testFilterCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"",fo);
-		
-		FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
-		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo1);
-		
-		FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
-		testFilterCommand("",fo2);
-		
-		FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
-		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo3);
-		
-		FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
-		testFilterCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo4);		
-	}
-	@Test
-	public void integrateTest() throws FileCorruptionException, NoTaskFoundException {
-		sto = new StorageManager();
 		sto.clear();
-		Task task1 = new Task("first task");
-		Task task2 = new Task("second task");
-		testAddCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"",1,task1);
-		testAddCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"2,second task,null,null,1,,,0,null\n" +
-				"",2,task2);
-		Task task3 = new Task(2,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
-		testAddCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",2,task3);
-//		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
-//		testAddCommand("",task4);
-		FilterObject fo = new FilterObject("first",null,null,null,null,null);
-		testFilterCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"",fo);
-		FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
-		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo1);
-		FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
-		testFilterCommand("",fo2);
-		FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
-		testFilterCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo3);
-		FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
-		testFilterCommand("" +
-				"1,first task,null,null,1,,,0,null\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",fo4);
-		testRemoveCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",1);
-		Task task6 = new Task(Task.TASKID_NULL,"testForUndo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
-		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"3,testForUndo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-				"",3,task6);
-		testUndoAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"",3);
-		Task task7 = new Task(Task.TASKID_NULL,"Add New Task After Undo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
-		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-				"",3,task7);
-		Task task8 = new Task(Task.TASKID_NULL,"test for add new task",new DateTime("2013-01-02"),null,TaskPriority.LOW,"school","no more description",false);
-		testAddCommand("" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-				"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-				"4,test for add new task,2013-01-02T00:00:00.000+08:00,null,0,school,no more description,0,null\n" +
-				"",4,task8);
+		addRealisticTasks();
+		FilterObject fo1 = new FilterObject(null,null,null,null,null,null);
+		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,Exam preparation,Be well prepared,1,2013-02-10T00:00:00.000+08:00\n" +
+				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,Project,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
+				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,Exam preparation,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
+				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,Assignment,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
+				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,Exam preparation,Be something,1,2013-12-02T00:00:00.000+08:00\n" +
+				"6,GO HOME,2013-12-03T00:00:00.000+08:00,2014-01-09T00:00:00.000+08:00,1,,,0,null\n" +
+				"7,WU HAN JOURNEY,2013-12-10T00:00:00.000+08:00,2013-12-15T00:00:00.000+08:00,0,TRAVEL,BE CAREFUL,0,2013-12-08T00:00:00.000+08:00\n" +
+				"8,SHANGHAI JOURNEY,2013-12-16T00:00:00.000+08:00,2013-12-18T00:00:00.000+08:00,0,TRAVEL,BE OPEN-MINDED,0,2013-12-02T00:00:00.000+08:00\n" +
+				"9,ALICE'S magic journey,2013-12-20T00:00:00.000+08:00,2013-12-25T00:00:00.000+08:00,0,,,0,null\n" +
+				"10,2103 V0.3,null,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-13T00:00:00.000+08:00\n" +
+				"11,PC1431,2013-11-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"12,NON-SENSE,2013-09-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
+				"13,My birthday,2014-02-10T00:00:00.000+08:00,2014-02-10T00:00:00.000+08:00,2,Birthday,Be Happy,0,2014-02-09T00:00:00.000+08:00\n" +
+				"14,lalala,2013-04-05T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Non-sense,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
+				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
+				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,ORAL PRESENTATION,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"19,You tiao,null,2013-12-04T00:00:00.000+08:00,2,Meal,Be Hungry,0,2013-02-14T00:00:00.000+08:00\n" +
+				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,Research,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,fake Cs,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
+				,fo1);
+		FilterObject fo2 = new FilterObject("cs",null,null,null,null,null);
+		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,Exam preparation,Be well prepared,1,2013-02-10T00:00:00.000+08:00\n" +
+				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,Project,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
+				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,Exam preparation,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
+				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,Assignment,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
+				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,Exam preparation,Be something,1,2013-12-02T00:00:00.000+08:00\n" +
+				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
+				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,ORAL PRESENTATION,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,Research,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,fake Cs,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
+				,fo2);
 
-	} 
-	
-	@Test
-	public void testForRealisticTasks() throws FileCorruptionException{
-		sto = new StorageManager();
+	}
+	public void addRealisticTasks() throws FileCorruptionException{
 		sto.clear();
 		Task task1 = new Task(Task.TASKID_NULL,"CS2103 REVIEW",new DateTime("2013-02-13"),new DateTime("2013-02-15"),TaskPriority.HIGH,"Exam preparation","Be well prepared",false,new DateTime("2013-02-10"));
 		Task task2 = new Task(Task.TASKID_NULL,"CS2103 Project Demo",null,new DateTime("2013-11-07"),TaskPriority.HIGH,"Project","Be confident",false,new DateTime("2013-11-02"));
@@ -260,7 +272,7 @@ public class StorageManagerTest {
 		Task task17 = new Task(Task.TASKID_NULL,"CS2101 EXAM",null,new DateTime("2013-11-04"),TaskPriority.HIGH,"Project","Be well-prepared",false,new DateTime("2013-02-14"));
 		Task task18 = new Task(Task.TASKID_NULL,"CS3230R",null,new DateTime("2013-11-07"),TaskPriority.HIGH,"Research","Be well-prepared",false,new DateTime("2013-02-14"));
 		Task task19 = new Task(Task.TASKID_NULL,"You tiao",null,new DateTime("2013-12-04"),TaskPriority.HIGH,"Meal","Be Hungry",false,new DateTime("2013-02-14"));
-		Task task20 = new Task(Task.TASKID_NULL,"Zongzi",null,new DateTime("2013-12-04"),TaskPriority.HIGH,"Meal","Be Hungry",false,new DateTime("2013-02-14"));
+		Task task20 = new Task(Task.TASKID_NULL,"Zongzi",null,new DateTime("2013-12-04"),TaskPriority.HIGH,"fake Cs","fake CS task",false,new DateTime("2013-02-14"));
 		
 		sto.add(task1);
 		sto.add(task2);
