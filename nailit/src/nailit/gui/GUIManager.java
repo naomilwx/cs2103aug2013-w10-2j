@@ -368,9 +368,9 @@ public class GUIManager {
 				displayArea.displayTaskList(result);
 				if(result.getDeleteStatus() == true){
 					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
-				}else{
-					displayArea.displayTaskDetails(result.getTaskToDisplay());
-				}
+				}//else{
+//					displayArea.displayTaskDetails(result.getTaskToDisplay());
+//				}
 				break;
 			default:
 				break;
