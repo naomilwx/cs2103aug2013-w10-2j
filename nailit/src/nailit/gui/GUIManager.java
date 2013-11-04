@@ -379,8 +379,8 @@ public class GUIManager {
 				displayArea.displayTaskList(result);
 				break;
 			case Result.HISTORY_DISPLAY:
-//				historyWindow.displayHistoryList(result.getHistoryList());
-//				historyWindow.setVisible(true);
+				historyWindow.displayHistoryList(result.getHistoryList());
+				historyWindow.setVisible(true);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
 				displayArea.displayTaskList(result);
