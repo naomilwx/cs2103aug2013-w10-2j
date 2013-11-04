@@ -133,10 +133,10 @@ public class GUIManager {
 		processAndDisplayExecutionResult(logicExecutor.getListOfTasksForTheDay());
 	}
 	private void getAndDisplayReminders(){
-		Vector<Task> reminderList = logicExecutor.getReminderList();
+		Vector<Vector <Task>> reminderList = logicExecutor.getReminderList();
 		updateReminderDisplay(reminderList);
 	}
-	private void updateReminderDisplay(Vector<Task> reminders){
+	private void updateReminderDisplay(Vector<Vector <Task>> reminders){
 		homeWindow.displayReminders(reminders);
 	}
 	//functions to initialise and configure GUI components
