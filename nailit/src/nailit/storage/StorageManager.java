@@ -103,7 +103,7 @@ public class StorageManager {
 	public Vector<Task> getReminderListForToday(){
 		Vector<Task> v = new Vector<Task>();
 		
-		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+		HashMap<Integer,Task> taskList = getTaskInMemory();
 		
 		Set<Integer> keys = taskList.keySet();
 		
@@ -313,11 +313,13 @@ public class StorageManager {
 	}
 	
 	/**
-	 * This method will return true if and only if both tag and name is not matched with the task's tag and name
+	 * This method will return true if and only if tag is not matched
+	 * accordingly and there is no matched cases when the tag contains 
+	 * the name in the filter.
 	 * */
 	private boolean tagNotMatch(Task task,FilterObject ftobj){
-		if(!isTagEmpty(ftobj)&&!task.getTag().equalsIgnoreCase(ftobj.getTag())){
-			if(nameNotMatch(task,ftobj)){
+		if(!isTagEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getTag().toLowerCase())){
+			if(isNameEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getName().toLowerCase())){
 				return true;
 			}
 		}
