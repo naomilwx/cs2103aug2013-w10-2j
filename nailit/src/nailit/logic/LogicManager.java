@@ -29,7 +29,7 @@ public class LogicManager{
 		return  executeCommandResult;
 	}
 	public Result getListOfTasksForTheDay(){
-		return commandInstance.getListOfTasksForTheDay();
+		return commandInstance.getDefaultListOfTasks();
 	}
 	//API to execute delete/display commands from GUI
 	public Result executeDirectIDCommand(CommandType command, int ID) throws Exception{
