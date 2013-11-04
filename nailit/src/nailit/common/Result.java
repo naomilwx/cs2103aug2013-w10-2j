@@ -19,7 +19,7 @@ public class Result {
 	private String notificationPrintOut = EMPTY_DISPLAY;
 	private Vector<Task> taskList = new Vector<Task>();
 	private Vector<Task> reminderList = new Vector<Task>();
-	private Vector<String> historyList = new Vector<String>();
+	private Vector<Vector<String>> historyList = new Vector<Vector<String>>();
 	private Task task = null;
 	
 	//initialise "empty" Result object
@@ -42,7 +42,7 @@ public class Result {
 		task = taskToDisplay;
 	}
 	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
-			String printOut, Task taskToDisplay, Vector<Task> tasks, Vector<String> history){
+			String printOut, Task taskToDisplay, Vector<Task> tasks, Vector<Vector <String>> history){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
 		this.displayType = displayType;
@@ -52,7 +52,7 @@ public class Result {
 		task = taskToDisplay;
 	}
 	public Result(boolean isExitCommand, boolean isSuccess, int displayType, 
-			String printOut, Vector<Task> tasks, Vector<String> history){
+			String printOut, Vector<Task> tasks, Vector<Vector <String>> history){
 		isExit = isExitCommand;
 		isSuccessful = isSuccess;
 		this.displayType = displayType;
@@ -76,7 +76,7 @@ public class Result {
 	public void setTaskList(Vector<Task> taskList){
 		this.taskList = taskList;
 	}
-	public void setHistoryList(Vector<String> historyList){
+	public void setHistoryList(Vector<Vector <String>> historyList){
 		this.historyList = historyList;
 	}
 	public void setTaskToDisplay(Task taskToDisplay){
@@ -116,7 +116,7 @@ public class Result {
 	public Vector<Task> getReminderList(){
 		return reminderList;
 	}
-	public Vector<String> getHistoryList(){
+	public Vector<Vector <String>> getHistoryList(){
 		return historyList;
 	}
 	public int getDisplayType(){

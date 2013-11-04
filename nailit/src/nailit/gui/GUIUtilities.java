@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class Utilities {
+public class GUIUtilities {
 	public static int getComponentOpacity(Component component){
 		return component.getBackground().getAlpha();
 	}

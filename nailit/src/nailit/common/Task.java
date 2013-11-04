@@ -183,7 +183,7 @@ public class Task {
 	}
 	public void setTag(String taskTag){
 		if(taskTag != null){
-			tag = taskTag;
+			tag = Utilities.formatTaskTag(taskTag);
 		}else{
 			tag = "";
 		}
@@ -316,6 +316,10 @@ public class Task {
 		}else{
 			return false;
 		}
+	}
+	public boolean isHappeningToday(){
+		DateTime now = new DateTime();
+		return isInDateRange(Utilities.getEndOfDay(now), Utilities.getEndOfDay(now));
 	}
 	public boolean isInDateRange(DateTime start, DateTime end){
 		//checks if event or deadline is within date range (inclusive)
