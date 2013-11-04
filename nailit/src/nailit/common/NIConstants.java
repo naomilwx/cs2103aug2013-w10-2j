@@ -11,6 +11,8 @@ public class NIConstants {
 	public static final String DISPLAY_DATE_FORMAT = "d MMM YYYY";
 	public static final String DISPLAY_TIME_FORMAT = "h:mma";
 	public static final String DISPLAY_FULL_DATETIME_FORMAT = "dd MMM YYYY h:mma";
+	public static final int REMINDER_TASKS_INDEX = 0;
+	public static final int REMINDER_EVENTS_INDEX = 1;
 	public static final int HISTORY_UNDO_INDEX = 0;
 	public static final int HISTORY_REDO_INDEX = 1;
 }

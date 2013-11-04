@@ -5,6 +5,7 @@ import java.util.Vector;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.common.Utilities;
 import nailit.logic.*;
 import nailit.logic.command.*;
 import nailit.logic.parser.*;
@@ -42,7 +43,13 @@ public class LogicManager{
 	}
 	
 	// api for giving the reminder on today
-	public Vector<Task> getReminderList() {
-		return commandInstance.getTodayReminder();
+	public Vector<Vector <Task>> getReminderList() {
+		Vector<Task> reminders = commandInstance.getTodayReminder();
+		Vector<Task> taskReminders = Utilities.filterAndSortTasks(reminders);
+		Vector<Task> eventReminders = Utilities.filterAndSortEvents(reminders);
+		Vector<Vector <Task>> reminderList = new Vector<Vector <Task>>();
+		reminderList.add(NIConstants.REMINDER_TASKS_INDEX, taskReminders);
+		reminderList.add(NIConstants.REMINDER_EVENTS_INDEX, eventReminders);
+		return reminderList;
 	}
 }
