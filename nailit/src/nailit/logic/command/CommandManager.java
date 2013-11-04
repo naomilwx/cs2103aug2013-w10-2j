@@ -530,6 +530,10 @@ public class CommandManager {
 		return operationsHistory;
 	}
 	
+	public Vector<Command> getRedoableCommandList() {
+		return redoCommandsList;
+	}
+	
 	// sort the Tasks in the currentTaskList according to isCompleted, date, priority
 	private void sort() {
 		ComparatorForTwoTaskObj newComparator = new ComparatorForTwoTaskObj();
