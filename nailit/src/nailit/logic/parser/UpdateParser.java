@@ -66,6 +66,17 @@ public class UpdateParser extends Parser {
 			}else{
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
+		}else if (listOfCommand[1].equalsIgnoreCase("Time")){
+			String answer = "";
+			for (int i=2; i<listOfCommand.length; i++)
+				answer += listOfCommand[i]+" ";
+			if (answer == ""){
+				resultExecution.setEndTime(null);
+				resultExecution.setStartTime(null);
+			}else{
+				resultExecution.setStartTime(Parser.retrieveDateTimeFirst(answer));
+				resultExecution.setEndTime(Parser.retrieveDateTimeSecond(answer));
+			}
 		}else if (listOfCommand[1].equalsIgnoreCase("Priority")){
 			if (listOfCommand.length<=2){
 				resultExecution.resetPriority();
