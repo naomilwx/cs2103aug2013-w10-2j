@@ -1,7 +1,6 @@
 package nailit.logic.parser;
-import nailit.common.TaskPriority;
+
 import nailit.logic.CommandType;
-import nailit.logic.command.*;
 import nailit.logic.ParserResult;
 
 public class ParserManager {
@@ -56,7 +55,7 @@ public class ParserManager {
 			SearchParser searchParserManager = new SearchParser(commandToExecute);
 			return searchParserManager.execute();
 		case SHOWHISTORY:
-			ShowHistoryParser showHistoryParserManager = new ShowHistoryParser(commandToExecute);
+			ShowHistoryParser showHistoryParserManager = new ShowHistoryParser();
 			return showHistoryParserManager.execute();
 		case UNCOMPLETE:
 			UncompleteParser uncompleteParserManager = new UncompleteParser(commandToExecute);
@@ -73,7 +72,7 @@ public class ParserManager {
 			AddReminderParser AddReminderParserManager = new AddReminderParser(commandToExecute);
 			return AddReminderParserManager.execute();
 		case EXIT:
-			ExitParser exitParserManager = new ExitParser(commandToExecute);
+			ExitParser exitParserManager = new ExitParser();
 			return exitParserManager.execute();
 		default:
 			throw new Error("Unrecognized command type");

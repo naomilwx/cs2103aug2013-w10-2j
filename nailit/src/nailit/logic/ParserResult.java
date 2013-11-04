@@ -1,10 +1,10 @@
 package nailit.logic;
 
+// @auther A0105559B
 import org.joda.time.DateTime;
 import nailit.common.TaskPriority;
 
 public class ParserResult{
-	//ArrayList<String> command = new ArrayList<String> ();
 
 	private int taskId;
 	private CommandType command;
@@ -106,10 +106,11 @@ public class ParserResult{
 	}
 	
 	public boolean isNullTaskID (){
-		if (taskId == 0)
+		if (taskId == 0){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 
 	public void setStartTime(DateTime startTimeExternal){

@@ -22,8 +22,9 @@ public class AddParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 		
 		resultExecution.setCommand(CommandType.ADD);
-		if (userCommand.equals(""))
+		if (userCommand.equals("")){
 			throw new Error("Wrong Format");
+		}
 		int startIndex = -1, endIndex = 0;
 		startIndex = userCommand.indexOf('(');
 		if (startIndex!=-1){
