@@ -5,7 +5,6 @@ package nailit.logic.command;
 import java.util.Comparator;
 import org.joda.time.DateTime;
 import nailit.common.Task;
-import nailit.common.TaskPriority;
 
 public class ComparatorForTwoTaskObj implements Comparator<Task>{
 	@Override
