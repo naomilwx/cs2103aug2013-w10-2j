@@ -4,15 +4,12 @@ package nailit.logic.command;
 
 import java.util.Vector;
 import org.joda.time.DateTime;
-import test.storage.StorageManagerStub;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.storage.FileCorruptionException;
-import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandUpdate extends Command{
@@ -32,18 +29,11 @@ public class CommandUpdate extends Command{
 	private boolean isUndoSuccess;
 	private boolean isRedoSuccess;
 	
-	private static final String SUCCESS_MSG_FIRSTPART = "Task [ID: "; 
-	private static final String SUCCESS_MSG_SECONDPART	= "] has been successfully updated";
 	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK = "Sorry, Task [ID: %1d] not found. Please check and try again.";
 	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK_FOR_TASK_NOT_EXIST_IN_CURRENT_LIST = "Sorry, Task [ID: %1d] is not in the current task list. Please check and try again.";
 	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult instance is null.";
 	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_TASK_LIST = "The task you are trying to update does not exist in the task list. Please try again."; 
 	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_STORAGE = "The task you are trying to update does not exist in the storage. Please try again.";
-
-
-	private static final String UPDATE_SUCCESSFUL_FEEDBACK = 
-			"Task [ID: %1d] has been successfully updated. The content updated is: \n";
-
 
 	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
