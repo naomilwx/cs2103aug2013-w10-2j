@@ -8,9 +8,11 @@ import nailit.logic.CommandType;
 public class HelpWindowConstants {
 	public static final String TEXT_DISPLAY_STYLE = "<head><style type = \"text/css\">"
 			+ "em {font-weight: bold; }"
-			+ "p.title {font-weight: bold; text-decoration:underline;}"
+			+ "p.title {font-size: 14px; font-weight: bold; text-decoration:underline;}"
+			+ "p.subtitle {font-weight: bold; text-decoration:underline;}"
 			+ "</style></head>"; 
 	public static final String TITLE_TEXT_HTML_FORMAT = "<tr><p class =\"title\"> %1s </p></tr>";
+	public static final String SUBTITLE_TEXT_HTML_FORMAT = "<tr><p class =\"subtitle\"> %1s </p></tr>";
 	public static final String[] PRIORITY_TYPES = {"low", "medium", "high"};
 	public static final String DATE_SYNTAX_LABEL = "date";
 	public static final String[] ACCEPTABLE_DATE_SYNTAX = 
@@ -23,6 +25,7 @@ public class HelpWindowConstants {
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
+	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] reminder [updated details]"};
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
@@ -39,6 +42,7 @@ public class HelpWindowConstants {
 		addCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> updateCommandSyntax = new Vector<String[]>();
 		updateCommandSyntax.add(UPDATE_SYNTAX);
+		updateCommandSyntax.add(UPDATE_REMINDER_SYNTAX);
 		updateCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> deleteCommandSyntax = new Vector<String[]>();
 		deleteCommandSyntax.add(DELETE_SYNTAX);
@@ -70,6 +74,8 @@ public class HelpWindowConstants {
 	
 	public static final HashMap<String, String> COMMANDBAR_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Down", "Scroll to next page in task list");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Up", "Scroll to previous page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+H", "Toggle Home Window");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+,", "Toggle Main Window");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+J", "Toggle History Window");

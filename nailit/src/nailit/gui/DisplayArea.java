@@ -78,13 +78,27 @@ public class DisplayArea extends JLayeredPane {
 	};
 	
 	private KeyAdapter keyEventListener = new KeyAdapter(){
+		boolean ctrlPressed = false;
 		@Override
 		public void keyPressed(KeyEvent keyStroke){
 			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_SHIFT){
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = true;
+			}else if(keyCode == KeyEvent.VK_SHIFT){
 				defaultPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
 				GUIBoss.setFocusOnCommandBar();
+			}else if(keyCode == KeyEvent.VK_COMMA){
+				GUIBoss.setVisible(false);
+			}else if(keyCode == KeyEvent.VK_H){
+				GUIBoss.toggleHomeWindow();
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent keyStroke){
+			int keyCode = keyStroke.getKeyCode();
+			if(keyCode == KeyEvent.VK_CONTROL){
+				ctrlPressed = false;
 			}
 		}
 	};
@@ -175,7 +189,7 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
 	private void configureDisplayArea(){
-		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
+		this.setBorder(null);
 		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
 		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
 		this.setSize(displayWidth, displayHeight);
@@ -274,6 +288,15 @@ public class DisplayArea extends JLayeredPane {
 		taskTable.displayTaskList(tasks, task);
 		addContent(taskTable, false);
 	}
+	protected void quickTaskTableScroll(boolean up){
+		if(taskTable != null){
+			if(up){
+				taskTable.quickScrollUp();
+			}else{
+				taskTable.quickScrollDown();
+			}
+		}
+	}
 	private void addAdditionalKeyListenerToTaskTable(){
 		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
 			private boolean ctrlPressed = false;
@@ -285,10 +308,16 @@ public class DisplayArea extends JLayeredPane {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
 					ctrlPressed = false;
 					taskTableOnCtrlEnterEvent();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					taskTableOnCtrlNEvent();
 				}else if(keyCode == KeyEvent.VK_ENTER){
 					taskTableOnEnterEvent();
 				}else if(keyCode == KeyEvent.VK_DELETE){
 					taskTableOnDeleteEvent();
+				}else if(keyCode == KeyEvent.VK_COMMA){
+					GUIBoss.setVisible(false);
+				}else if(keyCode == KeyEvent.VK_H){
+					GUIBoss.toggleHomeWindow();
 				}
 			}
 			@Override
@@ -320,6 +349,13 @@ public class DisplayArea extends JLayeredPane {
 		int displayID = taskTable.getSelectedRowDisplayID();
 		if(displayID >= 1){
 			GUIBoss.loadExistingTaskDescriptionInCommandBar(displayID);
+		}
+	}
+	protected void taskTableOnCtrlNEvent(){
+		GUIBoss.setFocusOnCommandBar();
+		int displayID = taskTable.getSelectedRowDisplayID();
+		if(displayID >= 1){
+			GUIBoss.loadExistingTaskNameInCommandBar(displayID);
 		}
 	}
 	

@@ -4,6 +4,7 @@ package nailit.gui;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -81,7 +82,6 @@ public abstract class ExtendedWindow extends JFrame{
 	}
 	protected void positionFrameBasedOnMainWindowPos(){
 		recalculateExtendedWindowPosition();
-//		setShape(new RoundRectangle2D.Double(10, 10, windowWidth, windowHeight, 50, 50));
 		setLocation(windowXPos, windowYPos);
 	}
 	protected void recalculateExtendedWindowPosition(){
@@ -113,8 +113,11 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void addItem(Component component) {
 		contentPane.add(component);
 	}
-	
-	protected void setFocus() {
+	protected void addListenersToDisplayPane(KeyAdapter keyListener){
+		displayPane.addKeyListener(keyListener);
+	}
+	@Override
+	public void requestFocus() {
 		displayPane.requestFocus();
 	}
 	@Override

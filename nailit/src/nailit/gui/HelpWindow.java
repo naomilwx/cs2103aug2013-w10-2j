@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -16,8 +18,10 @@ import nailit.logic.CommandType;
 public class HelpWindow extends ExtendedWindow{
 	protected static final String HTML_FORMATTED_STRING = "<html>" + HelpWindowConstants.TEXT_DISPLAY_STYLE + "%1s</html>";
 	protected static final String COMMAND_SYNTAX_HTML_FORMAT = "<tr><td>%1s  </td><td>%2s</td></tr>";
+	protected static final String KEYBOARD_SHORTCUT_HTML_FORMAT = "<tr><td>%1s : </td><td>%2s</td></tr>";
 	
 	private static final String ALL_COMMAND_SYNTAX_TITLE = "Command Syntax";
+	private static final String ALL_KEYBOARD_SHORTCUT_TITLE = "Keyboard Shortcuts";
 	private static final int DEFAULT_Y_TOP_OFFSET = 22;
 	private static final int DEFAULT_WINDOW_HEIGHT = 70;
 	private static final int EXTRA_LINE_HEIGHT = 20;
@@ -49,11 +53,9 @@ public class HelpWindow extends ExtendedWindow{
 	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addListenersToDisplayPane();
+		addListenersToDisplayPane(keyListener);
 	}
-	private void addListenersToDisplayPane(){
-		displayPane.addKeyListener(keyListener);
-	}
+
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;
@@ -112,6 +114,19 @@ public class HelpWindow extends ExtendedWindow{
 	private String formatTitleForDisplay(String title){
 		return String.format(HelpWindowConstants.TITLE_TEXT_HTML_FORMAT, title);
 	}
+	protected String formatDisplayForKeyBoardShortcuts(){
+		StringBuilder overallStr = new StringBuilder();
+		for(Entry<String, HashMap<String, String>> entry: HelpWindowConstants.ALL_KEYBOARD_COMMANDS.entrySet()){
+			overallStr.append(String.format(HelpWindowConstants.SUBTITLE_TEXT_HTML_FORMAT, entry.getKey()));
+			formatWindowKeyBoardShortcut(overallStr, entry.getValue());
+		}
+		return overallStr.toString();
+	}
+	protected void formatWindowKeyBoardShortcut(StringBuilder builder, HashMap<String, String> keyboardShortcutMap){
+		for(Entry<String, String> entry: keyboardShortcutMap.entrySet()){
+			builder.append(String.format(KEYBOARD_SHORTCUT_HTML_FORMAT, entry.getKey(), entry.getValue()));
+		}
+	}
 	protected String formatDisplayForSupportedCommandsSyntax(){
 		StringBuilder overallStr = new StringBuilder();
 		for(CommandType commandType: CommandType.values()){
@@ -129,6 +144,16 @@ public class HelpWindow extends ExtendedWindow{
 			}
 		}
 		return overallStr.toString();
+	}
+	protected void displayFullHelpWindow(){
+		String displayText = formatTitleForDisplay(ALL_KEYBOARD_SHORTCUT_TITLE) + formatDisplayForKeyBoardShortcuts() 
+				+ formatTitleForDisplay(ALL_COMMAND_SYNTAX_TITLE)
+				+ formatDisplayForSupportedCommandsSyntax();
+		String display = formatStringforDisplay(displayText);
+		displayFormattedText(display);
+		
+		adjustAndshowHelpWindow(FULL_WINDOW_HEIGHT);
+		Utilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForSupportedCommands(){
 		String displayText = formatTitleForDisplay(ALL_COMMAND_SYNTAX_TITLE)
@@ -154,8 +179,8 @@ public class HelpWindow extends ExtendedWindow{
 	protected void displayListOfAvailableCommands(){
 		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
 		displayFormattedText(display);
-		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
 		adjustAndshowHelpWindow(DEFAULT_WINDOW_HEIGHT);
+		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
 	private String formatStringforDisplay(String displayText){

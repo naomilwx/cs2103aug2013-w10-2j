@@ -2,6 +2,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -22,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int COMMANDBAR_TEXT_HEIGHT = 20;
+	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
 	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 5;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
@@ -31,6 +32,7 @@ public class CommandBar extends JPanel {
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final int MAX_HEIGHT_OF_TEXTBAR = 4 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
+	private static final Font COMMANDBAR_FONT = new Font("HelveticaNeue_Lt.tff", Font.PLAIN, 18);
 	
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
@@ -44,6 +46,7 @@ public class CommandBar extends JPanel {
 	private int commandBarWidth;
 	private int mainContainerWidth;
 	private int mainContainerHeight;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -104,6 +107,7 @@ public class CommandBar extends JPanel {
 		textBar.setLineWrap(true);
 		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
 		textBar.setSize(commandBarWidth, commandBarHeight);
+		textBar.setFont(COMMANDBAR_FONT);
 		textBar.addComponentListener(
 				//component listener to detect when JTextArea grows due to change in number of lines
 				new ComponentAdapter(){
@@ -154,6 +158,9 @@ public class CommandBar extends JPanel {
 				}else if(keyCode == KeyEvent.VK_TAB){
 					resetKeys();
 					GUIBoss.setFocusOnDisplay();
+				}else if(keyCode == KeyEvent.VK_F1){
+					GUIBoss.displayFullHelpWindow();
+					GUIBoss.setFocusOnHelpWindow();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
@@ -172,6 +179,10 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					GUIBoss.displayCommandSyantaxHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
+				}else if(keyCode == KeyEvent.VK_PAGE_UP){
+					GUIBoss.scrollToPrevPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
+					GUIBoss.scrollToNextPageInTaskTable();
 				}
 			}
 			@Override
