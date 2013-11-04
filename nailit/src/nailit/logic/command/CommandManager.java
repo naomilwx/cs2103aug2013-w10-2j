@@ -113,6 +113,10 @@ public class CommandManager {
 			Result resultToReturn = addReminder();
 			return resultToReturn;
 		}
+		case DELETEREMINDER: {
+			Result resultToReturn = deleteReminder();
+			return resultToReturn;
+		}
 		case UNDO: {
 			Result resultToReturn = undo();
 			return resultToReturn;
@@ -135,7 +139,7 @@ public class CommandManager {
 		return null;
 	}
 	
-	
+
 	private Result redo() {
 		Command commandToRedo = getTheCommandToRedo();
 		Result resultToPassToGUI = new Result();
@@ -197,6 +201,8 @@ public class CommandManager {
 							CommandAddReminder car = (CommandAddReminder)commandToRedo;
 							DateTime reminderDateToAdd = car.getReminderDateToAdd();
 							currentTask.setReminder(reminderDateToAdd);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							currentTask.setReminder(null);
 						}
 					}
 					sort();
@@ -285,6 +291,10 @@ public class CommandManager {
 							currentTask.setReminder(null); // remove the reminder date if has
 						} else if(commandType == CommandType.ADDREMINDER) {
 							currentTask.setReminder(null);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							CommandDeleteReminder cdrObj = (CommandDeleteReminder)commandToUndo;
+							DateTime reminderDateDeleted = cdrObj.getReminderDateDeleted();
+							currentTask.setReminder(reminderDateDeleted);
 						}
 					}
 					sort();
@@ -414,6 +424,17 @@ public class CommandManager {
 		}
 		return resultToPassToGUI;
 	}
+	
+	private Result deleteReminder() throws Exception {
+		CommandDeleteReminder cdrObj = new CommandDeleteReminder(parserResultInstance, storer, currentTaskList);
+		Result resultToPassToGUI = cdrObj.executeCommand(); // the result display 
+		if(cdrObj.isSuccess()) {
+			addNewCommandObjToOperationsHistory(cdrObj);
+			// clear the redo command list
+			redoCommandsList.clear();
+		}
+		return resultToPassToGUI;
+	}
 
 	private void updateCurrentFilterObj(CommandSearch newSearchCommandObj) {
 		if(newSearchCommandObj.isFilterNothing()) { // filterObj becomes a new original filterObj
@@ -530,13 +551,18 @@ public class CommandManager {
 	public void setCurrentFilterSearchAll() {
 		filterContentForCurrentTaskList.setIsSearchAll(true);
 	}
-	public Result getListOfTasksForTheDay(){
+	public Vector<Task> getTasksHappeningOnDay(DateTime date){
+		DateTime startOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
+		DateTime endOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 23, 59);
+		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
+		Vector<Task> tasks = storer.filter(dateFilter);
+		return tasks;
+	}
+	public Result getDefaultListOfTasks(){
 		DateTime now = new DateTime();
 		DateTime startOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 0, 0);
-		DateTime endOfDay = new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 23, 59);
-		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
 		FilterObject uncompletedFilter = new FilterObject("", null, startOfDay.minusSeconds(1), null, null, false); //1 sec before start of today
-		Vector<Task> dateList = storer.filter(dateFilter);
+		Vector<Task> dateList = getTasksHappeningOnDay(now);
 		Vector<Task> overdueList = storer.filter(uncompletedFilter);
 		for(Task task: overdueList){
 			if(!dateList.contains(task)){

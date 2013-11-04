@@ -12,24 +12,29 @@ import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandAdd extends Command{
-	private CommandType commandType;
-	private Result executedResult;
+	// fields that represent the command, created Result object passed to 
+	
+	
 	private Task taskPassedToStorer;
-	private CommandType command;
+	
+	// this is the task ID, which is used to contact with storage
+	private int taskID; 
+	
+	// potential fields to add 
 	private String taskName;
 	private DateTime startTime;
 	private DateTime endTime;
 	private TaskPriority taskPriority;
 	private String taskTag;
 	private String taskDescription;
-	private int taskID;
 	
-	// this is used for the command history
-	private String commandSummary;
 	
+	
+	// fields for marking the success for undo and redo 
 	private boolean isUndoSuccess;
 	private boolean isRedoSuccess;
 	
+	// final static fields
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully added";
 	
 	// constructor
@@ -69,15 +74,7 @@ public class CommandAdd extends Command{
 		if(parserResultInstance.getEndTime() != null) {
 			commandSummary = commandSummary + " End time: " + 
 		parserResultInstance.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-		} 
-		
-//		if(parserResultInstance.getTag() != null) {
-//			commandSummary = commandSummary + " Tag: " + parserResultInstance.getTag() + "\n";
-//		} 
-//		
-//		if(parserResultInstance.getPriority() != null) {
-//			commandSummary = commandSummary + " Priority: " + parserResultInstance.getPriority() + "\n";
-//		} 
+		}  
 	}
 
 	private void createResultObject() {
@@ -91,7 +88,6 @@ public class CommandAdd extends Command{
 	}
 
 	private void getContentFromParserResult() {
-		command = parserResultInstance.getCommand();
 		taskName = parserResultInstance.getName();
 		startTime = parserResultInstance.getStartTime();
 		endTime = parserResultInstance.getEndTime();
