@@ -16,7 +16,7 @@ private String userCommand;
 		ParserResult resultExecution = new ParserResult();
 		resultExecution.setCommand(CommandType.COMPLETE);
 		if (Parser.isNumber(userCommand))
-			resultExecution.setTaskID(Integer.parseInt(userCommand));
+			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		else 
 			throw new Error("Wrong Format");
 		return resultExecution;
