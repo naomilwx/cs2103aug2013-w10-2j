@@ -317,6 +317,10 @@ public class Task {
 			return false;
 		}
 	}
+	public boolean isHappeningToday(){
+		DateTime now = new DateTime();
+		return isInDateRange(Utilities.getEndOfDay(now), Utilities.getEndOfDay(now));
+	}
 	public boolean isInDateRange(DateTime start, DateTime end){
 		//checks if event or deadline is within date range (inclusive)
 		//boundary case: ie event or task time is exactly the same as start or end, should return true
