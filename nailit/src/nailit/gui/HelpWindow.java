@@ -53,11 +53,9 @@ public class HelpWindow extends ExtendedWindow{
 	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addListenersToDisplayPane();
+		addListenersToDisplayPane(keyListener);
 	}
-	private void addListenersToDisplayPane(){
-		displayPane.addKeyListener(keyListener);
-	}
+
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;
@@ -181,8 +179,8 @@ public class HelpWindow extends ExtendedWindow{
 	protected void displayListOfAvailableCommands(){
 		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
 		displayFormattedText(display);
-		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
 		adjustAndshowHelpWindow(DEFAULT_WINDOW_HEIGHT);
+		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
 	private String formatStringforDisplay(String displayText){

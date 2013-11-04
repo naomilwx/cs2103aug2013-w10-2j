@@ -156,6 +156,7 @@ public class CommandBar extends JPanel {
 					GUIBoss.setFocusOnDisplay();
 				}else if(keyCode == KeyEvent.VK_F1){
 					GUIBoss.displayFullHelpWindow();
+					GUIBoss.setFocusOnHelpWindow();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
@@ -174,6 +175,10 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					GUIBoss.displayCommandSyantaxHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
+				}else if(keyCode == KeyEvent.VK_PAGE_UP){
+					GUIBoss.scrollToPrevPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
+					GUIBoss.scrollToNextPageInTaskTable();
 				}
 			}
 			@Override
