@@ -1,11 +1,10 @@
 package nailit.logic.command;
 
+//@author A0105789R
+
 import java.util.Iterator;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
-
-
 import nailit.common.FilterObject;
 import nailit.common.NIConstants;
 import nailit.common.Result;

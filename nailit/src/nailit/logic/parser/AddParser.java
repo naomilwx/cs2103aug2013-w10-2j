@@ -1,6 +1,6 @@
 package nailit.logic.parser;
 
-// @auther A0105559B
+// @author A0105559B
 
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -10,7 +10,7 @@ import nailit.common.TaskPriority;
 public class AddParser extends Parser {
 
 	private String userCommand;
-	private String[] listOfCommand;
+	private String[] listOfCommands;
 	private String name="";
 	
 	public AddParser (String command){
@@ -25,6 +25,7 @@ public class AddParser extends Parser {
 		if (userCommand.equals("")){
 			throw new Error("Wrong Format");
 		}
+		
 		int startIndex = -1, endIndex = 0;
 		startIndex = userCommand.indexOf('(');
 		if (startIndex!=-1){
@@ -32,8 +33,9 @@ public class AddParser extends Parser {
 				if (userCommand.charAt(i)==')'){
 					endIndex = i;
 				}
-			if (endIndex == 0)
+			if (endIndex == 0){
 				throw new Error ("Wrong Format: Bracket is not matched");
+			}
 			resultExecution.setDescription(userCommand.substring(startIndex+1, endIndex));
 			userCommand = userCommand+" ";
 			
@@ -48,30 +50,29 @@ public class AddParser extends Parser {
 			if (index != -1){
 				userCommand = userCommand.substring(0,index);
 			}
-			
 			userCommand += temp;
 		}
 
-		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
-		for (int i=0; i<listOfCommand.length; i++) {
-			listOfCommand[i] = listOfCommand[i].trim();
-			if (TaskPriority.isTaskPriority(listOfCommand[i])) {
-				resultExecution.setPriority(TaskPriority.valueOf(listOfCommand[i].toUpperCase()));
-			}else if (Parser.isTag(listOfCommand[i])) {
-				resultExecution.setTag(listOfCommand[i]);
-			}else if (Parser.isDateTime(listOfCommand[i])) {
+		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
+		for (int i=0; i<listOfCommands.length; i++) {
+			listOfCommands[i] = listOfCommands[i].trim();
+			if (TaskPriority.isTaskPriority(listOfCommands[i])) {
+				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[i].toUpperCase()));
+			}else if (Parser.isTag(listOfCommands[i])) {
+				resultExecution.setTag(listOfCommands[i]);
+			}else if (Parser.isDateTime(listOfCommands[i])) {
 				if (resultExecution.getStartTime() == null) {
-					if (Parser.numberOfTime(listOfCommand[i]) == 2) {
-						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommand[i]));
-						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommand[i]));
+					if (Parser.numberOfTime(listOfCommands[i]) == 2) {
+						resultExecution.setStartTime(Parser.retrieveDateTimeFirst(listOfCommands[i]));
+						resultExecution.setEndTime(Parser.retrieveDateTimeSecond(listOfCommands[i]));
 					} else {
-						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommand[i]));
+						resultExecution.setStartTime(Parser.retrieveDateTime(listOfCommands[i]));
 					}
 				} else { 
-					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommand[i]));
+					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommands[i]));
 				}
 			} else 
-				name+= listOfCommand[i];
+				name+= listOfCommands[i];
 		}
 
 		if (name.equals("")){
