@@ -7,9 +7,7 @@ import nailit.storage.StorageManager;
 
 public class CommandExit extends Command{
 
-	private Result executedResult;
 	
-	private CommandType commandType;
 	
 	public CommandExit(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);

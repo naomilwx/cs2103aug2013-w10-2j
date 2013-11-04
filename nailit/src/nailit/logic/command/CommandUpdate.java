@@ -15,8 +15,6 @@ import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandUpdate extends Command{
-	private CommandType commandType;
-	private Result executedResult;
 	private int taskToRetrieveID;
 	private Task taskRetrieved; // previous version
 	
@@ -24,7 +22,6 @@ public class CommandUpdate extends Command{
 	
 	// for the use of commandSummary
 	private String updatedContent;
-	private String commandSummary;
 	
 	private Vector<Task> taskList;
 	private int taskToRetrieveDisplayID;
