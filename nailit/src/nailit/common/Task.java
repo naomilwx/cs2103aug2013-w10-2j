@@ -146,7 +146,17 @@ public class Task {
 	public boolean isPastEvent(){
 		if(isEvent()){
 			DateTime now = new DateTime();
-			return isBeforeDateTime(now);
+			return (endTime.compareTo(now) < 0);
+		}else{
+			return false;
+		}
+	}
+	//check if task is overdue
+	public boolean isOverDueTask(){
+		if(isEvent() || isFloatingTask()){
+			return false;
+		}else if(!isCompleted){
+			return isBeforeDateTime(new DateTime());
 		}else{
 			return false;
 		}

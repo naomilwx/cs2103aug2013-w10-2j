@@ -146,6 +146,7 @@ public class GUIManager {
 	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
+		mainWindow.setIconImage(TRAY_ICON_IMG.getImage());
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
 		initialiseAndConfigureDisplayArea();
 		loadComponentsUntoMainFrame();
@@ -164,19 +165,21 @@ public class GUIManager {
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
-			globalKeyListener.registerGlobalKeyHook();
-		}
+//		if(!globalKeyListener.isEnabled()){
+//			globalKeyListener.registerGlobalKeyHook();
+//		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components
 	public void setVisible(boolean isVisible){
-//		if(!isVisible){
-//			enableGlobalKeyListener();
-//		}
+		if(!isVisible){
+			enableGlobalKeyListener();
+		}else{
+			setFocusOnCommandBar();
+		}
 		mainWindow.setVisible(isVisible);
-//		homeWindow.setVisible(isVisible);
 	}
+	
 	public void toggleHomeWindow(){
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
@@ -210,10 +213,10 @@ public class GUIManager {
 		commandBar.setFocus();
 	}
 	public void setFocusOnHomeWindow(){
-		homeWindow.setFocus();
+		homeWindow.requestFocus();
 	}
 	public void setFocusOnHelpWindow(){
-		helpWindow.setFocus();
+		helpWindow.requestFocus();
 	}
 	
 	protected Dimension getMainWindowLocationCoordinates(){
@@ -229,6 +232,13 @@ public class GUIManager {
 	
 	protected void displayFullHelpWindow(){
 		helpWindow.displayFullHelpWindow();
+	}
+	
+	protected void scrollToNextPageInTaskTable(){
+		displayArea.quickTaskTableScroll(false);
+	}
+	protected void scrollToPrevPageInTaskTable(){
+		displayArea.quickTaskTableScroll(true);
 	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
