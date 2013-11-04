@@ -7,7 +7,7 @@ import nailit.logic.ParserResult;
 public class DisplayParser extends Parser {
 	
 	private String userCommand;
-	private String[] listOfCommand;
+	private String[] listOfCommands;
 	
 	public DisplayParser (String command){
 		userCommand = command;
@@ -16,17 +16,17 @@ public class DisplayParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		listOfCommand = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
+		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 	
 		resultExecution.setCommand(CommandType.DISPLAY);
 		
-		if (listOfCommand[0].equalsIgnoreCase("ALL")){
+		if (listOfCommands[0].equalsIgnoreCase("ALL")){
 			resultExecution.setDisplayAll(true);
-		}else if (listOfCommand[0].equalsIgnoreCase("HISTORY")){
+		}else if (listOfCommands[0].equalsIgnoreCase("HISTORY")){
 			resultExecution.setDisplayHistory(true);
-		}else if (listOfCommand[0].equalsIgnoreCase("COMPLETE")){
+		}else if (listOfCommands[0].equalsIgnoreCase("COMPLETE")){
 			resultExecution.setDisplayComplete(true);
-		}if (listOfCommand[0].equalsIgnoreCase("UNCOMPLETE")){
+		}if (listOfCommands[0].equalsIgnoreCase("UNCOMPLETE")){
 			resultExecution.setDisplayUncomplete(true);
 		}else if (Parser.isTaskID(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
