@@ -14,6 +14,8 @@ public class IDDisplayRenderer  extends DefaultTableCellRenderer{
 		String displayID = (String) value;
 		if(displayID.equals(GUIManager.DELETED_TASK_DISPLAY_ID)){
 			displayID = "<html><p color = \"red\">" + displayID + "</p><html>";
+		}else{
+			displayID = "<html><p style = \"font-weight: bold; font-size: 12px\">" + displayID + "</p><html>";
 		}
 		setText(displayID);
 	}

@@ -16,6 +16,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.Point;
@@ -28,6 +31,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -110,6 +114,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
+			loadRequiredFontsInGraphicsEnvironment();
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
@@ -125,7 +130,7 @@ public class GUIManager {
 	
 	private void showDefaultDisplayAndReminders(){
 		getAndDisplayReminders();
-		executeUserInputCommand(CommandType.DISPLAY + " all");
+		processAndDisplayExecutionResult(logicExecutor.getListOfTasksForTheDay());
 	}
 	private void getAndDisplayReminders(){
 		Vector<Task> reminderList = logicExecutor.getReminderList();
@@ -146,6 +151,7 @@ public class GUIManager {
 	}
 	private void createComponentsAndAddToMainFrame() {
 		mainWindow = new MainWindow(this);
+		mainWindow.setIconImage(TRAY_ICON_IMG.getImage());
 		commandBar = new CommandBar(this, mainWindow.getWidth(), mainWindow.getHeight());
 		initialiseAndConfigureDisplayArea();
 		loadComponentsUntoMainFrame();
@@ -164,23 +170,28 @@ public class GUIManager {
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
-			globalKeyListener.registerGlobalKeyHook();
-		}
+//		if(!globalKeyListener.isEnabled()){
+//			globalKeyListener.registerGlobalKeyHook();
+//		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components
 	public void setVisible(boolean isVisible){
-//		if(!isVisible){
-//			enableGlobalKeyListener();
-//		}
+		if(!isVisible){
+			enableGlobalKeyListener();
+		}else{
+			setFocusOnCommandBar();
+		}
 		mainWindow.setVisible(isVisible);
-//		homeWindow.setVisible(isVisible);
 	}
+	
 	public void toggleHomeWindow(){
 		if(homeWindow != null){
 			boolean currentVisibility = homeWindow.isVisible();
 			homeWindow.setVisible(!currentVisibility);
+			if(homeWindow.isVisible()){
+				getAndDisplayReminders();
+			}
 		}
 	}
 	protected void toggleHistoryWindow(){
@@ -207,10 +218,10 @@ public class GUIManager {
 		commandBar.setFocus();
 	}
 	public void setFocusOnHomeWindow(){
-		homeWindow.setFocus();
+		homeWindow.requestFocus();
 	}
 	public void setFocusOnHelpWindow(){
-		helpWindow.setFocus();
+		helpWindow.requestFocus();
 	}
 	
 	protected Dimension getMainWindowLocationCoordinates(){
@@ -223,6 +234,17 @@ public class GUIManager {
 	protected void displayCommandSyantaxHelpWindow(){
 		helpWindow.displaySyntaxForSupportedCommands();
 	}
+	
+	protected void displayFullHelpWindow(){
+		helpWindow.displayFullHelpWindow();
+	}
+	
+	protected void scrollToNextPageInTaskTable(){
+		displayArea.quickTaskTableScroll(false);
+	}
+	protected void scrollToPrevPageInTaskTable(){
+		displayArea.quickTaskTableScroll(true);
+	}
 	//functions to handle user commands from command bar or keyboard shortcut
 	/**
 	 * Executes command entered by user
@@ -231,15 +253,12 @@ public class GUIManager {
 	protected Result executeUserInputCommand(String input){
 		Result executionResult = null;
 		try{
-			displayArea.hideNotifications();
 			executionResult = logicExecutor.executeCommand(input);
 			if(executionResult == null){
 				System.out.println("die!");
 			}
 			assert executionResult != null;
-			clearUserInputAndCleanUpDisplay();
-			processAndDisplayExecutionResult(executionResult);
-			resizeMainDisplayArea();
+			displayCommandFeedback(executionResult);
 		}catch(Error err){
 			String notificationStr = err.getMessage();
 			if(notificationStr == null){
@@ -263,21 +282,36 @@ public class GUIManager {
 		return executionResult;
 	}
 	
+	private void displayCommandFeedback(Result executionResult){
+		clearUserInputAndCleanUpDisplay();
+		processAndDisplayExecutionResult(executionResult);
+		resizeMainDisplayArea();
+	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
+		displayArea.hideNotifications();
 		displayArea.removeDeletedTasksFromTaskListTable();
 		displayArea.removeTaskDisplay();
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
-		String deleteCommand = CommandType.DELETE.toString()+ " " + taskDisplayID;
-		executeUserInputCommand(deleteCommand);
-		return;
+		try {
+			Result delCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DELETE, taskDisplayID);
+			displayCommandFeedback(delCommandResult);
+		} catch (Exception e) {
+			e.printStackTrace(); //TODO:
+		}
 	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
-		String displayCommand = CommandType.DISPLAY.toString() + " " + taskDisplayID;
-		return executeUserInputCommand(displayCommand);
+		try {
+			Result displayCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DISPLAY, taskDisplayID);
+			displayCommandFeedback(displayCommandResult);
+			return displayCommandResult;
+		} catch (Exception e) {
+			e.printStackTrace(); //TODO:
+			return null;
+		}
 	}
 	protected void loadExistingTaskDescriptionInCommandBar(int taskDisplayID){
 		Result result = executeTriggeredTaskDisplay(taskDisplayID);
@@ -286,6 +320,16 @@ public class GUIManager {
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
 						+" " + "description " + task.getDescription());
+			}
+		}
+	}
+	protected void loadExistingTaskNameInCommandBar(int taskDisplayID){
+		Result result = executeTriggeredTaskDisplay(taskDisplayID);
+		if(result !=  null){
+			Task task = result.getTaskToDisplay();
+			if(task != null){
+				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
+						+" " + "name " + task.getName());
 			}
 		}
 	}
@@ -300,6 +344,9 @@ public class GUIManager {
 		if(result.getExitStatus()){
 			exit();
 		}else{
+			if(homeWindow.isVisible()){
+				getAndDisplayReminders();
+			}
 			displayExecutionResult(result);
 		}
 	}
@@ -321,9 +368,9 @@ public class GUIManager {
 				displayArea.displayTaskList(result);
 				if(result.getDeleteStatus() == true){
 					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
-				}else{
-					displayArea.displayTaskDetails(result.getTaskToDisplay());
-				}
+				}//else{
+//					displayArea.displayTaskDetails(result.getTaskToDisplay());
+//				}
 				break;
 			default:
 				break;
@@ -367,7 +414,23 @@ public class GUIManager {
 			}
 		}
 	}
-	
+	private void loadRequiredFontsInGraphicsEnvironment(){
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		try {
+			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/HelveticaNeue_Lt.ttf"));
+			Font helveticaR = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Helvetica_Reg.ttf"));
+			Font Lucida = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Lucida_Grande.ttf"));
+			env.registerFont(helveticaN);
+			env.registerFont(helveticaR);
+			env.registerFont(Lucida);
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private void showInSystemTray(final GUIManager GUIBoss){
 		if(SystemTray.isSupported()){
 			final SystemTray systemTray = SystemTray.getSystemTray();

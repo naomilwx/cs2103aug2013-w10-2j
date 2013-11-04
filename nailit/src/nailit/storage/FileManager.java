@@ -28,7 +28,7 @@ public class FileManager {
 	 * @throws FileCorruptionException 
 	 * */
 	public FileManager(String path) throws FileCorruptionException{
-		setPath(path);
+		setEnvironment(path);
 		readFile();
 	}
 	
@@ -120,7 +120,7 @@ public class FileManager {
 		}
 	}
 
-	private void setPath(String path){
+	private void setEnvironment(String path){
 		this.path = path;
 	}
 	

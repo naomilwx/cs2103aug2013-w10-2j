@@ -10,6 +10,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class MainWindow extends JFrame {
 	protected static final int WINDOW_HEIGHT = 470;

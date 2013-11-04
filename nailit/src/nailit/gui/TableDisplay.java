@@ -9,6 +9,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -41,7 +43,8 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int NO_SELECTED_ROW = -1;
 	protected static final int SINGLE_SCROLLDOWN = 1;
 	protected static final int SINGLE_SCROLLUP = -1;
-	protected static final int TAB_SCROLL_OFFSET = 5;
+	protected static final int QUICK_SCROLLDOWN_OFFSET = 6;
+	protected static final int QUICK_SCROLLUP_OFFSET = 6;
 	
 	protected int containerHeight;
 	protected int containerWidth;
@@ -66,11 +69,23 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			}
 		}
 	};
+	protected final MouseAdapter tableMouseEventListener = new MouseAdapter(){
+		@Override
+		public void mouseEntered(MouseEvent event){
+			showScrollBars();
+		}
+		@Override
+		public void mouseExited(MouseEvent event){
+			if(event.getComponent() instanceof TableDisplay){
+				hideScrollBars();
+			}
+		}
+	};
 	//actions
-	private final AbstractAction quickScrollToRowBelowOnTab = new AbstractAction(){
+	private final AbstractAction quickScrollToRowBelow = new AbstractAction(){
 		@Override
 		public void actionPerformed(ActionEvent event){
-			scrollToNextRow(TAB_SCROLL_OFFSET);
+			scrollToNextRow(QUICK_SCROLLDOWN_OFFSET);
 		}
 	};
 	private final AbstractAction scrollToRowBelowOnKeyEvent = new AbstractAction(){
@@ -107,10 +122,15 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		setFocusTraversalKeysEnabled(false);
 		addFocusListener(displayFocusListener);
 		addKeyListener(moreTableMainFrameKeyEventListener);
+		addMouseListener(tableMouseEventListener);
 	}
 	protected void hideScrollBars(){
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	}
+	protected void showScrollBars(){
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		 setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	}
 	protected void createAndConfigureTable() {
 		initialiseTableStructures();
@@ -151,9 +171,11 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		table.setFocusTraversalKeysEnabled(false);
+		table.setShowGrid(false);
 		createTableKeyBindings();
 		setRowWidths();
 		setViewportView(table);
+		table.addMouseListener(tableMouseEventListener);
 	}
 	
 	protected void setHeaderText(){
@@ -170,6 +192,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	protected void configureTableHeader(){
 		JTableHeader header = table.getTableHeader();
+		header.setReorderingAllowed(false);
 		header.setDefaultRenderer(new TableHeaderRenderer());
 		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));
 	}
@@ -191,6 +214,12 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 			column.setWidth(widths[i]);
 			column.setPreferredWidth(widths[i]);
 		}
+	}
+	protected void quickScrollUp(){
+		scrollToNextRow(QUICK_SCROLLUP_OFFSET);
+	}
+	protected void quickScrollDown(){
+		scrollToNextRow(QUICK_SCROLLDOWN_OFFSET);
 	}
 	private void scrollToNextRow(int offSet){
 		if(tableRows.isEmpty()){
@@ -233,7 +262,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "Down Key");
 		tableInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "Up Key");
 		tableActionMap.put("Esc Event", focusOnMainTableOnShift);
-		tableActionMap.put("Tab Key", quickScrollToRowBelowOnTab);
+		tableActionMap.put("Tab Key", quickScrollToRowBelow);
 		tableActionMap.put("Down Key", scrollToRowBelowOnKeyEvent);
 		tableActionMap.put("Up Key", scrollToRowAboveOnKeyEvent);
 		table.setInputMap(JTable.WHEN_FOCUSED, tableInputMap);

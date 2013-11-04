@@ -9,6 +9,7 @@ import nailit.common.TaskPriority;
 public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
 			+ "p.name {font-size: 14px;}"
+			+ "p.overdue {font-size: 14px; color: red;}"
 			+ "p.tag {font-size: 10px; color: gray;}"
 			+ "</style></head>";
 	private static final String PRIORITY_DISPLAY_FORMAT = "<td width = \" 40px\">"
@@ -37,20 +38,29 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 			return String.format(PRIORITY_DISPLAY_FORMAT, LOW_PRIORITY_COLOUR, LOW_PRIORITY_CODE);
 		}
 	}
+	private static String getNameHTMLTag(Task task){
+		String htmlTag;
+		if(task.isOverDueTask()){
+			htmlTag = "<p class = \"overdue\">";
+		}else{
+			htmlTag = "<p class = \"name\">";
+		}
+		return htmlTag;
+	}
 	public static String formatTaskNameCellDisplay(Task task){
 		String taskName = task.getName();
 		String tag = task.getTag();
 		boolean isCompleted = task.checkCompleted();
 		String statusFlag = "";
 		String tagRowFiller = "";
-		if(!task.isEvent()){
-			if(isCompleted){
-				statusFlag = TASK_DONE_CODE;
-			}else{
-				statusFlag = TASK_NOT_DONE_CODE;
-			}
+		
+		if(isCompleted){
+			statusFlag = TASK_DONE_CODE;
+		}else{
+			statusFlag = TASK_NOT_DONE_CODE;
 		}
-		String nameAndTag = "<p class = \"name\">" + taskName + "</p>";
+		
+		String nameAndTag = getNameHTMLTag(task) + taskName + "</p>";
 		if(!tag.isEmpty()){
 			nameAndTag += "<p class = \"tag\">" + tag + "</p>";
 			tagRowFiller = ROW_FILLER;
