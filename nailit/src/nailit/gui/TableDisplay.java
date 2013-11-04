@@ -171,6 +171,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		table.setFocusTraversalKeysEnabled(false);
+		table.setShowGrid(false);
 		createTableKeyBindings();
 		setRowWidths();
 		setViewportView(table);
