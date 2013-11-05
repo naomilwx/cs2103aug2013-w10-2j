@@ -12,7 +12,7 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 			+ "p.overdue {font-size: 14px; color: red;}"
 			+ "p.tag {font-size: 10px; color: gray;}"
 			+ "</style></head>";
-	private static final String PRIORITY_DISPLAY_FORMAT = "<td width = \" 40px\">"
+	private static final String PRIORITY_DISPLAY_FORMAT = "<td width = \" 45px\">"
 			+ "<p class = \"priority\" style = \"color: %1s\">%2s</p><p></p</td>";
 	private static final String TASK_DONE_CODE = "&#10004  ";
 	private static final String TASK_NOT_DONE_CODE = "&nbsp;   ";

@@ -81,11 +81,9 @@ public class GUIManager {
 	protected static final int END_TIME_COLUMN_WIDTH = 130;
 	protected static final int TOTAL_TABLE_WIDTH
 	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + START_TIME_COLUMN_WIDTH + END_TIME_COLUMN_WIDTH;
-	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
 	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
 		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, START_TIME_COLUMN_WIDTH, END_TIME_COLUMN_WIDTH};
-	protected static final int[] COMMAND_HISTORY_COLUMN_WIDTH =
-		{ID_COLUMN_WIDTH, COMMAND_COLUMN_WIDTH};
+	protected static final int TASK_NAME_COLUMN_NUMBER = 1;
 	
 	protected static final String ID_COL_NAME = "ID";
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
@@ -94,8 +92,6 @@ public class GUIManager {
 	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
 		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME};
-	protected static final String[] COMMAND_HISTORY_HEADER =
-		{ID_COL_NAME, COMMAND_COL_NAME};
 	public static final String DELETED_TASK_DISPLAY_ID = "DEL";
 	
 	protected static Font DEFAULT_FONT_OBJECT;
