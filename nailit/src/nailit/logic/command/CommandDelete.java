@@ -117,20 +117,20 @@ public class CommandDelete extends Command{
 
 	private void createCommandSummary() {
 		
-		commandSummary = "delete";
+		commandSummary = "delete: ";
 		if(taskToRemove.getName() != null) {
-			commandSummary = commandSummary + " Name: " + taskToRemove.getName() + "\n";
+			commandSummary = commandSummary + taskToRemove.getName() + "\n";
 		} 
 		
-		if(taskToRemove.getStartTime() != null) {
-			commandSummary = commandSummary + " Start time: " + 
-		taskToRemove.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-		} 
-		
-		if(taskToRemove.getEndTime() != null) {
-			commandSummary = commandSummary + " End time: " + 
-		taskToRemove.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-		} 
+//		if(taskToRemove.getStartTime() != null) {
+//			commandSummary = commandSummary + " Start time: " + 
+//		taskToRemove.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//		} 
+//		
+//		if(taskToRemove.getEndTime() != null) {
+//			commandSummary = commandSummary + " End time: " + 
+//		taskToRemove.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//		} 
 		
 //		if(taskToRemove.getTag() != null) {
 //			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "\n";
