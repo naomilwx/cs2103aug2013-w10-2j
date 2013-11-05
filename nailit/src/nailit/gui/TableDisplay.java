@@ -37,7 +37,7 @@ import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
 
-public class TableDisplay extends ScrollableFocusableDisplay{
+public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int TABLE_HEADER_HEIGHT = 35;
 	protected static final int TABLE_ROW_HEIGHT = 50;
 	protected static final int NO_SELECTED_ROW = -1;
@@ -48,8 +48,7 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 	
 	protected int containerHeight;
 	protected int containerWidth;
-	protected int tableDisplayType;
-	
+
 	protected JTable table;
 	protected Vector<Vector<String>> tableRows;
 	protected DefaultTableModel tableModel;
@@ -108,11 +107,13 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		}
 	};
 	
-	public TableDisplay(int width, int height, int displayType){
-		tableDisplayType = displayType;
+	public TableDisplay(int width, int height){
 		configureMainFrame(width, height);
 		createAndConfigureTable();
 	}
+	
+	protected abstract void setHeaderText();
+	protected abstract void setRowWidths();
 	protected void configureMainFrame(int width, int height){
 		containerWidth = width;
 		containerHeight = height;
@@ -146,25 +147,6 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 				return false;
 			}
 		};
-		tableRows = new Vector<Vector<String>>();
-		table = new JTable(){
-			private final IDDisplayRenderer idDisplayRenderer = new IDDisplayRenderer();
-			@Override
-			public TableCellRenderer getCellRenderer(int row, int col){
-				String colName = "";
-				switch(tableDisplayType){
-				case Result.HISTORY_DISPLAY:
-					colName = GUIManager.COMMAND_HISTORY_HEADER[col];
-					if(colName.equals(GUIManager.ID_COL_NAME)){
-						return idDisplayRenderer;
-					}else{
-						return super.getCellRenderer(row, col);
-					}
-				default:
-					return super.getCellRenderer(row, col);
-				}
-			}
-		};
 	}
 	
 	protected void configureTable() {
@@ -178,33 +160,13 @@ public class TableDisplay extends ScrollableFocusableDisplay{
 		table.addMouseListener(tableMouseEventListener);
 	}
 	
-	protected void setHeaderText(){
-		switch(tableDisplayType){
-			case Result.HISTORY_DISPLAY:
-				tableHeaderLabel = new Vector<String>(Arrays.asList(GUIManager.COMMAND_HISTORY_HEADER));
-				break;
-			default:
-				tableHeaderLabel = new Vector<String>();
-				break;
-		}
-		noOfCols = tableHeaderLabel.size();
-		tableModel.setDataVector(tableRows, tableHeaderLabel);
-	}
 	protected void configureTableHeader(){
 		JTableHeader header = table.getTableHeader();
 		header.setReorderingAllowed(false);
 		header.setDefaultRenderer(new TableHeaderRenderer());
 		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));
 	}
-	protected void setRowWidths(){
-		switch(tableDisplayType){
-			case Result.HISTORY_DISPLAY:
-				setRowWidths(table, GUIManager.COMMAND_HISTORY_COLUMN_WIDTH);
-				break;
-			default:
-				break;
-		}
-	}
+	
 	
 	protected void setRowWidths(JTable tab, int[] widths){
 		TableColumnModel columnModel = tab.getColumnModel();

@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.IDDisplayRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
@@ -21,8 +20,8 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 public class TaskTable extends TableDisplay{
 	private int deletedTaskRowsNum = 0;
 	
-	public TaskTable(int width, int height, int displayType) {
-		super(width, height, displayType);
+	public TaskTable(int width, int height) {
+		super(width, height);
 	}
 	
 	@Override

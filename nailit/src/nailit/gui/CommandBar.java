@@ -182,7 +182,7 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
 					GUIBoss.loadExistingTaskNameInCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
-					GUIBoss.loadExistingTaskNameInCommandBar();
+					GUIBoss.loadExistingTaskDescriptionInCommandBar();
 				}else if(keyCode == KeyEvent.VK_PAGE_UP){
 					GUIBoss.scrollToPrevPageInTaskTable();
 				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){

@@ -283,7 +283,7 @@ public class DisplayArea extends JLayeredPane {
 			return;
 		}
 		Task task = result.getTaskToDisplay();
-		taskTable = new TaskTable(displayWidth, displayHeight , Result.LIST_DISPLAY);
+		taskTable = new TaskTable(displayWidth, displayHeight);
 		addAdditionalKeyListenerToTaskTable();
 		taskTable.displayTaskList(tasks, task);
 		addContent(taskTable, false);
@@ -314,9 +314,9 @@ public class DisplayArea extends JLayeredPane {
 				int keyCode = keyStroke.getKeyCode();
 				if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_ENTER){
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
 					ctrlPressed = false;
-					taskTableOnCtrlEnterEvent();
+					taskTableOnCtrlDEvent();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
 					taskTableOnCtrlNEvent();
 				}else if(keyCode == KeyEvent.VK_ENTER){
@@ -360,7 +360,7 @@ public class DisplayArea extends JLayeredPane {
 			GUIBoss.executeTriggeredTaskDisplay(displayID);
 		}
 	}
-	protected void taskTableOnCtrlEnterEvent(){
+	protected void taskTableOnCtrlDEvent(){
 		GUIBoss.setFocusOnCommandBar();
 		int displayID = taskTable.getSelectedRowDisplayID();
 		if(displayID >= 1){
