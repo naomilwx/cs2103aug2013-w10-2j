@@ -13,6 +13,8 @@ public class AppLauncher {
 	private static final String LOG_FILE = "naillog.txt";
 	private static final String START_LOGGING_MSG = "Start up";
 	private static final String END_LOGGING_MSG = "Shut down";
+	private static final String FORCED_END_LOGGING_MSG = "Forced termination";
+	private static final long DELAY_TIME_BEFORE_FORCED_SHUT_DOWN = 12000;
 	
 	private static Logger appLog = Logger.getLogger(AppLauncher.class.getName());
 	GUIManager GUI;
@@ -44,7 +46,7 @@ public class AppLauncher {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					initialiseAndRunGUI();
+					runGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,10 +54,20 @@ public class AppLauncher {
 		});
 		
 	}
-	private void initialiseAndRunGUI(){
+	private void runGUI(){
 		GUI = new GUIManager(this);
 		GUI.setVisible(true);
 		GUI.setFocusOnCommandBar();
+	}
+	public void shutDownAfterDelay(){
+		final long start = System.currentTimeMillis();
+		while((System.currentTimeMillis() - start) < DELAY_TIME_BEFORE_FORCED_SHUT_DOWN){		
+		}
+		forcedExit();
+	}
+	public void forcedExit(){
+		appLog.info(FORCED_END_LOGGING_MSG);
+		System.exit(-1);
 	}
 	public void exit(){
 		appLog.info(END_LOGGING_MSG);

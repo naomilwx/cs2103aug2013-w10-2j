@@ -109,7 +109,7 @@ public class GUIManager {
 	private NailItGlobalKeyListener globalKeyListener;
 	private Logger logger;
 	
-	public GUIManager(final AppLauncher launcher) {
+	public GUIManager(final AppLauncher launcher){
 		try{
 			this.launcher = launcher;
 			logger = AppLauncher.getLogger();
@@ -126,6 +126,7 @@ public class GUIManager {
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
+//			throw e;
 		}catch(Exception e){
 			//TODO:
 			e.printStackTrace();
@@ -174,13 +175,13 @@ public class GUIManager {
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	protected void reduceMainWindowSize(){
-		mainWindow.reduceSize();
+		mainWindow.transformIntoReducedWindow();
 		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.removeTaskDisplay();
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
-		mainWindow.restoreSize();
+		mainWindow.restoreDefaultWindow();
 		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
