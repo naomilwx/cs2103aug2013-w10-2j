@@ -84,9 +84,9 @@ public class HomeWindow extends ExtendedWindow{
 		if(task.isFloatingTask()){
 			dateDetails = "";
 		}else if(task.getStartTime() != null){
-			dateDetails = "<td width = \"105px\">" + formatEventDate(task) + "</td>";
+			dateDetails = "<td width = \"107px\">" + formatEventDate(task) + "</td>";
 		}else{
-			dateDetails = "<td width = \"105px\">" + formatDeadline(task) + "</td>";
+			dateDetails = "<td width = \"107px\">" + formatDeadline(task) + "</td>";
 		}
 		taskDetails = String.format(TASK_CONCISE_FORMAT, dateDetails, getTaskStatusSymbol(task) + task.getName());
 		return taskDetails;

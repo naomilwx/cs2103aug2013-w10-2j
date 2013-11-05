@@ -27,7 +27,7 @@ public class HelpWindow extends ExtendedWindow{
 	private static final int EXTRA_LINE_HEIGHT = 20;
 	private static final int MAX_COMMAND_SYNTAX_WINDOW_HEIGHT = 150;
 	
-	private static final int FULL_WINDOW_HEIGHT = 200;
+	private static final int FULL_WINDOW_HEIGHT = 300;
 	
 	private static final float HELP_WINDOW_OPACITY = 0.9f;
 	private static final Color HELP_WINDOW_DEFAULT_COLOR = Color.white;

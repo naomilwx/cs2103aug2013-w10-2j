@@ -25,10 +25,14 @@ public class HelpWindowConstants {
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
-	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] reminder [updated details]"};
+	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task Reminder</b>", "<em>update</em> [<em>ID</em>] reminder [updated details]"};
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
+	public static final String[] DISPLAY_DATE_SYNTAX = {"<b>Display the Day's Task List</b>", "<em>display</em> [<em>date</em>]"};
+	public static final String[] DISPLAY_COMPLETE_SYNTAX = {"<b>Display Completed Tasks</b>", "<em>display complete</em>"};
+	public static final String[] DISPLAY_UNCOMPLETE_SYNTAX = {"<b>Display Uncompleted Tasks</b>", "<em>display uncomplete</em>"};
+	public static final String[] DISPLAY_HISTORY_SYNTAX = {"<b>Display History</b>", "<em>display history</em>"};
 	public static final String[] SEARCH_SYNTAX = {"<b>Task Search</b>", "<em>search</em> [name], [date], #[tag]#"};
 	public static final String[] COMPLETE_SYNTAX = {"<b>Mark Task As Completed</b>", "<em>complete</em> [<em>ID</em>]"};
 	public static final String[] UNCOMPLETE_SYNTAX = {"<b>Unmark Completed Task</b>", "<em>uncomplete</em> [<em>ID</em>]"};
@@ -49,6 +53,10 @@ public class HelpWindowConstants {
 		Vector<String[]> displayCommandSyntax = new Vector<String[]>();
 		displayCommandSyntax.add(DISPLAY_SYNTAX);
 		displayCommandSyntax.add(DISPLAY_TASK_SYNTAX);
+		displayCommandSyntax.add(DISPLAY_DATE_SYNTAX);
+		displayCommandSyntax.add(DISPLAY_COMPLETE_SYNTAX);
+		displayCommandSyntax.add(DISPLAY_UNCOMPLETE_SYNTAX);
+		displayCommandSyntax.add(DISPLAY_HISTORY_SYNTAX);
 		Vector<String[]> searchCommandSyntax = new Vector<String[]>();
 		searchCommandSyntax.add(SEARCH_SYNTAX);
 		searchCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
@@ -69,13 +77,15 @@ public class HelpWindowConstants {
 		COMMAND_SYNTAX_LIST.put(CommandType.COMPLETE.toString(), completeCommandSyntax);
 		COMMAND_SYNTAX_LIST.put(CommandType.UNCOMPLETE.toString(), uncompleteCommandSyntax);
 		COMMAND_SYNTAX_LIST.put(CommandType.ADDREMINDER.toString(), addremCommandSyntax);
-//		COMMAND_SYNTAX_LIST.put(CommandType.DELETEREMINDER.toString(), delremCommandSyntax);
+		COMMAND_SYNTAX_LIST.put(CommandType.DELETEREMINDER.toString(), delremCommandSyntax);
 	}
 	
 	public static final HashMap<String, String> COMMANDBAR_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Down", "Scroll to next page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Up", "Scroll to previous page in task list");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+N", "Put highlighted task's name in command bar");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+D", "Put highlighted task's description in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+H", "Toggle Home Window");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+,", "Toggle Main Window");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+J", "Toggle History Window");
@@ -83,7 +93,6 @@ public class HelpWindowConstants {
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+/", "Display Help Window For all KeyBoard Commands");
-//		COMMANDBAR_KEYBOARD_COMMANDS.put("F1", "Show Help Window"); //not implemented yet
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
@@ -97,7 +106,8 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Up", "Scrollup");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Delete Highlighted Task");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+Enter", "Put task description in command bar");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+N", "Put highlighted task's name in command bar");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+D", "Put highlighted task's description in command bar");
 	}
 	public static final HashMap<String, String> HELPWINDOW_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
