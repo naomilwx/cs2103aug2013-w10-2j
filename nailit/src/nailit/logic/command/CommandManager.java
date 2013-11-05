@@ -577,4 +577,31 @@ public class CommandManager {
 		ret.setTaskList(currentTaskList);
 		return ret;
 	}
+
+	public Vector<String> getUndoableCommandStringList() {
+		Vector<String> undoableCommandList = getCommandString(operationsHistory);
+		return undoableCommandList;
+	}
+	
+	public Vector<String> getRedoableCommandStringList() {
+		Vector<String> redoableCommandList = getCommandString(redoCommandsList);
+		return redoableCommandList;
+	}
+	
+	private Vector<String> getCommandString(Vector<Command> commandList) {
+		Vector<String> reversedCommandStringList = new Vector<String>();
+		Iterator<Command> itr = commandList.iterator();
+		
+		while(itr.hasNext()) {
+			reversedCommandStringList.add(itr.next().getCommandString());
+		}
+		
+		Vector<String> commandStringList  = new Vector<String>();
+		int size = reversedCommandStringList.size();
+		for(int i = 0; i < size; i++) {
+			commandStringList.add(reversedCommandStringList.get(size-i-1));
+		}
+		
+		return commandStringList;
+	}
 }
