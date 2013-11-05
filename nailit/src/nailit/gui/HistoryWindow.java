@@ -89,7 +89,7 @@ public class HistoryWindow extends ExtendedWindow{
 					fadeOutTimer.stop();
 					setVisible(false);
 				}else{
-//					setOpacity(nextOpacity);
+					setOpacity(nextOpacity);
 				}
 			}
 		});
