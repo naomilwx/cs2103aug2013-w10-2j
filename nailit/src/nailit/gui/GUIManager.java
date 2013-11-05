@@ -48,6 +48,8 @@ import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
+import nailit.logic.exception.InvalidCommandFormatException;
+import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.storage.FileCorruptionException;
 
 public class GUIManager {	
@@ -305,6 +307,10 @@ public class GUIManager {
 				displayNotification(notificationStr, false);
 			}
 			err.printStackTrace();
+		}catch(InvalidCommandFormatException e){
+			helpWindow.displaySyntaxForCommandType(e.getCommandType());
+		}catch(InvalidCommandTypeException e){
+			helpWindow.displayListOfAvailableCommands();
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
