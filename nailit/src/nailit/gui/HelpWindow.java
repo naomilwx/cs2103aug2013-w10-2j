@@ -186,8 +186,9 @@ public class HelpWindow extends ExtendedWindow{
 		
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
-		
-		adjustAndshowHelpWindow(-newWindowHeight, newWindowHeight);
+		int yposOffset = GUIBoss.getDisplayAreaHeight() - newWindowHeight;
+		adjustAndshowHelpWindow(yposOffset, newWindowHeight);
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
 	}
 	
