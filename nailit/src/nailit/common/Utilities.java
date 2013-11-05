@@ -76,10 +76,11 @@ public class Utilities {
 		Vector<Task> floatingTasks = new Vector<Task>();
 		Vector<Task> events = new Vector<Task>();
 		for(Task task: tasks){
-			if(task.isEvent()){
-				events.add(task);
-			}else if(task.isFloatingTask()){
+			if(task.isFloatingTask()){
 				floatingTasks.add(task);
+			}else if(task.getStartTime() != null){
+				//treat tasks with start but no end time as events
+				events.add(task);	
 			}else{
 				deadlineTasks.add(task);
 			}

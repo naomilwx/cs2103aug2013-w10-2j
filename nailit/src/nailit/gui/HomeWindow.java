@@ -21,15 +21,14 @@ public class HomeWindow extends ExtendedWindow{
 	= "<h1 style = \"padding-left: 9px\">ToDo: </h1>";
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
-	private static final String TASK_CONCISE_FORMAT = "<td></td>"
-            + "<td width = \"20px\">%1s<td></td>%2s</td><td>%3s</td>";
-	private static final String DONE_TASK_HEADER = "[&#10004;]";
-	private static final String UNDONE_TASK_HEADER = "[&emsp]";
-	public static final String TASK_SINGLE_CONCISE_DATE = "%1s, %2s]";
+	private static final String TASK_CONCISE_FORMAT = "<td></td>%1s<td>%2s</td>";
+	private static final String DONE_TASK_HEADER = "&#10004; ";
+	private static final String UNDONE_TASK_HEADER = "";
+	public static final String TASK_SINGLE_CONCISE_DATE = "[%1s, %2s]";
 	public static final String TODAYS_DEADLINE_DISPLAY = "[TODAY, %1s]";
-	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "[%1s, %2s - %3s]";
-	public static final String EVENT_DATE_DISPLAY = "[%1s  %2s<br>"
-													+ "- %3s %4s]";
+	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "[%1s,<br>"
+															+ "%2s - %3s]";
+	public static final String EVENT_DATE_DISPLAY = "[%1s  %2s - <br> %3s %4s]";
 	private final HomeWindow selfRef = this;
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
@@ -82,14 +81,14 @@ public class HomeWindow extends ExtendedWindow{
 	protected String formatTasksForReminderDisplay(Task task){
 		String taskDetails;
 		String dateDetails;
-		if(task.isEvent()){
-			dateDetails = formatEventDate(task);
-		}else if(task.getEndTime() != null){
-			dateDetails = formatDeadline(task);
-		}else{
+		if(task.isFloatingTask()){
 			dateDetails = "";
+		}else if(task.getStartTime() != null){
+			dateDetails = "<td width = \"105px\">" + formatEventDate(task) + "</td>";
+		}else{
+			dateDetails = "<td width = \"105px\">" + formatDeadline(task) + "</td>";
 		}
-		taskDetails = String.format(TASK_CONCISE_FORMAT, getTaskStatusSymbol(task), dateDetails, task.getName());
+		taskDetails = String.format(TASK_CONCISE_FORMAT, dateDetails, getTaskStatusSymbol(task) + task.getName());
 		return taskDetails;
 	}
 	private String getTaskStatusSymbol(Task task){
@@ -101,13 +100,14 @@ public class HomeWindow extends ExtendedWindow{
 	}
 	protected String formatEventDate(Task task){
 		String dateString = "";
-		if(!task.isEvent()){
-			return dateString;
-		}
+		
 		DateTime start = task.getStartTime();
 		DateTime end = task.getEndTime();
 		
-		if(task.isOneDayEvent()){
+		if(end == null){
+			dateString = String.format(EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT),
+					start.toString(NIConstants.DISPLAY_TIME_FORMAT), "&nbsp;", "");
+		}else if(task.isOneDayEvent()){
 			dateString = String.format(ONE_DAY_EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT), 
 					start.toString(NIConstants.DISPLAY_TIME_FORMAT), end.toString(NIConstants.DISPLAY_TIME_FORMAT));
 		}else{
