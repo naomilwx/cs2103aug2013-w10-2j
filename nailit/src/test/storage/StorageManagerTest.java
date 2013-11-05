@@ -167,7 +167,7 @@ public class StorageManagerTest {
 //	
 //		}
 
-	@Test 
+//	@Test//TODO: 
 	public void filterTest() throws FileCorruptionException{
 		sto = new StorageManager();
 		sto.clear();

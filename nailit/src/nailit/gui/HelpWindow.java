@@ -100,7 +100,7 @@ public class HelpWindow extends ExtendedWindow{
 					fadeOutTimer.stop();
 					setVisible(false);
 				}else{
-//					setOpacity(nextOpacity);
+					setOpacity(nextOpacity);
 				}
 			}
 		});
@@ -218,7 +218,7 @@ public class HelpWindow extends ExtendedWindow{
 	}
 	private void adjustAndshowHelpWindow(int yPosOffset, int height){
 		adjustHelpWindowHeight(height);
-//		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
+		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		setVisible(true);
 		adjustHelpWindowLocation(yPosOffset);
 	}
