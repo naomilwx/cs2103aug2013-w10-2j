@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -39,6 +40,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.text.Utilities;
 
 import test.logic.LogicManagerStub;
@@ -59,8 +61,10 @@ public class GUIManager {
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 150;
 	
+	protected static final String DEFAULT_FONT = "HelveticaNeue Light";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
+	
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	protected static final int HOME_WINDOW_WIDTH = 400;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
@@ -94,6 +98,8 @@ public class GUIManager {
 		{ID_COL_NAME, COMMAND_COL_NAME};
 	public static final String DELETED_TASK_DISPLAY_ID = "DEL";
 	
+	protected static Font DEFAULT_FONT_OBJECT;
+	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
 	private DisplayArea displayArea;
@@ -111,11 +117,12 @@ public class GUIManager {
 		try{
 			this.launcher = launcher;
 			logger = AppLauncher.getLogger();
+			loadRequiredFontsInGraphicsEnvironmentAndInitialiseDefaultFont();
 			setWindowLookAndFeel();
+			initialiseAndSetDefaultFont();
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-			loadRequiredFontsInGraphicsEnvironment();
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
@@ -173,6 +180,7 @@ public class GUIManager {
 	protected void reduceMainWindowSize(){
 		mainWindow.reduceSize();
 		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea.removeTaskDisplay();
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
@@ -425,7 +433,8 @@ public class GUIManager {
 	private void exit(){
 		launcher.exit();
 	}
-
+	
+	
 	private void setWindowLookAndFeel() throws Exception{
 		try {
 			for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
@@ -451,7 +460,12 @@ public class GUIManager {
 			}
 		}
 	}
-	private void loadRequiredFontsInGraphicsEnvironment(){
+	private void initialiseAndSetDefaultFont(){
+		DEFAULT_FONT_OBJECT = new Font(DEFAULT_FONT, Font.PLAIN, 14);
+		UIDefaults defaultUI = UIManager.getLookAndFeelDefaults();
+		defaultUI.put("defaultFont", new FontUIResource(DEFAULT_FONT_OBJECT));
+	}
+	private void loadRequiredFontsInGraphicsEnvironmentAndInitialiseDefaultFont(){
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
 			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/HelveticaNeue_Lt.ttf"));

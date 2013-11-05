@@ -21,14 +21,15 @@ public class HomeWindow extends ExtendedWindow{
 	= "<h1 style = \"padding-left: 9px\">Todo: </h1>";
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
-	private static final String TASK_CONCISE_FORMAT = "<td></td>%1s<td>%2s</td>";
+	
+	private static final String TASK_CONCISE_FORMAT = "<td></td>%1s<td><p>%2s</p></td>";
 	private static final String DONE_TASK_HEADER = "&#10004; ";
 	private static final String UNDONE_TASK_HEADER = "";
-	public static final String TASK_SINGLE_CONCISE_DATE = "[%1s, %2s]";
-	public static final String TODAYS_DEADLINE_DISPLAY = "[TODAY, %1s]";
-	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "[%1s,<br>"
-															+ "%2s - %3s]";
-	public static final String EVENT_DATE_DISPLAY = "[%1s  %2s - <br> %3s %4s]";
+	public static final String TASK_SINGLE_CONCISE_DATE = "<p>[%1s, %2s]</p>";
+	public static final String TODAYS_DEADLINE_DISPLAY = "<p>[TODAY, %1s]</p>";
+	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "<p>[%1s,<br>"
+															+ "%2s - %3s]</p>";
+	public static final String EVENT_DATE_DISPLAY = "<p>[%1s  %2s - <br> %3s %4s]</p>";
 	private final HomeWindow selfRef = this;
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
@@ -84,9 +85,9 @@ public class HomeWindow extends ExtendedWindow{
 		if(task.isFloatingTask()){
 			dateDetails = "";
 		}else if(task.getStartTime() != null){
-			dateDetails = "<td width = \"107px\">" + formatEventDate(task) + "</td>";
+			dateDetails = "<td width = \"120px\">" + formatEventDate(task) + "</td>";
 		}else{
-			dateDetails = "<td width = \"107px\">" + formatDeadline(task) + "</td>";
+			dateDetails = "<td width = \"120px\">" + formatDeadline(task) + "</td>";
 		}
 		taskDetails = String.format(TASK_CONCISE_FORMAT, dateDetails, getTaskStatusSymbol(task) + task.getName());
 		return taskDetails;
@@ -106,7 +107,7 @@ public class HomeWindow extends ExtendedWindow{
 		
 		if(end == null){
 			dateString = String.format(EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT),
-					start.toString(NIConstants.DISPLAY_TIME_FORMAT), "&nbsp;", "");
+					start.toString(NIConstants.DISPLAY_TIME_FORMAT), "", "");
 		}else if(task.isOneDayEvent()){
 			dateString = String.format(ONE_DAY_EVENT_DATE_DISPLAY, start.toString(NIConstants.DISPLAY_DATE_SHORT_FORMAT), 
 					start.toString(NIConstants.DISPLAY_TIME_FORMAT), end.toString(NIConstants.DISPLAY_TIME_FORMAT));
