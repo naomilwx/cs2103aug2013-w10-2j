@@ -114,14 +114,12 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	
 	protected abstract void setHeaderText();
 	protected abstract void setRowWidths();
+	
+	@Override
 	protected void configureMainFrame(int width, int height){
-		containerWidth = width;
-		containerHeight = height;
-		setSize(containerWidth, containerHeight);
-		setBorder(UNFOCUS_LINE_BORDER);
+		super.configureMainFrame(width, height);
 		hideScrollBars();
 		setFocusTraversalKeysEnabled(false);
-		addFocusListener(displayFocusListener);
 		addKeyListener(moreTableMainFrameKeyEventListener);
 		addMouseListener(tableMouseEventListener);
 	}

@@ -11,6 +11,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.AWTException;
@@ -169,6 +170,16 @@ public class GUIManager {
 	protected void resizeMainDisplayArea(){
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
+	protected void reduceMainWindowSize(){
+		mainWindow.reduceSize();
+		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+	}
+	protected void restoreMainWindowSize(){
+		mainWindow.restoreSize();
+		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+	}
 	public void enableGlobalKeyListener(){
 //		if(!globalKeyListener.isEnabled()){
 //			globalKeyListener.registerGlobalKeyHook();
@@ -322,7 +333,7 @@ public class GUIManager {
 		}
 	}
 	protected void loadExistingTaskDescriptionInCommandBar(){
-		int displayID = displayArea.getTaskTableSelectedRow();
+		int displayID = displayArea.getTaskTableSelectedRowID();
 		if(displayID > 0){
 			loadExistingTaskDescriptionInCommandBar(displayID);
 		}
@@ -338,7 +349,7 @@ public class GUIManager {
 		}
 	}
 	protected void loadExistingTaskNameInCommandBar(){
-		int displayID = displayArea.getTaskTableSelectedRow();
+		int displayID = displayArea.getTaskTableSelectedRowID();
 		if(displayID > 0){
 			loadExistingTaskNameInCommandBar(displayID);
 		}
@@ -375,6 +386,7 @@ public class GUIManager {
 		int displayType = result.getDisplayType();
 		switch (displayType){
 			case Result.TASK_DISPLAY:
+				restoreMainWindowSize();
 				displayArea.displayTaskDetails(result.getTaskToDisplay());
 				break;
 			case Result.LIST_DISPLAY:
@@ -416,7 +428,12 @@ public class GUIManager {
 
 	private void setWindowLookAndFeel() throws Exception{
 		try {
-			UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL);
+			for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+		        if (info.getClassName().equals(DEFAULT_WINDOW_LOOKANDFEEL)){
+		            UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL);
+		            break;
+		        }
+		    }
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

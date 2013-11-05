@@ -14,21 +14,13 @@ import javax.swing.text.html.HTMLEditorKit;
 
 public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
-	private int containerWidth;
-	private int containerHeight;
 	private int preferredHeight;
 	
 	public TextDisplay(int width, int height){
 		configureMainFrame(width, height);
 		createAndConfigureTextPane();
 	}
-	private void configureMainFrame(int width, int height){
-		containerWidth = width;
-		containerHeight = height;
-		setSize(containerWidth, containerHeight);
-		setBorder(UNFOCUS_LINE_BORDER);
-		addFocusListener(displayFocusListener);		
-	}
+	
 	private void createAndConfigureTextPane(){
 		preferredHeight = containerHeight;
 		textPane = new JTextPane();

@@ -33,7 +33,7 @@ public class HelpWindow extends ExtendedWindow{
 	private static final Color HELP_WINDOW_DEFAULT_COLOR = Color.white;
 	
 	private static final int TIMER_INTERVAL = 100;
-	private static final int TIMER_DELAY = 10000; //amount of time before item starts fading out
+	private static final int TIMER_DELAY = 8000; //amount of time before item starts fading out
 	private static final float OPACITY_INTERVAL_STEP = 0.1f;
 	protected static final float NO_OPACITY = 0.5f;
 	

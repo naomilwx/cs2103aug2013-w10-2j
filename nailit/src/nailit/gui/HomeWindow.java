@@ -18,7 +18,7 @@ public class HomeWindow extends ExtendedWindow{
 	private static final String TASK_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Deadlines: </h1>";
 	private static final String FLOATING_REMINDER_DISPLAY_HEADER
-	= "<h1 style = \"padding-left: 9px\">ToDo: </h1>";
+	= "<h1 style = \"padding-left: 9px\">Todo: </h1>";
 	private static final String EVENT_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Events: </h1>";
 	private static final String TASK_CONCISE_FORMAT = "<td></td>%1s<td>%2s</td>";

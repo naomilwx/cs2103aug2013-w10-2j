@@ -29,9 +29,9 @@ public class CommandBar extends JPanel {
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
 	public static final int TEXTBAR_X_BUFFER_WIDTH = 5;
+	protected static final int MAX_HEIGHT_OF_TEXTBAR = 3 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
-	private static final int MAX_HEIGHT_OF_TEXTBAR = 4 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 	private static final Font COMMANDBAR_FONT = new Font("HelveticaNeue_Lt.tff", Font.PLAIN, 18);
 	
 	//reference to main GUI container class so CommandBar can have access to the methods there
@@ -57,7 +57,11 @@ public class CommandBar extends JPanel {
 		positionAndResizeCommandFrame();
 		createConfigureAndAddInputField();
 	}
-	
+	protected void resizeCommandBarToFitMainContainer(int containerWidth, int containerHeight){
+		mainContainerWidth = containerWidth;
+		mainContainerHeight = containerHeight;
+		positionAndResizeCommandFrame();
+	}
 	private void positionAndResizeCommandFrame(){
 		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
@@ -165,6 +169,10 @@ public class CommandBar extends JPanel {
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
 					shiftDown = true;
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
+					GUIBoss.reduceMainWindowSize();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
+					GUIBoss.restoreMainWindowSize();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
 					GUIBoss.toggleHomeWindow();
 					GUIBoss.setFocusOnCommandBar();

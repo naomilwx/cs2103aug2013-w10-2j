@@ -114,6 +114,12 @@ public class DisplayArea extends JLayeredPane {
 		initialiseLayers();
 		addDisplayAreaListeners();
 	}
+	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
+		this.containerHeight = containerHeight;
+		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		//call to GUIManager to resize as only GUI manager is able to get commandbar height
+		GUIBoss.resizeMainDisplayArea();
+	}
 	
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
@@ -339,7 +345,7 @@ public class DisplayArea extends JLayeredPane {
 		};
 		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
 	}
-	protected int getTaskTableSelectedRow(){
+	protected int getTaskTableSelectedRowID(){
 		if(taskTable != null){
 			return taskTable.getSelectedRowDisplayID();
 		}else{
