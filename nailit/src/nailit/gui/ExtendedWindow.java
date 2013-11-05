@@ -45,7 +45,7 @@ public abstract class ExtendedWindow extends JFrame{
 		int currY;
 		@Override
 		public void mousePressed(MouseEvent mouseEvent){
-			mouseEvent.getComponent().requestFocus();
+			requestFocus();
 			initialMouseX = mouseEvent.getXOnScreen();
 			initialMouseY = mouseEvent.getYOnScreen();
 			currX = getX();

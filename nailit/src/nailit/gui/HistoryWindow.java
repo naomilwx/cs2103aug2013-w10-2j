@@ -3,6 +3,8 @@ package nailit.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Vector;
 
 import javax.swing.Timer;
@@ -18,13 +20,23 @@ public class HistoryWindow extends ExtendedWindow{
 	private final Timer fadeOutTimer = new Timer(0, null);
 	
 	private static final int TIMER_INTERVAL = 100;
-	private static final int TIMER_DELAY = 11000; //amount of time before item starts fading out
+	private static final int TIMER_DELAY = 6000; //amount of time before item starts fading out
 	private static final float OPACITY_INTERVAL_STEP = 0.1f;
 	protected static final float NO_OPACITY = 0.5f;
 	protected static final float FULL_OPACITY = 1.0f;
 	
+	protected final FocusListener historyFocusListener = new FocusListener(){
+		public void focusGained(FocusEvent event) {
+			fadeOutTimer.stop();
+		 }
+		public void focusLost(FocusEvent event){
+			fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		}
+	};
+	
 	public HistoryWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
+		displayPane.addFocusListener(historyFocusListener);
 	}
 	
 	protected void displayHistoryList(Vector<Vector <String>> list){
@@ -58,9 +70,13 @@ public class HistoryWindow extends ExtendedWindow{
 		
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
-		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
-	
+	@Override
+	public void setVisible(boolean visible){
+		super.setVisible(visible);
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		GUIBoss.setFocusOnCommandBar();
+	}
 	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
 		fadeOutTimer.setInitialDelay(displayTime);
 		fadeOutTimer.setDelay(timeInterval);

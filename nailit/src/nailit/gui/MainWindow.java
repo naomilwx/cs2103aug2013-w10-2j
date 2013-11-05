@@ -17,6 +17,9 @@ public class MainWindow extends JFrame {
 	protected static final int WINDOW_WIDTH = 
 			GUIManager.TOTAL_TABLE_WIDTH + GUIManager.X_BUFFER_WIDTH + 
 			GUIManager.WINDOW_RIGHT_BUFFER;
+	protected static final int REDUCED_WINDOW_HEIGHT = CommandBar.MAX_HEIGHT_OF_TEXTBAR 
+			+ TableDisplay.TABLE_HEADER_HEIGHT + TableDisplay.TABLE_ROW_HEIGHT
+			+ 2 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
 	
 	private GUIManager GUIBoss;
 	private JPanel contentPane;
@@ -52,6 +55,12 @@ public class MainWindow extends JFrame {
 		this.setBounds(GUIManager.MAIN_WINDOW_X_POS, GUIManager.MAIN_WINDOW_Y_POS, WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setTitle(GUIManager.APPLICATION_NAME);
 		this.setResizable(false);
+	}
+	protected void reduceSize(){
+		this.setSize(WINDOW_WIDTH, REDUCED_WINDOW_HEIGHT);
+	}
+	protected void restoreSize(){
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
