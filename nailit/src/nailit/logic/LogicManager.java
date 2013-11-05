@@ -2,11 +2,11 @@ package nailit.logic;
 
 import java.util.Vector;
 
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.Utilities;
 import nailit.logic.command.CommandManager;
+import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.ParserManager;
 import nailit.storage.FileCorruptionException;
 
@@ -25,8 +25,14 @@ public class LogicManager{
 	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
 		parserInstance.passCommand(OriginalCommand);
-		ParserResult parserResultInstance = parserInstance.execute();
-		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
+		
+		try{
+			ParserResult parserResultInstance = parserInstance.execute();
+			executeCommandResult = commandInstance.executeCommand(parserResultInstance);
+		} catch (InvalidCommandFormatException e) {
+			System.out.println("wrong format");
+			e.printStackTrace();
+		}
 		return  executeCommandResult;
 	}
 	
