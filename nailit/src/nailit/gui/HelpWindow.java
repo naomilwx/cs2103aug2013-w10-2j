@@ -3,6 +3,8 @@ package nailit.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map.Entry;
@@ -51,11 +53,23 @@ public class HelpWindow extends ExtendedWindow{
 		}
 	};
 	
+	protected final FocusListener additionalFocusListener = new FocusListener(){
+		public void focusGained(FocusEvent event) {
+			fadeOutTimer.stop();
+		 }
+		public void focusLost(FocusEvent event){
+			fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		}
+	};
+	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addListenersToDisplayPane(keyListener);
+		addKeyListenerToDisplayPane(keyListener);
+		addAdditionalFocusListenerToDisplayPane();
 	}
-
+	protected void addAdditionalFocusListenerToDisplayPane(){
+		displayPane.addFocusListener(additionalFocusListener);
+	}
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;

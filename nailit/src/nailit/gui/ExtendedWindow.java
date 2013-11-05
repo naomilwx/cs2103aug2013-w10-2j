@@ -113,7 +113,7 @@ public abstract class ExtendedWindow extends JFrame{
 	protected void addItem(Component component) {
 		contentPane.add(component);
 	}
-	protected void addListenersToDisplayPane(KeyAdapter keyListener){
+	protected void addKeyListenerToDisplayPane(KeyAdapter keyListener){
 		displayPane.addKeyListener(keyListener);
 	}
 	@Override

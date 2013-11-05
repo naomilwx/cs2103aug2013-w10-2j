@@ -111,13 +111,13 @@ public class TaskTable extends TableDisplay{
 	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
 		Vector<String> row = new Vector<String>();
 		row.add(IDVal);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
-		row.add(nameAndTag);
 		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
 		row.add(timeStartDet);
 		boolean highlightIfOverdue = !task.isEvent() && !task.checkCompleted();
 		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime(), highlightIfOverdue);
 		row.add(timeEndDet);
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
+		row.add(nameAndTag);
 		return row;
 	}
 	protected void displayTaskList(Vector<Task> tasks, Task taskToLookOutFor){

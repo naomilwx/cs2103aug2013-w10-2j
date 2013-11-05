@@ -16,9 +16,10 @@ import javax.swing.border.LineBorder;
 
 public class MainWindow extends JFrame {
 	protected static final int WINDOW_HEIGHT = 470;
+	protected static final int DEFAULT_BORDER_WIDTH = 1;
 	protected static final int WINDOW_WIDTH = 
 			GUIManager.TOTAL_TABLE_WIDTH + GUIManager.X_BUFFER_WIDTH + 
-			GUIManager.WINDOW_RIGHT_BUFFER;
+			GUIManager.WINDOW_RIGHT_BUFFER + 2 * DEFAULT_BORDER_WIDTH;
 	protected static final int REDUCED_WINDOW_HEIGHT = CommandBar.MAX_HEIGHT_OF_TEXTBAR 
 			+ TableDisplay.TABLE_HEADER_HEIGHT + TableDisplay.TABLE_ROW_HEIGHT
 			+ 2 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
