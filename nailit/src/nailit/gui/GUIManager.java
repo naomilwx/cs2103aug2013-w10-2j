@@ -125,7 +125,7 @@ public class GUIManager {
 //			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
-			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
+			displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
 //			throw e;
 		}catch(Exception e){
 			//TODO:
@@ -437,10 +437,18 @@ public class GUIManager {
 		displayArea.showNotifications();
 	}
 	
+	private void displayNotificationAndForceExit(String notificationStr){
+		notificationArea.displayNotification(notificationStr, false);
+		displayArea.showNotificationsAndForceExit();
+	}
+	
 	private void exit(){
 		launcher.exit();
 	}
 	
+	protected void forceExit(){
+		launcher.forceExit();
+	}
 	
 	private void setWindowLookAndFeel() throws Exception{
 		try {

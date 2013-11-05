@@ -63,9 +63,9 @@ public class AppLauncher {
 		final long start = System.currentTimeMillis();
 		while((System.currentTimeMillis() - start) < DELAY_TIME_BEFORE_FORCED_SHUT_DOWN){		
 		}
-		forcedExit();
+		forceExit();
 	}
-	public void forcedExit(){
+	public void forceExit(){
 		appLog.info(FORCED_END_LOGGING_MSG);
 		System.exit(-1);
 	}
