@@ -134,12 +134,14 @@ public class GUIManager {
 	}
 	
 	private void showDefaultDisplayAndReminders(){
-		getAndDisplayReminders();
+		if(!getAndDisplayReminders()){
+			homeWindow.setVisible(false);
+		}
 		processAndDisplayExecutionResult(logicExecutor.getListOfTasksForTheDay());
 	}
-	private void getAndDisplayReminders(){
+	private boolean getAndDisplayReminders(){
 		Vector<Vector <Task>> reminderList = logicExecutor.getReminderList();
-		homeWindow.displayReminders(reminderList);
+		return homeWindow.displayReminders(reminderList);
 	}	
 	private void getAndDisplayHistory(){
 		Vector<Vector <String>> commandHistory = logicExecutor.getCommandList();

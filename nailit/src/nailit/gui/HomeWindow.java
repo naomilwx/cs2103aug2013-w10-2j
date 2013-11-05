@@ -35,48 +35,44 @@ public class HomeWindow extends ExtendedWindow{
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
 	}
-	
-	protected void displayReminders(Vector<Vector <Task>> tasks){
-		if(tasks == null){
-			return;
+	protected void formatAndAppendTaskList(StringBuilder str, Vector<Task> tasks){
+		str.append("<table>");
+		for(Task task: tasks){
+			str.append("<tr>");
+			str.append(formatTasksForReminderDisplay(task));
+			str.append("</tr>");
 		}
+		str.append("</table>");
+	}
+	protected boolean displayReminders(Vector<Vector <Task>> tasks){
+		if(tasks == null){
+			return false;
+		}
+		boolean notAllEmpty = false;
 		Vector<Task> taskReminders = tasks.get(NIConstants.REMINDER_DEADLINE_TASKS_INDEX);
 		Vector<Task> floatingTaskReminders = tasks.get(NIConstants.REMINDER_FLOATING_TASKS_INDEX);
 		Vector<Task> eventReminders = tasks.get(NIConstants.REMINDER_EVENTS_INDEX);
 		StringBuilder str = new StringBuilder();
 		str.append("<html>");
 		if(!taskReminders.isEmpty()){
+			notAllEmpty = true;
 			str.append(TASK_REMINDER_DISPLAY_HEADER);
-			str.append("<table>");
-			for(Task task: taskReminders){
-				str.append("<tr>");
-				str.append(formatTasksForReminderDisplay(task));
-				str.append("</tr>");
-			}
+			formatAndAppendTaskList(str, taskReminders);
 		}
-		str.append("</table>");
+		
 		if(! floatingTaskReminders.isEmpty()){
+			notAllEmpty = true;
 			str.append(FLOATING_REMINDER_DISPLAY_HEADER);
-			str.append("<table>");
-			for(Task task: floatingTaskReminders){
-				str.append("<tr>");
-				str.append(formatTasksForReminderDisplay(task));
-				str.append("</tr>");
-			}
-			str.append("</table>");
+			formatAndAppendTaskList(str, floatingTaskReminders);
 		}
 		if(!eventReminders.isEmpty()){
-		str.append(EVENT_REMINDER_DISPLAY_HEADER);
-			str.append("<table>");
-			for(Task task: eventReminders){
-				str.append("<tr>");
-				str.append(formatTasksForReminderDisplay(task));
-				str.append("</tr>");
-			}
-			str.append("</table>");
+			notAllEmpty = true;
+			str.append(EVENT_REMINDER_DISPLAY_HEADER);
+			formatAndAppendTaskList(str, eventReminders);
 		}
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
+		return notAllEmpty;
 	}
 	
 	protected String formatTasksForReminderDisplay(Task task){
