@@ -2,6 +2,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,8 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -38,7 +41,7 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 import nailit.gui.renderer.IDDisplayRenderer;
 
 public abstract class TableDisplay extends ScrollableFocusableDisplay{
-	protected static final int TABLE_HEADER_HEIGHT = 35;
+	protected static final int TABLE_HEADER_HEIGHT = 40;
 	protected static final int TABLE_ROW_HEIGHT = 50;
 	protected static final int NO_SELECTED_ROW = -1;
 	protected static final int SINGLE_SCROLLDOWN = 1;
@@ -110,6 +113,7 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	public TableDisplay(int width, int height){
 		configureMainFrame(width, height);
 		createAndConfigureTable();
+		configureScrollPaneForTable();
 	}
 	
 	protected abstract void setHeaderText();
@@ -129,7 +133,7 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	}
 	protected void showScrollBars(){
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		 setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	}
 	protected void createAndConfigureTable() {
 		initialiseTableStructures();
@@ -147,22 +151,33 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 		};
 	}
 	
+	protected void configureScrollPaneForTable(){
+		setViewportView(table);
+		setColumnHeader(new JViewport() {
+		      @Override public Dimension getPreferredSize() {
+		        Dimension dim = super.getPreferredSize();
+		        dim.height = TABLE_HEADER_HEIGHT;
+		        return dim;
+		      }
+		    });
+	}
+	
 	protected void configureTable() {
 		table.setModel(tableModel);
 		table.setRowHeight(TABLE_ROW_HEIGHT);
 		table.setFocusTraversalKeysEnabled(false);
 		table.setShowGrid(false);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		createTableKeyBindings();
 		setRowWidths();
-		setViewportView(table);
 		table.addMouseListener(tableMouseEventListener);
 	}
 	
 	protected void configureTableHeader(){
 		JTableHeader header = table.getTableHeader();
 		header.setReorderingAllowed(false);
+		header.setResizingAllowed(false);
 		header.setDefaultRenderer(new TableHeaderRenderer());
-		header.setPreferredSize(new Dimension(containerWidth, TABLE_HEADER_HEIGHT));
 	}
 	
 	
@@ -248,5 +263,4 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected void addKeyListenerToTable(KeyAdapter tableKeyEventListener) {
 		table.addKeyListener(tableKeyEventListener);
 	}
-
 }
