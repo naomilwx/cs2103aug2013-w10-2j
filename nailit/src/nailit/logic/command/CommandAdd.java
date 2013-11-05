@@ -63,20 +63,20 @@ public class CommandAdd extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "add";
+		commandSummary = "add: ";
 		if(parserResultInstance.getName() != null) {
-			commandSummary = commandSummary + " Name: " + parserResultInstance.getName() + "\n";
+			commandSummary = commandSummary + parserResultInstance.getName();
 		} 
 		
-		if(parserResultInstance.getStartTime() != null) {
-			commandSummary = commandSummary + " Start time: " + 
-		parserResultInstance.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-		} 
-		
-		if(parserResultInstance.getEndTime() != null) {
-			commandSummary = commandSummary + " End time: " + 
-		parserResultInstance.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-		}  
+//		if(parserResultInstance.getStartTime() != null) {
+//			commandSummary = commandSummary + " Start time: " + 
+//		parserResultInstance.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//		} 
+//		
+//		if(parserResultInstance.getEndTime() != null) {
+//			commandSummary = commandSummary + " End time: " + 
+//		parserResultInstance.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//		}  
 	}
 
 	private void createResultObject() {

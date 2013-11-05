@@ -114,7 +114,7 @@ public class CommandUpdate extends Command{
 
 	private void createCommandSummary() {
 //		commandSummary = String.format(UPDATE_SUCCESSFUL_FEEDBACK, taskToRetrieveID) + updatedContent;
-		commandSummary = taskRetrieved.getName() + " is updated to " + updatedContent + "\n";
+		commandSummary = "Update " + taskRetrieved.getName() + ": " + updatedContent;
 		
 	}
 
@@ -150,7 +150,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullStartTime()) {
 			DateTime newStartTime = parserResultInstance.getStartTime();
 			updatedTask.setStartTime(newStartTime);
-			updatedContent = updatedContent + "Starttime: "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			updatedContent = updatedContent + "Start: "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setStartTime(taskRetrieved.getStartTime());
 		}
@@ -158,7 +158,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullEndTime()) {
 			DateTime newEndTime = parserResultInstance.getEndTime();
 			updatedTask.setEndTime(newEndTime);
-			updatedContent = updatedContent + "Endtime: " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			updatedContent = updatedContent + "End: " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setEndTime(taskRetrieved.getEndTime());
 		}
