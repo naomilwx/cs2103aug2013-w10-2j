@@ -152,7 +152,7 @@ public class HelpWindow extends ExtendedWindow{
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
 		
-		adjustAndshowHelpWindow(defaultYPos, FULL_WINDOW_HEIGHT);
+		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForSupportedCommands(){
@@ -161,7 +161,7 @@ public class HelpWindow extends ExtendedWindow{
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
 		
-		adjustAndshowHelpWindow(defaultYPos, FULL_WINDOW_HEIGHT);
+		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForCommandType(String command){
@@ -173,15 +173,15 @@ public class HelpWindow extends ExtendedWindow{
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
 		
-		adjustAndshowHelpWindow(defaultYPos - newWindowHeight, newWindowHeight);
+		adjustAndshowHelpWindow(-newWindowHeight, newWindowHeight);
 		GUIBoss.setFocusOnCommandBar();
 	}
 	
 	protected void displayListOfAvailableCommands(){
 		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
 		displayFormattedText(display);
-		int ypos = defaultYPos + GUIBoss.getDisplayAreaHeight() - DEFAULT_WINDOW_HEIGHT;
-		adjustAndshowHelpWindow(ypos, DEFAULT_WINDOW_HEIGHT);
+		int yposOffset = GUIBoss.getDisplayAreaHeight() - DEFAULT_WINDOW_HEIGHT;
+		adjustAndshowHelpWindow(yposOffset, DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
 	}
@@ -191,8 +191,8 @@ public class HelpWindow extends ExtendedWindow{
 	private void displayFormattedText(String text){
 		((TextDisplay) displayPane).displayHTMLFormattedText(text);
 	}
-	private void adjustHelpWindowLocation(int newYPos){
-		windowYPos = newYPos;
+	private void adjustHelpWindowLocation(int offset){
+		windowYPos = windowYPos + offset;
 		setLocation(windowXPos, windowYPos);
 	}
 	
@@ -201,11 +201,11 @@ public class HelpWindow extends ExtendedWindow{
 		setSize(windowWidth, windowHeight);
 		refreshContentSize();
 	}
-	private void adjustAndshowHelpWindow(int ypos, int height){
+	private void adjustAndshowHelpWindow(int yPosOffset, int height){
 		adjustHelpWindowHeight(height);
 //		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		setVisible(true);
-		adjustHelpWindowLocation(ypos);
+		adjustHelpWindowLocation(yPosOffset);
 	}
 	
 }

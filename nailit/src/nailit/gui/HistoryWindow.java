@@ -1,7 +1,11 @@
 //@author A0091372H
 package nailit.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
+
+import javax.swing.Timer;
 
 import nailit.common.NIConstants;
 import nailit.common.Result;
@@ -11,6 +15,14 @@ public class HistoryWindow extends ExtendedWindow{
 	= "<h1 style = \"padding-left: 5px\">Commands executed: </h1>";
 	private static final String COMMANDS_UNDID_HEADER 
 	= "<h1 style = \"padding-left: 5px\">Commands undone: </h1>";
+	private final Timer fadeOutTimer = new Timer(0, null);
+	
+	private static final int TIMER_INTERVAL = 100;
+	private static final int TIMER_DELAY = 11000; //amount of time before item starts fading out
+	private static final float OPACITY_INTERVAL_STEP = 0.1f;
+	protected static final float NO_OPACITY = 0.5f;
+	protected static final float FULL_OPACITY = 1.0f;
+	
 	public HistoryWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
 	}
@@ -46,6 +58,25 @@ public class HistoryWindow extends ExtendedWindow{
 		
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 	}
 	
+	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
+		fadeOutTimer.setInitialDelay(displayTime);
+		fadeOutTimer.setDelay(timeInterval);
+		fadeOutTimer.addActionListener(new ActionListener(){
+			float nextOpacity = FULL_OPACITY;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				nextOpacity -= opacityStep;
+				if(nextOpacity <= NO_OPACITY){
+					fadeOutTimer.stop();
+					setVisible(false);
+				}else{
+//					setOpacity(nextOpacity);
+				}
+			}
+		});
+		fadeOutTimer.restart();
+	}
 }
