@@ -22,7 +22,7 @@ public class HelpWindow extends ExtendedWindow{
 	
 	private static final String ALL_COMMAND_SYNTAX_TITLE = "Command Syntax";
 	private static final String ALL_KEYBOARD_SHORTCUT_TITLE = "Keyboard Shortcuts";
-	private static final int DEFAULT_Y_TOP_OFFSET = 22;
+	private static final int DEFAULT_Y_TOP_OFFSET = 30;
 	private static final int DEFAULT_WINDOW_HEIGHT = 70;
 	private static final int EXTRA_LINE_HEIGHT = 20;
 	private static final int MAX_COMMAND_SYNTAX_WINDOW_HEIGHT = 150;
@@ -152,7 +152,7 @@ public class HelpWindow extends ExtendedWindow{
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
 		
-		adjustAndshowHelpWindow(FULL_WINDOW_HEIGHT);
+		adjustAndshowHelpWindow(defaultYPos, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForSupportedCommands(){
@@ -161,7 +161,7 @@ public class HelpWindow extends ExtendedWindow{
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
 		
-		adjustAndshowHelpWindow(FULL_WINDOW_HEIGHT);
+		adjustAndshowHelpWindow(defaultYPos, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForCommandType(String command){
@@ -172,16 +172,18 @@ public class HelpWindow extends ExtendedWindow{
 		
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
-		adjustHelpWindowLocation(defaultYPos - newWindowHeight);
-		adjustAndshowHelpWindow(newWindowHeight);
+		
+		adjustAndshowHelpWindow(defaultYPos - newWindowHeight, newWindowHeight);
+		GUIBoss.setFocusOnCommandBar();
 	}
 	
 	protected void displayListOfAvailableCommands(){
 		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
 		displayFormattedText(display);
-		adjustAndshowHelpWindow(DEFAULT_WINDOW_HEIGHT);
-		adjustHelpWindowLocation(defaultYPos - DEFAULT_WINDOW_HEIGHT);
+		int ypos = defaultYPos + GUIBoss.getDisplayAreaHeight() - DEFAULT_WINDOW_HEIGHT;
+		adjustAndshowHelpWindow(ypos, DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		GUIBoss.setFocusOnCommandBar();
 	}
 	private String formatStringforDisplay(String displayText){
 		return String.format(HTML_FORMATTED_STRING, displayText);
@@ -199,10 +201,11 @@ public class HelpWindow extends ExtendedWindow{
 		setSize(windowWidth, windowHeight);
 		refreshContentSize();
 	}
-	private void adjustAndshowHelpWindow(int height){
+	private void adjustAndshowHelpWindow(int ypos, int height){
 		adjustHelpWindowHeight(height);
 //		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		setVisible(true);
+		adjustHelpWindowLocation(ypos);
 	}
 	
 }

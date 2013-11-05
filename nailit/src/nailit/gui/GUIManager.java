@@ -230,7 +230,9 @@ public class GUIManager {
 	protected boolean getMainWindowVisibility(){
 		return mainWindow.isVisible();
 	}
-	
+	protected int getDisplayAreaHeight(){
+		return displayArea.getHeight();
+	}
 	protected void displayCommandSyantaxHelpWindow(){
 		helpWindow.displaySyntaxForSupportedCommands();
 	}
