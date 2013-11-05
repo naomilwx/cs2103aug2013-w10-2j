@@ -119,8 +119,8 @@ public class Task {
 		return reminderStartDate;
 	}
 	
-	public boolean isNormalTask(){
-		if(startTime != null && endTime == null){
+	public boolean isDeadlineTask(){
+		if(startTime == null && endTime != null){
 			return true;
 		}
 		else{
@@ -153,7 +153,7 @@ public class Task {
 	}
 	//check if task is overdue
 	public boolean isOverDueTask(){
-		if(isEvent() || isFloatingTask()){
+		if(isEvent() || isFloatingTask() || !isDeadlineTask()){
 			return false;
 		}else if(!isCompleted){
 			return isBeforeDateTime(new DateTime());

@@ -10,10 +10,10 @@ public class NIConstants {
 	public static final String DESCRIPTION_LINE_SPLITER = "*&*";
 
 	public static final String EMPTY_STRING = "";
-	public static final String DISPLAY_DATE_FORMAT = "d MMM YYYY";
-	public static final String DISPLAY_DATE_SHORT_FORMAT = "d MMM";
+	public static final String DISPLAY_DATE_FORMAT = "d MMM y";
+	public static final String DISPLAY_DATE_SHORT_FORMAT = "d MMM Y";
 	public static final String DISPLAY_TIME_FORMAT = "h:mma";
-	public static final String DISPLAY_FULL_DATETIME_FORMAT = "dd MMM YYYY h:mma";
+	public static final String DISPLAY_FULL_DATETIME_FORMAT = "dd MMM y h:mma";
 	public static final int REMINDER_DEADLINE_TASKS_INDEX = 0;
 	public static final int REMINDER_FLOATING_TASKS_INDEX = 1;
 	public static final int REMINDER_EVENTS_INDEX = 2;
