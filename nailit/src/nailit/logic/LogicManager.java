@@ -50,4 +50,15 @@ public class LogicManager{
 		Vector<Task> reminders = commandInstance.getTodayReminder();
 		return Utilities.filterAndSortTaskList(reminders);
 	}
+	
+	// @author A0105789R 
+	// api for giving command list, undoable and redoable
+	public Vector<Vector<String>> getCommandList() {
+		Vector<Vector<String>> commandList = new Vector<Vector<String>>();
+		Vector<String> undoableCommandList = commandInstance.getUndoableCommandStringList();
+		Vector<String> redoableCommandList = commandInstance.getRedoableCommandStringList();
+		commandList.add(NIConstants.HISTORY_UNDO_INDEX, undoableCommandList);
+		commandList.add(NIConstants.HISTORY_REDO_INDEX, redoableCommandList);
+		return commandList;
+	}
 }
