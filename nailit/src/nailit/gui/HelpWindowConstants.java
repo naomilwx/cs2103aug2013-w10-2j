@@ -84,6 +84,8 @@ public class HelpWindowConstants {
 	static{
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Down", "Scroll to next page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Up", "Scroll to previous page in task list");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+-", "Reduce Main Window Size");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+=", "Restore Main Window Size");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+N", "Put highlighted task's name in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+D", "Put highlighted task's description in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+H", "Toggle Home Window");
