@@ -6,10 +6,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
+
 import org.joda.time.DateTime;
+
 import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.common.Utilities;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 import nailit.logic.CommandType;
@@ -553,8 +556,8 @@ public class CommandManager {
 	
 	//@author A0091372H
 	public Vector<Task> getTasksHappeningOnDay(DateTime date){
-		DateTime startOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 0, 0);
-		DateTime endOfDay = new DateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), 23, 59);
+		DateTime startOfDay = Utilities.getStartOfDay(date);
+		DateTime endOfDay =  Utilities.getEndOfDay(date);
 		FilterObject dateFilter = new FilterObject("", startOfDay, endOfDay, null, null , null);
 		Vector<Task> tasks = storer.filter(dateFilter);
 		return tasks;

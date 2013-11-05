@@ -59,11 +59,13 @@ public class MainWindow extends JFrame {
 		this.setTitle(GUIManager.APPLICATION_NAME);
 		this.setResizable(false);
 	}
-	protected void reduceSize(){
+	protected void transformIntoReducedWindow(){
 		this.setSize(WINDOW_WIDTH, REDUCED_WINDOW_HEIGHT);
+		this.setAlwaysOnTop(true);
 	}
-	protected void restoreSize(){
+	protected void restoreDefaultWindow(){
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		this.setAlwaysOnTop(false);
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
