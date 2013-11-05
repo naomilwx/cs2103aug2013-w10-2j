@@ -139,10 +139,11 @@ public class GUIManager {
 	}
 	private void getAndDisplayReminders(){
 		Vector<Vector <Task>> reminderList = logicExecutor.getReminderList();
-		updateReminderDisplay(reminderList);
-	}
-	private void updateReminderDisplay(Vector<Vector <Task>> reminders){
-		homeWindow.displayReminders(reminders);
+		homeWindow.displayReminders(reminderList);
+	}	
+	private void getAndDisplayHistory(){
+		Vector<Vector <String>> commandHistory = logicExecutor.getCommandList();
+		historyWindow.displayHistoryList(commandHistory);
 	}
 	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){
@@ -214,6 +215,9 @@ public class GUIManager {
 		if(historyWindow != null){
 			boolean currentVisibility = historyWindow.isVisible();
 			historyWindow.setVisible(!currentVisibility);
+			if(historyWindow.isVisible()){
+				getAndDisplayHistory();
+			}
 		}
 	}
 	protected void hideHistoryWindow(){
@@ -383,6 +387,9 @@ public class GUIManager {
 			if(homeWindow.isVisible()){
 				getAndDisplayReminders();
 			}
+			if(historyWindow.isVisible()){
+				getAndDisplayHistory();
+			}
 			displayExecutionResult(result);
 		}
 	}
@@ -400,6 +407,7 @@ public class GUIManager {
 			case Result.HISTORY_DISPLAY:
 				historyWindow.displayHistoryList(result.getHistoryList());
 				historyWindow.setVisible(true);
+				historyWindow.startFadeOutTimer();
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
 				displayArea.displayTaskList(result);

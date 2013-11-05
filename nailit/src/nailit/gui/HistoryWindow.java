@@ -71,12 +71,16 @@ public class HistoryWindow extends ExtendedWindow{
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
 	}
+	
 	@Override
 	public void setVisible(boolean visible){
 		super.setVisible(visible);
-		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
 	}
+	protected void startFadeOutTimer(){
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+	}
+	
 	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
 		fadeOutTimer.setInitialDelay(displayTime);
 		fadeOutTimer.setDelay(timeInterval);
