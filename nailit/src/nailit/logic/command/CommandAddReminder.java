@@ -13,9 +13,12 @@ import nailit.storage.StorageManager;
 
 public class CommandAddReminder extends Command{
 	
-	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is not added successfully. " +
-																		"The reason may be: the display ID is invalid" +
-																		" or the reminder date is invalid";
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID = "Sorry, the reminder is not added " +
+																		"successfully. The reason is: the display ID is invalid";
+	
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE = "Sorry, the reminder is not added " +
+																								"successfully. The reason is: the reminder " +
+																								"date is invalid";
 
 	private int displayID;
 	
@@ -53,16 +56,22 @@ public class CommandAddReminder extends Command{
 				createCommandSummary();
 				isSuccess = true;
 			} else {
-				createResultForFailure();
+				createResultForInvalidReminderDateFailure();
 			}
 		} else {
-			createResultForFailure();
+			createResultForInvalidDisplayIdFailure();
 		} 
 		return executedResult;
 	}
 	
-	private void createResultForFailure() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
+	private void createResultForInvalidReminderDateFailure() {
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE);
+		executedResult.setUpdateReminderList(false);
+		
+	}
+
+	private void createResultForInvalidDisplayIdFailure() {
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID);
 		executedResult.setUpdateReminderList(false);
 	}
 
@@ -105,13 +114,13 @@ public class CommandAddReminder extends Command{
 			return false;
 		}
 		
-		DateTime endTimeOfTask = taskRelated.getEndTime();
-		if(endTimeOfTask == null){
-			return true;
-		}
-		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
-			return false;
-		}
+//		DateTime endTimeOfTask = taskRelated.getEndTime();
+//		if(endTimeOfTask == null){
+//			return true;
+//		}
+//		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
+//			return false;
+//		}
 		
 		return true;
 	}
