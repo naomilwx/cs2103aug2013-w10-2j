@@ -2,6 +2,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,8 +10,10 @@ import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import nailit.common.Task;
 import nailit.gui.renderer.IDDisplayRenderer;
@@ -19,7 +22,7 @@ import nailit.gui.renderer.TaskNameDisplayRenderer;
 
 public class TaskTable extends TableDisplay{
 	private int deletedTaskRowsNum = 0;
-	
+			
 	public TaskTable(int width, int height) {
 		super(width, height);
 	}
@@ -69,6 +72,30 @@ public class TaskTable extends TableDisplay{
 	protected void setRowWidths(){
 		setRowWidths(table, GUIManager.TASKS_TABLE_COLUMN_WIDTH);
 	}
+	@Override
+	protected void addContentToTable(int pos, Vector<String> row){
+		super.addContentToTable(pos, row);
+		resizeColumnToFitText(pos, GUIManager.TASK_NAME_COLUMN_NUMBER);
+	}
+	@Override
+	protected void addContentToTable(Vector<String> row){
+		super.addContentToTable(row);
+		resizeColumnToFitText(tableRows.size() - 1, GUIManager.TASK_NAME_COLUMN_NUMBER);
+	}
+	protected void resizeColumnToFitText(int rowNum, int colNum){
+      DefaultTableColumnModel colModel = (DefaultTableColumnModel) table.getColumnModel();
+      TableColumn col = colModel.getColumn(colNum);
+      int width = col.getWidth();
+
+      TableCellRenderer renderer = table.getCellRenderer(rowNum, colNum);
+      Component component = renderer.getTableCellRendererComponent(table, table.getValueAt(rowNum, colNum),
+            false, false, rowNum, colNum);
+      int newWidth = Math.max(width, component.getPreferredSize().width);
+      if(newWidth > width){
+	      col.setWidth(newWidth);
+	      col.setPreferredWidth(newWidth);
+      }
+	}
 	protected void addDeletedTaskToTable(Task task){
 		deletedTaskRowsNum += 1;
 		Vector<String> row = formatTaskForRowDisplay(task, GUIManager.DELETED_TASK_DISPLAY_ID);
@@ -84,13 +111,13 @@ public class TaskTable extends TableDisplay{
 	protected Vector<String> formatTaskForRowDisplay(Task task, String IDVal){
 		Vector<String> row = new Vector<String>();
 		row.add(IDVal);
-		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
-		row.add(nameAndTag);
 		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
 		row.add(timeStartDet);
 		boolean highlightIfOverdue = !task.isEvent() && !task.checkCompleted();
 		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime(), highlightIfOverdue);
 		row.add(timeEndDet);
+		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);
+		row.add(nameAndTag);
 		return row;
 	}
 	protected void displayTaskList(Vector<Task> tasks, Task taskToLookOutFor){

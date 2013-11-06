@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -39,6 +40,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.text.Utilities;
 
 import test.logic.LogicManagerStub;
@@ -46,6 +48,8 @@ import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
+import nailit.logic.exception.InvalidCommandFormatException;
+import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.storage.FileCorruptionException;
 
 public class GUIManager {	
@@ -59,8 +63,10 @@ public class GUIManager {
 	protected static final int MAIN_WINDOW_X_POS = 100;
 	protected static final int MAIN_WINDOW_Y_POS = 150;
 	
+	protected static final String DEFAULT_FONT = "HelveticaNeue Light";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
+	
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	protected static final int HOME_WINDOW_WIDTH = 400;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
@@ -77,11 +83,9 @@ public class GUIManager {
 	protected static final int END_TIME_COLUMN_WIDTH = 130;
 	protected static final int TOTAL_TABLE_WIDTH
 	= ID_COLUMN_WIDTH + NAME_COLUMN_WIDTH + START_TIME_COLUMN_WIDTH + END_TIME_COLUMN_WIDTH;
-	protected static final int COMMAND_COLUMN_WIDTH = TOTAL_TABLE_WIDTH - ID_COLUMN_WIDTH;
 	protected static final int[] TASKS_TABLE_COLUMN_WIDTH = 
-		{ID_COLUMN_WIDTH, NAME_COLUMN_WIDTH, START_TIME_COLUMN_WIDTH, END_TIME_COLUMN_WIDTH};
-	protected static final int[] COMMAND_HISTORY_COLUMN_WIDTH =
-		{ID_COLUMN_WIDTH, COMMAND_COLUMN_WIDTH};
+		{ID_COLUMN_WIDTH, START_TIME_COLUMN_WIDTH, END_TIME_COLUMN_WIDTH, NAME_COLUMN_WIDTH};
+	protected static final int TASK_NAME_COLUMN_NUMBER = 3;
 	
 	protected static final String ID_COL_NAME = "ID";
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
@@ -89,10 +93,10 @@ public class GUIManager {
 	protected static final String TASK_END_TIME_COL_NAME = "End";
 	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
-		{ID_COL_NAME, TASK_NAME_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME};
-	protected static final String[] COMMAND_HISTORY_HEADER =
-		{ID_COL_NAME, COMMAND_COL_NAME};
+		{ID_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME, TASK_NAME_COL_NAME};
 	public static final String DELETED_TASK_DISPLAY_ID = "DEL";
+	
+	protected static Font DEFAULT_FONT_OBJECT;
 	
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
@@ -107,22 +111,24 @@ public class GUIManager {
 	private NailItGlobalKeyListener globalKeyListener;
 	private Logger logger;
 	
-	public GUIManager(final AppLauncher launcher) {
+	public GUIManager(final AppLauncher launcher){
 		try{
 			this.launcher = launcher;
 			logger = AppLauncher.getLogger();
+			loadRequiredFontsInGraphicsEnvironmentAndInitialiseDefaultFont();
 			setWindowLookAndFeel();
+			initialiseAndSetDefaultFont();
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-			loadRequiredFontsInGraphicsEnvironment();
 //			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
 //			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
-			displayNotification("File corrupted. Delete NailIt's storage file and restart NailIt", false);
+			displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
+//			throw e;
 		}catch(Exception e){
 			//TODO:
 			e.printStackTrace();
@@ -130,15 +136,18 @@ public class GUIManager {
 	}
 	
 	private void showDefaultDisplayAndReminders(){
-		getAndDisplayReminders();
+		if(!getAndDisplayReminders()){
+			homeWindow.setVisible(false);
+		}
 		processAndDisplayExecutionResult(logicExecutor.getListOfTasksForTheDay());
 	}
-	private void getAndDisplayReminders(){
+	private boolean getAndDisplayReminders(){
 		Vector<Vector <Task>> reminderList = logicExecutor.getReminderList();
-		updateReminderDisplay(reminderList);
-	}
-	private void updateReminderDisplay(Vector<Vector <Task>> reminders){
-		homeWindow.displayReminders(reminders);
+		return homeWindow.displayReminders(reminderList);
+	}	
+	private void getAndDisplayHistory(){
+		Vector<Vector <String>> commandHistory = logicExecutor.getCommandList();
+		historyWindow.displayHistoryList(commandHistory);
 	}
 	//functions to initialise and configure GUI components
 	private void initialiseExtendedWindows(){
@@ -171,12 +180,13 @@ public class GUIManager {
 		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
 	}
 	protected void reduceMainWindowSize(){
-		mainWindow.reduceSize();
+		mainWindow.transformIntoReducedWindow();
 		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		displayArea.removeTaskDisplay();
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
-		mainWindow.restoreSize();
+		mainWindow.restoreDefaultWindow();
 		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
@@ -209,6 +219,9 @@ public class GUIManager {
 		if(historyWindow != null){
 			boolean currentVisibility = historyWindow.isVisible();
 			historyWindow.setVisible(!currentVisibility);
+			if(historyWindow.isVisible()){
+				getAndDisplayHistory();
+			}
 		}
 	}
 	protected void hideHistoryWindow(){
@@ -294,6 +307,10 @@ public class GUIManager {
 				displayNotification(notificationStr, false);
 			}
 			err.printStackTrace();
+		}catch(InvalidCommandFormatException e){
+			helpWindow.displaySyntaxForCommandType(e.getCommandType());
+		}catch(InvalidCommandTypeException e){
+			helpWindow.displayListOfAvailableCommands();
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
@@ -378,6 +395,9 @@ public class GUIManager {
 			if(homeWindow.isVisible()){
 				getAndDisplayReminders();
 			}
+			if(historyWindow.isVisible()){
+				getAndDisplayHistory();
+			}
 			displayExecutionResult(result);
 		}
 	}
@@ -395,6 +415,7 @@ public class GUIManager {
 			case Result.HISTORY_DISPLAY:
 				historyWindow.displayHistoryList(result.getHistoryList());
 				historyWindow.setVisible(true);
+				historyWindow.startFadeOutTimer();
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
 				displayArea.displayTaskList(result);
@@ -422,10 +443,19 @@ public class GUIManager {
 		displayArea.showNotifications();
 	}
 	
+	private void displayNotificationAndForceExit(String notificationStr){
+		notificationArea.displayNotification(notificationStr, false);
+		displayArea.showNotificationsAndForceExit();
+	}
+	
 	private void exit(){
 		launcher.exit();
 	}
-
+	
+	protected void forceExit(){
+		launcher.forceExit();
+	}
+	
 	private void setWindowLookAndFeel() throws Exception{
 		try {
 			for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
@@ -451,7 +481,12 @@ public class GUIManager {
 			}
 		}
 	}
-	private void loadRequiredFontsInGraphicsEnvironment(){
+	private void initialiseAndSetDefaultFont(){
+		DEFAULT_FONT_OBJECT = new Font(DEFAULT_FONT, Font.PLAIN, 14);
+		UIDefaults defaultUI = UIManager.getLookAndFeelDefaults();
+		defaultUI.put("defaultFont", new FontUIResource(DEFAULT_FONT_OBJECT));
+	}
+	private void loadRequiredFontsInGraphicsEnvironmentAndInitialiseDefaultFont(){
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
 			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/HelveticaNeue_Lt.ttf"));

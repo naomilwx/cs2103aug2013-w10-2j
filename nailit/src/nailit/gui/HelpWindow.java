@@ -3,6 +3,8 @@ package nailit.gui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map.Entry;
@@ -51,11 +53,23 @@ public class HelpWindow extends ExtendedWindow{
 		}
 	};
 	
+	protected final FocusListener additionalFocusListener = new FocusListener(){
+		public void focusGained(FocusEvent event) {
+			fadeOutTimer.stop();
+		 }
+		public void focusLost(FocusEvent event){
+			fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+		}
+	};
+	
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addListenersToDisplayPane(keyListener);
+		addKeyListenerToDisplayPane(keyListener);
+		addAdditionalFocusListenerToDisplayPane();
 	}
-
+	protected void addAdditionalFocusListenerToDisplayPane(){
+		displayPane.addFocusListener(additionalFocusListener);
+	}
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;
@@ -86,7 +100,7 @@ public class HelpWindow extends ExtendedWindow{
 					fadeOutTimer.stop();
 					setVisible(false);
 				}else{
-//					setOpacity(nextOpacity);
+					setOpacity(nextOpacity);
 				}
 			}
 		});
@@ -172,8 +186,9 @@ public class HelpWindow extends ExtendedWindow{
 		
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
-		
-		adjustAndshowHelpWindow(-newWindowHeight, newWindowHeight);
+		int yposOffset = GUIBoss.getDisplayAreaHeight() - newWindowHeight;
+		adjustAndshowHelpWindow(yposOffset, newWindowHeight);
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
 	}
 	
@@ -203,7 +218,7 @@ public class HelpWindow extends ExtendedWindow{
 	}
 	private void adjustAndshowHelpWindow(int yPosOffset, int height){
 		adjustHelpWindowHeight(height);
-//		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
+		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
 		setVisible(true);
 		adjustHelpWindowLocation(yPosOffset);
 	}

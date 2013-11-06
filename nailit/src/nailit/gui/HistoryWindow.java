@@ -38,7 +38,15 @@ public class HistoryWindow extends ExtendedWindow{
 		super(GUIMain, width);
 		displayPane.addFocusListener(historyFocusListener);
 	}
-	
+	protected void formatAndAppendCommandsList(StringBuilder str, Vector<String> list){
+		str.append("<table>");
+		for(String command: list){
+			str.append("<tr>");
+			str.append(command);
+			str.append("</tr>");
+		}
+		str.append("</table>");
+	}
 	protected void displayHistoryList(Vector<Vector <String>> list){
 		if(list == null){
 			return;
@@ -48,35 +56,27 @@ public class HistoryWindow extends ExtendedWindow{
 		
 		Vector<String> undidCommands = list.get(NIConstants.HISTORY_UNDO_INDEX);
 		str.append(COMMANDS_EXECUTED_HEADER);
-		str.append("<table>");
-		for(String command: undidCommands){
-			str.append("<tr>");
-			str.append(command);
-			str.append("</tr>");
-		}
-		str.append("</table>");
+		formatAndAppendCommandsList(str, undidCommands);
 		
 		Vector<String> redoableCommands = list.get(NIConstants.HISTORY_REDO_INDEX);
 		if(!redoableCommands.isEmpty()){
 			str.append(COMMANDS_UNDID_HEADER);
-			str.append("<table>");
-			for(String command: redoableCommands){
-				str.append("<tr>");
-				str.append(command);
-				str.append("</tr>");
-			}
-			str.append("</table>");
+			formatAndAppendCommandsList(str, redoableCommands);
 		}
 		
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());
 	}
+	
 	@Override
 	public void setVisible(boolean visible){
 		super.setVisible(visible);
-		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
 	}
+	protected void startFadeOutTimer(){
+		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
+	}
+	
 	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
 		fadeOutTimer.setInitialDelay(displayTime);
 		fadeOutTimer.setDelay(timeInterval);
@@ -89,7 +89,7 @@ public class HistoryWindow extends ExtendedWindow{
 					fadeOutTimer.stop();
 					setVisible(false);
 				}else{
-//					setOpacity(nextOpacity);
+					setOpacity(nextOpacity);
 				}
 			}
 		});

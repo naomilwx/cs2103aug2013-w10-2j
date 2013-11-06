@@ -4,7 +4,7 @@ package nailit.gui.renderer;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TableHeaderRenderer extends DefaultTableCellRenderer{
-	private static final String cellStyle = "<head><style type = \"text/css\">" 
+	private static final String cellStyle = "<head><style type = \"text/css\">"
 			+ "p.header{font-size: 14px; text-align:center;}"
 			+ "</style></head>";
 	public TableHeaderRenderer(){

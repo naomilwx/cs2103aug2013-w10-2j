@@ -239,7 +239,17 @@ public class DisplayArea extends JLayeredPane {
 					}
 		});
 	}
-	
+	protected void showNotificationsAndForceExit(){
+		popupPane.setVisible(true);
+		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
+				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
+				new Callable(){
+					public Boolean call() throws Exception {
+						GUIBoss.forceExit();
+						return true;
+					}
+		});
+	}
 	protected void addContent(Component component, boolean replace){
 		if(replace){
 			defaultPane.removeAll();
