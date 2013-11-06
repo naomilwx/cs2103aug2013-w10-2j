@@ -26,12 +26,12 @@ public enum CommandType {
 		int min = Integer.MAX_VALUE;
 		CommandType answer = CommandType.INVALID;
 		for(CommandType type: CommandType.values()){
-			min = Math.min(min, StringUtils.getLevenshteinDistance(type.toString(), p));
-			if (min<p.length()){
+			if (StringUtils.getLevenshteinDistance(type.toString(), p)<min){
+				min = StringUtils.getLevenshteinDistance(type.toString(), p);
 				answer = type;
 			}
 		}
-		System.out.println();
+		System.out.println(answer.toString());
 		return answer;
 	}
 }
