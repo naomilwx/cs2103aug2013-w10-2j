@@ -8,7 +8,9 @@ import nailit.storage.FileCorruptionException;
 import nailit.storage.FileManager;
 
 import org.junit.Test;
-
+/**
+ * @author a0105683e
+ * */
 public class FileManagerTest {
 	public FileManager hardDisk = null;
 

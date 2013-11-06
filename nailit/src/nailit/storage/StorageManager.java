@@ -14,6 +14,9 @@ import nailit.common.TaskPriority;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
  
+/**
+ * @author a0105683e
+ * */
 public class StorageManager {
 	private FileManager taskFile;
 	private DataManager inMemory;
