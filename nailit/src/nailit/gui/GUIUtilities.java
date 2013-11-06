@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -26,12 +27,29 @@ public class GUIUtilities {
 		componentGraphics.fillRect(0, 0, component.getWidth(), component.getHeight());
 		component.revalidate();
 	}
-	public static void scrollTextDisplayToTop(final TextDisplay textDisplay){
+	public static void scrollDisplayToTop(final ScrollableFocusableDisplay display){
+		scrollDisplayToPosition(display, new Point(0, 0));
+	}
+	
+	public static void scrollDisplayToPosition(final ScrollableFocusableDisplay display, final Point point){
 		SwingUtilities.invokeLater(new Runnable(){
 			@Override
 			public void run() {
-				textDisplay.getViewport().setViewPosition(new Point(0, 0));
+				display.getViewport().setViewPosition(point);
 			}
 		});
 	}
+	public static void scrollDisplayToLeft(final ScrollableFocusableDisplay display){
+		
+		SwingUtilities.invokeLater(new Runnable(){
+			@Override
+			public void run() {
+				JViewport viewport = display.getViewport();
+				int yPos = viewport.getViewPosition().y;
+				display.getViewport().setViewPosition(new Point(0, yPos));
+			}
+		});
+	}
+	
+	
 }
