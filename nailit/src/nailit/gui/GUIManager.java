@@ -73,7 +73,7 @@ public class GUIManager {
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
-	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("todo.png");
+	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png");
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
@@ -487,9 +487,9 @@ public class GUIManager {
 	private void loadRequiredFontsInGraphicsEnvironmentAndInitialiseDefaultFont(){
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		try {
-			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/HelveticaNeue_Lt.ttf"));
-			Font helveticaR = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Helvetica_Reg.ttf"));
-			Font Lucida = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("fonts/Lucida_Grande.ttf"));
+			Font helveticaN = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("/fonts/HelveticaNeue_Lt.ttf"));
+			Font helveticaR = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("/fonts/Helvetica_Reg.ttf"));
+			Font Lucida = Font.createFont(Font.TRUETYPE_FONT, GUIManager.class.getResourceAsStream("/fonts/Lucida_Grande.ttf"));
 			env.registerFont(helveticaN);
 			env.registerFont(helveticaR);
 			env.registerFont(Lucida);
