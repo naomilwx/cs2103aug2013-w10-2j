@@ -142,7 +142,7 @@ public class CommandManager {
 			resultToPassToGUI = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Sorry, you haven't undone any command, so cannot redo.", null, currentTaskList, null);
 		} else {
 			commandToRedo.redo();
-			if(commandToRedo.isSuccessRedo()) {
+			if(commandToRedo.isRedoSuccessfully()) {
 				operationsHistory.push(commandToRedo);
 				updateCurrentListAfterRedo(commandToRedo);
 				resultToPassToGUI = createResultForRndoSuccessfully();
@@ -237,7 +237,7 @@ public class CommandManager {
 			}
 		} else { // three situations
 			commandToUndo.undo();
-			if(commandToUndo.undoSuccessfully()) {
+			if(commandToUndo.isUndoSuccessfully()) {
 				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
 				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
 				resultToPassToGUI = createResultForUndoSuccessfully(commandToUndo);

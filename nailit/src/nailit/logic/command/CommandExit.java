@@ -41,7 +41,7 @@ public class CommandExit extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		// nothing
 		return false;
 	}
@@ -59,7 +59,7 @@ public class CommandExit extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		// TODO Auto-generated method stub
 		return false;
 	}

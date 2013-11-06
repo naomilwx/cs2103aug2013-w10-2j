@@ -30,12 +30,6 @@ public class CommandAdd extends Command{
 	private String taskTag;
 	private String taskDescription;
 	
-	
-	
-	// fields for marking the success for undo and redo 
-	private boolean isUndoSuccess;
-	private boolean isRedoSuccess;
-	
 	// final static fields
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully added";
 	
@@ -118,7 +112,7 @@ public class CommandAdd extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		return isUndoSuccess;
 	}
 
@@ -136,7 +130,7 @@ public class CommandAdd extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
 	

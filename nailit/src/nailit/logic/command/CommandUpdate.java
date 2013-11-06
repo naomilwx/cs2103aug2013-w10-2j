@@ -226,7 +226,7 @@ public class CommandUpdate extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		return isUndoSuccess;
 	}
 	
@@ -251,7 +251,7 @@ public class CommandUpdate extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
 

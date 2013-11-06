@@ -204,7 +204,7 @@ public class CommandDisplay extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		// nothing to do
 		return false;
 	}
@@ -221,7 +221,7 @@ public class CommandDisplay extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		// TODO Auto-generated method stub
 		return false;
 	}

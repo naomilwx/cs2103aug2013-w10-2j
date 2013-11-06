@@ -24,8 +24,6 @@ public class CommandDelete extends Command{
 	// task list, in which the task is to delete
 	private Vector<Task> taskList;
 	
-	private boolean isUndoSuccess;
-	private boolean isRedoSuccess;
 
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully deleted.";
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
@@ -187,7 +185,7 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		return isUndoSuccess;
 	}
 
@@ -209,7 +207,7 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
 	

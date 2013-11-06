@@ -8,19 +8,23 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public abstract class Command {
-
 	// the parserResutl instance given by parser
 	protected ParserResult parserResultInstance;
 	
 	// used for connecting with storage
 	protected StorageManager storer;
 	
+	// represent the commandType of the sub Command class
 	protected CommandType commandType;
 	
+	// the final Result object passed to GUI component
 	protected Result executedResult;
 	
-	// this is used for the command history
+	// this is used for the command history, it summarize the command
 	protected String commandSummary;
+	
+	protected boolean isUndoSuccess;
+	protected boolean isRedoSuccess;
 	
 	
 	// constructor
@@ -29,19 +33,22 @@ public abstract class Command {
 		this.storer = storerToUse;
 	}
 
-
+	// the method that does the execution 
 	public abstract Result executeCommand() throws Exception;
 	
+	// get the task ID for the task related to that command object
 	public abstract int getTaskID(); 
 	
 	public abstract CommandType getCommandType();	
 	
+	// the command object is able to undo or redo itself
 	public abstract void undo();
 	public abstract void redo();
 
-
-	public abstract boolean undoSuccessfully();
-	public abstract boolean isSuccessRedo();
 	
+	public abstract boolean isUndoSuccessfully();
+	public abstract boolean isRedoSuccessfully();
+	
+	// the method return the command summary for the command object
 	public abstract String getCommandString();
 }

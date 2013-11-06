@@ -5,7 +5,6 @@ package nailit.logic.command;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import nailit.common.NIConstants;
-import nailit.common.Reminder;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -32,8 +31,6 @@ public class CommandAddReminder extends Command{
 	
 	private boolean isSuccess;
 	
-	private boolean undoSuccess;
-	private boolean redoSuccess;
 	
 
 	public CommandAddReminder(ParserResult resultInstance,
@@ -45,8 +42,8 @@ public class CommandAddReminder extends Command{
 		taskRelated = new Task();
 		commandSummary = "";
 		isSuccess = false;
-		undoSuccess = false;
-		redoSuccess = false;
+		isUndoSuccess = false;
+		isRedoSuccess = false;
 		commandType = CommandType.ADDREMINDER;
 	}
 
@@ -163,26 +160,26 @@ public class CommandAddReminder extends Command{
 	public void undo() { // update it by setting reminder date as null
 		taskRelated.setReminder(null); 
 		storer.add(taskRelated);
-		this.undoSuccess = true;
-		this.redoSuccess = false;
+		this.isUndoSuccess = true;
+		this.isRedoSuccess = false;
 	}
 
 	@Override
 	public void redo() {
 		taskRelated.setReminder(this.reminderDateToAdd); 
 		storer.add(taskRelated);
-		this.undoSuccess = false;
-		this.redoSuccess = true;
+		this.isUndoSuccess = false;
+		this.isRedoSuccess = true;
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
-		return undoSuccess;
+	public boolean isUndoSuccessfully() {
+		return isUndoSuccess;
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
-		return redoSuccess;
+	public boolean isRedoSuccessfully() {
+		return isRedoSuccess;
 	}
 
 	@Override
