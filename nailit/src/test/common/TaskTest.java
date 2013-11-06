@@ -9,6 +9,24 @@ import nailit.common.TaskPriority;
 import org.joda.time.DateTime;
 public class TaskTest {
 	@Test
+	public void isOverDueTaskTest(){
+		Task pastTask = new Task();
+		//At this point task is a float thing task. should be false for overdue
+		assertFalse(pastTask.isOverDueTask());
+		DateTime now = new DateTime();
+		System.out.println(now);
+		DateTime start = now.minusDays(10);
+		DateTime end = now.minusDays(5);
+		pastTask.setStartTime(start);
+		pastTask.setEndTime(end);
+		assertFalse(pastTask.isOverDueTask());
+		pastTask.setStartTime(null);
+		assertTrue(pastTask.isOverDueTask());
+		//Boundary case, due now. should return false
+		pastTask.setEndTime(new DateTime());
+		assertFalse(pastTask.isOverDueTask());
+	}
+	@Test
 	public void emptyTaskTest() {
 		Task emptyTask = new Task();
 		assertTrue(emptyTask.isFloatingTask());

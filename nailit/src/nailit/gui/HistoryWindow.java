@@ -10,7 +10,6 @@ import java.util.Vector;
 import javax.swing.Timer;
 
 import nailit.common.NIConstants;
-import nailit.common.Result;
 
 public class HistoryWindow extends ExtendedWindow{
 	private static final String COMMANDS_EXECUTED_HEADER 

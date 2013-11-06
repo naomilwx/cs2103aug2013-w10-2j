@@ -5,12 +5,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 public class GUIUtilities {
 	public static int getComponentOpacity(Component component){

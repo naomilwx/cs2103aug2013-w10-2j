@@ -11,8 +11,6 @@ import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import nailit.logic.CommandType;
