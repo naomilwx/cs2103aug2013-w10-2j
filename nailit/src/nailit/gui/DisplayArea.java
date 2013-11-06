@@ -271,7 +271,7 @@ public class DisplayArea extends JLayeredPane {
 			int textDisplayHeight = defaultPane.getHeight()/2;
 			textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
 			textDisplay.displayHTMLFormattedText(details);
-			GUIUtilities.scrollTextDisplayToTop(textDisplay);
+			GUIUtilities.scrollDisplayToTop(textDisplay);
 			
 			addContent(textDisplay, false);
 		}

@@ -167,7 +167,7 @@ public class HelpWindow extends ExtendedWindow{
 		displayFormattedText(display);
 		
 		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
-		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
+		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForSupportedCommands(){
 		String displayText = formatTitleForDisplay(ALL_COMMAND_SYNTAX_TITLE)
@@ -176,7 +176,7 @@ public class HelpWindow extends ExtendedWindow{
 		displayFormattedText(display);
 		
 		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
-		GUIUtilities.scrollTextDisplayToTop((TextDisplay) displayPane);
+		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForCommandType(String command){
 		String displayText = formatTitleForDisplay("Syntax for "+ command + " command")

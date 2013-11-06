@@ -48,6 +48,7 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int SINGLE_SCROLLUP = -1;
 	protected static final int QUICK_SCROLLDOWN_OFFSET = 6;
 	protected static final int QUICK_SCROLLUP_OFFSET = 6;
+	protected static final int TABLE_DISPLAY_DEFAULT_POS = 0;
 	
 	protected int containerHeight;
 	protected int containerWidth;
@@ -210,6 +211,7 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 			int selectedRow =currentRow;
 			
 			if(selectedRow == NO_SELECTED_ROW){
+				currentRow = 0;
 				selectedRow = 0;
 			}else{
 				selectedRow = selectedRow + offSet;
@@ -221,16 +223,17 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 			if(selectedRow >= tableRows.size()){
 				selectedRow = 0;
 				table.changeSelection(selectedRow, noOfCols, false, false);
+				GUIUtilities.scrollDisplayToLeft(this);
 			}else{
 				Point viewPos = getViewport().getViewPosition();
-				int XPos = viewPos.x;
+				int XPos = TABLE_DISPLAY_DEFAULT_POS;
 				int YPos = viewPos.y;
 				YPos += (selectedRow - currentRow) * TABLE_ROW_HEIGHT;
 				if(YPos < 0){
 					YPos = 0;
 				}
-				getViewport().setViewPosition(new Point(XPos, YPos));
 				table.changeSelection(selectedRow, noOfCols, false, false);
+				getViewport().setViewPosition(new Point(XPos, YPos));
 			}
 		}
 	}
