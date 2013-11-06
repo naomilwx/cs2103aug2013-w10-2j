@@ -27,7 +27,7 @@ public class CommandExit extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
+	public int getTaskId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

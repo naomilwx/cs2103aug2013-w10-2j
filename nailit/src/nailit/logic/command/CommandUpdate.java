@@ -13,7 +13,6 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandUpdate extends Command{
-	private int taskToRetrieveID;
 	private Task taskRetrieved; // previous version
 	
 	private Task updatedTask; // updated version
@@ -29,11 +28,20 @@ public class CommandUpdate extends Command{
 	private boolean isUndoSuccess;
 	private boolean isRedoSuccess;
 	
-	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK = "Sorry, Task [ID: %1d] not found. Please check and try again.";
-	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK_FOR_TASK_NOT_EXIST_IN_CURRENT_LIST = "Sorry, Task [ID: %1d] is not in the current task list. Please check and try again.";
+	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK = "Sorry, Task [ID: %1d] not " +
+															"found. Please check and try again.";
+	
+	private static final String UPDATE_UNSUCCESSFUL_FEEDBACK_FOR_TASK_NOT_EXIST_IN_CURRENT_LIST = "Sorry, Task [ID: %1d] " +
+																								"is not in the current task list. " +
+																								"Please check and try again.";
+	
 	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult instance is null.";
-	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_TASK_LIST = "The task you are trying to update does not exist in the task list. Please try again."; 
-	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_STORAGE = "The task you are trying to update does not exist in the storage. Please try again.";
+	
+	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_TASK_LIST = "The task you are trying to update does not " +
+																					"exist in the task list. Please try again.";
+	
+	private static final String COMMAND_SUMMARY_FOR_UPDATING_TASK_NOT_IN_STORAGE = "The task you are trying to update does not " +
+																					"exist in the storage. Please try again.";
 
 	public CommandUpdate(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
@@ -78,7 +86,7 @@ public class CommandUpdate extends Command{
 	}
 	
 	private void setTaskID() {
-		taskToRetrieveID = taskRetrieved.getID();
+		taskId = taskRetrieved.getID();
 	}
 
 	private void createCommandSummaryForUpdatingTaskNotInStorage() {
@@ -206,8 +214,8 @@ public class CommandUpdate extends Command{
 	
 	
 	
-	public int getTaskID() {
-		return taskToRetrieveID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	public boolean updateSuccess() {

@@ -61,7 +61,7 @@ public class CommandTest {
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		int taskID = cm.getOperationsHistory().firstElement().getTaskId();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
@@ -73,7 +73,7 @@ public class CommandTest {
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		int taskID = cm.getOperationsHistory().firstElement().getTaskId();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
@@ -93,7 +93,7 @@ public class CommandTest {
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
+		int taskID = cm.getOperationsHistory().firstElement().getTaskId();
 		Result expectedResultObj = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, SuccessMsg + taskID);
 		testTwoResultObj(resultObjOfCommandAdd, expectedResultObj);
 	}

@@ -19,7 +19,6 @@ public class CommandAddReminder extends Command{
 
 	private int displayID;
 	
-	private int taskID;
 	
 	private Vector<Task> taskList;
 	
@@ -93,7 +92,7 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void setTaskID() {
-		taskID = taskRelated.getID();
+		taskId = taskRelated.getID();
 	}
 
 	private void addReminderDate() {
@@ -147,8 +146,8 @@ public class CommandAddReminder extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
-		return taskID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	@Override

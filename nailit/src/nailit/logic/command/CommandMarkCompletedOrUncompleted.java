@@ -15,6 +15,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	
 	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "The task: %1s " +
 																				"has been successfully marked as completed.";
+	
 	private static final String NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS = "The task: %1s has " +
 																				"been successfully marked as uncompleted.";
 
@@ -163,7 +164,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
+	public int getTaskId() {
 		return taskID;
 	}
 
