@@ -47,7 +47,7 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int SINGLE_SCROLLDOWN = 1;
 	protected static final int SINGLE_SCROLLUP = -1;
 	protected static final int QUICK_SCROLLDOWN_OFFSET = 6;
-	protected static final int QUICK_SCROLLUP_OFFSET = 6;
+	protected static final int QUICK_SCROLLUP_OFFSET = -6;
 	protected static final int TABLE_DISPLAY_DEFAULT_POS = 0;
 	
 	protected int containerHeight;
