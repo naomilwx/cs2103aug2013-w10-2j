@@ -5,9 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.border.LineBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;

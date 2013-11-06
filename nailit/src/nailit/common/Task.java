@@ -294,7 +294,7 @@ public class Task {
 	public boolean isAfterDateTime(DateTime dateTime){
 		//true if event starts AFTER (exclusive) date or task is due after date
 		if(dateTime == null){
-			return true; //TODO: check if this should happen
+			return true;
 		}
 		if(startTime != null){
 			return (startTime.compareTo(dateTime) > 0);//startTime is after given date
@@ -374,7 +374,7 @@ public class Task {
 	}
 	//end of task utility functions
 	@Override
-	public String toString(){ //TODO: figure out whether to include description
+	public String toString(){
 		String output = formatID()+"\n"
 						+formatName() +"\n";
 		if(!isFloatingTask()){
@@ -387,6 +387,8 @@ public class Task {
 		}
 		return output;
 	}
+	
+	//Two tasks are considered to be the same task if their IDs are the same
 	@Override
 	public boolean equals(Object otherTask){
 		if(otherTask instanceof Task){

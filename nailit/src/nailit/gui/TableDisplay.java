@@ -13,16 +13,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.ComponentInputMap;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
@@ -33,12 +30,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import nailit.common.Result;
-import nailit.common.Task;
 import nailit.gui.renderer.TableHeaderRenderer;
-import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
-import nailit.gui.renderer.TaskNameDisplayRenderer;
-import nailit.gui.renderer.IDDisplayRenderer;
+
 
 public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int TABLE_HEADER_HEIGHT = 40;

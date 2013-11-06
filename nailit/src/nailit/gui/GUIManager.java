@@ -73,6 +73,10 @@ public class GUIManager {
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
+	private static final String FAIL_TO_LOAD_ICON_IN_SYSTEM_TRAY_ERROR = "Failed to load system tray icon";
+	private static final String FAIL_TO_OPEN_FONT_RESOURCE_ERROR = "Failed to open font file data";
+	private static final String FONT_FORMAT_ERROR = "Problem encountered when reading font format file";
+	
 	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png");
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
@@ -462,15 +466,14 @@ public class GUIManager {
 		            break;
 		        }
 		    }
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(e.getMessage() != null){
+				logger.info(e.getMessage());
+			}
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(e.getMessage() != null){
+				logger.info(e.getMessage());
+			}
 		} catch (UnsupportedLookAndFeelException e) {
 			try{
 				UIManager.setLookAndFeel(DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK);
@@ -494,11 +497,10 @@ public class GUIManager {
 			env.registerFont(helveticaR);
 			env.registerFont(Lucida);
 		} catch (FontFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(FONT_FORMAT_ERROR);
+			logger.info(e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(FAIL_TO_OPEN_FONT_RESOURCE_ERROR);
 		}
 	}
 	private void showInSystemTray(final GUIManager GUIBoss){
@@ -508,7 +510,7 @@ public class GUIManager {
 			final TrayIcon trayIcon = new TrayIcon(trayImage, NAILIT_TRAY_TOOLTIP_TEXT);
 
 			MenuItem showMain = new MenuItem("Main");
-			MenuItem showHome = new MenuItem("Home");
+			MenuItem showHome = new MenuItem("Reminders");
 			MenuItem exitApp = new MenuItem("Exit");
 			final PopupMenu menu = new PopupMenu();
 			menu.add(showMain);
@@ -546,8 +548,7 @@ public class GUIManager {
 			try {
 				systemTray.add(trayIcon);
 			} catch (AWTException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				logger.info(FAIL_TO_LOAD_ICON_IN_SYSTEM_TRAY_ERROR);
 			}
 		}
 	}

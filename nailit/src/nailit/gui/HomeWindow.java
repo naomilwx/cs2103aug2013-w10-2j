@@ -5,14 +5,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
-import javax.swing.JPanel;
-
 import org.joda.time.DateTime;
 
 import nailit.common.NIConstants;
 import nailit.common.Task;
-import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
-import nailit.gui.renderer.TaskDetailsFormatter;
+
 
 public class HomeWindow extends ExtendedWindow{
 	private static final String TASK_REMINDER_DISPLAY_HEADER 
