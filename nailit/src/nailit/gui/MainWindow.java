@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class MainWindow extends JFrame {
-	protected static final int WINDOW_HEIGHT = 470;
+	protected static final int WINDOW_HEIGHT = 485;
 	protected static final int DEFAULT_BORDER_WIDTH = 1;
 	protected static final int WINDOW_WIDTH = 
 			GUIManager.TOTAL_TABLE_WIDTH + GUIManager.X_BUFFER_WIDTH + 
