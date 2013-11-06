@@ -23,12 +23,24 @@ public class CommandDelete extends Command{
 	
 
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully deleted.";
-	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
-	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST = "Task [ID %1d] does not exist in the current task list. Cannot delete non-existant task."; 
-	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult instance is null."; 
-	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, but the to-delete task does not exist in the storage.";;
-	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but the to-delete task does not exist in the task list."; 
-
+	
+	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. " +
+																"Cannot delete non-existant task.";
+	
+	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST = "Task [ID %1d] does not " +
+																			"exist in the current task list. " +
+																			"Cannot delete non-existant task.";
+	
+	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult " +
+																			"instance is null.";
+	
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, " +
+																							"but the to-delete task does not " +
+																							"exist in the storage.";
+	
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but " +
+																							"the to-delete task does not exist in " +
+																							"the task list.";
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
