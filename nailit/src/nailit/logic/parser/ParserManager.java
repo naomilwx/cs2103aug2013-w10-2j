@@ -3,6 +3,7 @@ package nailit.logic.parser;
 //@author A0105559B
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.logic.exception.InvalidCommandFormatException;
 
 public class ParserManager {
 
@@ -16,7 +17,7 @@ public class ParserManager {
 		commandToExecute = command;
 	}
 
-	public ParserResult execute() {
+	public ParserResult execute() throws InvalidCommandFormatException{
 		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
 		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
