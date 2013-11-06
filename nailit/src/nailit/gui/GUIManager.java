@@ -121,14 +121,12 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-//			globalKeyListener = new NailItGlobalKeyListener(this);
+			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
-//			helpWindow.displaySyntaxForCommandType("add"); //testing: to be removed later
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
-//			throw e;
 		}catch(Exception e){
 			//TODO:
 			e.printStackTrace();
@@ -191,9 +189,9 @@ public class GUIManager {
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	public void enableGlobalKeyListener(){
-//		if(!globalKeyListener.isEnabled()){
-//			globalKeyListener.registerGlobalKeyHook();
-//		}
+		if(!globalKeyListener.isEnabled()){
+			globalKeyListener.registerGlobalKeyHook();
+		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components
