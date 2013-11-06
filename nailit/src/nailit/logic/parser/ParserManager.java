@@ -84,12 +84,15 @@ public class ParserManager {
 	}
 	
 	private static CommandType determineCommandType(String commandTypeString) {
-		if (commandTypeString == null)
+		if (commandTypeString == null){
 			throw new Error("command type string cannot be null!");
-		if (CommandType.isCommandType(commandTypeString))
+		}
+		if (CommandType.isCommandType(commandTypeString)){
 			return CommandType.valueOf(commandTypeString.toUpperCase());
-		else
+		}
+		else{
 			return CommandType.isApproximateCommandType(commandTypeString);
+		}
 	}
 	
 }
