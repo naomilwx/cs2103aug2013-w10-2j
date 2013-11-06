@@ -25,12 +25,15 @@ public enum CommandType {
 	public static CommandType isApproximateCommandType(String p){
 		int min = Integer.MAX_VALUE;
 		CommandType answer = CommandType.INVALID;
+		p = p.toUpperCase(); //because CommandType.toString() always gives upper case
 		for(CommandType type: CommandType.values()){
-			if (StringUtils.getLevenshteinDistance(type.toString(), p)<min){
-				min = StringUtils.getLevenshteinDistance(type.toString(), p);
+			int distance = StringUtils.getLevenshteinDistance(type.toString(), p);
+			if (distance<min && distance<type.toString().length()){
+				min = distance;
 				answer = type;
 			}
 		}
+		
 		System.out.println(answer.toString());
 		return answer;
 	}
