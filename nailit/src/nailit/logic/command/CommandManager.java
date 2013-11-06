@@ -42,8 +42,13 @@ public class CommandManager {
 	// store the commands that have been undoed
 	private Stack<Command> redoCommandsList;
 	
-	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has been executed yet, so no undo command can be done.";
-	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the command history. You can undo Add, delete, or Update command.";
+	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has " +
+															"been executed yet, so no undo " +
+															"command can be done.";
+	
+	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the " +
+														"command history. You can undo Add, delete, " +
+														"or Update command.";
 
 	// constructor
 	public CommandManager () throws FileCorruptionException 
@@ -145,7 +150,7 @@ public class CommandManager {
 			resultToPassToGUI = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Sorry, you haven't undone any command, so cannot redo.", null, currentTaskList, null);
 		} else {
 			commandToRedo.redo();
-			if(commandToRedo.isSuccessRedo()) {
+			if(commandToRedo.isRedoSuccessfully()) {
 				operationsHistory.push(commandToRedo);
 				updateCurrentListAfterRedo(commandToRedo);
 				resultToPassToGUI = createResultForRndoSuccessfully();
@@ -167,7 +172,7 @@ public class CommandManager {
 	}
 
 	private void updateCurrentListAfterRedo(Command commandToRedo) {
-		int taskID = commandToRedo.getTaskID();
+		int taskID = commandToRedo.getTaskId();
 		CommandType commandType = commandToRedo.getCommandType();
 		if(commandType == CommandType.ADD) {
 			CommandAdd ca = (CommandAdd)commandToRedo;
@@ -240,7 +245,7 @@ public class CommandManager {
 			}
 		} else { // three situations
 			commandToUndo.undo();
-			if(commandToUndo.undoSuccessfully()) {
+			if(commandToUndo.isUndoSuccessfully()) {
 				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
 				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
 				resultToPassToGUI = createResultForUndoSuccessfully(commandToUndo);
@@ -259,7 +264,7 @@ public class CommandManager {
 	}
 
 	private void updateCurrentListAfterUndo(Command commandToUndo) {
-		int taskID = commandToUndo.getTaskID();
+		int taskID = commandToUndo.getTaskId();
 		CommandType commandType = commandToUndo.getCommandType();
 		if(commandType == CommandType.DELETE) {
 			CommandDelete cd = (CommandDelete)commandToUndo;

@@ -33,11 +33,20 @@ public class CommandSearch extends Command{
 	private boolean isEmptySearch;
 	
 	
-	private final static String COMMAND_SUMMARY_CONTENT = "This is a search command. The search content is: "; 
-	private final static String SEARCH_NONE_WARNING = "This is a search command, but the search content is none.";
-	private final static String SEARCH_NONE_WARNING_FEEDBACK = "Sorry, please tell us what you want to search.";
+	private final static String COMMAND_SUMMARY_CONTENT = "This is a search " +
+														"command. The search content is: ";
+	
+	private final static String SEARCH_NONE_WARNING = "This is a search command, " +
+													"but the search content is none.";
+	
+	private final static String SEARCH_NONE_WARNING_FEEDBACK = "Sorry, please tell " +
+															"us what you want to search.";
+	
 	private final static String STORAGE_GIVES_NULL_VECTOR = "Storage gives null pointer.";
-	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "There is no tasks in the storage that fits the search conditions.";
+	
+	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "There is no tasks " +
+																	"in the storage that fits " +
+																	"the search conditions.";
 	
 	public CommandSearch(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
@@ -129,7 +138,7 @@ public class CommandSearch extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
+	public int getTaskId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -158,7 +167,7 @@ public class CommandSearch extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		// nothing to do
 		return false;
 	}
@@ -175,7 +184,7 @@ public class CommandSearch extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		// TODO Auto-generated method stub
 		return false;
 	}

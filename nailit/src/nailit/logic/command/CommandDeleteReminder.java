@@ -13,14 +13,15 @@ import nailit.storage.StorageManager;
 
 public class CommandDeleteReminder extends Command {
 
-	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is not deleted successfully. "
-			+ "The display ID is invalid";
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is " +
+																		"not deleted successfully. " + 
+																		"The display ID is invalid";
 	
-	private static final String NO_REMINDER_TO_DELETE_FEEDBACK = "Sorry, the task you are accessing does not have a reminder. No need to delete.";
+	private static final String NO_REMINDER_TO_DELETE_FEEDBACK = "Sorry, the task you are accessing does " +
+																"not have a reminder. No need to delete.";
 
 	private int displayID;
 
-	private int taskID;
 
 	private Vector<Task> taskList;
 
@@ -32,8 +33,6 @@ public class CommandDeleteReminder extends Command {
 
 	private boolean isSuccess;
 
-	private boolean undoSuccess;
-	private boolean redoSuccess;
 
 	public CommandDeleteReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
@@ -44,8 +43,8 @@ public class CommandDeleteReminder extends Command {
 		taskRelated = new Task();
 		commandSummary = "";
 		isSuccess = false;
-		undoSuccess = false;
-		redoSuccess = false;
+		isUndoSuccess = false;
+		isRedoSuccess = false;
 		commandType = CommandType.DELETEREMINDER;
 	}
 
@@ -124,7 +123,7 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	private void setTaskID() {
-		taskID = taskRelated.getID();
+		taskId = taskRelated.getID();
 	}
 
 
@@ -147,8 +146,8 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	@Override
-	public int getTaskID() {
-		return taskID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	@Override
@@ -160,26 +159,26 @@ public class CommandDeleteReminder extends Command {
 	public void undo() { // update it by setting reminder date as null
 		taskRelated.setReminder(reminderDateDeleted);
 		storer.add(taskRelated);
-		this.undoSuccess = true;
-		this.redoSuccess = false;
+		this.isUndoSuccess = true;
+		this.isRedoSuccess = false;
 	}
 
 	@Override
 	public void redo() {
 		taskRelated.setReminder(null);
 		storer.add(taskRelated);
-		this.undoSuccess = false;
-		this.redoSuccess = true;
+		this.isUndoSuccess = false;
+		this.isRedoSuccess = true;
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
-		return undoSuccess;
+	public boolean isUndoSuccessfully() {
+		return isUndoSuccess;
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
-		return redoSuccess;
+	public boolean isRedoSuccessfully() {
+		return isRedoSuccess;
 	}
 
 	@Override

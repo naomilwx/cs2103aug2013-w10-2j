@@ -4,8 +4,6 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
-import test.storage.StorageManagerStub;
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -16,7 +14,6 @@ import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
 	private Task taskToRemove;
-	private int taskToDeleteID;
 	private boolean deleteSuccessfully;
 	
 	private int taskToDeleteDisplayID;
@@ -24,16 +21,26 @@ public class CommandDelete extends Command{
 	// task list, in which the task is to delete
 	private Vector<Task> taskList;
 	
-	private boolean isUndoSuccess;
-	private boolean isRedoSuccess;
 
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully deleted.";
-	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. Cannot delete non-existant task.";
-	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST = "Task [ID %1d] does not exist in the current task list. Cannot delete non-existant task."; 
-	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult instance is null."; 
-	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, but the to-delete task does not exist in the storage.";;
-	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but the to-delete task does not exist in the task list."; 
-
+	
+	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. " +
+																"Cannot delete non-existant task.";
+	
+	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK_IN_TASK_LIST = "Task [ID %1d] does not " +
+																			"exist in the current task list. " +
+																			"Cannot delete non-existant task.";
+	
+	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult " +
+																			"instance is null.";
+	
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, " +
+																							"but the to-delete task does not " +
+																							"exist in the storage.";
+	
+	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but " +
+																							"the to-delete task does not exist in " +
+																							"the task list.";
 	
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
@@ -144,8 +151,8 @@ public class CommandDelete extends Command{
 	private void removeTheTaskOnStorage() throws NoTaskFoundException,
 			FileCorruptionException {
 	
-		taskToDeleteID = retrieveTheTaskID();
-		storer.remove(taskToDeleteID, false);
+		taskId = retrieveTheTaskID();
+		storer.remove(taskId, false);
 	}
 
 	private int retrieveTheTaskID() {
@@ -155,8 +162,8 @@ public class CommandDelete extends Command{
 		return taskToRemove.getID();
 	}
 
-	public int getTaskID() {
-		return taskToDeleteID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	public boolean deleteSuccess() {
@@ -187,7 +194,7 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		return isUndoSuccess;
 	}
 
@@ -199,7 +206,7 @@ public class CommandDelete extends Command{
 	@Override
 	public void redo() {
 		try {
-			storer.remove(taskToDeleteID, false);
+			storer.remove(taskId, false);
 			this.isRedoSuccess = true;
 			this.isUndoSuccess = false;
 		} catch (NoTaskFoundException e) {
@@ -209,7 +216,7 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
 	

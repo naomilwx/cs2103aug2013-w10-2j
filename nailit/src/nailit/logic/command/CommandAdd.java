@@ -3,8 +3,6 @@ package nailit.logic.command;
 //@author A0105789R
 
 import org.joda.time.DateTime;
-import test.storage.StorageManagerStub;
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
@@ -19,8 +17,6 @@ public class CommandAdd extends Command{
 	
 	private Task taskPassedToStorer;
 	
-	// this is the task ID, which is used to contact with storage
-	private int taskID; 
 	
 	// potential fields to add 
 	private String taskName;
@@ -29,12 +25,6 @@ public class CommandAdd extends Command{
 	private TaskPriority taskPriority;
 	private String taskTag;
 	private String taskDescription;
-	
-	
-	
-	// fields for marking the success for undo and redo 
-	private boolean isUndoSuccess;
-	private boolean isRedoSuccess;
 	
 	// final static fields
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully added";
@@ -52,12 +42,12 @@ public class CommandAdd extends Command{
 		System.out.println("execute");
 		getContentFromParserResult();
 		createTaskObject();
-		taskID = storer.add(taskPassedToStorer);
-		taskPassedToStorer.setID(taskID); //temp fix here. will it be better if storage returns task object instead of id?
+		taskId = storer.add(taskPassedToStorer);
+		taskPassedToStorer.setID(taskId); //temp fix here. will it be better if storage returns task object instead of id?
 		createResultObject();
 		createCommandSummary();
 		
-		System.out.println(taskID);
+		System.out.println(taskId);
 		
 		return executedResult;
 	}
@@ -67,16 +57,6 @@ public class CommandAdd extends Command{
 		if(parserResultInstance.getName() != null) {
 			commandSummary = commandSummary + parserResultInstance.getName();
 		} 
-		
-//		if(parserResultInstance.getStartTime() != null) {
-//			commandSummary = commandSummary + " Start time: " + 
-//		parserResultInstance.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//		} 
-//		
-//		if(parserResultInstance.getEndTime() != null) {
-//			commandSummary = commandSummary + " End time: " + 
-//		parserResultInstance.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//		}  
 	}
 
 	private void createResultObject() {
@@ -98,8 +78,8 @@ public class CommandAdd extends Command{
 		taskDescription = parserResultInstance.getDescription();
 	}
 	
-	public int getTaskID() {
-		return taskID;
+	public int getTaskId() {
+		return taskId;
 	}
 	
 	public CommandType getCommandType() {
@@ -109,7 +89,7 @@ public class CommandAdd extends Command{
 	@Override
 	public void undo() {
 		try {
-			storer.remove(taskID, true);
+			storer.remove(taskId, true);
 			isUndoSuccess = true;
 			isRedoSuccess = false; //means now you can redo again, if redone before
 		} catch (NoTaskFoundException e) {
@@ -118,7 +98,7 @@ public class CommandAdd extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		return isUndoSuccess;
 	}
 
@@ -136,12 +116,12 @@ public class CommandAdd extends Command{
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
 	
 	public Task getTaskAdded() {
-		taskPassedToStorer.setID(taskID);
+		taskPassedToStorer.setID(taskId);
 		return taskPassedToStorer;
 	}
 }

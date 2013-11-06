@@ -8,8 +8,6 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandExit extends Command{
-
-	
 	
 	public CommandExit(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
@@ -27,7 +25,7 @@ public class CommandExit extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
+	public int getTaskId() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -41,7 +39,7 @@ public class CommandExit extends Command{
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
+	public boolean isUndoSuccessfully() {
 		// nothing
 		return false;
 	}
@@ -55,14 +53,11 @@ public class CommandExit extends Command{
 	@Override
 	public void redo() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
+	public boolean isRedoSuccessfully() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 }
