@@ -5,7 +5,6 @@ package nailit.logic.command;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import nailit.common.NIConstants;
-import nailit.common.Reminder;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -14,28 +13,23 @@ import nailit.storage.StorageManager;
 
 public class CommandAddReminder extends Command{
 	
-	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is not added successfully. " +
-																		"The reason may be: the display ID is invalid" +
-																		" or the reminder date is invalid";
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID = "Sorry, the reminder is not added " +
+																		"successfully. The reason is: the display ID is invalid";
+	
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE = "Sorry, the reminder is not added " +
+																								"successfully. The reason is: the reminder " +
+																								"date is invalid";
 
 	private int displayID;
 	
-	private int taskID;
-	
 	private Vector<Task> taskList;
-	
 	
 	private DateTime reminderDateToAdd;
 	
 	private Task taskRelated;
 	
-	
 	private boolean isSuccess;
 	
-	private boolean undoSuccess;
-	private boolean redoSuccess;
-	
-
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
 		super(resultInstance, storerToUse);
@@ -45,8 +39,8 @@ public class CommandAddReminder extends Command{
 		taskRelated = new Task();
 		commandSummary = "";
 		isSuccess = false;
-		undoSuccess = false;
-		redoSuccess = false;
+		isUndoSuccess = false;
+		isRedoSuccess = false;
 		commandType = CommandType.ADDREMINDER;
 	}
 
@@ -62,16 +56,22 @@ public class CommandAddReminder extends Command{
 				createCommandSummary();
 				isSuccess = true;
 			} else {
-				createResultForFailure();
+				createResultForInvalidReminderDateFailure();
 			}
 		} else {
-			createResultForFailure();
+			createResultForInvalidDisplayIdFailure();
 		} 
 		return executedResult;
 	}
 	
-	private void createResultForFailure() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK);
+	private void createResultForInvalidReminderDateFailure() {
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE);
+		executedResult.setUpdateReminderList(false);
+		
+	}
+
+	private void createResultForInvalidDisplayIdFailure() {
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID);
 		executedResult.setUpdateReminderList(false);
 	}
 
@@ -96,7 +96,7 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void setTaskID() {
-		taskID = taskRelated.getID();
+		taskId = taskRelated.getID();
 	}
 
 	private void addReminderDate() {
@@ -109,23 +109,18 @@ public class CommandAddReminder extends Command{
 		taskRelated = taskList.get(displayID - 1);
 	}
 
-	private boolean isValidReminderDateTime() {
-		// can add reminder for the completed task
-//		if(taskRelated.checkCompleted()) { // cannot add a reminder to a completed task
-//			return false;
-//		} 
-//		
+	private boolean isValidReminderDateTime() {		
 		if(reminderDateToAdd == null) { // handle the null reminder time situation
 			return false;
 		}
 		
-		DateTime endTimeOfTask = taskRelated.getEndTime();
-		if(endTimeOfTask == null){
-			return true;
-		}
-		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
-			return false;
-		}
+//		DateTime endTimeOfTask = taskRelated.getEndTime();
+//		if(endTimeOfTask == null){
+//			return true;
+//		}
+//		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
+//			return false;
+//		}
 		
 		return true;
 	}
@@ -150,8 +145,8 @@ public class CommandAddReminder extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
-		return taskID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	@Override
@@ -163,26 +158,26 @@ public class CommandAddReminder extends Command{
 	public void undo() { // update it by setting reminder date as null
 		taskRelated.setReminder(null); 
 		storer.add(taskRelated);
-		this.undoSuccess = true;
-		this.redoSuccess = false;
+		this.isUndoSuccess = true;
+		this.isRedoSuccess = false;
 	}
 
 	@Override
 	public void redo() {
 		taskRelated.setReminder(this.reminderDateToAdd); 
 		storer.add(taskRelated);
-		this.undoSuccess = false;
-		this.redoSuccess = true;
+		this.isUndoSuccess = false;
+		this.isRedoSuccess = true;
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
-		return undoSuccess;
+	public boolean isUndoSuccessfully() {
+		return isUndoSuccess;
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
-		return redoSuccess;
+	public boolean isRedoSuccessfully() {
+		return isRedoSuccess;
 	}
 
 	@Override
@@ -197,5 +192,4 @@ public class CommandAddReminder extends Command{
 	public DateTime getReminderDateToAdd() {
 		return this.reminderDateToAdd;
 	}
-
 }

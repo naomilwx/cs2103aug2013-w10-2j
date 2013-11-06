@@ -13,11 +13,16 @@ import nailit.storage.StorageManager;
 
 public class CommandMarkCompletedOrUncompleted extends Command{
 	
-	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "The task: %1s has been successfully marked as completed.";
-	private static final String NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS = "The task: %1s has been successfully marked as uncompleted.";
+	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "The task: %1s " +
+																				"has been successfully marked as completed.";
+	
+	private static final String NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS = "The task: %1s has " +
+																				"been successfully marked as uncompleted.";
 
-	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_UNSUCCESS = "The marking operation fails. This may be due to: the task " +
-																					"does not exist in the display task list; the task does not exist " +
+	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_UNSUCCESS = "The marking operation " +
+																					"fails. This may be due to: the task " +
+																					"does not exist in the display task list; " +
+																					"the task does not exist " +
 																					"in the storage.";
 
 	// isCompleted marks whether the task related has already been completed
@@ -35,9 +40,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	private Task taskRelated;
 	
 	
-	private boolean undoSuccess;
 	
-	private boolean redoSuccess;
 	
 	private boolean isCommandMarkAsCompleted;
 	
@@ -53,8 +56,8 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 		taskList = currentTaskList;
 		taskRelated = new Task();
 		commandSummary = "";
-		undoSuccess = false;
-		redoSuccess = false;
+		isUndoSuccess = false;
+		isRedoSuccess = false;
 		isCommandMarkAsCompleted = isMarkAsCompleted;
 		if(isCommandMarkAsCompleted) {
 			commandType = CommandType.COMPLETE;
@@ -161,7 +164,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	}
 
 	@Override
-	public int getTaskID() {
+	public int getTaskId() {
 		return taskID;
 	}
 
@@ -182,8 +185,8 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 			taskRelated.setReminder(null);
 			storer.add(taskRelated);
 		}
-		redoSuccess = false;
-		undoSuccess = true;
+		isRedoSuccess = false;
+		isUndoSuccess = true;
 	}
 
 	@Override
@@ -197,18 +200,18 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 			taskRelated.setReminder(taskReminderDate);
 			storer.add(taskRelated);
 		}
-		redoSuccess = true;
-		undoSuccess = false;
+		isRedoSuccess = true;
+		isUndoSuccess = false;
 	}
 
 	@Override
-	public boolean undoSuccessfully() {
-		return undoSuccess;
+	public boolean isUndoSuccessfully() {
+		return isUndoSuccess;
 	}
 
 	@Override
-	public boolean isSuccessRedo() {
-		return redoSuccess;
+	public boolean isRedoSuccessfully() {
+		return isRedoSuccess;
 	}
 
 	@Override
