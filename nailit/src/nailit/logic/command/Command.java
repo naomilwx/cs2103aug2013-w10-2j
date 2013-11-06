@@ -17,6 +17,9 @@ public abstract class Command {
 	// represent the commandType of the sub Command class
 	protected CommandType commandType;
 	
+	// the task ID for the task related to the Command object
+	protected int taskId;
+	
 	// the final Result object passed to GUI component
 	protected Result executedResult;
 	
@@ -37,7 +40,7 @@ public abstract class Command {
 	public abstract Result executeCommand() throws Exception;
 	
 	// get the task ID for the task related to that command object
-	public abstract int getTaskID(); 
+	public abstract int getTaskId(); 
 	
 	public abstract CommandType getCommandType();	
 	

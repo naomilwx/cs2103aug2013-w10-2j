@@ -4,8 +4,6 @@ package nailit.logic.command;
 
 import java.util.Vector;
 
-import test.storage.StorageManagerStub;
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -16,7 +14,6 @@ import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
 	private Task taskToRemove;
-	private int taskToDeleteID;
 	private boolean deleteSuccessfully;
 	
 	private int taskToDeleteDisplayID;
@@ -142,8 +139,8 @@ public class CommandDelete extends Command{
 	private void removeTheTaskOnStorage() throws NoTaskFoundException,
 			FileCorruptionException {
 	
-		taskToDeleteID = retrieveTheTaskID();
-		storer.remove(taskToDeleteID, false);
+		taskId = retrieveTheTaskID();
+		storer.remove(taskId, false);
 	}
 
 	private int retrieveTheTaskID() {
@@ -153,8 +150,8 @@ public class CommandDelete extends Command{
 		return taskToRemove.getID();
 	}
 
-	public int getTaskID() {
-		return taskToDeleteID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	public boolean deleteSuccess() {
@@ -197,7 +194,7 @@ public class CommandDelete extends Command{
 	@Override
 	public void redo() {
 		try {
-			storer.remove(taskToDeleteID, false);
+			storer.remove(taskId, false);
 			this.isRedoSuccess = true;
 			this.isUndoSuccess = false;
 		} catch (NoTaskFoundException e) {

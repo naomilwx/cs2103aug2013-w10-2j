@@ -13,14 +13,15 @@ import nailit.storage.StorageManager;
 
 public class CommandDeleteReminder extends Command {
 
-	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is not deleted successfully. "
-			+ "The display ID is invalid";
+	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is " +
+																		"not deleted successfully. " + 
+																		"The display ID is invalid";
 	
-	private static final String NO_REMINDER_TO_DELETE_FEEDBACK = "Sorry, the task you are accessing does not have a reminder. No need to delete.";
+	private static final String NO_REMINDER_TO_DELETE_FEEDBACK = "Sorry, the task you are accessing does " +
+																"not have a reminder. No need to delete.";
 
 	private int displayID;
 
-	private int taskID;
 
 	private Vector<Task> taskList;
 
@@ -122,7 +123,7 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	private void setTaskID() {
-		taskID = taskRelated.getID();
+		taskId = taskRelated.getID();
 	}
 
 
@@ -145,8 +146,8 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	@Override
-	public int getTaskID() {
-		return taskID;
+	public int getTaskId() {
+		return taskId;
 	}
 
 	@Override

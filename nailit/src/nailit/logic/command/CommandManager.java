@@ -39,8 +39,13 @@ public class CommandManager {
 	// store the commands that have been undoed
 	private Stack<Command> redoCommandsList;
 	
-	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has been executed yet, so no undo command can be done.";
-	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the command history. You can undo Add, delete, or Update command.";
+	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has " +
+															"been executed yet, so no undo " +
+															"command can be done.";
+	
+	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the " +
+														"command history. You can undo Add, delete, " +
+														"or Update command.";
 
 	// constructor
 	public CommandManager () throws FileCorruptionException 
@@ -164,7 +169,7 @@ public class CommandManager {
 	}
 
 	private void updateCurrentListAfterRedo(Command commandToRedo) {
-		int taskID = commandToRedo.getTaskID();
+		int taskID = commandToRedo.getTaskId();
 		CommandType commandType = commandToRedo.getCommandType();
 		if(commandType == CommandType.ADD) {
 			CommandAdd ca = (CommandAdd)commandToRedo;
@@ -256,7 +261,7 @@ public class CommandManager {
 	}
 
 	private void updateCurrentListAfterUndo(Command commandToUndo) {
-		int taskID = commandToUndo.getTaskID();
+		int taskID = commandToUndo.getTaskId();
 		CommandType commandType = commandToUndo.getCommandType();
 		if(commandType == CommandType.DELETE) {
 			CommandDelete cd = (CommandDelete)commandToUndo;
