@@ -112,12 +112,6 @@ public class DisplayArea extends JLayeredPane {
 		initialiseLayers();
 		addDisplayAreaListeners();
 	}
-	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
-		this.containerHeight = containerHeight;
-		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		//call to GUIManager to resize as only GUI manager is able to get commandbar height
-		GUIBoss.resizeMainDisplayArea();
-	}
 	
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
@@ -166,6 +160,14 @@ public class DisplayArea extends JLayeredPane {
 		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		layer.setOpaque(false);
 	}
+	
+	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
+		this.containerHeight = containerHeight;
+		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		//call to GUIManager to resize as only GUI manager is able to get commandbar height
+		GUIBoss.resizeMainDisplayArea();
+	}
+	
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
 		displayHeight = containerHeight - 2 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
@@ -184,12 +186,15 @@ public class DisplayArea extends JLayeredPane {
 		dynamicallyResizeDefaultPaneHeight();
 		revalidate();
 	}
-	private void dynamicallyResizeDefaultPaneHeight(){
+	private void adjustDefaultPaneHeight(){
 		if(popupPane.isVisible()){
 			defaultPaneHeight = displayHeight - NOTIFICATION_OFFSET;
 		}else{
 			defaultPaneHeight = displayHeight;
 		}
+	}
+	private void dynamicallyResizeDefaultPaneHeight(){
+		adjustDefaultPaneHeight();
 		defaultPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
 	private void configureDisplayArea(){
@@ -199,6 +204,7 @@ public class DisplayArea extends JLayeredPane {
 		this.setSize(displayWidth, displayHeight);
 		this.setOpaque(true);
 	}
+	
 	private void addDisplayAreaListeners(){
 		defaultPane.addFocusListener(defaultPaneFocusListener);
 	}
