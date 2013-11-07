@@ -44,7 +44,7 @@ public class Task {
 		if(t == null){
 			tag = "";
 		}else{
-			tag = t;
+			tag = Utilities.formatTaskTag(t);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class Task {
 		if(t == null){
 			tag = "";
 		}else{
-			tag = t;
+			tag = Utilities.formatTaskTag(t);
 		}
 	}
 	public Task(int ID, String taskName, DateTime start, DateTime end, TaskPriority p, String t, String desc, boolean isCompleted,DateTime reminder){
@@ -77,7 +77,7 @@ public class Task {
 		if(t == null){
 			tag = "";
 		}else{
-			tag = t;
+			tag = Utilities.formatTaskTag(t);
 		}
 		this.reminderStartDate = reminder;
 	}
