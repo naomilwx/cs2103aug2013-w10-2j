@@ -43,7 +43,6 @@ public class DisplayArea extends JLayeredPane {
 	private static final int DISPLAY_AREA_TOP_BUFFER = 2;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
-	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
 	private static final int NULL_FOCUS = -1;
 	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
 	
@@ -226,7 +225,7 @@ public class DisplayArea extends JLayeredPane {
 		}else{
 			nextFocusElement = currentFocusElement + 1;
 		}
-		//TODO: toggle between table and task display
+		//toggle between table and task display
 		Component[] components = defaultPane.getComponents();
 		if(components.length == 0){
 			currentFocusElement = NULL_FOCUS;

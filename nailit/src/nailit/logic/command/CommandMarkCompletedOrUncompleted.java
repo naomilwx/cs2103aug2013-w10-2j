@@ -13,11 +13,11 @@ import nailit.storage.StorageManager;
 
 public class CommandMarkCompletedOrUncompleted extends Command{
 	
-	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "The task: %1s " +
-																				"has been successfully marked as completed.";
+	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "Marked %1s " +
+																				"as completed.";
 	
-	private static final String NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS = "The task: %1s has " +
-																				"been successfully marked as uncompleted.";
+	private static final String NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS = "Marked %1s " +
+																				"as uncompleted.";
 
 	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_UNSUCCESS = "The marking operation " +
 																					"fails. This may be due to: the task " +

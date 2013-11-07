@@ -77,12 +77,12 @@ public class CommandAddReminder extends Command{
 
 	private void createCommandSummary() {
 		commandSummary = "Add reminder for " + taskRelated.getName() + 
-				" from " + reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT);
+				" on " + reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT);
 	}
 
 	private void createResult() {
 		String notificationStr = "Add reminder to the Task: " + taskRelated.getName() + 
-				" from " + reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT);
+				" on " + reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT);
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
 		// create a dateTime obj representing today
 		DateTime today = new DateTime();

@@ -150,7 +150,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullName()) {
 			String newName = parserResultInstance.getName();
 			updatedTask.setName(newName);
-			updatedContent = updatedContent + "Name: " + newName + " \n";
+			updatedContent = updatedContent + "[Name] " + newName + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setName(taskRetrieved.getName());
 		}
@@ -158,7 +158,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullStartTime()) {
 			DateTime newStartTime = parserResultInstance.getStartTime();
 			updatedTask.setStartTime(newStartTime);
-			updatedContent = updatedContent + "Start: "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			updatedContent = updatedContent + "[Start] "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setStartTime(taskRetrieved.getStartTime());
 		}
@@ -166,7 +166,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullEndTime()) {
 			DateTime newEndTime = parserResultInstance.getEndTime();
 			updatedTask.setEndTime(newEndTime);
-			updatedContent = updatedContent + "End: " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			updatedContent = updatedContent + "[End] " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setEndTime(taskRetrieved.getEndTime());
 		}
@@ -174,7 +174,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullTag()) {
 			String newTag = parserResultInstance.getTag();
 			updatedTask.setTag(newTag);
-			updatedContent = updatedContent + "Tag: " + newTag + " \n";
+			updatedContent = updatedContent + "[Tag] " + newTag + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setTag(taskRetrieved.getTag());
 		}
@@ -182,7 +182,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullPriority()) { // currently use this method, although the name is not suitable
 			TaskPriority newPriority = parserResultInstance.getPriority();
 			updatedTask.setPriority(newPriority);
-			updatedContent = updatedContent + "Priority: " + newPriority + " ";
+			updatedContent = updatedContent + "[Priority] " + newPriority + " ";
 		} else { // means name use the original one, since no update
 			updatedTask.setPriority(taskRetrieved.getPriority());
 		}
@@ -190,7 +190,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullDescription()) {
 			String newDesc = parserResultInstance.getDescription();
 			updatedTask.setDescription(newDesc);
-			updatedContent = updatedContent + "Description: " + newDesc + " \n";
+			updatedContent = updatedContent + "[Description] " + newDesc + " \n";
 		} else { // means name use the original one, since no update
 			updatedTask.setDescription(taskRetrieved.getDescription());
 		}
@@ -198,7 +198,7 @@ public class CommandUpdate extends Command{
 		if(!parserResultInstance.isNullReminderTime()) {
 			DateTime newReminder = parserResultInstance.getReminderTime();
 			updatedTask.setReminder(newReminder);
-			updatedContent = updatedContent + "Reminder Date: " + newReminder.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			updatedContent = updatedContent + "[Reminder Date] " + newReminder.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
 		} else { // means name use the original one, since no update
 			// no update for the reminder
 			updatedTask.setReminder(taskRetrieved.getReminder());

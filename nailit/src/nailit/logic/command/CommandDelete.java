@@ -126,7 +126,7 @@ public class CommandDelete extends Command{
 		
 		commandSummary = "delete: ";
 		if(taskToRemove.getName() != null) {
-			commandSummary = commandSummary + taskToRemove.getName() + "\n";
+			commandSummary = commandSummary + taskToRemove.toString();
 		} 
 		
 //		if(taskToRemove.getStartTime() != null) {

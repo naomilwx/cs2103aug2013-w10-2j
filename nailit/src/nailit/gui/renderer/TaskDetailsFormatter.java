@@ -22,9 +22,7 @@ public class TaskDetailsFormatter {
 			+ "p.desc {font-size: 11px; text-align:top;}"
 			+ "</style></head>";
 	private static final String TASK_NAME_AND_TAG_FORMAT = 
-//			"<tr><td><p class = \"title\">Name: </p></td>"
-			"<tr>"
-			+ "<td colspan = 7><p class = \"name\">%1s %2s</p></td><td></td><td></td></tr>";
+			"<tr><td colspan = 7><p class = \"name\">%1s %2s</p></td><td></td><td></td></tr>";
 	private static final String TASK_PRIORITY_FORMAT = 
 			"<tr><td><p class = \"title\">Priority: </p></td><td><p class = \"priority\">%1s</p></td>";
 	private static final String TASK_STATUS_FORMAT = 
