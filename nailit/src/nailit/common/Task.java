@@ -211,18 +211,14 @@ public class Task {
 		return formattedID;
 	}
 	
-	public String formatName(){
-		String formattedName = "Name: " + name;
-		return formattedName;
+	public String formatNameAndTag(){
+		String formatted = name;
+		if(!tag.isEmpty()){
+			formatted += " " + tag;
+		}
+		return formatted;
 	}
 	
-	public String formatTag(){
-		String formattedTag = "";
-		if(!tag.isEmpty()){
-			formattedTag = "Tag: " + tag;
-		}
-		return formattedTag;
-	}
 	
 	public String formatPriority(){
 		String formattedPriority = "Priority: " + priority.toString();
@@ -233,11 +229,12 @@ public class Task {
 		String formattedDateDetails = "";
 		if(isEvent()){
 			formattedDateDetails = 
-					"Start Time: " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n"
-					+"End Time: " + endTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
-		}else if(!isFloatingTask()){
-			assert startTime != null;	//non floating tasks should not have null start time
-			formattedDateDetails = "Due: " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
+					"from " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n"
+					+"to " + endTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
+		}else if(!isFloatingTask() && endTime != null){
+			formattedDateDetails = "at " + endTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
+		}else if(startTime != null){
+			formattedDateDetails = "from " + startTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT);
 		}
 		return formattedDateDetails;
 	}
@@ -375,16 +372,11 @@ public class Task {
 	//end of task utility functions
 	@Override
 	public String toString(){
-		String output = formatID()+"\n"
-						+formatName() +"\n";
+		String output = formatNameAndTag() +" ";
 		if(!isFloatingTask()){
 			output += formatDateDetails() + "\n";
 		}
-		output += formatPriority() +"\n"
-				 + formatStatus() + "\n";
-		if(!tag.isEmpty()){
-			output += formatTag() + "\n";
-		}
+		
 		return output;
 	}
 	

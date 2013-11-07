@@ -83,35 +83,37 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 
 	private void createCommandSummary() {
 		if(isCommandMarkAsCompleted) {
-			commandSummary = "mark completed";
-			if(taskRelated.getName() != null) {
-				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
-			} 
+			commandSummary = "mark completed: ";
+			commandSummary += taskRelated.toString();
+//			if(taskRelated.getName() != null) {
+//				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
+//			} 
+//			
+//			if(taskRelated.getStartTime() != null) {
+//				commandSummary = commandSummary + " Start time: " + 
+//						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//			} 
 			
-			if(taskRelated.getStartTime() != null) {
-				commandSummary = commandSummary + " Start time: " + 
-						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-			} 
-			
-			if(taskRelated.getEndTime() != null) {
-				commandSummary = commandSummary + " End time: " + 
-						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-			} 
+//			if(taskRelated.getEndTime() != null) {
+//				commandSummary = commandSummary + " End time: " + 
+//						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//			} 
 		} else {
-			commandSummary = "mark uncompleted";
-			if(taskRelated.getName() != null) {
-				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
-			} 
-			
-			if(taskRelated.getStartTime() != null) {
-				commandSummary = commandSummary + " Start time: " + 
-						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-			} 
-			
-			if(taskRelated.getEndTime() != null) {
-				commandSummary = commandSummary + " End time: " + 
-						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-			} 
+			commandSummary = "mark uncompleted: ";
+			commandSummary += taskRelated.toString();
+//			if(taskRelated.getName() != null) {
+//				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
+//			} 
+//			
+//			if(taskRelated.getStartTime() != null) {
+//				commandSummary = commandSummary + " Start time: " + 
+//						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//			} 
+//			
+//			if(taskRelated.getEndTime() != null) {
+//				commandSummary = commandSummary + " End time: " + 
+//						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
+//			} 
 		}
 	}
 
