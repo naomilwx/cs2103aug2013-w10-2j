@@ -24,7 +24,7 @@ import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
+	private static final int COMMANDBAR_TEXT_HEIGHT = 25;
 	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 5;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;

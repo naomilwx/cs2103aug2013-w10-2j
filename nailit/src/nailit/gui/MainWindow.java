@@ -13,14 +13,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class MainWindow extends JFrame {
-	protected static final int WINDOW_HEIGHT = 485;
+	protected static final int WINDOW_HEIGHT = 425;
 	protected static final int DEFAULT_BORDER_WIDTH = 1;
 	protected static final int WINDOW_WIDTH = 
 			GUIManager.TOTAL_TABLE_WIDTH + GUIManager.X_BUFFER_WIDTH + 
 			GUIManager.WINDOW_RIGHT_BUFFER + 2 * DEFAULT_BORDER_WIDTH;
 	protected static final int REDUCED_WINDOW_HEIGHT = CommandBar.MAX_COMMANDBAR_HEIGHT 
 			+ TableDisplay.TABLE_HEADER_HEIGHT + TableDisplay.TABLE_ROW_HEIGHT
-			+ 2 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
+			+ 4 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
 	
 	private GUIManager GUIBoss;
 	private JPanel contentPane;
