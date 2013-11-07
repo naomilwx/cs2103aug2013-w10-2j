@@ -183,13 +183,13 @@ public class GUIManager {
 	}
 	protected void reduceMainWindowSize(){
 		mainWindow.transformIntoReducedWindow();
-		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.removeTaskDisplay();
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
 		mainWindow.restoreDefaultWindow();
-		commandBar.resizeCommandBarToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
+		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	public void enableGlobalKeyListener(){
