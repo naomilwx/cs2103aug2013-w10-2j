@@ -329,7 +329,7 @@ public class GUIManager {
 		commandBar.clearUserInput();
 		displayArea.hideNotifications();
 		displayArea.removeDeletedTasksFromTaskListTable();
-		displayArea.removeTaskDisplay();
+		displayArea.removeTaskDisplay(); //TODO:
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
