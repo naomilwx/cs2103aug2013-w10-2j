@@ -140,13 +140,14 @@ public class DisplayArea extends JLayeredPane {
 
 			@Override
 			public void componentHidden(ComponentEvent event) {
-				shiftDefaultLayer(GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
+				dynamicallyResizeDisplayArea();
+//				shiftDefaultLayer(GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
 			}
 			@Override
 			public void componentShown(ComponentEvent event) {
-				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
-					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
-				}
+//				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
+//					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+//				}
 			}
 			
 		});
@@ -180,7 +181,12 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.setSize(displayWidth, displayHeight);
 		revalidate();
 	}
-	
+	private void dynamicallyResizeDisplayArea(){
+		this.setSize(displayWidth, displayHeight);
+		dynamicallyResizeDefaultPaneHeight();
+		popupPane.setSize(displayWidth, displayHeight);
+		revalidate();
+	}
 	private void shiftDefaultLayer(int xpos, int ypos){
 		defaultPane.setLocation(xpos, ypos);
 		dynamicallyResizeDefaultPaneHeight();
@@ -420,6 +426,12 @@ public class DisplayArea extends JLayeredPane {
 	
 	protected void addPopup(Component component){
 		popupPane.add(component);
+		positionItemInPopupPane(component);
+	}
+	private void positionItemInPopupPane(Component component){
+		int xPos = 0;
+		int yPos = displayHeight - component.getHeight();
+		component.setLocation(xPos, yPos);
 	}
 	protected void setFocus(){
 		defaultPane.requestFocus();
