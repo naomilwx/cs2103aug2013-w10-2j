@@ -29,7 +29,9 @@ public class CommandBar extends JPanel {
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
 	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
 	public static final int TEXTBAR_X_BUFFER_WIDTH = 5;
-	protected static final int MAX_HEIGHT_OF_TEXTBAR = 3 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
+	private static final int DEFAULT_COMMANDBAR_HEIGHT = COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
+	private static final int DEFAULT_FRAME_HEIGHT = DEFAULT_COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+	protected static final int MAX_COMMANDBAR_HEIGHT = 3 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final Font COMMANDBAR_FONT = new Font("HelveticaNeue_Lt.tff", Font.PLAIN, 18);
@@ -38,11 +40,11 @@ public class CommandBar extends JPanel {
 	private GUIManager GUIBoss;
 	private JScrollPane textBarWrapper;
 	private JTextArea textBar;
-	private int frameHeight;
+	private int frameHeight = DEFAULT_FRAME_HEIGHT;
 	private int frameWidth;
 	private int frameXPos;
 	private int frameYPos;
-	private int commandBarHeight;
+	private int commandBarHeight = DEFAULT_COMMANDBAR_HEIGHT;
 	private int commandBarWidth;
 	private int mainContainerWidth;
 	private int mainContainerHeight;
@@ -56,8 +58,6 @@ public class CommandBar extends JPanel {
 		//
 		adjustFrameWidth();
 		adjustCommandBarWidth();
-		adjustCommandBarHeight();
-		adjustFrameHeight();
 		//
 		adjustFramePos();
 		createConfigureAndAddInputField();
@@ -71,8 +71,6 @@ public class CommandBar extends JPanel {
 		//
 		adjustFrameWidth();
 		adjustCommandBarWidth();
-		adjustCommandBarHeight();
-		adjustFrameHeight();
 		//
 		adjustFramePos();
 		setCommandFramePosAndSize();
@@ -96,21 +94,18 @@ public class CommandBar extends JPanel {
 		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 	}
 	private void adjustCommandBarHeight(){
-		if(textBar == null){
-			//initialisation of CommandBar
-			commandBarHeight = COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
+		int newHeight = textBar.getHeight();
+		if(newHeight < MAX_COMMANDBAR_HEIGHT){
+			commandBarHeight = newHeight;
 		}else{
-			int newHeight = textBar.getHeight();
-			if(newHeight < MAX_HEIGHT_OF_TEXTBAR){
-				commandBarHeight = newHeight;
-			}
+			commandBarHeight = MAX_COMMANDBAR_HEIGHT;
 		}
 	}
 	private void adjustFramePos(){
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
 	}
-	//this is needed for resizing based on text. 
+	//this is needed for resizing based on text.  only resizes height.
 	//command frame height controlled by command bar height
 	private void commandFrameAndBarDynamicResize(){
 		adjustCommandBarHeight();
@@ -119,7 +114,6 @@ public class CommandBar extends JPanel {
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 		GUIBoss.resizeMainDisplayArea();
-		revalidate();
 	}
 	private void createConfigureAndAddInputField(){
 		textBarWrapper = new JScrollPane();
@@ -144,6 +138,7 @@ public class CommandBar extends JPanel {
 					@Override
 			        public void componentResized(ComponentEvent resize) {
 						commandFrameAndBarDynamicResize();
+						revalidate();
 			        }
 				});
 	}
