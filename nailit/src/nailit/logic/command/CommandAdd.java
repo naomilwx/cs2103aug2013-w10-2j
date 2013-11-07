@@ -55,7 +55,7 @@ public class CommandAdd extends Command{
 	private void createCommandSummary() {
 		commandSummary = "add: ";
 		if(parserResultInstance.getName() != null) {
-			commandSummary = commandSummary + parserResultInstance.getName();
+			commandSummary = commandSummary + taskPassedToStorer.toString();
 		} 
 	}
 

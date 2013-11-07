@@ -47,7 +47,7 @@ public class CommandManager {
 															"command can be done.";
 	
 	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the " +
-														"command history. You can undo Add, delete, " +
+														"command history. You can undo Add, Delete, " +
 														"or Update command.";
 
 	// constructor

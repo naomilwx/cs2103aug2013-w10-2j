@@ -37,7 +37,7 @@ public class CommandDisplay extends Command{
 	
 	private static final String NO_TASKS_FOUND_MSG = "There are no tasks to display!";
 	
-	private static final String TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST = "The task to display does " +
+	private static final String TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST = "The task does " +
 																		"not exist in the display list.";
 	
 	public CommandDisplay(ParserResult resultInstance,

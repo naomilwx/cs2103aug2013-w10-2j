@@ -101,13 +101,13 @@ public class CommandDeleteReminder extends Command {
 //				+ reminderDateDeleted.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)
 //				+ "for the Task: "
 //				+ taskRelated.getName();
-		commandSummary = "Deleted reminder for " + taskRelated.getName();
+		commandSummary = "Deleted reminder for " + taskRelated.toString();
 	}
 
 	private void createResult() {
-		String notificationStr = "Delete the reminder: " 
+		String notificationStr = "Deleted reminder on " 
 				+ reminderDateDeleted.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)
-				+ "for the Task: "
+				+ "for "
 				+ taskRelated.getName();
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY,
 				notificationStr);
