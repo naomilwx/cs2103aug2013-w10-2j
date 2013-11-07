@@ -21,6 +21,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+@SuppressWarnings("serial")
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
 	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
@@ -35,7 +36,7 @@ public class CommandBar extends JPanel {
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final Font COMMANDBAR_FONT = new Font("HelveticaNeue_Lt.tff", Font.PLAIN, 18);
-	
+	private static final LineBorder COMMAND_FRAME_BORDER  = new LineBorder(GUIManager.BORDER_COLOR);
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
 	private JScrollPane textBarWrapper;
@@ -50,42 +51,40 @@ public class CommandBar extends JPanel {
 	private int mainContainerHeight;
 	
 	/**
-	 * Create the panel.
+	 * Create and initialise CommandBar Frame and Contents
 	 */
 	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
-		storeMainContainerDimensions(containerWidth, containerHeight);
-		//
-		adjustFrameWidth();
-		adjustCommandBarWidth();
-		//
-		adjustFramePos();
 		createConfigureAndAddInputField();
-		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
+		resizeToFitMainContainer(containerWidth, containerHeight);
+		this.setBorder(COMMAND_FRAME_BORDER);
 		this.setLayout(null);
-		setCommandFramePosAndSize();
 	}
 	
+	//set position and size of command frame and bar based on main container. 
+	//NOTE: height is independent of main window
 	protected void resizeToFitMainContainer(int containerWidth, int containerHeight){
 		storeMainContainerDimensions(containerWidth, containerHeight);
-		//
 		adjustFrameWidth();
 		adjustCommandBarWidth();
-		//
 		adjustFramePos();
 		setCommandFramePosAndSize();
+		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 	}
 	private void storeMainContainerDimensions(int containerWidth, int containerHeight){
 		mainContainerWidth = containerWidth;
 		mainContainerHeight = containerHeight;
 	}
+	
 	private void setCommandFramePosAndSize(){
 		this.setLocation(frameXPos, frameYPos);
 		this.setSize(frameWidth, frameHeight);
 	}
+
 	private void adjustFrameWidth(){
 		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 	}
+	
 	private void adjustCommandBarWidth(){
 		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
 	}
@@ -93,6 +92,7 @@ public class CommandBar extends JPanel {
 	private void adjustFrameHeight(){
 		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 	}
+	
 	private void adjustCommandBarHeight(){
 		int newHeight = textBar.getHeight();
 		if(newHeight < MAX_COMMANDBAR_HEIGHT){
@@ -101,6 +101,7 @@ public class CommandBar extends JPanel {
 			commandBarHeight = MAX_COMMANDBAR_HEIGHT;
 		}
 	}
+	
 	private void adjustFramePos(){
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
@@ -113,8 +114,13 @@ public class CommandBar extends JPanel {
 		adjustFramePos();
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
-		GUIBoss.resizeMainDisplayArea();
 	}
+	private void textBarResizeAction(){
+		commandFrameAndBarDynamicResize();
+		GUIBoss.resizeMainDisplayArea();
+		revalidate();
+	}
+	
 	private void createConfigureAndAddInputField(){
 		textBarWrapper = new JScrollPane();
 		textBar = new JTextArea();
@@ -127,25 +133,23 @@ public class CommandBar extends JPanel {
 		add(textBarWrapper);
 	}
 	
+	
 	private void configureTextInputField(){
 		textBar.setLineWrap(true);
 		textBar.setFocusTraversalKeysEnabled(false); //disable default tab operation
-		textBar.setSize(commandBarWidth, commandBarHeight);
 		textBar.setFont(COMMANDBAR_FONT);
 		textBar.addComponentListener(
 				//component listener to detect when JTextArea grows due to change in number of lines
 				new ComponentAdapter(){
 					@Override
 			        public void componentResized(ComponentEvent resize) {
-						commandFrameAndBarDynamicResize();
-						revalidate();
+						textBarResizeAction();
 			        }
 				});
 	}
 	
 	private void configureTextBarWrapper(){
 		textBarWrapper.setLocation(TEXTBAR_X_BUFFER_WIDTH, TEXTBAR_Y_BUFFER_HEIGHT);
-		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 		textBarWrapper.setFocusable(false);
 		textBarWrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         textBarWrapper.setHorizontalScrollBar(null);
