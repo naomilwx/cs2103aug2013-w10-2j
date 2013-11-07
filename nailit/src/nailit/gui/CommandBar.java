@@ -216,9 +216,9 @@ public class CommandBar extends JPanel {
 					GUIBoss.scrollToPrevPageInTaskTable();
 				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
 					GUIBoss.scrollToNextPageInTaskTable();
-				}else if(keyCode == KeyEvent.VK_UP){
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_UP){
 					GUIBoss.taskTableScollUp();
-				}else if(keyCode == KeyEvent.VK_DOWN){
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_DOWN){
 					GUIBoss.taskTableScrollDown();
 				}
 			}

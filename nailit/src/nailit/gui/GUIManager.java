@@ -26,6 +26,7 @@ import java.awt.MenuItem;
 import java.awt.Point;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
 
 import javax.swing.JPanel;
@@ -60,8 +61,6 @@ public class GUIManager {
 	protected static final int X_BUFFER_WIDTH = 5;
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
-	protected static final int MAIN_WINDOW_X_POS = 100;
-	protected static final int MAIN_WINDOW_Y_POS = 150;
 	
 	protected static final String DEFAULT_FONT = "HelveticaNeue Light";
 	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
@@ -70,6 +69,12 @@ public class GUIManager {
 	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	protected static final int HOME_WINDOW_WIDTH = 400;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
+	
+	protected static final int SCREEN_BOTTOM_BUFFER = 50;
+	protected static final Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize(); 
+	protected static final int MAIN_WINDOW_X_POS = (SCREEN_DIMENSION.width - MainWindow.WINDOW_WIDTH - HOME_WINDOW_WIDTH)/2;
+	protected static final int MAIN_WINDOW_Y_POS = Math.min(SCREEN_DIMENSION.height/2, 
+			SCREEN_DIMENSION.height - SCREEN_BOTTOM_BUFFER - MainWindow.WINDOW_HEIGHT);
 	
 	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
@@ -136,7 +141,7 @@ public class GUIManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void showDefaultDisplayAndReminders(){
 		if(!getAndDisplayReminders()){
 			homeWindow.setVisible(false);
