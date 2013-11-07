@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 
+@SuppressWarnings("serial")
 public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
 			+ "p.name {font-size: 14px;}"

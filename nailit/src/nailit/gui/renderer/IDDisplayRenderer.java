@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import nailit.gui.GUIManager;
 
+@SuppressWarnings("serial")
 public class IDDisplayRenderer  extends DefaultTableCellRenderer{
 	public IDDisplayRenderer(){
 		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
