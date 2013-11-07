@@ -46,8 +46,8 @@ public class DisplayArea extends JLayeredPane {
 	private static final int NULL_FOCUS = -1;
 	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
 	
-	private static final int TIMER_INTERVAL = 80;
-	private static final int TIMER_DELAY = 3000; //amount of time before item starts fading out
+	private static final int TIMER_INTERVAL = 100;
+	private static final int TIMER_DELAY = 5000; //amount of time before item starts fading out
 	private static final float OPACITY_INTERVAL_STEP = 0.1f;
 	protected static final float FULL_OPACITY = 1.0f;
 	protected static final float NO_OPACITY = 0.5f;

@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
 			GUIManager.WINDOW_RIGHT_BUFFER + 2 * DEFAULT_BORDER_WIDTH;
 	protected static final int REDUCED_WINDOW_HEIGHT = CommandBar.MAX_COMMANDBAR_HEIGHT 
 			+ TableDisplay.TABLE_HEADER_HEIGHT + TableDisplay.TABLE_ROW_HEIGHT
-			+ 4 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
+			+ 2 * GUIManager.Y_BUFFER_HEIGHT + GUIManager.WINDOW_BOTTOM_BUFFER;
 	
 	private GUIManager GUIBoss;
 	private JPanel contentPane;

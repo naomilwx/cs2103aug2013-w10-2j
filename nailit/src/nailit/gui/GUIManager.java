@@ -55,7 +55,7 @@ import nailit.storage.FileCorruptionException;
 
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
-	protected static final Color BORDER_COLOR = Color.black;
+	protected static final Color BORDER_COLOR = Color.gray;
 	protected static final Color FOCUSED_BORDER_COLOR = Color.orange;
 	protected static final int Y_BUFFER_HEIGHT = 7;
 	protected static final int X_BUFFER_WIDTH = 5;

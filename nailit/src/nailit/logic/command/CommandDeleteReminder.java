@@ -106,8 +106,8 @@ public class CommandDeleteReminder extends Command {
 
 	private void createResult() {
 		String notificationStr = "Deleted reminder on " 
-				+ reminderDateDeleted.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)
-				+ "for "
+				+ reminderDateDeleted.toString(NIConstants.DISPLAY_DATE_FORMAT)
+				+ " for "
 				+ taskRelated.getName();
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY,
 				notificationStr);
