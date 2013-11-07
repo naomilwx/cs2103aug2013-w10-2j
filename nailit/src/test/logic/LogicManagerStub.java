@@ -8,7 +8,6 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.LogicManager;
-import nailit.logic.command.CommandManager;
 import nailit.storage.FileCorruptionException;
 
 public class LogicManagerStub extends LogicManager{
@@ -45,9 +44,6 @@ public class LogicManagerStub extends LogicManager{
 			res.setDisplayType(Result.LIST_DISPLAY);
 		}else if(command.equals("new")){
 			res.setDisplayType(Result.EXECUTION_RESULT_DISPLAY);
-		}else if(command.equals("history")){
-			res.setHistoryList(historyList);
-			res.setDisplayType(Result.HISTORY_DISPLAY);
 		}
 		return res;
 	}

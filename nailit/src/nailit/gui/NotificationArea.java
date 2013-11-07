@@ -3,12 +3,7 @@ package nailit.gui;
 
 import java.awt.Color;
 
-import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 @SuppressWarnings("serial")
 public class NotificationArea extends TextDisplay{
