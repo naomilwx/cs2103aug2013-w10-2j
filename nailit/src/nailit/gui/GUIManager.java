@@ -77,7 +77,8 @@ public class GUIManager {
 	private static final String FAIL_TO_OPEN_FONT_RESOURCE_ERROR = "Failed to open font file data";
 	private static final String FONT_FORMAT_ERROR = "Problem encountered when reading font format file";
 	
-	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png");
+	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
+//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png");
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
@@ -124,7 +125,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-			globalKeyListener = new NailItGlobalKeyListener(this);
+//			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
 		}catch(FileCorruptionException e){
@@ -192,9 +193,9 @@ public class GUIManager {
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
-			globalKeyListener.registerGlobalKeyHook();
-		}
+//		if(!globalKeyListener.isEnabled()){
+//			globalKeyListener.registerGlobalKeyHook();
+//		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components
