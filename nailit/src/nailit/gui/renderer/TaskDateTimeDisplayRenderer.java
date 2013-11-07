@@ -5,9 +5,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.joda.time.DateTime;
 
-import nailit.common.Task;
 import nailit.common.NIConstants;
 
+@SuppressWarnings("serial")
 public class TaskDateTimeDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
 			+ "p.date {font-size: 14px; text-align:center;}"

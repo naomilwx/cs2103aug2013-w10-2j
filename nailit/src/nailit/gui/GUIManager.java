@@ -95,7 +95,6 @@ public class GUIManager {
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
 	protected static final String TASK_START_TIME_COL_NAME = "Start";
 	protected static final String TASK_END_TIME_COL_NAME = "End";
-	protected static final String COMMAND_COL_NAME = "Command";
 	protected static final String[] ALL_TASKS_TABLE_HEADER = 
 		{ID_COL_NAME, TASK_START_TIME_COL_NAME, TASK_END_TIME_COL_NAME, TASK_NAME_COL_NAME};
 	public static final String DELETED_TASK_DISPLAY_ID = "DEL";
