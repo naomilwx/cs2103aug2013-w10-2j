@@ -1,8 +1,6 @@
 //@author A0091372H
 package nailit.gui;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -11,6 +9,7 @@ import nailit.common.NIConstants;
 import nailit.common.Task;
 
 
+@SuppressWarnings("serial")
 public class HomeWindow extends ExtendedWindow{
 	private static final String TASK_REMINDER_DISPLAY_HEADER 
 	= "<h1 style = \"padding-left: 9px\">Deadlines: </h1>";
@@ -27,12 +26,12 @@ public class HomeWindow extends ExtendedWindow{
 	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "<p>[%1s,<br>"
 															+ "%2s - %3s]</p>";
 	public static final String EVENT_DATE_DISPLAY = "<p>[%1s  %2s - <br> %3s %4s]</p>";
-	private final HomeWindow selfRef = this;
 	
 	public HomeWindow(GUIManager GUIMain, int width) {
 		super(GUIMain, width);
 	}
-	protected void formatAndAppendTaskList(StringBuilder str, Vector<Task> tasks){
+	protected void formatAndAppendTaskList(StringBuilder str, String displayHeader, Vector<Task> tasks){
+		str.append(displayHeader);
 		str.append("<table>");
 		for(Task task: tasks){
 			str.append("<tr>");
@@ -53,19 +52,16 @@ public class HomeWindow extends ExtendedWindow{
 		str.append("<html>");
 		if(!taskReminders.isEmpty()){
 			notAllEmpty = true;
-			str.append(TASK_REMINDER_DISPLAY_HEADER);
-			formatAndAppendTaskList(str, taskReminders);
+			formatAndAppendTaskList(str, TASK_REMINDER_DISPLAY_HEADER, taskReminders);
 		}
 		
 		if(! floatingTaskReminders.isEmpty()){
 			notAllEmpty = true;
-			str.append(FLOATING_REMINDER_DISPLAY_HEADER);
-			formatAndAppendTaskList(str, floatingTaskReminders);
+			formatAndAppendTaskList(str, FLOATING_REMINDER_DISPLAY_HEADER, floatingTaskReminders);
 		}
 		if(!eventReminders.isEmpty()){
 			notAllEmpty = true;
-			str.append(EVENT_REMINDER_DISPLAY_HEADER);
-			formatAndAppendTaskList(str, eventReminders);
+			formatAndAppendTaskList(str, EVENT_REMINDER_DISPLAY_HEADER, eventReminders);
 		}
 		str.append("</html>");
 		((TextDisplay) displayPane).displayHTMLFormattedText(str.toString());

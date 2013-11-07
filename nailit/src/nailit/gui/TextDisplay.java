@@ -25,6 +25,7 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 		textPane.setEditable(false);
 		textPane.setPreferredSize(new Dimension(containerWidth, preferredHeight));
 		textPane.setSize(containerWidth, preferredHeight);
+		textPane.addFocusListener(super.displayFocusListener);
 		setViewportView(textPane);
 	}
 	

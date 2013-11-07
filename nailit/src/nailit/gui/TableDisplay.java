@@ -12,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -33,6 +32,7 @@ import javax.swing.table.TableColumnModel;
 import nailit.gui.renderer.TableHeaderRenderer;
 
 
+@SuppressWarnings("serial")
 public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int TABLE_HEADER_HEIGHT = 30;
 	protected static final int TABLE_ROW_HEIGHT = 50;
