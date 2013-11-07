@@ -303,12 +303,14 @@ public class DisplayArea extends JLayeredPane {
 		addAdditionalKeyListenerToTaskTable();
 		addContent(taskTable);
 	}
-	protected void displayTaskDetails(Task task){
+	protected int displayTaskDetails(Task task){
 		if(task!=null){
 			addNewTextDisplay();
 			displayTaskInTextDisplay(task);
 			revalidate();
+			return task.getID();
 		}
+		return Task.TASKID_NULL;
 	}
 	private void addNewTextDisplay(){
 		removeExistingTextDisplay();

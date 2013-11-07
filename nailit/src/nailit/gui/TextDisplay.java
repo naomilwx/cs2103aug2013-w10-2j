@@ -10,6 +10,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
 
+@SuppressWarnings("serial")
 public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
 	private int preferredHeight;
