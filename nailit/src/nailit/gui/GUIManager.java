@@ -192,6 +192,9 @@ public class GUIManager {
 		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
+	protected int getCommandBarHeight(){
+		return commandBar.getFrameHeight();
+	}
 	public void enableGlobalKeyListener(){
 //		if(!globalKeyListener.isEnabled()){
 //			globalKeyListener.registerGlobalKeyHook();

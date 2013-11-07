@@ -170,8 +170,7 @@ public class DisplayArea extends JLayeredPane {
 	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
 		this.containerHeight = containerHeight;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		//call to GUIManager to resize as only GUI manager is able to get commandbar height
-		GUIBoss.resizeMainDisplayArea();
+		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getCommandBarHeight());
 	}
 	
 	//adjust display height based on available space
