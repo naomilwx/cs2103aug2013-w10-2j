@@ -83,7 +83,7 @@ public class GUIManager {
 	private static final String FONT_FORMAT_ERROR = "Problem encountered when reading font format file";
 	
 	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
-//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png");
+//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png"); //TODO: change when compiling
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
@@ -119,6 +119,8 @@ public class GUIManager {
 	private LogicManager logicExecutor;
 	private NailItGlobalKeyListener globalKeyListener;
 	private Logger logger;
+	
+	private int lastDisplayedTaskID;
 	
 	public GUIManager(final AppLauncher launcher){
 		try{
@@ -296,9 +298,6 @@ public class GUIManager {
 		Result executionResult = null;
 		try{
 			executionResult = logicExecutor.executeCommand(input);
-			if(executionResult == null){
-				System.out.println("die!");
-			}
 			assert executionResult != null;
 			displayCommandFeedback(executionResult);
 		}catch(Error err){
@@ -411,29 +410,49 @@ public class GUIManager {
 			displayExecutionResult(result);
 		}
 	}
+	private void handleTaskDisplay(Result result){
+		restoreMainWindowSize();
+		lastDisplayedTaskID = displayArea.displayTaskDetails(result.getTaskToDisplay());
+	}
+	private void handleTaskListDisplay(Result result){
+		displayArea.displayTaskList(result);
+		lastDisplayedTaskID = Task.TASKID_NULL;
+	}
+	private void handleHistoryDisplay(Result result){
+		historyWindow.displayHistoryList(result.getHistoryList());
+		historyWindow.setVisible(true);
+		historyWindow.startFadeOutTimer();
+		lastDisplayedTaskID = Task.TASKID_NULL;
+	}
+	private void handleExecutionResultDisplay(Result result){
+		displayArea.displayTaskList(result);
+		Task taskDisp = result.getTaskToDisplay();
+		if(result.getDeleteStatus() == true){
+			displayArea.showDeletedTaskInTaskListTable(taskDisp);
+			lastDisplayedTaskID = Task.TASKID_NULL;
+		}else{
+			if(taskDisp != null && taskDisp.getID() == lastDisplayedTaskID){
+				displayArea.displayTaskDetails(taskDisp);
+			}else{
+				lastDisplayedTaskID = Task.TASKID_NULL;
+			}
+		}
+	}
 	protected void displayExecutionResult(Result result){
 		displayExecutionNotification(result);
 		int displayType = result.getDisplayType();
 		switch (displayType){
 			case Result.TASK_DISPLAY:
-				restoreMainWindowSize();
-				displayArea.displayTaskDetails(result.getTaskToDisplay());
+				handleTaskDisplay(result);
 				break;
 			case Result.LIST_DISPLAY:
-				displayArea.displayTaskList(result);
+				handleTaskListDisplay(result);
 				break;
 			case Result.HISTORY_DISPLAY:
-				historyWindow.displayHistoryList(result.getHistoryList());
-				historyWindow.setVisible(true);
-				historyWindow.startFadeOutTimer();
+				handleHistoryDisplay(result);
 				break;
 			case Result.EXECUTION_RESULT_DISPLAY:
-				displayArea.displayTaskList(result);
-				if(result.getDeleteStatus() == true){
-					displayArea.showDeletedTaskInTaskListTable(result.getTaskToDisplay());
-				}//else{
-//					displayArea.displayTaskDetails(result.getTaskToDisplay());
-//				}
+				handleExecutionResultDisplay(result);
 				break;
 			default:
 				break;
