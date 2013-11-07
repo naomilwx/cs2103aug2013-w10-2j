@@ -68,12 +68,12 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected final MouseAdapter tableMouseEventListener = new MouseAdapter(){
 		@Override
 		public void mouseEntered(MouseEvent event){
-			showVerticalScrollBar();
+			showVerticalScrollBars();
 		}
 		@Override
 		public void mouseExited(MouseEvent event){
 			if(event.getComponent() instanceof TableDisplay){
-				hideVerticalScrollBar();
+				hideVerticalScrollBars();
 			}
 		}
 	};
@@ -116,19 +116,17 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	@Override
 	protected void configureMainFrame(int width, int height){
 		super.configureMainFrame(width, height);
-		hideVerticalScrollBar();
+		hideVerticalScrollBars();
 		setFocusTraversalKeysEnabled(false);
 		addKeyListener(moreTableMainFrameKeyEventListener);
 		addMouseListener(tableMouseEventListener);
 	}
-	protected void hideVerticalScrollBar(){
+	protected void hideVerticalScrollBars(){
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	}
 	
-	protected void showVerticalScrollBar(){
+	protected void showVerticalScrollBars(){
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	}
 	
 	protected void createAndConfigureTable() {

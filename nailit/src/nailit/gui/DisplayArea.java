@@ -40,6 +40,7 @@ public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
+	private static final int DISPLAY_AREA_TOP_BUFFER = 2;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
 	private static final int MAX_NUM_ITEMS_IN_DEFAULTPANE = 2;
@@ -66,6 +67,9 @@ public class DisplayArea extends JLayeredPane {
 	private int defaultPaneWidth;
 	private int defaultPaneHeight;
 	private int containerHeight;
+	private int containerWidth;
+	private int xPos;
+	private int yPos;
 	
 	private int currentFocusElement = NULL_FOCUS;
 	private final FocusListener defaultPaneFocusListener = new FocusListener(){
@@ -107,7 +111,9 @@ public class DisplayArea extends JLayeredPane {
 		GUIBoss = GUIMain;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		this.containerHeight = containerHeight;
+		this.containerWidth = containerWidth;
 		adjustDisplayHeight(offset);
+		adjustDisplayAreaPos();
 		configureDisplayArea();
 		initialiseLayers();
 		addDisplayAreaListeners();
@@ -140,14 +146,13 @@ public class DisplayArea extends JLayeredPane {
 
 			@Override
 			public void componentHidden(ComponentEvent event) {
-				dynamicallyResizeDisplayArea();
-//				shiftDefaultLayer(GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
+				shiftDefaultLayer(GUIManager.DEFAULT_COMPONENT_LOCATION.x, GUIManager.DEFAULT_COMPONENT_LOCATION.y);
 			}
 			@Override
 			public void componentShown(ComponentEvent event) {
-//				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
-//					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
-//				}
+				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
+					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+				}
 			}
 			
 		});
@@ -171,21 +176,20 @@ public class DisplayArea extends JLayeredPane {
 	
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
-		displayHeight = containerHeight - 2 * Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
+		displayHeight = containerHeight - DISPLAY_AREA_TOP_BUFFER - Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
 	}
 	
-	protected void dynamicallyResizeDisplayArea(int additionalOffset){
+	protected void dynamicallyResizeAndRepositionDisplayArea(int additionalOffset){
 		adjustDisplayHeight(additionalOffset);
-		this.setSize(displayWidth, displayHeight);
+		adjustDisplayAreaPos();
+		setDisplayAreaSizeAndPos();
 		dynamicallyResizeDefaultPaneHeight();
 		popupPane.setSize(displayWidth, displayHeight);
 		revalidate();
 	}
-	private void dynamicallyResizeDisplayArea(){
+	private void setDisplayAreaSizeAndPos(){
 		this.setSize(displayWidth, displayHeight);
-		dynamicallyResizeDefaultPaneHeight();
-		popupPane.setSize(displayWidth, displayHeight);
-		revalidate();
+		this.setLocation(xPos, yPos);
 	}
 	private void shiftDefaultLayer(int xpos, int ypos){
 		defaultPane.setLocation(xpos, ypos);
@@ -206,11 +210,13 @@ public class DisplayArea extends JLayeredPane {
 	private void configureDisplayArea(){
 		this.setBorder(null);
 		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
-		this.setLocation(X_BUFFER_WIDTH, Y_BUFFER_HEIGHT);
-		this.setSize(displayWidth, displayHeight);
+		setDisplayAreaSizeAndPos();
 		this.setOpaque(true);
 	}
-	
+	private void adjustDisplayAreaPos(){
+		xPos = X_BUFFER_WIDTH;
+		yPos = containerHeight - displayHeight - WINDOW_BOTTOM_BUFFER;
+	}
 	private void addDisplayAreaListeners(){
 		defaultPane.addFocusListener(defaultPaneFocusListener);
 	}
@@ -266,6 +272,11 @@ public class DisplayArea extends JLayeredPane {
 		component.setFocusTraversalKeysEnabled(false);
 		defaultPane.add(component);
 	}
+	private void addContent(Component component, int pos){
+		component.addKeyListener(keyEventListener);
+		component.setFocusTraversalKeysEnabled(false);
+		defaultPane.add(component, pos);
+	}
 	
 	private void clearContents(){
 		defaultPane.removeAll();
@@ -314,7 +325,7 @@ public class DisplayArea extends JLayeredPane {
 		int textDisplayWidth = defaultPane.getWidth()/2;
 		int textDisplayHeight = defaultPane.getHeight()/2;
 		textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
-		addContent(textDisplay);
+		addContent(textDisplay, 0);
 	}
 	private void removeExistingTextDisplay(){
 		if(textDisplay != null){
@@ -426,12 +437,6 @@ public class DisplayArea extends JLayeredPane {
 	
 	protected void addPopup(Component component){
 		popupPane.add(component);
-		positionItemInPopupPane(component);
-	}
-	private void positionItemInPopupPane(Component component){
-		int xPos = 0;
-		int yPos = displayHeight - component.getHeight();
-		component.setLocation(xPos, yPos);
 	}
 	protected void setFocus(){
 		defaultPane.requestFocus();

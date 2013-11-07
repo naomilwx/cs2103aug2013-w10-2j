@@ -179,7 +179,7 @@ public class GUIManager {
 		mainWindow.addItem(displayArea);
 	}
 	protected void resizeMainDisplayArea(){
-		displayArea.dynamicallyResizeDisplayArea(commandBar.getHeight());
+		displayArea.dynamicallyResizeAndRepositionDisplayArea(commandBar.getHeight());
 	}
 	protected void reduceMainWindowSize(){
 		mainWindow.transformIntoReducedWindow();

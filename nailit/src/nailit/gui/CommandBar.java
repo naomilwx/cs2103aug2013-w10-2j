@@ -24,12 +24,12 @@ import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 public class CommandBar extends JPanel {
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
-	private static final int COMMANDBAR_TEXT_HEIGHT = 25;
-	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 5;
+	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
+	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 3;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
-	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 5;
-	public static final int TEXTBAR_X_BUFFER_WIDTH = 5;
+	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 3;
+	public static final int TEXTBAR_X_BUFFER_WIDTH = 3;
 	private static final int DEFAULT_COMMANDBAR_HEIGHT = COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 	private static final int DEFAULT_FRAME_HEIGHT = DEFAULT_COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 	protected static final int MAX_COMMANDBAR_HEIGHT = 3 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
@@ -43,8 +43,8 @@ public class CommandBar extends JPanel {
 	private JTextArea textBar;
 	private int frameHeight = DEFAULT_FRAME_HEIGHT;
 	private int frameWidth;
-	private int frameXPos;
-	private int frameYPos;
+	private int frameXPos = X_BUFFER_WIDTH;
+	private int frameYPos = Y_BUFFER_HEIGHT;
 	private int commandBarHeight = DEFAULT_COMMANDBAR_HEIGHT;
 	private int commandBarWidth;
 	private int mainContainerWidth;
@@ -67,7 +67,7 @@ public class CommandBar extends JPanel {
 		storeMainContainerDimensions(containerWidth, containerHeight);
 		adjustFrameWidth();
 		adjustCommandBarWidth();
-		adjustFramePos();
+//		adjustFramePos();
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 	}
@@ -82,11 +82,11 @@ public class CommandBar extends JPanel {
 	}
 
 	private void adjustFrameWidth(){
-		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+		frameWidth = mainContainerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 	}
 	
 	private void adjustCommandBarWidth(){
-		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
+		commandBarWidth = frameWidth - 2* TEXTBAR_X_BUFFER_WIDTH;
 	}
 	
 	private void adjustFrameHeight(){
@@ -102,16 +102,12 @@ public class CommandBar extends JPanel {
 		}
 	}
 	
-	private void adjustFramePos(){
-		frameXPos = X_BUFFER_WIDTH;
-		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
-	}
 	//this is needed for resizing based on text.  only resizes height.
 	//command frame height controlled by command bar height
 	private void commandFrameAndBarDynamicResize(){
 		adjustCommandBarHeight();
 		adjustFrameHeight();
-		adjustFramePos();
+//		adjustFramePos();
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 	}
