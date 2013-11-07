@@ -6,17 +6,12 @@ import nailit.NailItGlobalKeyListener;
 import nailit.logic.CommandType;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.AWTException;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -40,9 +35,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.border.LineBorder;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.text.Utilities;
 
 import test.logic.LogicManagerStub;
 import nailit.common.NIConstants;
