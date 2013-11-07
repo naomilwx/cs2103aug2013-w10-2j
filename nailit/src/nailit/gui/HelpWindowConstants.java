@@ -25,7 +25,8 @@ public class HelpWindowConstants {
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] [field name] [updated details]"};
-	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task Reminder</b>", "<em>update</em> [<em>ID</em>] reminder [updated details]"};
+	public static final String[] UPDATE_DATE_RANGE = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>] date from [start date] to [end date]"};//TODO:
+	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task Reminder</b>", "<em>update</em> [<em>ID</em>] reminder [new reminder date]"};
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
@@ -46,6 +47,7 @@ public class HelpWindowConstants {
 		addCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> updateCommandSyntax = new Vector<String[]>();
 		updateCommandSyntax.add(UPDATE_SYNTAX);
+//		updateCommandSyntax.add(UPDATE_DATE_RANGE); //TODO:
 		updateCommandSyntax.add(UPDATE_REMINDER_SYNTAX);
 		updateCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> deleteCommandSyntax = new Vector<String[]>();
@@ -84,17 +86,19 @@ public class HelpWindowConstants {
 	static{
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Down", "Scroll to next page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Up", "Scroll to previous page in task list");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+-", "Reduce Main Window Size");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+=", "Restore Main Window Size");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+N", "Put highlighted task's name in command bar");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+D", "Put highlighted task's description in command bar");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+H", "Toggle Home Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+,", "Toggle Main Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+J", "Toggle History Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+W", "Hide Task Details Display");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+Enter or Shift+Enter", "Add new line in command bar");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Up", "Scroll to next task in task list");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Down", "Scroll to previous task in task list");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + -", "Reduce Main Window Size");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + =", "Restore Main Window Size");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + N", "Put highlighted task's name in command bar");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + D", "Put highlighted task's description in command bar");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + H", "Toggle Home Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + ,", "Toggle Main Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + J", "Toggle History Window");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + W", "Hide Task Details Display");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl+/", "Display Help Window For all KeyBoard Commands");
+		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + /", "Display Help Window For all KeyBoard Commands");
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
@@ -108,8 +112,8 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Up", "Scrollup");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Delete Highlighted Task");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+N", "Put highlighted task's name in command bar");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl+D", "Put highlighted task's description in command bar");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl + N", "Put highlighted task's name in command bar");
+		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl + D", "Put highlighted task's description in command bar");
 	}
 	public static final HashMap<String, String> HELPWINDOW_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{

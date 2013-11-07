@@ -15,6 +15,7 @@ import javax.swing.Timer;
 
 import nailit.logic.CommandType;
 
+@SuppressWarnings("serial")
 public class HelpWindow extends ExtendedWindow{
 	protected static final String HTML_FORMATTED_STRING = "<html>" + HelpWindowConstants.TEXT_DISPLAY_STYLE + "%1s</html>";
 	protected static final String COMMAND_SYNTAX_HTML_FORMAT = "<tr><td>%1s  </td><td>%2s</td></tr>";

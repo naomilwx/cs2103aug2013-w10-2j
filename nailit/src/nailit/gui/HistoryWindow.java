@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import nailit.common.NIConstants;
 
+@SuppressWarnings("serial")
 public class HistoryWindow extends ExtendedWindow{
 	private static final String COMMANDS_EXECUTED_HEADER 
 	= "<h1 style = \"padding-left: 5px\">Commands executed: </h1>";
@@ -37,7 +38,8 @@ public class HistoryWindow extends ExtendedWindow{
 		super(GUIMain, width);
 		displayPane.addFocusListener(historyFocusListener);
 	}
-	protected void formatAndAppendCommandsList(StringBuilder str, Vector<String> list){
+	protected void formatAndAppendCommandsList(StringBuilder str, String header, Vector<String> list){
+		str.append(header);
 		str.append("<table>");
 		for(String command: list){
 			str.append("<tr>");
@@ -54,13 +56,11 @@ public class HistoryWindow extends ExtendedWindow{
 		str.append("<html>");
 		
 		Vector<String> undidCommands = list.get(NIConstants.HISTORY_UNDO_INDEX);
-		str.append(COMMANDS_EXECUTED_HEADER);
-		formatAndAppendCommandsList(str, undidCommands);
+		formatAndAppendCommandsList(str, COMMANDS_EXECUTED_HEADER, undidCommands);
 		
 		Vector<String> redoableCommands = list.get(NIConstants.HISTORY_REDO_INDEX);
 		if(!redoableCommands.isEmpty()){
-			str.append(COMMANDS_UNDID_HEADER);
-			formatAndAppendCommandsList(str, redoableCommands);
+			formatAndAppendCommandsList(str, COMMANDS_UNDID_HEADER, redoableCommands);
 		}
 		
 		str.append("</html>");

@@ -20,6 +20,7 @@ import nailit.gui.renderer.IDDisplayRenderer;
 import nailit.gui.renderer.TaskDateTimeDisplayRenderer;
 import nailit.gui.renderer.TaskNameDisplayRenderer;
 
+@SuppressWarnings("serial")
 public class TaskTable extends TableDisplay{
 	private int deletedTaskRowsNum = 0;
 			
@@ -132,9 +133,13 @@ public class TaskTable extends TableDisplay{
 			row = formatTaskForRowDisplay(currTask, IDVal);
 			addContentToTable(row);
 			if(taskIDToLookOutFor != Task.TASKID_NULL && taskIDToLookOutFor == currTask.getID()){
-				table.changeSelection(i, noOfCols, false, false);
-				getViewport().setViewPosition(new Point(0, i * TABLE_ROW_HEIGHT));
+				selectAndScrollToRow(0, i);
 			}
 		}
 	}
+	protected void selectAndScrollToRow(int xPos, int rowNum){
+		table.changeSelection(rowNum, noOfCols, false, false);
+		GUIUtilities.scrollDisplayToPosition(this, new Point(xPos, rowNum * TABLE_ROW_HEIGHT));
+	}
 }
+
