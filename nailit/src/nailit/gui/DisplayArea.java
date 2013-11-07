@@ -58,7 +58,6 @@ public class DisplayArea extends JLayeredPane {
 	private GUIManager GUIBoss;
 	private JPanel defaultPane;
 	private JPanel popupPane;
-	private LinkedList<Component> items;
 	private TaskTable taskTable;
 	private TextDisplay textDisplay;
 	
@@ -106,7 +105,6 @@ public class DisplayArea extends JLayeredPane {
 	//DisplayArea constructor. offset is the height of the CommandBar below
 	public DisplayArea(final GUIManager GUIMain, int containerWidth, int containerHeight, int offset) {
 		GUIBoss = GUIMain;
-		items = new LinkedList<Component>();
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		this.containerHeight = containerHeight;
 		adjustDisplayHeight(offset);
@@ -211,18 +209,18 @@ public class DisplayArea extends JLayeredPane {
 		}else{
 			nextFocusElement = currentFocusElement + 1;
 		}
-		
-		if(items.isEmpty()){
+		//TODO: toggle between table and task display
+		Component[] components = defaultPane.getComponents();
+		if(components.length == 0){
 			currentFocusElement = NULL_FOCUS;
 			GUIBoss.setFocusOnCommandBar();
-		 }else{
-			if(items.size() <= nextFocusElement){
+		}else{
+			if(components.length <= nextFocusElement){
 				nextFocusElement = 0;
 			}
-			Component item = items.get(nextFocusElement);
-			item.requestFocus();
+			components[nextFocusElement].requestFocus();
 			currentFocusElement = nextFocusElement;
-		 }
+		}
 	}
 	
 	protected void hideNotifications(){
@@ -250,37 +248,70 @@ public class DisplayArea extends JLayeredPane {
 					}
 		});
 	}
-	protected void addContent(Component component, boolean replace){
-		if(replace){
-			defaultPane.removeAll();
-			items.clear();
-		}else{
-			//always keep number of items displayed to 2.
-			removeExtraContent(component);
-			items.add(component);
-		}
+	
+	private void addContent(Component component){
 		component.addKeyListener(keyEventListener);
 		component.setFocusTraversalKeysEnabled(false);
 		defaultPane.add(component);
+	}
+	
+	private void clearContents(){
+		defaultPane.removeAll();
+		textDisplay = null;
+		taskTable = null;
+	}
+	protected void displayTaskList(Result result){
+		Vector<Task>  tasks = result.getTaskList();
+		Task task = result.getTaskToDisplay();
+		if(tasks == null){
+			return;
+		}
+		addNewTaskTable();
+		displayTaskListInTaskTable(tasks, task);
 		revalidate();
+	}
+	private void addNewTaskTable(){
+		clearContents();
+		createAndConfigureTaskTable();
+	}
+	private void displayTaskListInTaskTable(Vector<Task>  tasks, Task task){
+		taskTable.displayTaskList(tasks, task);
+	}
+	private void createAndConfigureTaskTable(){
+		taskTable = new TaskTable(displayWidth, displayHeight);
+		addAdditionalKeyListenerToTaskTable();
+		addContent(taskTable);
 	}
 	protected void displayTaskDetails(Task task){
 		if(task!=null){
-			String details = TaskDetailsFormatter.formatTaskForDisplay(task);
-			int textDisplayWidth = defaultPane.getWidth()/2;
-			int textDisplayHeight = defaultPane.getHeight()/2;
-			textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
-			textDisplay.displayHTMLFormattedText(details);
-			GUIUtilities.scrollDisplayToTop(textDisplay);
-			
-			addContent(textDisplay, false);
+			addNewTextDisplay();
+			displayTaskInTextDisplay(task);
+			revalidate();
+		}
+	}
+	private void addNewTextDisplay(){
+		removeExistingTextDisplay();
+		createAndConfigureNewTextDisplay();
+	}
+	private void displayTaskInTextDisplay(Task task){
+		String details = TaskDetailsFormatter.formatTaskForDisplay(task);
+		textDisplay.displayHTMLFormattedText(details);
+		GUIUtilities.scrollDisplayToTop(textDisplay);
+	}
+	private void createAndConfigureNewTextDisplay(){
+		int textDisplayWidth = defaultPane.getWidth()/2;
+		int textDisplayHeight = defaultPane.getHeight()/2;
+		textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
+		addContent(textDisplay);
+	}
+	private void removeExistingTextDisplay(){
+		if(textDisplay != null){
+			defaultPane.remove(textDisplay);
+			textDisplay = null;
 		}
 	}
 	protected void removeTaskDisplay(){
-		if(textDisplay != null){
-			defaultPane.remove(textDisplay);
-			items.remove(textDisplay);
-		}
+		removeExistingTextDisplay();
 		revalidate();
 	}
 	protected void showDeletedTaskInTaskListTable(Task task){
@@ -293,17 +324,7 @@ public class DisplayArea extends JLayeredPane {
 			taskTable.clearDeletedTaskRowsFromTable();
 		}
 	}
-	protected void displayTaskList(Result result){
-		Vector<Task>  tasks = result.getTaskList();
-		if(tasks == null){
-			return;
-		}
-		Task task = result.getTaskToDisplay();
-		taskTable = new TaskTable(displayWidth, displayHeight);
-		addAdditionalKeyListenerToTaskTable();
-		taskTable.displayTaskList(tasks, task);
-		addContent(taskTable, false);
-	}
+	
 	protected void quickTaskTableScroll(boolean up){
 		if(taskTable != null){
 			if(up){
@@ -391,16 +412,6 @@ public class DisplayArea extends JLayeredPane {
 		}
 	}
 	
-	//function to keep top displayed component if it is a table and new display is not a table
-	private void removeExtraContent(Component newComponent){
-		Component first = items.peekFirst();
-		items.clear();
-		defaultPane.removeAll();
-		if((first instanceof TaskTable) && !(newComponent instanceof TaskTable)){
-			items.add(first);
-			defaultPane.add(first);
-		}
-	}
 	protected void addPopup(Component component){
 		popupPane.add(component);
 	}
@@ -419,7 +430,6 @@ public class DisplayArea extends JLayeredPane {
 			float nextOpacityRatio = ((float) originalOpacity)/MAX_OPACITY_VALUE;
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// TODO Auto-generated method stub
 				nextOpacityRatio -= opacityStep;
 				if(nextOpacityRatio <= NO_OPACITY){
 					timer.stop();
