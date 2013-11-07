@@ -63,15 +63,29 @@ public class CommandBar extends JPanel {
 		positionAndResizeCommandFrame();
 	}
 	private void positionAndResizeCommandFrame(){
-		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
+		adjustFrameWidth();
+		adjustCommandBarWidth();
 		adjustCommandBarAndFrameHeightAndPos();
 		this.setBorder(new LineBorder(GUIManager.BORDER_COLOR));
 		this.setLocation(frameXPos, frameYPos);
 		this.setSize(frameWidth, frameHeight);
 		this.setLayout(null);
 	}
+	private void adjustFrameWidth(){
+		frameWidth = mainContainerWidth - TEXTBAR_X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
+	}
+	private void adjustCommandBarWidth(){
+		commandBarWidth = frameWidth - 2* X_BUFFER_WIDTH;
+	}
 	private void adjustCommandBarAndFrameHeightAndPos(){
+		adjustCommandBarHeight();
+		adjustFrameHeight();
+		adjustFramePos();
+	}
+	private void adjustFrameHeight(){
+		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+	}
+	private void adjustCommandBarHeight(){
 		if(textBar == null){
 			//initialisation of CommandBar
 			commandBarHeight = COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
@@ -81,11 +95,11 @@ public class CommandBar extends JPanel {
 				commandBarHeight = newHeight;
 			}
 		}
-		frameHeight = commandBarHeight + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+	}
+	private void adjustFramePos(){
 		frameXPos = X_BUFFER_WIDTH;
 		frameYPos = mainContainerHeight - frameHeight - WINDOW_BOTTOM_BUFFER;
 	}
-	
 	
 	private void commandFrameAndBarDynamicResize(){
 		adjustCommandBarAndFrameHeightAndPos();
