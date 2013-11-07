@@ -31,7 +31,7 @@ public class CommandBar extends JPanel {
 	public static final int TEXTBAR_Y_BUFFER_HEIGHT = 3;
 	public static final int TEXTBAR_X_BUFFER_WIDTH = 3;
 	private static final int DEFAULT_COMMANDBAR_HEIGHT = COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
-	private static final int DEFAULT_FRAME_HEIGHT = DEFAULT_COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
+	protected static final int DEFAULT_FRAME_HEIGHT = DEFAULT_COMMANDBAR_HEIGHT + 2*TEXTBAR_Y_BUFFER_HEIGHT;
 	protected static final int MAX_COMMANDBAR_HEIGHT = 3 * COMMANDBAR_TEXT_HEIGHT + 2 * COMMANDBAR_TEXT_BUFFER_HEIGHT;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
@@ -233,6 +233,9 @@ public class CommandBar extends JPanel {
 			}
 		});
 	}
+	protected int getFrameHeight(){
+		return frameHeight;
+	}
 	protected void setFocus(){
 		textBar.requestFocus();
 	}
@@ -248,5 +251,4 @@ public class CommandBar extends JPanel {
 		textBar.setText(text);
 		return;
 	}
-	//Methods to manipulate text in user input field.
 }

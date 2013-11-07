@@ -163,8 +163,8 @@ public class HelpWindow extends ExtendedWindow{
 				+ formatDisplayForSupportedCommandsSyntax();
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
-		
-		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
+		int yposOffset = GUIBoss.getCommandBarHeight();
+		adjustAndshowHelpWindow(yposOffset, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForSupportedCommands(){
@@ -172,8 +172,8 @@ public class HelpWindow extends ExtendedWindow{
 							+ formatDisplayForSupportedCommandsSyntax();
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
-		
-		adjustAndshowHelpWindow(0, FULL_WINDOW_HEIGHT);
+		int yposOffset = GUIBoss.getCommandBarHeight();
+		adjustAndshowHelpWindow(yposOffset, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}
 	protected void displaySyntaxForCommandType(String command){
@@ -184,7 +184,8 @@ public class HelpWindow extends ExtendedWindow{
 		
 		int newWindowHeight = Math.min(DEFAULT_WINDOW_HEIGHT + offSet * EXTRA_LINE_HEIGHT,
 				MAX_COMMAND_SYNTAX_WINDOW_HEIGHT);
-		int yposOffset = GUIBoss.getDisplayAreaHeight() - newWindowHeight;
+//		int yposOffset = GUIBoss.getDisplayAreaHeight() - newWindowHeight;
+		int yposOffset = - newWindowHeight;
 		adjustAndshowHelpWindow(yposOffset, newWindowHeight);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
@@ -193,7 +194,8 @@ public class HelpWindow extends ExtendedWindow{
 	protected void displayListOfAvailableCommands(){
 		String display = formatStringforDisplay(HelpWindowConstants.generateListOfSupportedCommands());
 		displayFormattedText(display);
-		int yposOffset = GUIBoss.getDisplayAreaHeight() - DEFAULT_WINDOW_HEIGHT;
+//		int yposOffset = GUIBoss.getDisplayAreaHeight() - DEFAULT_WINDOW_HEIGHT;
+		int yposOffset = - DEFAULT_WINDOW_HEIGHT;
 		adjustAndshowHelpWindow(yposOffset, DEFAULT_WINDOW_HEIGHT);
 		fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
 		GUIBoss.setFocusOnCommandBar();
