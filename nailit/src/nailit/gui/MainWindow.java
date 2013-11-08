@@ -8,8 +8,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	protected static final int WINDOW_HEIGHT = 425;
 	protected static final int DEFAULT_BORDER_WIDTH = 1;

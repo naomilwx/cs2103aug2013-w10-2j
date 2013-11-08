@@ -3,39 +3,29 @@ package nailit.gui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.LinkedList;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-import com.sun.java.swing.SwingUtilities3;
-
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDetailsFormatter;
 
+@SuppressWarnings("serial")
 public class DisplayArea extends JLayeredPane {
 	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
@@ -66,6 +56,7 @@ public class DisplayArea extends JLayeredPane {
 	private int defaultPaneWidth;
 	private int defaultPaneHeight;
 	private int containerHeight;
+	@SuppressWarnings("unused")
 	private int containerWidth;
 	private int xPos;
 	private int yPos;
@@ -86,7 +77,7 @@ public class DisplayArea extends JLayeredPane {
 			int keyCode = keyStroke.getKeyCode();
 			if(keyCode == KeyEvent.VK_CONTROL){
 				ctrlPressed = true;
-			}else if(keyCode == KeyEvent.VK_SHIFT){
+			}else if(ctrlPressed && keyCode == KeyEvent.VK_TAB){
 				defaultPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
 				GUIBoss.setFocusOnCommandBar();
@@ -246,7 +237,7 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
 				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
-				new Callable(){
+				new Callable<Boolean>(){
 					public Boolean call() throws Exception {
 						removeDeletedTasksFromTaskListTable();
 						return true;
@@ -257,7 +248,7 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
 				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
-				new Callable(){
+				new Callable<Boolean>(){
 					public Boolean call() throws Exception {
 						GUIBoss.forceExit();
 						return true;

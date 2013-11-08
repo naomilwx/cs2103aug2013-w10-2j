@@ -2,19 +2,16 @@
 package nailit.gui;
 
 import java.awt.Component;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import nailit.common.Result;
 
+@SuppressWarnings("serial")
 public abstract class ExtendedWindow extends JFrame{
 	protected static final int EXTENDED_WINDOW_HEIGHT = MainWindow.WINDOW_HEIGHT;
 	protected static final int EXTENDED_WINDOW_BORDER_WIDTH = 3;
