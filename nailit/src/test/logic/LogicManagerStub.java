@@ -25,10 +25,6 @@ public class LogicManagerStub extends LogicManager{
 		task.setID(2);
 		taskList.add(event);
 		taskList.add(task);
-		history1.add("task 1");
-		history2.add("task 2");
-		historyList.add(history1);
-		historyList.add(history2);
 	}
 	
 	public Result executeCommand(String command){
