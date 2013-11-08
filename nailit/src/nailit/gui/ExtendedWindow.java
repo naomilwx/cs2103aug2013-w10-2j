@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
 
 
 @SuppressWarnings("serial")
-public abstract class ExtendedWindow extends JFrame{
+public class ExtendedWindow extends JFrame{
 	protected static final int EXTENDED_WINDOW_HEIGHT = MainWindow.WINDOW_HEIGHT;
 	protected static final int EXTENDED_WINDOW_BORDER_WIDTH = 3;
 	protected static final LineBorder EXTENDED_WINDOW_BORDER = new LineBorder(GUIManager.BORDER_COLOR, EXTENDED_WINDOW_BORDER_WIDTH);

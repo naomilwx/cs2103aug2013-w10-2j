@@ -44,7 +44,7 @@ public class DisplayArea extends JLayeredPane {
 	private final Timer fadeOutTimer = new Timer(0, null);
 	
 	private GUIManager GUIBoss;
-	private JPanel defaultPane;
+	private JPanel defaultDisplayPane;
 	private JPanel popupPane;
 	private TaskTable taskTable;
 	private TextDisplay textDisplay;
@@ -120,11 +120,11 @@ public class DisplayArea extends JLayeredPane {
 	private void initialiseDefaultPane(){
 		defaultPaneWidth = displayWidth;
 		defaultPaneHeight = displayHeight;
-		defaultPane = new JPanel();
-		defaultPane.setLayout(new BoxLayout(defaultPane,BoxLayout.Y_AXIS));
-		setLayerToDefaultSettings(defaultPane);
-		defaultPane.setFocusable(true);
-		add(defaultPane,JLayeredPane.DEFAULT_LAYER);
+		defaultDisplayPane = new JPanel();
+		defaultDisplayPane.setLayout(new BoxLayout(defaultDisplayPane,BoxLayout.Y_AXIS));
+		setLayerToDefaultSettings(defaultDisplayPane);
+		defaultDisplayPane.setFocusable(true);
+		add(defaultDisplayPane,JLayeredPane.DEFAULT_LAYER);
 	}
 	private void initialisePopupPane(){
 		popupPane = new JPanel();
@@ -139,8 +139,8 @@ public class DisplayArea extends JLayeredPane {
 			}
 			@Override
 			public void componentShown(ComponentEvent event) {
-				if(defaultPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
-					shiftDefaultLayer(defaultPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
+				if(defaultDisplayPane.getY() == GUIManager.DEFAULT_COMPONENT_LOCATION.y){
+					shiftDefaultLayer(defaultDisplayPane.getX(), NotificationArea.NOTIFICATION_HEIGHT);
 				}
 			}
 			
@@ -180,7 +180,7 @@ public class DisplayArea extends JLayeredPane {
 		this.setLocation(xPos, yPos);
 	}
 	private void shiftDefaultLayer(int xpos, int ypos){
-		defaultPane.setLocation(xpos, ypos);
+		defaultDisplayPane.setLocation(xpos, ypos);
 		dynamicallyResizeDefaultPaneHeight();
 		revalidate();
 	}
@@ -193,7 +193,7 @@ public class DisplayArea extends JLayeredPane {
 	}
 	private void dynamicallyResizeDefaultPaneHeight(){
 		adjustDefaultPaneHeight();
-		defaultPane.setSize(defaultPaneWidth, defaultPaneHeight);
+		defaultDisplayPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
 	private void configureDisplayArea(){
 		this.setBorder(null);
@@ -206,7 +206,7 @@ public class DisplayArea extends JLayeredPane {
 		yPos = containerHeight - displayHeight - WINDOW_BOTTOM_BUFFER;
 	}
 	private void addDisplayAreaListeners(){
-		defaultPane.addFocusListener(defaultPaneFocusListener);
+		defaultDisplayPane.addFocusListener(defaultPaneFocusListener);
 	}
 	private void defaultPaneSetFocusHandler(){
 		int nextFocusElement = NULL_FOCUS;
@@ -216,7 +216,7 @@ public class DisplayArea extends JLayeredPane {
 			nextFocusElement = currentFocusElement + 1;
 		}
 		//toggle between table and task display
-		Component[] components = defaultPane.getComponents();
+		Component[] components = defaultDisplayPane.getComponents();
 		if(components.length == 0){
 			currentFocusElement = NULL_FOCUS;
 			GUIBoss.setFocusOnCommandBar();
@@ -258,16 +258,16 @@ public class DisplayArea extends JLayeredPane {
 	private void addContent(Component component){
 		component.addKeyListener(keyEventListener);
 		component.setFocusTraversalKeysEnabled(false);
-		defaultPane.add(component);
+		defaultDisplayPane.add(component);
 	}
 	private void addContent(Component component, int pos){
 		component.addKeyListener(keyEventListener);
 		component.setFocusTraversalKeysEnabled(false);
-		defaultPane.add(component, pos);
+		defaultDisplayPane.add(component, pos);
 	}
 	
 	private void clearContents(){
-		defaultPane.removeAll();
+		defaultDisplayPane.removeAll();
 		textDisplay = null;
 		taskTable = null;
 		lastDisplayedTaskID = Task.TASKID_NULL;
@@ -327,14 +327,14 @@ public class DisplayArea extends JLayeredPane {
 		GUIUtilities.scrollDisplayToTop(textDisplay);
 	}
 	private void createAndConfigureNewTextDisplay(){
-		int textDisplayWidth = defaultPane.getWidth();
-		int textDisplayHeight = defaultPane.getHeight();
+		int textDisplayWidth = defaultDisplayPane.getWidth();
+		int textDisplayHeight = defaultDisplayPane.getHeight();
 		textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
 		addContent(textDisplay, 0);
 	}
 	private void removeExistingTextDisplay(){
 		if(textDisplay != null){
-			defaultPane.remove(textDisplay);
+			defaultDisplayPane.remove(textDisplay);
 			textDisplay = null;
 		}
 	}
@@ -444,7 +444,7 @@ public class DisplayArea extends JLayeredPane {
 		popupPane.add(component);
 	}
 	protected void setFocus(){
-		defaultPane.requestFocus();
+		defaultDisplayPane.requestFocus();
 	}
 	protected void stopAllTimers(){
 		fadeOutTimer.stop();

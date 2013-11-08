@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
-public abstract class ScrollableFocusableDisplay extends JScrollPane{
+public class ScrollableFocusableDisplay extends JScrollPane{
 	protected int containerWidth;
 	protected int containerHeight;
 	
