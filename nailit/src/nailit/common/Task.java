@@ -54,7 +54,7 @@ public class Task {
 		startTime = start;
 		endTime = end;
 		priority = p;
-		if(description != null){
+		if(desc != null){
 			description = desc;
 		}
 		this.isCompleted = isCompleted;
@@ -70,7 +70,7 @@ public class Task {
 		startTime = start;
 		endTime = end;
 		priority = p;
-		if(description != null){
+		if(desc != null){
 			description = desc;
 		}
 		this.isCompleted = isCompleted;
@@ -177,7 +177,7 @@ public class Task {
 		name = taskName;
 	}
 	public void setDescription(String taskDesc){
-		if(description != null){
+		if(taskDesc != null){
 			description = taskDesc;
 		}
 	}

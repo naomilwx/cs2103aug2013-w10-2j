@@ -20,6 +20,8 @@ import org.junit.runners.Suite;
 	ParserTest.class,
 	CommandTest.class,
 	OverallTestAdd.class,
+	OverAllTestUpdate.class,
+	OverAllTestDelete.class,
 })
 
 public class OverallTestSuite {
