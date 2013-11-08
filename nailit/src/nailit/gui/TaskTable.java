@@ -1,11 +1,8 @@
 //@author A0091372H
 package nailit.gui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Vector;
 
