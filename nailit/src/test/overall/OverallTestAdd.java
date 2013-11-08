@@ -121,7 +121,7 @@ public class OverallTestAdd {
 			Result addResult;
 			addResult = logic.executeCommand(commandString);
 			Task addedTask = addResult.getTaskToDisplay();
-			OverAllTest.compareTasksAttributes(expectedTask, addedTask);
+			OverallTestSuite.compareTasksAttributes(expectedTask, addedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
