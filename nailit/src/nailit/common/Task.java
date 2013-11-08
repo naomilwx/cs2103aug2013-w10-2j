@@ -101,7 +101,7 @@ public class Task {
 	public String getTag(){
 		return tag;
 	}
-	public boolean checkCompleted(){
+	public boolean checkCompletedOrOver(){
 		if(isEvent()){
 			return isPastEvent();
 		}else{
