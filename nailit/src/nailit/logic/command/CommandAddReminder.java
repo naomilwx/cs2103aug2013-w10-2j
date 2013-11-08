@@ -20,14 +20,17 @@ public class CommandAddReminder extends Command{
 	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE = "Sorry, the reminder is not added " +
 																								"successfully. The reason is: the reminder " +
 																								"date is invalid";
+	private static final String FEEDBACK_FOR_SUCCESSFULLY_ADD_REMINDER = "Add reminder to the Task: %s on %s";
 	
 	private int displayID;
 	private Vector<Task> taskList;
 	private DateTime reminderDateToAdd;
 	private Task taskRelated;
 	
+	// indicate whether the add reminder command is successful
 	private boolean isSuccess;
 	
+	// constructor
 	public CommandAddReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
 		super(resultInstance, storerToUse);
@@ -63,13 +66,15 @@ public class CommandAddReminder extends Command{
 	}
 	
 	private void createResultForInvalidReminderDateFailure() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, 
+				REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE);
 		executedResult.setUpdateReminderList(false);
 		
 	}
 
 	private void createResultForInvalidDisplayIdFailure() {
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, 
+				REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_DISPLAYID);
 		executedResult.setUpdateReminderList(false);
 	}
 
@@ -79,10 +84,11 @@ public class CommandAddReminder extends Command{
 	}
 
 	private void createResult() {
-		String notificationStr = "Add reminder to the Task: " + taskRelated.getName() + 
-				" on " + reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT);
+		String notificationStr = String.format(FEEDBACK_FOR_SUCCESSFULLY_ADD_REMINDER, 
+				taskRelated.getName(), reminderDateToAdd.toString(NIConstants.DISPLAY_DATE_FORMAT));
 		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, notificationStr);
-		// create a dateTime obj representing today
+		
+		// create a dateTime object representing today, used as comparison
 		DateTime today = new DateTime();
 		if(today.compareTo(reminderDateToAdd) == 0) { // means that the reminder is today, reminder list needs update
 			Vector<Task> todayReminderList = storer.getReminderListForToday();
@@ -111,15 +117,6 @@ public class CommandAddReminder extends Command{
 		if(reminderDateToAdd == null) { // handle the null reminder time situation
 			return false;
 		}
-		
-//		DateTime endTimeOfTask = taskRelated.getEndTime();
-//		if(endTimeOfTask == null){
-//			return true;
-//		}
-//		if(reminderDateToAdd.compareTo(endTimeOfTask) > 0) { // means reminderDateToAdd is later than task due Date
-//			return false;
-//		}
-		
 		return true;
 	}
 
