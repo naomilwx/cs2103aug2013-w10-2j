@@ -54,12 +54,12 @@ public class StorageManagerTest {
 		Task task6 = new Task(Task.TASKID_NULL,"sixth task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
 				"1,fifth task,null,null,1,,,0,null\n" +
-				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,#school stuff#,desc,1,null\n" +
 				"",2,task6);
-		Task task7 = new Task(2,"seventh task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
+		Task task7 = new Task(2,"seventh task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"#school stuff#","desc",true);
 		testAddCommand("" +
 				"1,fifth task,null,null,1,,,0,null\n" +
-				"2,seventh task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"2,seventh task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,#school stuff#,desc,1,null\n" +
 				"",2,task7);
 
 	}
@@ -85,7 +85,7 @@ public class StorageManagerTest {
 		Task task6 = new Task(Task.TASKID_NULL,"sixth task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
 		testAddCommand("" +
 				"1,fifth task,null,null,1,,,0,null\n" +
-				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"2,sixth task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,#school stuff#,desc,1,null\n" +
 				"",2,task6);
 		
 		
@@ -200,7 +200,7 @@ public class StorageManagerTest {
 				"",1,task1);
 		testAddCommand("" +
 				"1,first task,null,null,1,,,0,null\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,#school stuff#,desc,1,null\n" +
 				"",2,task2);
 
 		/**
@@ -209,7 +209,7 @@ public class StorageManagerTest {
 		testFilterCommand("",null);
 		testFilterCommand("" +
 				"1,first task,null,null,1,,,0,null\n" +
-				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
+				"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,#school stuff#,desc,1,null\n" +
 				"",new FilterObject());
 		
 		/**
@@ -218,38 +218,38 @@ public class StorageManagerTest {
 		sto.clear();
 		addRealisticTasks();
 		FilterObject fo1 = new FilterObject(null,null,null,null,null,null);
-		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,Exam preparation,Be well prepared,1,2013-02-10T00:00:00.000+08:00\n" +
-				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,Project,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
-				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,Exam preparation,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
-				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,Assignment,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
-				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,Exam preparation,Be something,0,2013-12-02T00:00:00.000+08:00\n" +
+		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,#Exam preparation#,Be well prepared,0,2013-02-10T00:00:00.000+08:00\n" +
+				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,#Project#,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
+				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,#Exam preparation#,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
+				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,#Assignment#,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
+				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,#Exam preparation#,Be something,0,2013-12-02T00:00:00.000+08:00\n" +
 				"6,GO HOME,2013-12-03T00:00:00.000+08:00,2014-01-09T00:00:00.000+08:00,1,,,0,null\n" +
-				"7,WU HAN JOURNEY,2013-12-10T00:00:00.000+08:00,2013-12-15T00:00:00.000+08:00,0,TRAVEL,BE CAREFUL,0,2013-12-08T00:00:00.000+08:00\n" +
-				"8,SHANGHAI JOURNEY,2013-12-16T00:00:00.000+08:00,2013-12-18T00:00:00.000+08:00,0,TRAVEL,BE OPEN-MINDED,0,2013-12-02T00:00:00.000+08:00\n" +
+				"7,WU HAN JOURNEY,2013-12-10T00:00:00.000+08:00,2013-12-15T00:00:00.000+08:00,0,#TRAVEL#,BE CAREFUL,0,2013-12-08T00:00:00.000+08:00\n" +
+				"8,SHANGHAI JOURNEY,2013-12-16T00:00:00.000+08:00,2013-12-18T00:00:00.000+08:00,0,#TRAVEL#,BE OPEN-MINDED,0,2013-12-02T00:00:00.000+08:00\n" +
 				"9,ALICE'S magic journey,2013-12-20T00:00:00.000+08:00,2013-12-25T00:00:00.000+08:00,0,,,0,null\n" +
-				"10,2103 V0.3,null,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-13T00:00:00.000+08:00\n" +
-				"11,PC1431,2013-11-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"12,NON-SENSE,2013-09-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
-				"13,My birthday,2014-02-10T00:00:00.000+08:00,2014-02-10T00:00:00.000+08:00,2,Birthday,Be Happy,0,2014-02-09T00:00:00.000+08:00\n" +
-				"14,lalala,2013-04-05T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,Non-sense,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
-				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
-				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,ORAL PRESENTATION,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"19,You tiao,null,2013-12-04T00:00:00.000+08:00,2,Meal,Be Hungry,0,2013-02-14T00:00:00.000+08:00\n" +
-				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,Research,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,fake Cs,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
+				"10,2103 V0.3,null,2013-10-30T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-13T00:00:00.000+08:00\n" +
+				"11,PC1431,2013-11-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"12,NON-SENSE,2013-09-08T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"13,My birthday,2014-02-10T00:00:00.000+08:00,2014-02-10T00:00:00.000+08:00,2,#Birthday#,Be Happy,0,2014-02-09T00:00:00.000+08:00\n" +
+				"14,lalala,2013-04-05T00:00:00.000+08:00,2013-10-30T00:00:00.000+08:00,2,#Non-sense#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,#ORAL PRESENTATION#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"19,You tiao,null,2013-12-04T00:00:00.000+08:00,2,#Meal#,Be Hungry,0,2013-02-14T00:00:00.000+08:00\n" +
+				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,#Research#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,#fake Cs#,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
 				,fo1);
 		FilterObject fo2 = new FilterObject("cs",null,null,null,null,null);
-		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,Exam preparation,Be well prepared,1,2013-02-10T00:00:00.000+08:00\n" +
-				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,Project,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
-				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,Exam preparation,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
-				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,Assignment,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
-				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,Exam preparation,Be something,1,2013-12-02T00:00:00.000+08:00\n" +
-				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,Project,Be well-prepared,1,2013-02-14T00:00:00.000+08:00\n" +
-				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,Project,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,ORAL PRESENTATION,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,Research,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
-				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,fake Cs,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
+		testFilterCommand("1,CS2103 REVIEW,2013-02-13T00:00:00.000+08:00,2013-02-15T00:00:00.000+08:00,2,#Exam preparation#,Be well prepared,0,2013-02-10T00:00:00.000+08:00\n" +
+				"2,CS2103 Project Demo,null,2013-11-07T00:00:00.000+08:00,2,#Project#,Be confident,0,2013-11-02T00:00:00.000+08:00\n" +
+				"3,CS2105 REVIEW,2013-11-12T00:00:00.000+08:00,2013-11-26T00:00:00.000+08:00,1,#Exam preparation#,Be brave,0,2013-11-10T00:00:00.000+08:00\n" +
+				"4,CS3230 ONLINE ASSIGNMENT,null,2103-11-06T00:00:00.000+08:00,2,#Assignment#,BE Smart,0,2013-10-31T00:00:00.000+08:00\n" +
+				"5,CS3230 FINAL REVIEW,2013-11-01T00:00:00.000+08:00,2013-11-27T00:00:00.000+08:00,1,#Exam preparation#,Be something,0,2013-12-02T00:00:00.000+08:00\n" +
+				"15,CS2102,2013-10-02T00:00:00.000+08:00,2013-11-30T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"17,CS2101 EXAM,null,2013-11-04T00:00:00.000+08:00,2,#Project#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"16,CS2101 ORAL PRESENTATION,null,2013-11-08T00:00:00.000+08:00,2,#ORAL PRESENTATION#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"18,CS3230R,null,2013-11-07T00:00:00.000+08:00,2,#Research#,Be well-prepared,0,2013-02-14T00:00:00.000+08:00\n" +
+				"20,Zongzi,null,2013-12-04T00:00:00.000+08:00,2,#fake Cs#,fake CS task,0,2013-02-14T00:00:00.000+08:00\n"
 				,fo2);
 
 	}
@@ -335,7 +335,7 @@ public class StorageManagerTest {
 		String desc = task.getDescription();
 		String tag = task.getTag();
 		
-		int completeStatus = (task.checkCompletedOrOver())? 1:0;
+		int completeStatus = (task.isCompleted())? 1:0;
 		
 		String reminderDate;
 		if(task.getReminder()==null){

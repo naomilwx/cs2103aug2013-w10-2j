@@ -108,6 +108,10 @@ public class Task {
 			return isCompleted;
 		}
 	}
+	
+	public boolean isCompleted(){
+		return isCompleted;
+	}
 	public DateTime getStartTime(){
 		return startTime;
 	}
