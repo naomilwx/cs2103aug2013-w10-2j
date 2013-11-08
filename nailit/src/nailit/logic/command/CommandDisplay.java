@@ -122,8 +122,11 @@ public class CommandDisplay extends Command{
 			throw new Exception(NO_DISPLAY_ID_WARNING);
 		} else {
 			try {
-				retrieveTheTask(); // let retrievedTask = the task to display, which is gotten from task list
-				createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, taskRetrieved, cm.getCurrentTaskList(), null);
+				// let retrievedTask = the task to display, which is gotten from task list
+				retrieveTheTask(); 
+				createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, 
+						taskRetrieved, cm.getCurrentTaskList(), null);
+//				executedResult.setd
 				createCommandSummary();
 			} catch(Exception e) {
 				createUnsuccessfulResultObject();
