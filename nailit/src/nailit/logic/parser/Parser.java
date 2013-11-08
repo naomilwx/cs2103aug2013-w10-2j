@@ -52,11 +52,14 @@ public abstract class Parser {
 	}
 	
 	public static boolean isTaskID(String p){
-		for (int i=0; i<p.length(); i++)
-			if ((p.charAt(i)<48) || (p.charAt(i)>57))
+		for (int i=0; i<p.length(); i++){
+			if ((p.charAt(i)<48) || (p.charAt(i)>57)){
 				return false;
-		if (Integer.parseInt(p)>10000000)
+			}
+		}
+		if (Integer.parseInt(p)>10000000){
 			return false;
+		}
 		return true;
 	}
 	
@@ -64,8 +67,10 @@ public abstract class Parser {
 		List<DateGroup> parseResult = nattyParser.parse(p);
 		
 		p = p.trim();
-	    if (p.length()>4 && p.substring(0,4).equalsIgnoreCase("from"))
+		
+	    if (p.length()>4 && p.substring(0,4).equalsIgnoreCase("from")){
 	    		p = p.substring(4);
+	    }
 		p = p.trim();
 		
 		if(parseResult.isEmpty()){
@@ -90,9 +95,10 @@ public abstract class Parser {
 		}
 	}
 	public static boolean isTag(String p){
-		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#')
+		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#'){
 			return true;
-		else
+		}else{
 			return false;
+		}
 	}
 }

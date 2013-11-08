@@ -17,10 +17,11 @@ public class DeleteParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 	
 		resultExecution.setCommand(CommandType.DELETE);
-		if (Parser.isNumber(userCommand))
+		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
-		else 
+		}else{ 
 			throw new Error("Wrong Format");
+		}
 		
 		return resultExecution;
 	}
