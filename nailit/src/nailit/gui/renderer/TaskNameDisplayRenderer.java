@@ -51,7 +51,7 @@ public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	public static String formatTaskNameCellDisplay(Task task){
 		String taskName = task.getName();
 		String tag = task.getTag();
-		boolean isCompleted = task.checkCompleted();
+		boolean isCompleted = task.checkCompletedOrOver();
 		String statusFlag = "";
 		String tagRowFiller = "";
 		

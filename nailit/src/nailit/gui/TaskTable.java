@@ -114,7 +114,7 @@ public class TaskTable extends TableDisplay{
 		row.add(IDVal);
 		String timeStartDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getStartTime());
 		row.add(timeStartDet);
-		boolean highlightIfOverdue = !task.isEvent() && !task.checkCompleted();
+		boolean highlightIfOverdue = !task.isEvent() && !task.checkCompletedOrOver();
 		String timeEndDet = TaskDateTimeDisplayRenderer.formatTaskDateTimeCellDisplay(task.getEndTime(), highlightIfOverdue);
 		row.add(timeEndDet);
 		String nameAndTag = TaskNameDisplayRenderer.formatTaskNameCellDisplay(task);

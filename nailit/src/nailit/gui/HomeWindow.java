@@ -82,7 +82,7 @@ public class HomeWindow extends ExtendedWindow{
 		return taskDetails;
 	}
 	private String getTaskStatusSymbol(Task task){
-		if(task.checkCompleted()){
+		if(task.checkCompletedOrOver()){
 			return DONE_TASK_HEADER;
 		}else{
 			return UNDONE_TASK_HEADER;
