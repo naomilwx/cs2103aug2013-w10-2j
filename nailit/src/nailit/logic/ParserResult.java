@@ -23,6 +23,13 @@ public class ParserResult{
 	private boolean isDisplayUncomplete = false;
 	private boolean isSetPriority = false;
 	
+	private boolean isPriorityNull = false;
+	private boolean isTagNull = false;
+	private boolean isDescriptionNull = false;
+	private boolean isStartTimeNull = false;
+	private boolean isEndTimeNull = false;
+	private boolean isReminderTimeNull = false;
+	
 	public ParserResult(){
 		taskId = 0;
 		command = CommandType.INVALID;
@@ -49,12 +56,12 @@ public class ParserResult{
 		return command;
 	}
 	
-	public void setDisplayAll (boolean flag){
-		isDisplayAll = flag;
+	public void setReminderTimeNull (boolean flag){
+		isReminderTimeNull = flag;
 	}
 	
-	public boolean isDisplayAll(){
-		return isDisplayAll;
+	public boolean isReminderTimeNull(){
+		return isReminderTimeNull;
 	}
 	
 	public void setDisplayHistory (boolean flag){
@@ -79,6 +86,52 @@ public class ParserResult{
 	
 	public boolean isDisplayUncomplete(){
 		return isDisplayUncomplete;
+	}
+	
+	public void setPriorityNull (boolean flag){
+		isPriorityNull = flag;
+	}
+	
+	public boolean isPriorityNulll(){
+		return isPriorityNull;
+	}
+	
+	public void setTagNull (boolean flag){
+		isTagNull = flag;
+	}
+	
+	public boolean isTagNull(){
+		return isTagNull;
+	}
+	
+	public void setDescriptionNull (boolean flag){
+		isDescriptionNull = flag;
+	}
+	
+	public boolean isDescriptionNull(){
+		return isDescriptionNull;
+	}
+	
+	public void setStartTimeNull (boolean flag){
+		isStartTimeNull = flag;
+	}
+	
+	public boolean isStartTimeNull(){
+		return isStartTimeNull;
+	}
+	public void setEndTimeNull (boolean flag){
+		isEndTimeNull = flag;
+	}
+	
+	public boolean isEndTimeNull(){
+		return isEndTimeNull;
+	}
+	public void setDisplayAll (boolean flag){
+		isDisplayAll = flag;
+	}
+	
+	public boolean isDisplayAll(){
+		return isDisplayAll;
 	}
 	
 	public void setName(String nameExternal){

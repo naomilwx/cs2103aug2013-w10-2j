@@ -42,13 +42,13 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+ " ";
 			}
 			if (answer == ""){
-				resultExecution.setDescription(null);
+				resultExecution.setDescriptionNull(true);
 			} else{
 				resultExecution.setDescription(answer.substring(0, answer.length()-1));
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("tag")){
 			if (listOfCommands.length<=2){
-				resultExecution.setTag(null);
+				resultExecution.setTagNull(true);
 			}else{
 				resultExecution.setTag(listOfCommands[2]);
 			}
@@ -58,7 +58,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+" ";
 			}
 			if (answer == ""){
-				resultExecution.setStartTime(null);
+				resultExecution.setStartTimeNull(true);
 			}else{
 				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
@@ -68,7 +68,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+" ";
 			}
 			if (answer == ""){
-				resultExecution.setEndTime(null);
+				resultExecution.setEndTimeNull(true);
 			}else{
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
@@ -78,8 +78,8 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+" ";
 			}
 			if (answer == ""){
-				resultExecution.setEndTime(null);
-				resultExecution.setStartTime(null);
+				resultExecution.setEndTimeNull(true);
+				resultExecution.setStartTimeNull(true);
 			}else{
 				resultExecution.setStartTime(Parser.retrieveDateTimeFirst(answer));
 				resultExecution.setEndTime(Parser.retrieveDateTimeSecond(answer));
@@ -97,7 +97,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+" ";
 			}
 			if (answer == ""){
-				resultExecution.setReminderTime(null);
+				resultExecution.setReminderTimeNull(true);
 			}else{
 				resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
