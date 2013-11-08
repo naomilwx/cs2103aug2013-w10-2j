@@ -21,7 +21,7 @@ public class Result {
 	private Vector<Task> reminderList = new Vector<Task>();
 	private Vector<Vector<String>> historyList = new Vector<Vector<String>>();
 	private Task task = null;
-	
+	private int displayedTaskDisplayID = Task.TASKID_NULL;
 	//initialise "empty" Result object
 	public Result(){
 		isExit = false;
@@ -91,6 +91,9 @@ public class Result {
 	public void setReminderList(Vector<Task> reminders){
 		reminderList = reminders;
 	}
+	public void setDisplayedTaskDisplayID(int ID){
+		displayedTaskDisplayID = ID;
+	}
 	//getters
 	public boolean getExitStatus(){
 		return isExit;
@@ -124,5 +127,8 @@ public class Result {
 	}
 	public Task getTaskToDisplay(){
 		return task;
+	}
+	public int getDisplayedTaskDisplayID(){
+		return displayedTaskDisplayID;
 	}
 }
