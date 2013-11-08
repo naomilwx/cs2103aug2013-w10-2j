@@ -1,22 +1,14 @@
 package nailit.gui;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.Vector;
 
-import javax.swing.Timer;
-
 import nailit.logic.CommandType;
 
 @SuppressWarnings("serial")
-public class HelpWindow extends ExtendedWindow{
+public class HelpWindow extends ExtendedFadableWindow{
 	protected static final String HTML_FORMATTED_STRING = "<html>" + HelpWindowConstants.TEXT_DISPLAY_STYLE + "%1s</html>";
 	protected static final String COMMAND_SYNTAX_HTML_FORMAT = "<tr><td>%1s  </td><td>%2s</td></tr>";
 	protected static final String KEYBOARD_SHORTCUT_HTML_FORMAT = "<tr><td>%1s : </td><td>%2s</td></tr>";
@@ -30,45 +22,21 @@ public class HelpWindow extends ExtendedWindow{
 	
 	private static final int FULL_WINDOW_HEIGHT = 300;
 	
-	private static final float HELP_WINDOW_OPACITY = 0.9f;
+	
 	private static final Color HELP_WINDOW_DEFAULT_COLOR = Color.white;
 	
-	private static final int TIMER_INTERVAL = 100;
-	private static final int TIMER_DELAY = 8000; //amount of time before item starts fading out
-	private static final float OPACITY_INTERVAL_STEP = 0.1f;
+	protected static final int TIMER_INTERVAL = 250;
+	protected static final int TIMER_DELAY = 10000; //amount of time before item starts fading out
+	protected static final float OPACITY_INTERVAL_STEP = 0.05f;
 	protected static final float NO_OPACITY = 0.5f;
-	
-	private final Timer fadeOutTimer = new Timer(0, null);
+	protected static final float FULL_OPACITY = 0.9f;
+
 	private int offSet;
-	
-	private final KeyAdapter keyListener = new KeyAdapter(){
-		@Override
-		public void keyPressed(KeyEvent keyStroke){
-			int keyCode = keyStroke.getKeyCode();
-			if(keyCode == KeyEvent.VK_ESCAPE){
-				setVisible(false);
-				GUIBoss.setFocusOnCommandBar();
-			}
-		}
-	};
-	
-	protected final FocusListener additionalFocusListener = new FocusListener(){
-		public void focusGained(FocusEvent event) {
-			fadeOutTimer.stop();
-		 }
-		public void focusLost(FocusEvent event){
-			fadeOutWindow(TIMER_DELAY, TIMER_INTERVAL, OPACITY_INTERVAL_STEP);
-		}
-	};
-	
+
 	public HelpWindow(GUIManager GUIMain, int width){
 		super(GUIMain, width);
-		addKeyListenerToDisplayPane(keyListener);
-		addAdditionalFocusListenerToDisplayPane();
 	}
-	protected void addAdditionalFocusListenerToDisplayPane(){
-		displayPane.addFocusListener(additionalFocusListener);
-	}
+
 	@Override
 	protected void positionFrameBasedOnMainWindowPos(){
 		windowHeight = DEFAULT_WINDOW_HEIGHT;
@@ -86,24 +54,6 @@ public class HelpWindow extends ExtendedWindow{
 		super.configureHomeWindowFrame();
 		setBackground(HELP_WINDOW_DEFAULT_COLOR);
 		setAlwaysOnTop(true);
-	}
-	private void fadeOutWindow(int displayTime, int timeInterval, final float opacityStep){
-		fadeOutTimer.setInitialDelay(displayTime);
-		fadeOutTimer.setDelay(timeInterval);
-		fadeOutTimer.addActionListener(new ActionListener(){
-			float nextOpacity = HELP_WINDOW_OPACITY;
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				nextOpacity -= opacityStep;
-				if(nextOpacity <= NO_OPACITY){
-					fadeOutTimer.stop();
-					setVisible(false);
-				}else{
-					setOpacity(nextOpacity);
-				}
-			}
-		});
-		fadeOutTimer.restart();
 	}
 	
 	//Methods to format and display help window contents
@@ -219,7 +169,7 @@ public class HelpWindow extends ExtendedWindow{
 	}
 	private void adjustAndshowHelpWindow(int yPosOffset, int height){
 		adjustHelpWindowHeight(height);
-		setOpacity(HELP_WINDOW_OPACITY); //temporarily commented out. only works on java 7
+		setOpacity(FULL_OPACITY); //temporarily commented out. only works on java 7
 		setVisible(true);
 		adjustHelpWindowLocation(yPosOffset);
 	}
