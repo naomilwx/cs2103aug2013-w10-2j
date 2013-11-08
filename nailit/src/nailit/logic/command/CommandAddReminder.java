@@ -20,13 +20,10 @@ public class CommandAddReminder extends Command{
 	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK_INVALID_REMINDER_DATE = "Sorry, the reminder is not added " +
 																								"successfully. The reason is: the reminder " +
 																								"date is invalid";
-
+	
 	private int displayID;
-	
 	private Vector<Task> taskList;
-	
 	private DateTime reminderDateToAdd;
-	
 	private Task taskRelated;
 	
 	private boolean isSuccess;
