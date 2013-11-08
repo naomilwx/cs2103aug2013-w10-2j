@@ -126,7 +126,7 @@ public class CommandDisplay extends Command{
 				retrieveTheTask(); 
 				createResultObject(false, true, Result.TASK_DISPLAY, Result.EMPTY_DISPLAY, 
 						taskRetrieved, cm.getCurrentTaskList(), null);
-//				executedResult.setd
+				executedResult.setDisplayedTaskDisplayID(displayId);
 				createCommandSummary();
 			} catch(Exception e) {
 				createUnsuccessfulResultObject();
