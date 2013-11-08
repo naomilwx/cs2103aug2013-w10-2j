@@ -48,6 +48,7 @@ public class CommandBar extends JPanel {
 	private int commandBarHeight = DEFAULT_COMMANDBAR_HEIGHT;
 	private int commandBarWidth;
 	private int mainContainerWidth;
+	@SuppressWarnings("unused")
 	private int mainContainerHeight;
 	
 	/**
@@ -165,6 +166,13 @@ public class CommandBar extends JPanel {
 				GUIBoss.executeUserInputCommand(getUserInput());
 			}
 		});
+		textFieldInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "key tab");
+		textFieldActionMap.put("key tab", new AbstractAction(){
+			@Override
+			public void actionPerformed(ActionEvent event){
+				GUIBoss.setFocusOnDisplay();
+			}
+		});
 	}
 	private void addListenersToTextInputField(){
 		textBar.addKeyListener(new KeyAdapter(){
@@ -180,9 +188,6 @@ public class CommandBar extends JPanel {
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineOfTextFromPos();
 					GUIBoss.resizeMainDisplayArea();
-				}else if(keyCode == KeyEvent.VK_TAB){
-					resetKeys();
-					GUIBoss.setFocusOnDisplay();
 				}else if(keyCode == KeyEvent.VK_F1){
 					GUIBoss.displayFullHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();

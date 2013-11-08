@@ -102,7 +102,7 @@ public class HelpWindowConstants {
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
-		DISPLAYAREA_KEYBOARD_COMMANDS.put("Shift", "Toggle focus between elements in display area");
+		DISPLAYAREA_KEYBOARD_COMMANDS.put("Ctrl + TAB", "Toggle focus between elements in display area");
 		DISPLAYAREA_KEYBOARD_COMMANDS.put("ESC", "Set focus on command bar");
 		DISPLAYAREA_KEYBOARD_COMMANDS.put("TAB", "Set focus on task table (when focus is on pane with task table");
 	}
