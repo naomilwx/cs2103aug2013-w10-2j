@@ -155,83 +155,83 @@ public class CommandUpdate extends Command{
 			updatedTask.setName(taskRetrieved.getName());
 		}
 		
-		if(!parserResultInstance.isNullStartTime()) {
-			if(parserResultInstance.isStartTimeNull()) { // means user wants to set start time as empty
-				updatedTask.setStartTime(null);
-				updatedContent = updatedContent + "[Start] " + "empty" + " \n";
-			} else {
+		if(parserResultInstance.isStartTimeNull()) { // means user wants to set start time as empty
+			updatedTask.setStartTime(null);
+			updatedContent = updatedContent + "[Start] " + "empty" + " \n";
+		} else {
+			if(!parserResultInstance.isNullStartTime()) {
 				DateTime newStartTime = parserResultInstance.getStartTime();
 				updatedTask.setStartTime(newStartTime);
 				updatedContent = updatedContent + "[Start] "+newStartTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			} else { // means name use the original one, since no update
+				updatedTask.setStartTime(taskRetrieved.getStartTime());
 			}
-		} else { // means name use the original one, since no update
-			updatedTask.setStartTime(taskRetrieved.getStartTime());
 		}
 		
-		if(!parserResultInstance.isNullEndTime()) {
-			if(parserResultInstance.isEndTimeNull()) {
-				updatedTask.setEndTime(null);
-				updatedContent = updatedContent + "[End] " + "empty" + " \n";
-			} else {
+		if(parserResultInstance.isEndTimeNull()) {
+			updatedTask.setEndTime(null);
+			updatedContent = updatedContent + "[End] " + "empty" + " \n";
+		} else {
+			if(!parserResultInstance.isNullEndTime()) {
 				DateTime newEndTime = parserResultInstance.getEndTime();
 				updatedTask.setEndTime(newEndTime);
 				updatedContent = updatedContent + "[End] " +newEndTime.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			} else { // means name use the original one, since no update
+				updatedTask.setEndTime(taskRetrieved.getEndTime());
 			}
-		} else { // means name use the original one, since no update
-			updatedTask.setEndTime(taskRetrieved.getEndTime());
 		}
 		
-		if(!parserResultInstance.isNullTag()) {
-			if(parserResultInstance.isTagNull()) {
-				updatedTask.setTag(null);
-				updatedContent = updatedContent + "[Tag] " + "empty" + " \n";
-			} else {
-				String newTag = parserResultInstance.getTag();
+		if(parserResultInstance.isTagNull()) {
+			updatedTask.setTag(null);
+			updatedContent = updatedContent + "[Tag] " + "empty" + " \n";
+		} else {
+			if(!parserResultInstance.isNullTag()) {
+				 String newTag = parserResultInstance.getTag();
 				updatedTask.setTag(newTag);
 				updatedContent = updatedContent + "[Tag] " + newTag + " \n";
+			} else { // means name use the original one, since no update
+				updatedTask.setTag(taskRetrieved.getTag());
 			}
-		} else { // means name use the original one, since no update
-			updatedTask.setTag(taskRetrieved.getTag());
 		}
 		
-		if(!parserResultInstance.isNullPriority()) { // currently use this method, although the name is not suitable
-			if(parserResultInstance.isPriorityNulll()) {
-				updatedTask.setPriority(TaskPriority.DEFAULT_TASK_PRIORITY);
-				updatedContent = updatedContent + "[Priority] " + "Medium" + " \n";
-			} else {
-				TaskPriority newPriority = parserResultInstance.getPriority();
-				updatedTask.setPriority(newPriority);
-				updatedContent = updatedContent + "[Priority] " + newPriority + " ";
+		if(parserResultInstance.isPriorityNulll()) {
+			updatedTask.setPriority(TaskPriority.DEFAULT_TASK_PRIORITY);
+			updatedContent = updatedContent + "[Priority] " + "Medium" + " \n";
+		} else {
+			if(!parserResultInstance.isNullPriority()) { // currently use this method, although the name is not suitable
+				 TaskPriority newPriority = parserResultInstance.getPriority();
+				 updatedTask.setPriority(newPriority);
+				 updatedContent = updatedContent + "[Priority] " + newPriority + " ";
+			} else { // means name use the original one, since no update
+				updatedTask.setPriority(taskRetrieved.getPriority());
 			}
-		} else { // means name use the original one, since no update
-			updatedTask.setPriority(taskRetrieved.getPriority());
 		}
 		
-		if(!parserResultInstance.isNullDescription()) {
-			if(parserResultInstance.isDescriptionNull()) {
-				updatedTask.setDescription(null);
-				updatedContent = updatedContent + "[Description] " + "Empty" + " \n";
-			} else {
+		if(parserResultInstance.isDescriptionNull()) {
+			updatedTask.setDescription(null);
+			updatedContent = updatedContent + "[Description] " + "Empty" + " \n";
+		} else {
+			if(!parserResultInstance.isNullDescription()) {
 				String newDesc = parserResultInstance.getDescription();
 				updatedTask.setDescription(newDesc);
 				updatedContent = updatedContent + "[Description] " + newDesc + " \n";
+			} else { // means name use the original one, since no update
+				updatedTask.setDescription(taskRetrieved.getDescription());
 			}
-		} else { // means name use the original one, since no update
-			updatedTask.setDescription(taskRetrieved.getDescription());
 		}
 		
-		if(!parserResultInstance.isNullReminderTime()) {
-			if(parserResultInstance.isReminderTimeNull()) {
-				updatedTask.setReminder(null);
-				updatedContent = updatedContent + "[Reminder] " + "Deleted" + " \n";
-			} else {
+		if(parserResultInstance.isReminderTimeNull()) {
+			updatedTask.setReminder(null);
+			updatedContent = updatedContent + "[Reminder] " + "Deleted" + " \n";
+		} else {
+			if(!parserResultInstance.isNullReminderTime()) {
 				DateTime newReminder = parserResultInstance.getReminderTime();
 				updatedTask.setReminder(newReminder);
 				updatedContent = updatedContent + "[Reminder Date] " + newReminder.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + " \n";
+			} else { // means name use the original one, since no update
+				// no update for the reminder
+				updatedTask.setReminder(taskRetrieved.getReminder());
 			}
-		} else { // means name use the original one, since no update
-			// no update for the reminder
-			updatedTask.setReminder(taskRetrieved.getReminder());
 		}
 		
 		updatedTask.setID(taskRetrieved.getID());
