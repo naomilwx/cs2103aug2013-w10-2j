@@ -3,6 +3,7 @@ package nailit.logic;
 import java.util.Vector;
 
 import nailit.common.Result;
+import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.Utilities;
 import nailit.logic.command.CommandManager;
