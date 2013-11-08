@@ -12,13 +12,10 @@ import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandAdd extends Command{
-	// fields that represent the command, created Result object passed to 
-	
-	
+	// the new created task to add to the storage
 	private Task taskPassedToStorer;
 	
-	
-	// potential fields to add 
+	// potential fields to add to the new field
 	private String taskName;
 	private DateTime startTime;
 	private DateTime endTime;
@@ -43,10 +40,9 @@ public class CommandAdd extends Command{
 		getContentFromParserResult();
 		createTaskObject();
 		taskId = storer.add(taskPassedToStorer);
-		taskPassedToStorer.setID(taskId); //temp fix here. will it be better if storage returns task object instead of id?
+		taskPassedToStorer.setID(taskId);
 		createResultObject();
 		createCommandSummary();
-		
 		System.out.println(taskId);
 		
 		return executedResult;
