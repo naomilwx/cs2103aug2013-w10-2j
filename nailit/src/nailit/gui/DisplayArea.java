@@ -371,6 +371,11 @@ public class DisplayArea extends JLayeredPane {
 			}
 		}
 	}
+	protected void scrollToTaskDisplayID(int ID){
+		if(taskTable != null){
+			taskTable.selectAndScrollToRow(0, ID - 1);
+		}
+	}
 	private void addAdditionalKeyListenerToTaskTable(){
 		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
 			private boolean ctrlPressed = false;
