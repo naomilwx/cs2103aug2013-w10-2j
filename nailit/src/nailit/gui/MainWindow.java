@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
-	protected static final int WINDOW_HEIGHT = 425;
+	protected static final int WINDOW_HEIGHT = 415;
 	protected static final int DEFAULT_BORDER_WIDTH = 1;
 	protected static final int WINDOW_WIDTH = 
 			GUIManager.TOTAL_TABLE_WIDTH + GUIManager.X_BUFFER_WIDTH + 
