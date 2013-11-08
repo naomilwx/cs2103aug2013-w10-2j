@@ -16,10 +16,11 @@ private String userCommand;
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
 		resultExecution.setCommand(CommandType.UNCOMPLETE);
-		if (Parser.isNumber(userCommand))
+		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
-		else 
+		}else{ 
 			throw new Error("Wrong Format");
+		}
 		return resultExecution;
 	}
 
