@@ -3,8 +3,6 @@ package nailit.gui;
 
 import java.util.Vector;
 
-import javax.swing.Timer;
-
 import nailit.common.NIConstants;
 
 @SuppressWarnings("serial")

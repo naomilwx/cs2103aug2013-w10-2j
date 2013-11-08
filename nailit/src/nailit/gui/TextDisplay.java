@@ -2,8 +2,6 @@
 package nailit.gui;
 
 import java.awt.Dimension;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;

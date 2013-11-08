@@ -24,8 +24,6 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 
-import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +35,6 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.FontUIResource;
 
-import test.logic.LogicManagerStub;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -113,8 +110,6 @@ public class GUIManager {
 	private NailItGlobalKeyListener globalKeyListener;
 	private Logger logger;
 	
-	private int lastDisplayedTaskID;
-	
 	public GUIManager(final AppLauncher launcher){
 		try{
 			this.launcher = launcher;
@@ -172,7 +167,7 @@ public class GUIManager {
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight(), commandBar.getHeight());
 		notificationArea = new NotificationArea(displayArea.getWidth());
 		displayArea.addPopup(notificationArea);
-		displayArea.hideNotifications();
+		displayArea.hideNotificationsPane();
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.addItem(commandBar);
@@ -327,7 +322,7 @@ public class GUIManager {
 	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
-		displayArea.hideNotifications();
+		displayArea.hideNotificationsPane();
 		displayArea.removeDeletedTasksFromTaskListTable();
 		displayArea.removeTaskDisplay(); //TODO:
 	}
@@ -405,29 +400,16 @@ public class GUIManager {
 	}
 	private void handleTaskDisplay(Result result){
 		restoreMainWindowSize();
-		lastDisplayedTaskID = displayArea.displayTaskDetails(result.getTaskToDisplay());
+		displayArea.displayTaskDetails(result.getTaskToDisplay());
 	}
 	private void handleTaskListDisplay(Result result){
 		displayArea.displayTaskList(result);
-		lastDisplayedTaskID = Task.TASKID_NULL;
 	}
 	private void handleHistoryDisplay(Result result){
 		historyWindow.displayHistoryList(result.getHistoryList(), true);
-		lastDisplayedTaskID = Task.TASKID_NULL;
 	}
 	private void handleExecutionResultDisplay(Result result){
-		displayArea.displayTaskList(result);
-		Task taskDisp = result.getTaskToDisplay();
-		if(result.getDeleteStatus() == true){
-			displayArea.showDeletedTaskInTaskListTable(taskDisp);
-			lastDisplayedTaskID = Task.TASKID_NULL;
-		}else{
-			if(taskDisp != null && taskDisp.getID() == lastDisplayedTaskID){
-				displayArea.displayTaskDetails(taskDisp);
-			}else{
-				lastDisplayedTaskID = Task.TASKID_NULL;
-			}
-		}
+		displayArea.displayExecutionResultDisplay(result);
 	}
 	protected void displayExecutionResult(Result result){
 		displayExecutionNotification(result);
@@ -455,17 +437,17 @@ public class GUIManager {
 		if(!notificationStr.isEmpty()){
 			displayNotification(notificationStr, isSuccess);
 		}else{
-			displayArea.hideNotifications();
+			displayArea.hideNotificationsPane();
 		}
 	}
 	private void displayNotification(String notificationStr, boolean isSuccess){
 		notificationArea.displayNotification(notificationStr, isSuccess);
-		displayArea.showNotifications();
+		displayArea.showNotificationsPane();
 	}
 	
 	private void displayNotificationAndForceExit(String notificationStr){
 		notificationArea.displayNotification(notificationStr, false);
-		displayArea.showNotificationsAndForceExit();
+		displayArea.showNotificationsPaneAndForceExit();
 	}
 	
 	private void exit(){

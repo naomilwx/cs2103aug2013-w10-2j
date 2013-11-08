@@ -18,8 +18,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 import nailit.common.Result;
 import nailit.common.Task;
@@ -50,6 +48,7 @@ public class DisplayArea extends JLayeredPane {
 	private JPanel popupPane;
 	private TaskTable taskTable;
 	private TextDisplay textDisplay;
+	private int lastDisplayedTaskID;
 	
 	private int displayWidth;
 	private int displayHeight;
@@ -230,10 +229,10 @@ public class DisplayArea extends JLayeredPane {
 		}
 	}
 	
-	protected void hideNotifications(){
+	protected void hideNotificationsPane(){
 		popupPane.setVisible(false);
 	}
-	protected void showNotifications(){
+	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
 				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
@@ -244,7 +243,7 @@ public class DisplayArea extends JLayeredPane {
 					}
 		});
 	}
-	protected void showNotificationsAndForceExit(){
+	protected void showNotificationsPaneAndForceExit(){
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
 				TIMER_INTERVAL, OPACITY_INTERVAL_STEP,
@@ -271,6 +270,7 @@ public class DisplayArea extends JLayeredPane {
 		defaultPane.removeAll();
 		textDisplay = null;
 		taskTable = null;
+		lastDisplayedTaskID = Task.TASKID_NULL;
 	}
 	protected void displayTaskList(Result result){
 		Vector<Task>  tasks = result.getTaskList();
@@ -294,14 +294,28 @@ public class DisplayArea extends JLayeredPane {
 		addAdditionalKeyListenerToTaskTable();
 		addContent(taskTable);
 	}
-	protected int displayTaskDetails(Task task){
+	protected void displayExecutionResultDisplay(Result result){
+		int currDisplayTask = lastDisplayedTaskID;
+		displayTaskList(result);
+		Task taskDisp = result.getTaskToDisplay();
+		if(result.getDeleteStatus() == true){
+			showDeletedTaskInTaskListTable(taskDisp);
+		}else{
+			if(taskDisp != null && taskDisp.getID() ==  currDisplayTask){
+				displayTaskDetails(taskDisp);
+				lastDisplayedTaskID =  currDisplayTask;
+			}
+		}
+	}
+	protected void displayTaskDetails(Task task){
 		if(task!=null){
 			addNewTextDisplay();
 			displayTaskInTextDisplay(task);
 			revalidate();
-			return task.getID();
+			lastDisplayedTaskID = task.getID();
+		}else{
+			lastDisplayedTaskID = Task.TASKID_NULL;
 		}
-		return Task.TASKID_NULL;
 	}
 	private void addNewTextDisplay(){
 		removeExistingTextDisplay();
