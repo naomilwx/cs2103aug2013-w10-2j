@@ -56,7 +56,7 @@ public class TaskDetailsFormatter {
 		String otherDetails = formatTaskDateTimeForDisplay(task);
 		
 		if(!task.isEvent()){
-			if(task.checkCompleted()){
+			if(task.checkCompletedOrOver()){
 				otherDetails += String.format(TASK_STATUS_FORMAT, "Done");
 			}else{
 				otherDetails += String.format(TASK_STATUS_FORMAT, "Not Done");

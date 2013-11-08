@@ -101,12 +101,16 @@ public class Task {
 	public String getTag(){
 		return tag;
 	}
-	public boolean checkCompleted(){
+	public boolean checkCompletedOrOver(){
 		if(isEvent()){
 			return isPastEvent();
 		}else{
 			return isCompleted;
 		}
+	}
+	
+	public boolean isCompleted(){
+		return isCompleted;
 	}
 	public DateTime getStartTime(){
 		return startTime;

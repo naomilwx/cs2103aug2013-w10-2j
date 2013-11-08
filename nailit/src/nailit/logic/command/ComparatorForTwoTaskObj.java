@@ -9,8 +9,8 @@ import nailit.common.Task;
 public class ComparatorForTwoTaskObj implements Comparator<Task>{
 	@Override
 	public int compare(Task hostTask, Task taskToCompare) {
-		boolean hostTaskIsCompleted = hostTask.checkCompleted();
-		boolean taskToCompareIsCompleted = taskToCompare.checkCompleted();
+		boolean hostTaskIsCompleted = hostTask.checkCompletedOrOver();
+		boolean taskToCompareIsCompleted = taskToCompare.checkCompletedOrOver();
 		
 		int hostTaskPriorityCode = hostTask.getPriority().getPriorityCode();
 		int taskToComparePriorityCode = taskToCompare.getPriority().getPriorityCode();
