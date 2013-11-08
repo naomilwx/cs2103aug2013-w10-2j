@@ -86,7 +86,7 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Priority")){
 			if (listOfCommands.length<=2){
-				resultExecution.resetPriority();
+				resultExecution.setPriorityNull(true);
 			}else{
 				resultExecution.isNullPriority();
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[2].toUpperCase()));

@@ -92,7 +92,7 @@ public class ParserResult{
 		isPriorityNull = flag;
 	}
 	
-	public boolean isPriorityNulll(){
+	public boolean isPriorityNull(){
 		return isPriorityNull;
 	}
 	

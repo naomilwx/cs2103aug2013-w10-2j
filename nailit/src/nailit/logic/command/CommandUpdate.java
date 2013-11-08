@@ -194,7 +194,7 @@ public class CommandUpdate extends Command{
 			}
 		}
 		
-		if(parserResultInstance.isPriorityNulll()) {
+		if(parserResultInstance.isPriorityNull()) {
 			updatedTask.setPriority(TaskPriority.DEFAULT_TASK_PRIORITY);
 			updatedContent = updatedContent + "[Priority] " + "Medium" + " \n";
 		} else {
