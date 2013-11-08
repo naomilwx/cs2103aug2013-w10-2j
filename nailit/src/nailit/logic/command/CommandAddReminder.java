@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
+import nailit.common.Utilities;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
@@ -127,7 +128,11 @@ public class CommandAddReminder extends Command{
 
 	private void setReminderDateToAdd() {
 		// the dateTime to add is stored in the endTime
-		this.reminderDateToAdd = parserResultInstance.getReminderTime();
+		if(parserResultInstance.getReminderTime() != null) {
+			this.reminderDateToAdd = Utilities.getStartOfDay(parserResultInstance.getReminderTime());
+		} else {
+			this.reminderDateToAdd = null;
+		}
 	}
 
 	private boolean isValidDisplayID() {
