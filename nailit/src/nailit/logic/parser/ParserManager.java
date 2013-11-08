@@ -14,7 +14,7 @@ public class ParserManager {
 	}
 
 	public void passCommand(String command){
-		commandToExecute = command;
+		commandToExecute = command.trim();
 	}
 
 	public ParserResult execute() throws InvalidCommandFormatException{
@@ -49,8 +49,9 @@ public class ParserManager {
 			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
 			return displayParserManager.execute();
 		case REDO:
-			if (commandToExecute.equalsIgnoreCase("REDO"))
+			if (commandToExecute.equalsIgnoreCase("REDO")){
 				commandToExecute = "";
+			}
 			RedoParser redoParserManager = new RedoParser(commandToExecute);
 			return redoParserManager.execute();
 		case SEARCH:
@@ -60,8 +61,9 @@ public class ParserManager {
 			UncompleteParser uncompleteParserManager = new UncompleteParser(commandToExecute);
 			return uncompleteParserManager.execute();
 		case UNDO:
-			if (commandToExecute.equalsIgnoreCase("UNDO"))
+			if (commandToExecute.equalsIgnoreCase("UNDO")){
 				commandToExecute = "";
+			}
 			UndoParser undoParserManager = new UndoParser(commandToExecute);
 			return undoParserManager.execute();
 		case UPDATE:
@@ -89,8 +91,7 @@ public class ParserManager {
 		}
 		if (CommandType.isCommandType(commandTypeString)){
 			return CommandType.valueOf(commandTypeString.toUpperCase());
-		}
-		else{
+		}else{
 			return CommandType.isApproximateCommandType(commandTypeString);
 		}
 	}
