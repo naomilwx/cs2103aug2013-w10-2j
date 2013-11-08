@@ -10,7 +10,7 @@ public enum CommandType {
 	public static final int INSERT_COST = 1;
 	public static final int REPLACE_COST = 2;
 	public static final int TWIDDLE_COST = 2;
-	
+	public static final int MAX_ERROR_TOLERANCE = 2;
 	
 	public static boolean isCommandType(String p){
 		for(CommandType type: CommandType.values()){
@@ -28,7 +28,7 @@ public enum CommandType {
 		p = p.toUpperCase(); //because CommandType.toString() always gives upper case
 		for(CommandType type: CommandType.values()){
 			int distance = StringUtils.getLevenshteinDistance(type.toString(), p);
-			if (distance<min && distance<type.toString().length()){
+			if (distance<min && distance<=MAX_ERROR_TOLERANCE){
 				min = distance;
 				answer = type;
 			}
