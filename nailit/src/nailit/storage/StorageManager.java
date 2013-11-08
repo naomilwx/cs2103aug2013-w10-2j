@@ -342,7 +342,7 @@ public class StorageManager {
 	}
 	
 	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
-		return !isCompleteStatusEmpty(ftobj)&&task.checkCompleted() != ftobj.isCompleted();
+		return !isCompleteStatusEmpty(ftobj)&&task.checkCompletedOrOver() != ftobj.isCompleted();
 	}
 	
 	
