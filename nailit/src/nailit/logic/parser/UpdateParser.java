@@ -22,13 +22,15 @@ public class UpdateParser extends Parser {
 		resultExecution.setCommand(CommandType.UPDATE);
 		listOfCommands = userCommand.split(NIConstants.UPDATE_FIELD_SPLITTER);
 		
-		for (int i=0; i<listOfCommands.length; i++)
+		for (int i=0; i<listOfCommands.length; i++){
 			listOfCommands[i] = listOfCommands[i].trim();
+		}
 		resultExecution.setTaskId(Integer.parseInt(listOfCommands[0]));
 		if (listOfCommands[1].equalsIgnoreCase("name")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+ " ";
+			}
 			if (answer == ""){
 				resultExecution.setName(null);
 			} else{
@@ -36,8 +38,9 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("description")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+ " ";
+			}
 			if (answer == ""){
 				resultExecution.setDescription(null);
 			} else{
@@ -51,8 +54,9 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Start")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+" ";
+			}
 			if (answer == ""){
 				resultExecution.setStartTime(null);
 			}else{
@@ -60,8 +64,9 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("End")|| listOfCommands[1].equalsIgnoreCase("Due")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+" ";
+			}
 			if (answer == ""){
 				resultExecution.setEndTime(null);
 			}else{
@@ -69,8 +74,9 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Time")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+" ";
+			}
 			if (answer == ""){
 				resultExecution.setEndTime(null);
 				resultExecution.setStartTime(null);
@@ -87,8 +93,9 @@ public class UpdateParser extends Parser {
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Reminder")){
 			String answer = "";
-			for (int i=2; i<listOfCommands.length; i++)
+			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+" ";
+			}
 			if (answer == ""){
 				resultExecution.setReminderTime(null);
 			}else{
