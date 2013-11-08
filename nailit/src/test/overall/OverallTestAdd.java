@@ -9,17 +9,18 @@ import nailit.logic.LogicManager;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import test.common.TaskStub;
-
+//Must be run after overall test add
 public class OverallTestAdd {
-	LogicManager logic;
-	int count;
-	@Before
-	public void clearStorageAndInitialise(){
+	public static LogicManager logic;
+	static int count;
+	@BeforeClass
+	public static void clearStorageAndInitialise(){
 		StorageManager storage;
 		try {
 			storage = new StorageManager();
@@ -31,13 +32,16 @@ public class OverallTestAdd {
 			e.printStackTrace();
 		}
 	}
-	@Test
-	public void run(){
-		test();
-		test2();
+//	@Test
+	public void run() throws Exception{
+		testEvent1();
+		testEvent2();
+		testFloatingAdd();
+		testTaskAdd();
 	}
-	public void test() {
-		Task expectedTask = new TaskStub();
+	@Test
+	public void testEvent1() throws Exception {
+		Task expectedTask = new TaskStub(TaskStub.GENERATE_EVENT);
 		String commandString = "add "+ expectedTask.getName() +"," 
 				+expectedTask.getPriority() + "," 
 				+expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
@@ -45,14 +49,14 @@ public class OverallTestAdd {
 				+expectedTask.getTag();
 		executeAddAndCheckResult(expectedTask, commandString);
 	}
-
-	public void test2() {
+	@Test
+	public void testEvent2() {
 		try {
-			Task expectedTask = new TaskStub();
+			Task expectedTask = new TaskStub(TaskStub.GENERATE_EVENT);
 			String commandString = "add "
 					+expectedTask.getPriority() + "," 
 					+expectedTask.getTag() + ","
-					+expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
+					+"from " + expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+" to "
 					+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
 					+expectedTask.getName();
 		
@@ -61,6 +65,55 @@ public class OverallTestAdd {
 			e.printStackTrace();
 		}
 	}
+	@Test
+	public void testFloatingAdd(){
+		Task expectedTask;
+		try {
+			expectedTask = new TaskStub(TaskStub.GENERATE_FLOATING);
+			String commandString = "add "
+					+expectedTask.getPriority() + "," 
+					+expectedTask.getTag() + ","
+					+expectedTask.getName();
+			executeAddAndCheckResult(expectedTask, commandString);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	@Test
+	public void testTaskAdd(){
+		Task expectedTask;
+		try {
+			expectedTask = new TaskStub(TaskStub.GENERATE_TASK);
+			String commandString = "add "
+					+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+ ","
+					+expectedTask.getPriority() + "," 
+					+expectedTask.getTag() + ","
+					+expectedTask.getName();
+			executeAddAndCheckResult(expectedTask, commandString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testTaskWithDescAdd(){
+		Task expectedTask;
+		try {
+			expectedTask = new TaskStub(TaskStub.GENERATE_TASK);
+			expectedTask.setDescription(TaskStub.getRandomDescription());
+			String commandString = "add "
+					+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+ ","
+					+expectedTask.getPriority() + "," 
+					+"(" + expectedTask.getDescription() + ")" + ","
+					+expectedTask.getTag() + ","
+					+expectedTask.getName();
+			executeAddAndCheckResult(expectedTask, commandString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
 	public void executeAddAndCheckResult(Task expectedTask, String commandString){
 		try {
 			count += 1;
@@ -68,15 +121,12 @@ public class OverallTestAdd {
 			Result addResult;
 			addResult = logic.executeCommand(commandString);
 			Task addedTask = addResult.getTaskToDisplay();
-			assertEquals(expectedTask.getName(), addedTask.getName());
-			assertEquals(expectedTask.getStartTime(), addedTask.getStartTime());
-			assertEquals(expectedTask.getEndTime(), addedTask.getEndTime());
-			assertEquals(expectedTask.getPriority(), addedTask.getPriority());
-			assertEquals(expectedTask.getTag(), addedTask.getTag());
+			OverAllTest.compareTasksAttributes(expectedTask, addedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
 }
