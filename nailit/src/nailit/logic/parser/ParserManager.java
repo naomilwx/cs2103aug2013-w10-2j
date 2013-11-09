@@ -4,6 +4,7 @@ package nailit.logic.parser;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.exception.InvalidCommandFormatException;
+import nailit.logic.exception.InvalidCommandTypeException;
 
 public class ParserManager {
 
@@ -17,31 +18,21 @@ public class ParserManager {
 		commandToExecute = command.trim();
 	}
 
-	public ParserResult execute() throws InvalidCommandFormatException{
+	public ParserResult execute() throws InvalidCommandFormatException, InvalidCommandTypeException{
 		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
 		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
 		commandToExecute = commandToExecute.trim();
 		switch (commandType) {
 		case ADD:
-			try {
-				AddParser addParserManager = new AddParser(commandToExecute);
-				return addParserManager.execute();
-			}
-			catch (Exception e) {
-				System.out.print(e);
-			}
+			AddParser addParserManager = new AddParser(commandToExecute);
+			return addParserManager.execute();
 		case COMPLETE:
 			CompleteParser completeParserManager = new CompleteParser(commandToExecute);
 			return completeParserManager.execute();
 		case DELETE:
-			try {
-				DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
-				return deleteParserManager.execute();
-			}
-			catch (Exception e) {
-				System.out.println(e);
-			}
+			DeleteParser deleteParserManager = new DeleteParser(commandToExecute);
+			return deleteParserManager.execute();
 		case DELETEREMINDER:
 			DeleteReminderParser DeleteReminderParserManager = new DeleteReminderParser(commandToExecute);
 			return DeleteReminderParserManager.execute();
@@ -76,7 +67,7 @@ public class ParserManager {
 			ExitParser exitParserManager = new ExitParser();
 			return exitParserManager.execute();
 		default:
-			throw new Error("Unrecognized command type");
+			throw new InvalidCommandTypeException("This is an invalid command");
 		}
 	}
 	
@@ -85,9 +76,9 @@ public class ParserManager {
 		return commandTypeString;
 	}
 	
-	private static CommandType determineCommandType(String commandTypeString) {
+	private static CommandType determineCommandType(String commandTypeString) throws InvalidCommandTypeException {
 		if (commandTypeString == null){
-			throw new Error("command type string cannot be null!");
+			throw new InvalidCommandTypeException("Command type string cannot be null!");
 		}
 		if (CommandType.isCommandType(commandTypeString)){
 			return CommandType.valueOf(commandTypeString.toUpperCase());
