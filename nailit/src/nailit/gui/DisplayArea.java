@@ -11,6 +11,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
@@ -458,6 +460,13 @@ public class DisplayArea extends JLayeredPane {
 			int displayTime, int timeInterval, final float opacityStep, final Callable<?> func){
 		timer.setInitialDelay(displayTime);
 		timer.setDelay(timeInterval);
+		//stop fadeout if user mouseover component
+		component.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseEntered(MouseEvent event){
+				timer.stop();
+			}
+		});
 		timer.addActionListener(new ActionListener(){
 			int originalOpacity = GUIUtilities.getComponentOpacity(component);
 			float nextOpacityRatio = ((float) originalOpacity)/MAX_OPACITY_VALUE;
