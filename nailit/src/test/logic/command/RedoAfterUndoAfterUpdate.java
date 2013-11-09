@@ -112,7 +112,6 @@ public class RedoAfterUndoAfterUpdate {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
 

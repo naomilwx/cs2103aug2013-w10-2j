@@ -16,7 +16,6 @@ import nailit.logic.command.CommandManager;
 import nailit.storage.FileCorruptionException;
 
 
-
 public class CommandAddTest {
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
 			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 

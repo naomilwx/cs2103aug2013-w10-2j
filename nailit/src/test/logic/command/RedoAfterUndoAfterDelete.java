@@ -83,7 +83,6 @@ public class RedoAfterUndoAfterDelete {
 		Result resultOfRedo = cm.executeCommand(parserResultRedo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-//		currentTaskList.add(task3);
 		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
@@ -127,7 +126,6 @@ public class RedoAfterUndoAfterDelete {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
 
