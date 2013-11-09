@@ -4,7 +4,9 @@ package nailit.logic.command;
 
 import java.util.Vector;
 import org.joda.time.DateTime;
+
 import nailit.common.FilterObject;
+import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -44,9 +46,8 @@ public class CommandSearch extends Command{
 	
 	private final static String STORAGE_GIVES_NULL_VECTOR = "Storage gives null pointer.";
 	
-	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "There is no tasks " +
-																	"in the storage that fits " +
-																	"the search conditions.";
+	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "No tasks matching the conditions: ";
+	private static final String PARAMETER_SEPARATER = "; ";
 	
 	public CommandSearch(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
@@ -88,7 +89,7 @@ public class CommandSearch extends Command{
 			executedResult = new Result(false, false, Result.LIST_DISPLAY, STORAGE_GIVES_NULL_VECTOR);
 		} else {
 			if(filteredTasks.isEmpty()) { // meaning that no suitable tasks to fetch, gives back notification
-				executedResult = new Result(false, false, Result.LIST_DISPLAY, NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK);
+				executedResult = new Result(false, false, Result.LIST_DISPLAY, NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK + commandSummary);
 			} else {
 				executedResult = new Result(false, true, Result.LIST_DISPLAY, Result.EMPTY_DISPLAY, null, filteredTasks, null);
 			}
@@ -111,27 +112,29 @@ public class CommandSearch extends Command{
 		
 		if (!parserResultInstance.isNullName()) {
 			searchedName = parserResultInstance.getName();
-			commandSummary = commandSummary + searchedName;
+			commandSummary = commandSummary + searchedName + PARAMETER_SEPARATER;
 			isEmptySearch = false;
 		}
 		if (!parserResultInstance.isNullStartTime()) {
 			searchedST = parserResultInstance.getStartTime();
-			commandSummary = commandSummary + searchedST;
+			commandSummary = commandSummary + "before " 
+			+ searchedST.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + PARAMETER_SEPARATER;
 			isEmptySearch = false;
 		}
 		if (!parserResultInstance.isNullEndTime()) {
 			searchedET = parserResultInstance.getEndTime();
-			commandSummary = commandSummary + searchedET;
+			commandSummary = commandSummary + "after "
+			+ searchedET.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + PARAMETER_SEPARATER;
 			isEmptySearch = false;
 		}
 		if (!parserResultInstance.isNullPriority()) {
 			searchedPriority = parserResultInstance.getPriority();
-			commandSummary = commandSummary + searchedPriority;
+			commandSummary = commandSummary + searchedPriority + ". ";
 			isEmptySearch = false;
 		}
 		if (!parserResultInstance.isNullTag()) {
 			searchedTag = parserResultInstance.getTag();
-			commandSummary = commandSummary + searchedTag;
+			commandSummary = commandSummary + searchedTag + PARAMETER_SEPARATER;
 			isEmptySearch = false;
 		}
 		filterObjForTheSearch = new FilterObject(searchedName, searchedST, searchedET, searchedTag, searchedPriority, null);
