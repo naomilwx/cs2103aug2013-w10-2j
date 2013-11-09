@@ -14,7 +14,6 @@ public class Task {
 	private DateTime startTime;
 	private DateTime endTime;
 	private String tag = NIConstants.EMPTY_STRING;
-	private boolean added = false; //variable to indicate if task has been added to task list
 	private boolean isCompleted = false;
 	private TaskPriority priority;
 	private DateTime reminderStartDate = null;
@@ -31,7 +30,6 @@ public class Task {
 		name = taskName;
 		startTime = null;
 		endTime = null;
-		added = true;
 		priority = TaskPriority.DEFAULT_TASK_PRIORITY;
 	}
 	
@@ -80,9 +78,6 @@ public class Task {
 			tag = Utilities.formatTaskTag(t);
 		}
 		this.reminderStartDate = reminder;
-	}
-	public boolean isAdded(){
-		return added;
 	}
 	//getters
 	public int getID(){
