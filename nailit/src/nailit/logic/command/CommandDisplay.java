@@ -14,17 +14,7 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDisplay extends Command{
-	private Task taskRetrieved;
-	
-	private Vector<Task> taskList;
-	
-	private int displayId;
-	
-	// the CommandManager instance that the CommandDisplay 
-	// instance belongs to, since it may display the operations
-	// history
-	private CommandManager cm;
-	
+	// static final variables
 	private static final String UNSUCCESS_DISPLAY_FEEDBACK = "Sorry, there is no task with display ID as %d in the list";
 	
 	private static final String FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL = "Sorry, the system fails " +
@@ -38,6 +28,17 @@ public class CommandDisplay extends Command{
 	private static final String TASK_TO_DISPLAY_NOT_EXIST_ON_TASK_LIST = "The task does " +
 																		"not exist in the display list.";
 	
+	// private fields
+	private Task taskRetrieved;
+	private Vector<Task> taskList;
+	private int displayId;
+	
+	// the CommandManager instance that the CommandDisplay 
+	// instance belongs to, since it may display the operations
+	// history
+	private CommandManager cm;
+	
+	// constructor
 	public CommandDisplay(ParserResult resultInstance,
 			StorageManager storerToUse, CommandManager cm) {
 		super(resultInstance, storerToUse);
@@ -113,7 +114,8 @@ public class CommandDisplay extends Command{
 	private void createUnsuccessfulResultObjectForDisplayAll() {
 		// in case GUI access the taskList 
 		Vector<Task> emptyTaskList = new Vector<Task>();
-		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL, null, emptyTaskList, null);
+		executedResult = new Result(false, false, Result.NOTIFICATION_DISPLAY, 
+				FEEDBACK_FOR_UNSUCCESSFUL_DISPLAY_ALL, null, emptyTaskList, null);
 	}
 
 	private void displayTheTask() throws Exception {
@@ -147,10 +149,9 @@ public class CommandDisplay extends Command{
 		Vector<String> undoableCommandStringList = getCommandString(cm.getOperationsHistory());
 		Vector<String> redoableCommandStringList = getCommandString(cm.getRedoableCommandList());
 		Vector<Vector<String>> twoCommandStringList = new Vector<Vector<String>>();
-		twoCommandStringList.add(NIConstants.HISTORY_UNDO_INDEX, undoableCommandStringList); // undoable list is the first
-		twoCommandStringList.add(NIConstants.HISTORY_REDO_INDEX, redoableCommandStringList); // redoable list is the second
+		twoCommandStringList.add(NIConstants.HISTORY_UNDO_INDEX, undoableCommandStringList); 
+		twoCommandStringList.add(NIConstants.HISTORY_REDO_INDEX, redoableCommandStringList); 
 		executedResult = new Result(false, true, Result.HISTORY_DISPLAY, "", null, null, twoCommandStringList);
-		
 	}
 
 	private Vector<String> getCommandString(Vector<Command> commandList) {
@@ -166,13 +167,11 @@ public class CommandDisplay extends Command{
 		for(int i = 0; i < size; i++) {
 			commandStringList.add(reversedCommandStringList.get(size-i-1));
 		}
-		
 		return commandStringList;
 	}
 
 	private Vector<Task> retrieveAllTheTasks() {
 		return storer.retrieveAll();
-		
 	}
 
 	private void createCommandSummary() {
@@ -208,7 +207,7 @@ public class CommandDisplay extends Command{
 
 	@Override
 	public void undo() {
-		// nothing
+		// no undo for command display
 	}
 
 	@Override
@@ -224,13 +223,11 @@ public class CommandDisplay extends Command{
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		// no redo for command display
 	}
 
 	@Override
 	public boolean isRedoSuccessfully() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
