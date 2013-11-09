@@ -5,7 +5,6 @@ package nailit.common;
 public class NIConstants {
 	public static final String HARDDISK_FIELD_SPLITTER = "$%";
 	public static final String NORMAL_FIELD_SPLITTER = ",";
-	public static final String UPDATE_FIELD_SPLITTER = " ";
 
 	public static final String DESCRIPTION_LINE_SPLITER = "*&*";
 

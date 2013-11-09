@@ -6,6 +6,7 @@ import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
+import nailit.logic.exception.InvalidCommandFormatException;
 
 public class AddParser extends Parser {
 
@@ -18,12 +19,12 @@ public class AddParser extends Parser {
 	}
 	
 	@Override
-	public ParserResult execute(){
+	public ParserResult execute() throws InvalidCommandFormatException {
 		ParserResult resultExecution = new ParserResult();
 		
 		resultExecution.setCommand(CommandType.ADD);
 		if (userCommand.equals("")){
-			throw new Error("Wrong Format");
+			throw new InvalidCommandFormatException("Wrong Format: Cannot add an empth task, please specify your task name");
 		}
 		
 		int startIndex = -1, endIndex = 0;
@@ -35,7 +36,7 @@ public class AddParser extends Parser {
 				}
 			}
 			if (endIndex == 0){
-				throw new Error ("Wrong Format: Bracket is not matched");
+				throw new InvalidCommandFormatException ("Wrong Format: Bracket is not matched");
 			}
 			
 			resultExecution.setDescription(userCommand.substring(startIndex+1, endIndex));
