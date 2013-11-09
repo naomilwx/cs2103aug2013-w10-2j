@@ -12,28 +12,25 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandDeleteReminder extends Command {
-
+	// static final variables
 	private static final String REMINDER_ADDED_UNSUCCESSFULLY_FEEDBACK = "Sorry, the reminder is " +
 																		"not deleted successfully. " + 
 																		"The display ID is invalid";
 	
 	private static final String NO_REMINDER_TO_DELETE_FEEDBACK = "Sorry, the task you are accessing does " +
 																"not have a reminder. No need to delete.";
-
-	private int displayID;
-
-
+	
+	// private fields
+	private int displayId;
 	private Vector<Task> taskList;
-
+	private Task taskRelated;
+	private boolean isSuccess;
+	
 	// the reminder date deleted, used for undo and redo
 	// it can be null
 	private DateTime reminderDateDeleted;
 
-	private Task taskRelated;
-
-	private boolean isSuccess;
-
-
+	// constructor
 	public CommandDeleteReminder(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList) {
 		super(resultInstance, storerToUse);
@@ -50,11 +47,10 @@ public class CommandDeleteReminder extends Command {
 
 	@Override
 	public Result executeCommand() throws Exception {
-		if (isValidDisplayID()) { // set displayID here 
+		if (isValidDisplayID()) { // displayId is set inside the method
 			setTaskRelated();
 			setTaskID();
 			saveReminderDate();
-			
 			if(taskHasReminder()) {
 				deleteReminderAndUpdateStorage();
 				createCommandSummary(); 
@@ -97,21 +93,16 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	private void createCommandSummary() {
-//		commandSummary = "Deleted the reminder: " 
-//				+ reminderDateDeleted.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)
-//				+ "for the Task: "
-//				+ taskRelated.getName();
 		commandSummary = "Deleted reminder for " + taskRelated.toString();
 	}
 
 	private void createResult() {
-		String notificationStr = "Deleted reminder on " 
-				+ reminderDateDeleted.toString(NIConstants.DISPLAY_DATE_FORMAT)
-				+ " for "
-				+ taskRelated.getName();
-		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY,
-				notificationStr);
-		// create a dateTime obj representing today
+		String notificationStr = "Deleted reminder on " + 
+								reminderDateDeleted.toString(NIConstants.DISPLAY_DATE_FORMAT) + 
+								" for " + taskRelated.getName();
+		executedResult = new Result(false, true, Result.NOTIFICATION_DISPLAY, 
+									notificationStr);
+		// create a dateTime object representing today
 		DateTime today = new DateTime();
 		if (today.compareTo(reminderDateDeleted) == 0) { // means that the reminder deleted is today, reminder list needs update
 			Vector<Task> todayReminderList = storer.getReminderListForToday();
@@ -126,15 +117,14 @@ public class CommandDeleteReminder extends Command {
 		taskId = taskRelated.getID();
 	}
 
-
 	private void setTaskRelated() {
-		taskRelated = taskList.get(displayID - 1);
+		taskRelated = taskList.get(displayId - 1);
 	}
 
 	private boolean isValidDisplayID() {
 		setDisplayID();
 		int size = taskList.size();
-		if ((size == 0) || (displayID < 1) || (displayID > size)) {
+		if ((size == 0) || (displayId < 1) || (displayId > size)) {
 			return false;
 		} else {
 			return true;
@@ -142,7 +132,7 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	private void setDisplayID() {
-		displayID = parserResultInstance.getTaskID();
+		displayId = parserResultInstance.getTaskID();
 	}
 
 	@Override
