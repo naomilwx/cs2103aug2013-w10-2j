@@ -186,4 +186,10 @@ public class CommandSearch extends Command{
 		// nothing to do
 		return false;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		// Nothing to do
+		return null;
+	}
 }
