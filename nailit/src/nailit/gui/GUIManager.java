@@ -401,6 +401,7 @@ public class GUIManager {
 	private void handleTaskDisplay(Result result){
 		restoreMainWindowSize();
 		displayArea.displayTaskDetails(result.getTaskToDisplay());
+		displayArea.scrollToTaskDisplayID(result.getDisplayedTaskDisplayID());
 	}
 	private void handleTaskListDisplay(Result result){
 		displayArea.displayTaskList(result);
