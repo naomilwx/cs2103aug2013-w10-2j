@@ -6,9 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
-
 import nailit.common.FilterObject;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -20,11 +18,18 @@ import nailit.logic.ParserResult;
 
 
 public class CommandManager {
-	// the storage object that the commandManager works with 
+	// static final fields
+	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has " +
+															"been executed yet, so no undo " +
+															"command can be done.";
+
+	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the " +
+														"command history. You can undo Add, Delete, " +
+														"or Update command.";
 	
-	// for testing
-	protected StorageManager storer; //Note from Naomi: changed to protected so it is visible to child stub
-//	private StorageManager storer;
+	// private fields
+	// the storage object that the commandManager works with 
+	protected StorageManager storer;
 	
 	// the parserResult to use in the commandExcute
 	private ParserResult parserResultInstance;
@@ -39,22 +44,11 @@ public class CommandManager {
 	// eg. it can be "all", "CS2103, 2013-10-20, low"
 	private FilterObject filterContentForCurrentTaskList;
 	
-	// store the commands that have been undoed
+	// store the commands that have been undone
 	private Stack<Command> redoCommandsList;
 	
-	private static String COMMAND_HISTORY_IS_EMPTY_FEEDBACK = "Sorry, no command has " +
-															"been executed yet, so no undo " +
-															"command can be done.";
-	
-	private static String NO_UNDOABLE_COMMNAD_FEEDBACK = "Sorry, no undoable command in the " +
-														"command history. You can undo Add, Delete, " +
-														"or Update command.";
-
 	// constructor
-	public CommandManager () throws FileCorruptionException 
-	{
-		//for testing
-		//storer = new StorageStub();
+	public CommandManager () throws FileCorruptionException {
 		storer = new StorageManager();
 		operationsHistory = new Stack<Command>();
 		currentTaskList = new Vector<Task>();
@@ -77,12 +71,15 @@ public class CommandManager {
 			return executedResult;
 		}
 	}
-
+	
+	/** 
+	 * In each command execute method like add(), we will create the
+	 * corresponding object and use them to execute the command.
+	 * In addition, the command is added to operation History.
+	*/
 	private Result doExecution() throws Exception {
 		CommandType commandType = parserResultInstance.getCommand();
-		// in each command execute method like add(), we will create the
-		// corresponding object and use them to execute the command.
-		// In addition, the command is added to operation History.
+
 		switch (commandType) {
 		case ADD: {
 			Result resultToReturn = add();
@@ -142,216 +139,20 @@ public class CommandManager {
 		return null;
 	}
 	
-
-	private Result redo() {
-		Command commandToRedo = getTheCommandToRedo();
-		Result resultToPassToGUI = new Result();
-		if(commandToRedo == null) {
-			resultToPassToGUI = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Sorry, you haven't undone any command, so cannot redo.", null, currentTaskList, null);
-		} else {
-			commandToRedo.redo();
-			if(commandToRedo.isRedoSuccessfully()) {
-				operationsHistory.push(commandToRedo);
-				updateCurrentListAfterRedo(commandToRedo);
-				resultToPassToGUI = createResultForRndoSuccessfully(commandToRedo);
-			} else {
-				resultToPassToGUI = createResultForRedoFailure();
-			}
-		}
-		return resultToPassToGUI;
-	}
-
-	private Result createResultForRedoFailure() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, 
-						"Redo cannot be done.", null, currentTaskList, null);		
-
-	}
-
-	private Result createResultForRndoSuccessfully(Command commandToRedo) {
-		String commandSummary = commandToRedo.getCommandString();
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
-						commandSummary + " successfully.", null, currentTaskList, null);
-	}
-
-	private void updateCurrentListAfterRedo(Command commandToRedo) {
-		int taskID = commandToRedo.getTaskId();
-		CommandType commandType = commandToRedo.getCommandType();
-		if(commandType == CommandType.ADD) {
-			CommandAdd ca = (CommandAdd)commandToRedo;
-			Task taskAddedBack = ca.getTaskAdded();
-			currentTaskList.add(taskAddedBack);
-			sort();
-			
-		} else {
-			int count = -1;
-			Iterator<Task> itr = currentTaskList.iterator();
-			while(itr.hasNext()) {
-				count++;
-				Task currentTask = itr.next();
-				int currentTaskID = currentTask.getID();
-				if(currentTaskID == taskID) {
-					if((commandType == CommandType.DELETE) || commandType == (CommandType.UPDATE)) {
-						currentTaskList.remove(count);
-					} else {
-						if(commandType == CommandType.COMPLETE) {
-							currentTask.setCompleted(true);
-							currentTask.setReminder(null);
-						} else if(commandType == CommandType.UNCOMPLETE) {
-							currentTask.setCompleted(false);
-							// add the reminder back if has before
-							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToRedo;
-							DateTime rd = mcou.getReminderDate();
-							currentTask.setReminder(rd);
-						} else if(commandType == CommandType.ADDREMINDER) {
-							CommandAddReminder car = (CommandAddReminder)commandToRedo;
-							DateTime reminderDateToAdd = car.getReminderDateToAdd();
-							currentTask.setReminder(reminderDateToAdd);
-						} else if(commandType == CommandType.DELETEREMINDER) {
-							currentTask.setReminder(null);
-						}
-					}
-					sort();
-					break;
-				} 
-			}
-			
-			// add it to the task list if the task fit the filter after the redo
-			if(commandType == CommandType.UPDATE) {
-				CommandUpdate cu = (CommandUpdate)commandToRedo;
-				currentTaskList.add(cu.getUpdatedTask());
-				sort();
-			} 
-		}
-		
-	}
-
-	private Command getTheCommandToRedo() {
-		if(redoCommandsList.isEmpty()) {
-			return null;
-		} else {
-			Command commandToRedo = redoCommandsList.pop();
-			return commandToRedo;
-		}
-	}
-
-	private Result undo() { // do not put into the command history
-		Command commandToUndo = getTheCommandToUndo();
-		Result resultToPassToGUI = new Result(); // means there is no command can be undone
-		if(commandToUndo == null) { // two situations
-			if(operationsHistory.isEmpty()) { // no command done yet
-				resultToPassToGUI = createResultForEmptyCommandsHistory();
-				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
-			} else {
-				resultToPassToGUI = createResultForNoUndoableCommand();
-				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
-			}
-		} else { // three situations
-			commandToUndo.undo();
-			if(commandToUndo.isUndoSuccessfully()) {
-				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
-				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
-				resultToPassToGUI = createResultForUndoSuccessfully(commandToUndo);
-			} else {
-				resultToPassToGUI = createResultForUndoFailure();
-			}
-		}
-		return resultToPassToGUI;
-	}
-
-	
-
-	private Result createResultForUndoSuccessfully(Command commandToUndo) {
-		String commandSummary = commandToUndo.getCommandString();
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
-	}
-
-	private void updateCurrentListAfterUndo(Command commandToUndo) {
-		int taskID = commandToUndo.getTaskId();
-		CommandType commandType = commandToUndo.getCommandType();
-		if(commandType == CommandType.DELETE) {
-			CommandDelete cd = (CommandDelete)commandToUndo;
-			Task taskAddedBack = cd.getTaskDeleted();
-			currentTaskList.add(taskAddedBack);
-			sort();
-		} else {
-			int count = -1;
-			Iterator<Task> itr = currentTaskList.iterator();
-			while(itr.hasNext()) {
-				count++;
-				Task currentTask = itr.next();
-				int currentTaskID = currentTask.getID();
-				if(currentTaskID == taskID) {
-					if(commandType == (CommandType.UPDATE) || commandType == (CommandType.ADD)) {
-						currentTaskList.remove(count);
-					} else {
-						if(commandType == CommandType.COMPLETE) {
-							currentTask.setCompleted(false);
-							// add the reminder back if has before
-							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToUndo;
-							DateTime rd = mcou.getReminderDate();
-							currentTask.setReminder(rd);
-							
-						} else if(commandType == CommandType.UNCOMPLETE) {
-							currentTask.setCompleted(true);
-							currentTask.setReminder(null); // remove the reminder date if has
-						} else if(commandType == CommandType.ADDREMINDER) {
-							currentTask.setReminder(null);
-						} else if(commandType == CommandType.DELETEREMINDER) {
-							CommandDeleteReminder cdrObj = (CommandDeleteReminder)commandToUndo;
-							DateTime reminderDateDeleted = cdrObj.getReminderDateDeleted();
-							currentTask.setReminder(reminderDateDeleted);
-						}
-					}
-					sort();
-					break;
-				} 
-			}
-			// add it to the task list if the task fit the filter after the undo
-			if(commandType == CommandType.UPDATE) {
-				CommandUpdate cu = (CommandUpdate)commandToUndo;
-				currentTaskList.add(cu.getRetrievedTask());
-				sort();
-			} 
-		}
-	}
-
-	
-
-	private Result createResultForUndoFailure() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Undo cannot be done.", null, currentTaskList, null);		
-	}
-
-	private Command getTheCommandToUndo() {
-		// it is guaranteed that in the operation 
-		// history, only add, delete and update command objects will be contained
-		if(operationsHistory.isEmpty()) {
-			return null;
-		} else {
-			Command commandToUndo = operationsHistory.pop();
-			return commandToUndo;
-		}
-	}
-	
-	private Result createResultForEmptyCommandsHistory() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, COMMAND_HISTORY_IS_EMPTY_FEEDBACK);
-	}
-	
-	private Result createResultForNoUndoableCommand() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, NO_UNDOABLE_COMMNAD_FEEDBACK);
-	}
-
 	private Result add() {
 		CommandAdd newAddCommandObj = new CommandAdd(parserResultInstance, storer); 
+		
 		// the resultToPassToGUI does not have the currentTaskList
 		Result resultToPassToGUI = newAddCommandObj.executeCommand();
 		addNewCommandObjToOperationsHistory(newAddCommandObj);
+		
 		// clear the redo command list
 		redoCommandsList.clear();
-		// the new added task may or may not should exist in the currentTaskList,
-		// check whether the added task fit the filterContentForCurrentTaskList
-		// if fit, add it and sort the current task list
 		addTaskToCurrentTaskList(resultToPassToGUI);
-		sort();
+		
+		// sort the current task list 
+		sortCurrentTaskList();
+		
 		// deal with the case that when user add a task while nothing in the task list.
 		// in this situation, instead of giving a display type Execution_Display, we give task display
 		resultToPassToGUI.setTaskList(currentTaskList);
@@ -359,11 +160,10 @@ public class CommandManager {
 	}
 	
 	private Result delete() throws Exception {
-
 		// delete the task according to its displayID in the taskList
-		CommandDelete newDeleteCommandObj = new CommandDelete(
-				parserResultInstance, storer, currentTaskList);
+		CommandDelete newDeleteCommandObj = new CommandDelete(parserResultInstance, storer, currentTaskList);
 		Result resultToPassToGUI = newDeleteCommandObj.executeCommand();
+		
 		// if successfully deleted, update the currentTaskList by removing that
 		// task from the list
 		if (newDeleteCommandObj.deleteSuccess()) {
@@ -386,7 +186,7 @@ public class CommandManager {
 			addTaskToCurrentTaskList(resultToPassToGUI);
 		}
 		// the display ID for the task may change, so sort again
-		sort();
+		sortCurrentTaskList();
 		resultToPassToGUI.setTaskList(currentTaskList);
 		addNewCommandObjToOperationsHistory(newUpdateCommandObj);
 		// clear the redo command list
@@ -399,23 +199,21 @@ public class CommandManager {
 		Result resultToPassToGUI = newDisplayCommandObj.executeCommand();
 		// should sort the currentTaskList and then set the sorted 
 		// one on the returned result object
-		sort();
+		sortCurrentTaskList();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		
 		return resultToPassToGUI;
 	}
 	
 	private Result search() {
 		CommandSearch newSearchCommandObj = new CommandSearch(parserResultInstance, storer);
 		Result resultToPassToGUI = newSearchCommandObj.executeCommand();
-		// update the currentTaskList and filter Object
+		// update the currentTaskList
 		updateCurrentTaskList(newSearchCommandObj);
 		updateCurrentFilterObj(newSearchCommandObj);
 		// since want to sort the searched tasks list, we need to sort 
-		// the current task list and then add it to the result obj
-		sort();
+		// the current task list and then add it to the result object
+		sortCurrentTaskList();
 		resultToPassToGUI.setTaskList(currentTaskList);
-		
 		return resultToPassToGUI;
 	}
 	
@@ -481,7 +279,8 @@ public class CommandManager {
 		int displayID = newMOrUnMCompletedObj.getDisplayID();
 		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
 		taskToMarkAsCompleted.setCompleted(true);
-		sort();
+		// sort the currentTaskList
+		sortCurrentTaskList();
 	}
 	
 	private Result uncomplete() throws Exception {
@@ -505,7 +304,202 @@ public class CommandManager {
 		int displayID = newMOrUnMCompletedObj.getDisplayID();
 		Task taskToMarkAsCompleted = currentTaskList.get(displayID - 1);
 		taskToMarkAsCompleted.setCompleted(false);
-		sort();
+		sortCurrentTaskList();
+	}
+	private Result undo() { // do not put into the command history
+		Command commandToUndo = getTheCommandToUndo();
+		Result resultToPassToGUI = new Result(); // means there is no command can be undone
+		if(commandToUndo == null) { // two situations
+			if(operationsHistory.isEmpty()) { // no command done yet
+				resultToPassToGUI = createResultForEmptyCommandsHistory();
+				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
+			} else {
+				resultToPassToGUI = createResultForNoUndoableCommand();
+				resultToPassToGUI.setTaskList(currentTaskList); // the task list is unchanged
+			}
+		} else { // three situations
+			commandToUndo.undo();
+			if(commandToUndo.isUndoSuccessfully()) {
+				redoCommandsList.push(commandToUndo); // add the undone command into the redo list
+				updateCurrentListAfterUndo(commandToUndo); // since undo operation may change the current task list
+				resultToPassToGUI = createResultForUndoSuccessfully(commandToUndo);
+			} else {
+				resultToPassToGUI = createResultForUndoFailure();
+			}
+		}
+		return resultToPassToGUI;
+	}
+
+	
+
+	private Result createResultForUndoSuccessfully(Command commandToUndo) {
+		String commandSummary = commandToUndo.getCommandString();
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
+	}
+
+	private void updateCurrentListAfterUndo(Command commandToUndo) {
+		int taskID = commandToUndo.getTaskId();
+		CommandType commandType = commandToUndo.getCommandType();
+		if(commandType == CommandType.DELETE) {
+			CommandDelete cd = (CommandDelete)commandToUndo;
+			Task taskAddedBack = cd.getTaskDeleted();
+			currentTaskList.add(taskAddedBack);
+			sortCurrentTaskList();
+		} else {
+			int count = -1;
+			Iterator<Task> itr = currentTaskList.iterator();
+			while(itr.hasNext()) {
+				count++;
+				Task currentTask = itr.next();
+				int currentTaskID = currentTask.getID();
+				if(currentTaskID == taskID) {
+					if(commandType == (CommandType.UPDATE) || commandType == (CommandType.ADD)) {
+						currentTaskList.remove(count);
+					} else {
+						if(commandType == CommandType.COMPLETE) {
+							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToUndo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
+							
+						} else if(commandType == CommandType.UNCOMPLETE) {
+							currentTask.setCompleted(true);
+							currentTask.setReminder(null); // remove the reminder date if has
+						} else if(commandType == CommandType.ADDREMINDER) {
+							currentTask.setReminder(null);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							CommandDeleteReminder cdrObj = (CommandDeleteReminder)commandToUndo;
+							DateTime reminderDateDeleted = cdrObj.getReminderDateDeleted();
+							currentTask.setReminder(reminderDateDeleted);
+						}
+					}
+					sortCurrentTaskList();
+					break;
+				} 
+			}
+			// add it to the task list if the task fit the filter after the undo
+			if(commandType == CommandType.UPDATE) {
+				CommandUpdate cu = (CommandUpdate)commandToUndo;
+				currentTaskList.add(cu.getRetrievedTask());
+				sortCurrentTaskList();
+			} 
+		}
+	}
+
+	private Result createResultForUndoFailure() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Undo cannot be done.", null, currentTaskList, null);		
+	}
+
+	private Command getTheCommandToUndo() {
+		// it is guaranteed that in the operation 
+		// history, only add, delete and update command objects will be contained
+		if(operationsHistory.isEmpty()) {
+			return null;
+		} else {
+			Command commandToUndo = operationsHistory.pop();
+			return commandToUndo;
+		}
+	}
+	
+	private Result createResultForEmptyCommandsHistory() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, COMMAND_HISTORY_IS_EMPTY_FEEDBACK);
+	}
+	
+	private Result redo() {
+		Command commandToRedo = getTheCommandToRedo();
+		Result resultToPassToGUI = new Result();
+		if(commandToRedo == null) {
+			resultToPassToGUI = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Sorry, you haven't undone any command, so cannot redo.", null, currentTaskList, null);
+		} else {
+			commandToRedo.redo();
+			if(commandToRedo.isRedoSuccessfully()) {
+				operationsHistory.push(commandToRedo);
+				updateCurrentListAfterRedo(commandToRedo);
+				resultToPassToGUI = createResultForRndoSuccessfully(commandToRedo);
+			} else {
+				resultToPassToGUI = createResultForRedoFailure();
+			}
+		}
+		return resultToPassToGUI;
+	}
+
+	private Result createResultForRedoFailure() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, 
+						"Redo cannot be done.", null, currentTaskList, null);		
+
+	}
+
+	private Result createResultForRndoSuccessfully(Command commandToRedo) {
+		String commandSummary = commandToRedo.getCommandString();
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
+						commandSummary + " successfully.", null, currentTaskList, null);
+	}
+
+	private void updateCurrentListAfterRedo(Command commandToRedo) {
+		int taskID = commandToRedo.getTaskId();
+		CommandType commandType = commandToRedo.getCommandType();
+		if(commandType == CommandType.ADD) {
+			CommandAdd ca = (CommandAdd)commandToRedo;
+			Task taskAddedBack = ca.getTaskAdded();
+			currentTaskList.add(taskAddedBack);
+			sortCurrentTaskList();
+			
+		} else {
+			int count = -1;
+			Iterator<Task> itr = currentTaskList.iterator();
+			while(itr.hasNext()) {
+				count++;
+				Task currentTask = itr.next();
+				int currentTaskID = currentTask.getID();
+				if(currentTaskID == taskID) {
+					if((commandType == CommandType.DELETE) || commandType == (CommandType.UPDATE)) {
+						currentTaskList.remove(count);
+					} else {
+						if(commandType == CommandType.COMPLETE) {
+							currentTask.setCompleted(true);
+							currentTask.setReminder(null);
+						} else if(commandType == CommandType.UNCOMPLETE) {
+							currentTask.setCompleted(false);
+							// add the reminder back if has before
+							CommandMarkCompletedOrUncompleted mcou = (CommandMarkCompletedOrUncompleted)commandToRedo;
+							DateTime rd = mcou.getReminderDate();
+							currentTask.setReminder(rd);
+						} else if(commandType == CommandType.ADDREMINDER) {
+							CommandAddReminder car = (CommandAddReminder)commandToRedo;
+							DateTime reminderDateToAdd = car.getReminderDateToAdd();
+							currentTask.setReminder(reminderDateToAdd);
+						} else if(commandType == CommandType.DELETEREMINDER) {
+							currentTask.setReminder(null);
+						}
+					}
+					sortCurrentTaskList();
+					break;
+				} 
+			}
+			
+			// add it to the task list if the task fit the filter after the redo
+			if(commandType == CommandType.UPDATE) {
+				CommandUpdate cu = (CommandUpdate)commandToRedo;
+				currentTaskList.add(cu.getUpdatedTask());
+				sortCurrentTaskList();
+			} 
+		}
+		
+	}
+
+	private Command getTheCommandToRedo() {
+		if(redoCommandsList.isEmpty()) {
+			return null;
+		} else {
+			Command commandToRedo = redoCommandsList.pop();
+			return commandToRedo;
+		}
+	}
+
+	
+	private Result createResultForNoUndoableCommand() {
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, NO_UNDOABLE_COMMNAD_FEEDBACK);
 	}
 
 	private Result exit() {
@@ -540,7 +534,7 @@ public class CommandManager {
 	}
 	
 	// sort the Tasks in the currentTaskList according to isCompleted, date, priority
-	private void sort() {
+	private void sortCurrentTaskList() {
 		ComparatorForTwoTaskObj newComparator = new ComparatorForTwoTaskObj();
 		Collections.sort(currentTaskList, newComparator);
 	}
@@ -583,7 +577,7 @@ public class CommandManager {
 		}
 		Result ret = new Result(false, true, Result.LIST_DISPLAY, "");
 		currentTaskList = dateList;
-		sort();
+		sortCurrentTaskList();
 		ret.setTaskList(currentTaskList);
 		return ret;
 	}
