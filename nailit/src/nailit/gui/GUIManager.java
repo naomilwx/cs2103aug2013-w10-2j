@@ -173,19 +173,15 @@ public class GUIManager {
 		mainWindow.addItem(commandBar);
 		mainWindow.addItem(displayArea);
 	}
-	protected void resizeMainDisplayArea(){
+	protected void handleCommandBarResizeEvent(){
 		displayArea.dynamicallyResizeAndRepositionDisplayArea(commandBar.getHeight());
 	}
 	protected void reduceMainWindowSize(){
 		mainWindow.transformIntoReducedWindow();
-		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.removeTaskDisplay();
-		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
 		mainWindow.restoreDefaultWindow();
-		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
-		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected int getCommandBarHeight(){
 		return commandBar.getFrameHeight();
@@ -318,7 +314,7 @@ public class GUIManager {
 	private void displayCommandFeedback(Result executionResult){
 		clearUserInputAndCleanUpDisplay();
 		processAndDisplayExecutionResult(executionResult);
-		resizeMainDisplayArea();
+		handleCommandBarResizeEvent();
 	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();

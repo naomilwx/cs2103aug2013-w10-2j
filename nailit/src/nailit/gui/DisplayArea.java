@@ -19,7 +19,7 @@ import nailit.common.Result;
 import nailit.common.Task;
 
 @SuppressWarnings("serial")
-public class DisplayArea extends JLayeredPane {
+public class DisplayArea extends JLayeredPane implements Resizable{
 	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
@@ -122,7 +122,7 @@ public class DisplayArea extends JLayeredPane {
 		fadeOutTimer.stop();
 	}
 	//Start of functions to resize and reposition DisplayArea and its constituent layers 
-	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
+	public void resizeToFitContainer(int containerWidth, int containerHeight){
 		this.containerHeight = containerHeight;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getCommandBarHeight());
