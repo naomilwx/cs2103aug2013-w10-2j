@@ -125,7 +125,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	public void resizeToFitContainer(int containerWidth, int containerHeight){
 		this.containerHeight = containerHeight;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getCommandBarHeight());
+		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getDisplayAreaHeightOffset());
 	}
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
