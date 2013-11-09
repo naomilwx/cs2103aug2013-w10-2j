@@ -20,7 +20,7 @@ public class UpdateParser extends Parser {
 		ParserResult resultExecution = new ParserResult();
 		
 		resultExecution.setCommand(CommandType.UPDATE);
-		listOfCommands = userCommand.split(NIConstants.UPDATE_FIELD_SPLITTER);
+		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		for (int i=0; i<listOfCommands.length; i++){
 			listOfCommands[i] = listOfCommands[i].trim();
