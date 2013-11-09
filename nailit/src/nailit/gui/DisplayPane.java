@@ -14,6 +14,7 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.gui.renderer.TaskDetailsFormatter;
 
+@SuppressWarnings("serial")
 public class DisplayPane extends JPanel{
 	private static final int NULL_FOCUS = -1;
 	

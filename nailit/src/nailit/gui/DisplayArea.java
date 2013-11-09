@@ -7,23 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Vector;
 import java.util.concurrent.Callable;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.gui.renderer.TaskDetailsFormatter;
 
 @SuppressWarnings("serial")
 public class DisplayArea extends JLayeredPane {
@@ -33,7 +26,6 @@ public class DisplayArea extends JLayeredPane {
 	private static final int DISPLAY_AREA_TOP_BUFFER = 2;
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
-	private static final int NULL_FOCUS = -1;
 	private static final int NOTIFICATION_OFFSET = NotificationArea.NOTIFICATION_HEIGHT;
 	
 	private static final int TIMER_INTERVAL = 100;
@@ -69,7 +61,13 @@ public class DisplayArea extends JLayeredPane {
 		adjustDisplayAreaPos();
 		configureDisplayArea();
 		initialiseLayers();
-//		addDisplayAreaListeners();
+	}
+	
+	private void configureDisplayArea(){
+		this.setBorder(null);
+		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
+		setDisplayAreaSizeAndPos();
+		this.setOpaque(true);
 	}
 	
 	/**
@@ -108,27 +106,31 @@ public class DisplayArea extends JLayeredPane {
 			
 		});
 	}
-	/**
-	 * Sets given JPanel to span the whole container (DisplayArea)
-	 * @param JPanel layer
-	 */
 	private void setLayerToDefaultSettings(JPanel layer){
 		layer.setSize(displayWidth, displayHeight);
 		layer.setLocation(GUIManager.DEFAULT_COMPONENT_LOCATION);
 		layer.setOpaque(false);
 	}
 	
+	protected void addPopup(Component component){
+		popupPane.add(component);
+	}
+	protected void setFocus(){
+		defaultDisplayPane.requestFocus();
+	}
+	protected void stopAllTimers(){
+		fadeOutTimer.stop();
+	}
+	//Start of functions to resize and reposition DisplayArea and its constituent layers 
 	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
 		this.containerHeight = containerHeight;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
 		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getCommandBarHeight());
 	}
-	
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
 		displayHeight = containerHeight - DISPLAY_AREA_TOP_BUFFER - Y_BUFFER_HEIGHT -  WINDOW_BOTTOM_BUFFER - additionalOffset;
 	}
-	
 	protected void dynamicallyResizeAndRepositionDisplayArea(int additionalOffset){
 		adjustDisplayHeight(additionalOffset);
 		adjustDisplayAreaPos();
@@ -141,22 +143,12 @@ public class DisplayArea extends JLayeredPane {
 		this.setSize(displayWidth, displayHeight);
 		this.setLocation(xPos, yPos);
 	}
-	private void shiftDefaultLayer(int xpos, int ypos){
-		defaultDisplayPane.setLocation(xpos, ypos);
-		dynamicallyResizeDefaultPaneHeight();
-		revalidate();
-	}
-	private void configureDisplayArea(){
-		this.setBorder(null);
-		this.setBackground(DISPLAYAREA_DEFAULT_BACKGROUND_COLOR);
-		setDisplayAreaSizeAndPos();
-		this.setOpaque(true);
-	}
 	private void adjustDisplayAreaPos(){
 		xPos = X_BUFFER_WIDTH;
 		yPos = containerHeight - displayHeight - WINDOW_BOTTOM_BUFFER;
 	}
-	//display pane stuff
+	
+	//display pane resizing
 	private void adjustDefaultPaneHeight(){
 		if(popupPane.isVisible()){
 			defaultPaneHeight = displayHeight - NOTIFICATION_OFFSET;
@@ -168,10 +160,17 @@ public class DisplayArea extends JLayeredPane {
 		adjustDefaultPaneHeight();
 		defaultDisplayPane.setSize(defaultPaneWidth, defaultPaneHeight);
 	}
-
+	private void shiftDefaultLayer(int xpos, int ypos){
+		defaultDisplayPane.setLocation(xpos, ypos);
+		dynamicallyResizeDefaultPaneHeight();
+		revalidate();
+	}
+	//End of functions to resize and reposition DisplayArea and its consitutient layers
 	protected void hideNotificationsPane(){
 		popupPane.setVisible(false);
 	}
+	
+	//Functions to control visibility of popupPane
 	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
@@ -194,44 +193,7 @@ public class DisplayArea extends JLayeredPane {
 					}
 		});
 	}
-	//
-	protected void removeTaskDisplay(){
-		defaultDisplayPane.removeTaskDisplay();
-	}
-	protected void quickTaskTableScroll(boolean up){
-		defaultDisplayPane.quickTaskTableScroll(up);
-	}
-	protected void taskTableScroll(boolean up){
-		defaultDisplayPane.taskTableScroll(up);
-	}
-	protected void removeDeletedTasksFromTaskListTable(){
-		defaultDisplayPane.removeDeletedTasksFromTaskListTable();
-	}
-	protected int getTaskTableSelectedRowID(){
-		return defaultDisplayPane.getTaskTableSelectedRowID();
-	}
-	protected void displayTaskDetails(Task task){
-		defaultDisplayPane.displayTaskDetails(task);
-	}
-	protected void scrollToTaskDisplayID(int ID){
-		defaultDisplayPane.scrollToTaskDisplayID(ID);
-	}
-	protected void displayTaskList(Result result){
-		defaultDisplayPane.displayTaskList(result);
-	}
-	protected void displayExecutionResultDisplay(Result result){
-		defaultDisplayPane.displayExecutionResultDisplay(result);
-	}
 	
-	protected void addPopup(Component component){
-		popupPane.add(component);
-	}
-	protected void setFocus(){
-		defaultDisplayPane.requestFocus();
-	}
-	protected void stopAllTimers(){
-		fadeOutTimer.stop();
-	}
 	private void fadeOutComponentAndPerformActionOnComplete(final Component component, final Timer timer,
 			int displayTime, int timeInterval, final float opacityStep, final Callable<?> func){
 		timer.setInitialDelay(displayTime);
@@ -274,5 +236,34 @@ public class DisplayArea extends JLayeredPane {
 			
 		});
 		timer.restart();
+	}
+	
+	//
+	protected void removeTaskDisplay(){
+		defaultDisplayPane.removeTaskDisplay();
+	}
+	protected void quickTaskTableScroll(boolean up){
+		defaultDisplayPane.quickTaskTableScroll(up);
+	}
+	protected void taskTableScroll(boolean up){
+		defaultDisplayPane.taskTableScroll(up);
+	}
+	protected void removeDeletedTasksFromTaskListTable(){
+		defaultDisplayPane.removeDeletedTasksFromTaskListTable();
+	}
+	protected int getTaskTableSelectedRowID(){
+		return defaultDisplayPane.getTaskTableSelectedRowID();
+	}
+	protected void displayTaskDetails(Task task){
+		defaultDisplayPane.displayTaskDetails(task);
+	}
+	protected void scrollToTaskDisplayID(int ID){
+		defaultDisplayPane.scrollToTaskDisplayID(ID);
+	}
+	protected void displayTaskList(Result result){
+		defaultDisplayPane.displayTaskList(result);
+	}
+	protected void displayExecutionResultDisplay(Result result){
+		defaultDisplayPane.displayExecutionResultDisplay(result);
 	}
 }
