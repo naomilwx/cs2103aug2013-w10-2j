@@ -20,34 +20,33 @@ import nailit.storage.StorageManager;
  * 
  */
 public class CommandSearch extends Command{
+	// static final fields
+	private final static String COMMAND_SUMMARY_CONTENT = "This is a search " +
+														"command. The search content is: ";
+
+	private final static String SEARCH_NONE_WARNING = "This is a search command, " +
+													"but the search content is none.";
+
+	private final static String SEARCH_NONE_WARNING_FEEDBACK = "Sorry, please tell " +
+															"us what you want to search.";
+
+	private final static String STORAGE_GIVES_NULL_VECTOR = "Storage gives null pointer.";
+
+	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "There is no tasks " +
+																	"in the storage that fits " +
+																	"the search conditions.";
 	
+	// private fields
 	// the filterOnject instance for the search, which contains all the search information
 	private FilterObject filterObjForTheSearch;
 	
 	// vector of tasks retrieved from the storage according to the search requirements
 	private Vector<Task> filteredTasks;
 	
-	
-	
 	// check whether has search content
 	private boolean isEmptySearch;
 	
-	
-	private final static String COMMAND_SUMMARY_CONTENT = "This is a search " +
-														"command. The search content is: ";
-	
-	private final static String SEARCH_NONE_WARNING = "This is a search command, " +
-													"but the search content is none.";
-	
-	private final static String SEARCH_NONE_WARNING_FEEDBACK = "Sorry, please tell " +
-															"us what you want to search.";
-	
-	private final static String STORAGE_GIVES_NULL_VECTOR = "Storage gives null pointer.";
-	
-	private final static String NO_SUITABLE_TASKS_TO_FETCH_FEEDBACK = "There is no tasks " +
-																	"in the storage that fits " +
-																	"the search conditions.";
-	
+	// constructor
 	public CommandSearch(ParserResult resultInstance, StorageManager storerToUse) {
 		super(resultInstance, storerToUse);
 		filterObjForTheSearch = new FilterObject();
@@ -107,8 +106,6 @@ public class CommandSearch extends Command{
 		TaskPriority searchedPriority = null;
 		String searchedTag = null;
 		
-		
-		
 		if (!parserResultInstance.isNullName()) {
 			searchedName = parserResultInstance.getName();
 			commandSummary = commandSummary + searchedName;
@@ -139,7 +136,7 @@ public class CommandSearch extends Command{
 
 	@Override
 	public int getTaskId() {
-		// TODO Auto-generated method stub
+		// not used in this class
 		return 0;
 	}
 	
@@ -179,13 +176,12 @@ public class CommandSearch extends Command{
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		// nothing to do
 	}
 
 	@Override
 	public boolean isRedoSuccessfully() {
-		// TODO Auto-generated method stub
+		// nothing to do
 		return false;
 	}
 }
