@@ -23,10 +23,11 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
@@ -188,6 +189,62 @@ public class GUIManager {
 	}
 	protected int getDisplayAreaHeightOffset(){
 		return commandBar.getFrameHeight();
+	}
+	protected KeyAdapter getMainWindowComponentBasicKeyListener(){
+		KeyAdapter listener = new KeyAdapter(){
+			private boolean ctrlPressed = false;
+
+			private void reset(){
+				ctrlPressed = false;
+			}
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_F1){
+					displayFullHelpWindow();
+					setFocusOnHelpWindow();
+				}else if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = true;
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
+					reduceMainWindowSize();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
+					restoreMainWindowSize();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+					toggleHomeWindow();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
+					reset();
+					setVisible(false);
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
+					toggleHistoryWindow();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
+					removeTaskDisplay();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
+					reset();
+					displayCommandSyantaxHelpWindow();
+					setFocusOnHelpWindow();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					loadExistingTaskNameInCommandBar();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
+					loadExistingTaskDescriptionInCommandBar();
+					setFocusOnCommandBar();
+				}else if(keyCode == KeyEvent.VK_PAGE_UP){
+					scrollToPrevPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
+					scrollToNextPageInTaskTable();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = false;
+				}
+			}
+		};
+		return listener;
 	}
 	public void enableGlobalKeyListener(){
 //		if(!globalKeyListener.isEnabled()){
