@@ -10,7 +10,6 @@ import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.command.CommandManager;
-import nailit.storage.FileCorruptionException;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -19,9 +18,6 @@ import org.junit.experimental.categories.Category;
 public class CommandTest {
 	
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
-	private final String SuccessDeleteMsg = "The task is deleted successfully, the Task ID for it is: ";
-	private final String SuccessMsgFirstPart = "The task with Task ID: "; 
-	private final String SuccessMsgSecondPart	= "is updated successfully";
 	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
 	private final String FeedbackForNotExistingTask = "The to-delete task does not exist in the storage."; 
 
@@ -34,7 +30,6 @@ public class CommandTest {
 		CommandManager cm = new CommandManagerStub();
 		ParserResult prForCommandAdd = createParserResult(CommandType.ADD);
 		Result resultObjOfCommandAdd = cm.executeCommand(prForCommandAdd);
-//		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 		
 		Task expectedAddedTask = new Task("CS2103 project", startTime, endTime, "school work", TaskPriority.HIGH);
 		expectedAddedTask.setID(1);
@@ -48,7 +43,6 @@ public class CommandTest {
 		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
 		prForCommandDelete.setTaskId(123);
 		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
-//		int taskID = cm.getOperationsHistory().firstElement().getTaskID();
 
 		Result expectedResultObj = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
 		testTwoResultObj(resultObjOfCommandDelete, expectedResultObj);
@@ -61,7 +55,6 @@ public class CommandTest {
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskId();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
@@ -73,7 +66,6 @@ public class CommandTest {
 		// function update, taskToDeleteID needed
 		prForCommandUpdate.setTaskId(123);
 		Result resultObjOfCommandUpdate = cm.executeCommand(prForCommandUpdate);
-		int taskID = cm.getOperationsHistory().firstElement().getTaskId();
 		Result expectedResultObj = new Result(false, false, Result.NOTIFICATION_DISPLAY, UnsuccessfulFeedback);
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
 	}
@@ -114,13 +106,6 @@ public class CommandTest {
 	private void testTwoResultObjFromCommandDisplay(
 			Result resultObjOfCommandUpdate, Result expectedResultObj) {
 		testTwoResultObj(resultObjOfCommandUpdate, expectedResultObj);
-//		ask displayedTask = resultObjOfCommandUpdate.getTaskList().firstElement();
-//		Task expectedTask = expectedResultObj.getTaskList().firstElement();
-//		assertEquals(displayedTask.getName(), expectedTask.getName());
-//		assertEquals(displayedTask.getStartTime(), expectedTask.getStartTime());
-//		assertEquals(displayedTask.getEndTime(), expectedTask.getEndTime());
-//		assertEquals(displayedTask.getPriority(), expectedTask.getPriority());
-//		assertEquals(displayedTask.getTag(), expectedTask.getTag());
 	}
 
 	private Task createTask() {
@@ -146,8 +131,6 @@ public class CommandTest {
 		newPR.setTag(taskTag);
 		return newPR;
 	}
-	
-
 	
 	private ParserResult createParserResult(CommandType commandType) {
 		return createParserResult(commandType, 
