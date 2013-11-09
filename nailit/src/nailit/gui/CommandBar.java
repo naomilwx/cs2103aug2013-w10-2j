@@ -174,53 +174,20 @@ public class CommandBar extends JPanel implements Resizable{
 		});
 	}
 	private void addListenersToTextInputField(){
+		textBar.addKeyListener(GUIBoss.getMainWindowComponentBasicKeyListener());
 		textBar.addKeyListener(new KeyAdapter(){
 			private boolean ctrlPressed = false;
 			private boolean shiftDown = false;
-			private void resetKeys(){
-				ctrlPressed = false;
-				shiftDown = false;
-			}
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineOfTextFromPos();
 					GUIBoss.handleCommandBarResizeEvent();
-				}else if(keyCode == KeyEvent.VK_F1){
-					GUIBoss.displayFullHelpWindow();
-					GUIBoss.setFocusOnHelpWindow();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
 					shiftDown = true;
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
-					GUIBoss.reduceMainWindowSize();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
-					GUIBoss.restoreMainWindowSize();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
-					GUIBoss.toggleHomeWindow();
-					GUIBoss.setFocusOnCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
-					resetKeys();
-					GUIBoss.setVisible(false);
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
-					GUIBoss.toggleHistoryWindow();
-					GUIBoss.setFocusOnCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
-					GUIBoss.removeTaskDisplay();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
-					resetKeys();
-					GUIBoss.displayCommandSyantaxHelpWindow();
-					GUIBoss.setFocusOnHelpWindow();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
-					GUIBoss.loadExistingTaskNameInCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
-					GUIBoss.loadExistingTaskDescriptionInCommandBar();
-				}else if(keyCode == KeyEvent.VK_PAGE_UP){
-					GUIBoss.scrollToPrevPageInTaskTable();
-				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
-					GUIBoss.scrollToNextPageInTaskTable();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_UP){
 					GUIBoss.taskTableScollUp();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_DOWN){

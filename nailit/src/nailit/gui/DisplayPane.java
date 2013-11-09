@@ -47,6 +47,7 @@ public class DisplayPane extends JPanel{
 			if(keyCode == KeyEvent.VK_CONTROL){
 				ctrlPressed = true;
 			}else if(ctrlPressed && keyCode == KeyEvent.VK_TAB){
+				ctrlPressed = false;
 				displayPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
 				GUIBoss.setFocusOnCommandBar();
@@ -212,9 +213,9 @@ public class DisplayPane extends JPanel{
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
 				if(keyCode == KeyEvent.VK_ENTER){
-					taskTableOnEnterEvent();
+					GUIBoss.executeTriggeredTaskDisplay();
 				}else if(keyCode == KeyEvent.VK_DELETE){
-					taskTableOnDeleteEvent();
+					GUIBoss.executeTriggeredTaskDelete();
 				}
 			}
 		};
@@ -226,34 +227,6 @@ public class DisplayPane extends JPanel{
 			return taskTable.getSelectedRowDisplayID();
 		}else{
 			return -1;
-		}
-	}
-	private void taskTableOnDeleteEvent() {
-		GUIBoss.setFocusOnCommandBar();
-		int displayID = taskTable.getSelectedRowDisplayID();
-		if(displayID >= 1){
-			GUIBoss.executeTriggeredTaskDelete(displayID);
-		}
-	}
-	protected void taskTableOnEnterEvent(){
-		GUIBoss.setFocusOnCommandBar();
-		int displayID = taskTable.getSelectedRowDisplayID();
-		if(displayID >= 1){
-			GUIBoss.executeTriggeredTaskDisplay(displayID);
-		}
-	}
-	protected void taskTableOnCtrlDEvent(){
-		GUIBoss.setFocusOnCommandBar();
-		int displayID = taskTable.getSelectedRowDisplayID();
-		if(displayID >= 1){
-			GUIBoss.loadExistingTaskDescriptionInCommandBar(displayID);
-		}
-	}
-	protected void taskTableOnCtrlNEvent(){
-		GUIBoss.setFocusOnCommandBar();
-		int displayID = taskTable.getSelectedRowDisplayID();
-		if(displayID >= 1){
-			GUIBoss.loadExistingTaskNameInCommandBar(displayID);
 		}
 	}
 }
