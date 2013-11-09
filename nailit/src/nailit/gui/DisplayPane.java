@@ -27,13 +27,13 @@ public class DisplayPane extends JPanel{
 		GUIBoss = GUIMain;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setFocusable(true);
-		addFocusListener(defaultPaneFocusListener);
+		addFocusListener(displayPaneFocusListener);
 	}
 	
 	private int currentFocusElement = NULL_FOCUS;
-	private final FocusListener defaultPaneFocusListener = new FocusListener(){
+	private final FocusListener displayPaneFocusListener = new FocusListener(){
 		public void focusGained(FocusEvent event) {
-			defaultPaneSetFocusHandler();
+			displayPaneSetFocusHandler();
 		 }
 		public void focusLost(FocusEvent event){
 		}
@@ -46,7 +46,7 @@ public class DisplayPane extends JPanel{
 			if(keyCode == KeyEvent.VK_CONTROL){
 				ctrlPressed = true;
 			}else if(ctrlPressed && keyCode == KeyEvent.VK_TAB){
-				defaultPaneSetFocusHandler();
+				displayPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
 				GUIBoss.setFocusOnCommandBar();
 			}else if(keyCode == KeyEvent.VK_COMMA){
@@ -65,7 +65,7 @@ public class DisplayPane extends JPanel{
 	};
 	//
 	
-	private void defaultPaneSetFocusHandler(){
+	private void displayPaneSetFocusHandler(){
 		int nextFocusElement = NULL_FOCUS;
 		if(currentFocusElement == NULL_FOCUS){
 			nextFocusElement = 0;

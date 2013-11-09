@@ -2,6 +2,8 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 
 import javax.swing.border.LineBorder;
 
@@ -26,5 +28,9 @@ public class NotificationArea extends TextDisplay{
 		
 		setBorder(new LineBorder(displayColor, NOTIFICATION_BORDER_WIDTH));
 		displayText(notification);
+	}
+	@Override
+	public void addMouseListener(MouseListener listener){
+		textPane.addMouseListener(listener);
 	}
 }

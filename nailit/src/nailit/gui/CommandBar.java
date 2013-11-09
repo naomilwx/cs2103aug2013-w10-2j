@@ -246,7 +246,7 @@ public class CommandBar extends JPanel {
 	protected String getUserInput(){
 		return textBar.getText();
 	}
-	//Methods to manipulate the text in the user input JTextField
+	//Methods to manipulate the text in the user input JTextArea
 	protected void clearUserInput(){
 		textBar.setText(COMMANDBAR_EMPTY_DISPLAY);
 		return;
