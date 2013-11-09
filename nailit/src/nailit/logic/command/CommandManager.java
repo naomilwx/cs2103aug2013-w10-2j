@@ -153,7 +153,7 @@ public class CommandManager {
 			if(commandToRedo.isRedoSuccessfully()) {
 				operationsHistory.push(commandToRedo);
 				updateCurrentListAfterRedo(commandToRedo);
-				resultToPassToGUI = createResultForRndoSuccessfully();
+				resultToPassToGUI = createResultForRndoSuccessfully(commandToRedo);
 			} else {
 				resultToPassToGUI = createResultForRedoFailure();
 			}
@@ -162,13 +162,15 @@ public class CommandManager {
 	}
 
 	private Result createResultForRedoFailure() {
-		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, "Redo cannot be done.", null, currentTaskList, null);		
+		return new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, 
+						"Redo cannot be done.", null, currentTaskList, null);		
 
 	}
 
-	private Result createResultForRndoSuccessfully() {
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo successfully.", null, currentTaskList, null);
-
+	private Result createResultForRndoSuccessfully(Command commandToRedo) {
+		String commandSummary = commandToRedo.getCommandString();
+		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
+						commandSummary + " successfully.", null, currentTaskList, null);
 	}
 
 	private void updateCurrentListAfterRedo(Command commandToRedo) {
