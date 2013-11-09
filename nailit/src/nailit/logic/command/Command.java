@@ -3,6 +3,7 @@ package nailit.logic.command;
 //@author A0105789R
 
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
@@ -43,6 +44,8 @@ public abstract class Command {
 	public abstract int getTaskId(); 
 	
 	public abstract CommandType getCommandType();	
+	
+	public abstract Task getTaskRelated();
 	
 	// the command object is able to undo or redo itself
 	public abstract void undo();

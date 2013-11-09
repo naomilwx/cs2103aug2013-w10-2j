@@ -191,4 +191,9 @@ public class CommandAddReminder extends Command{
 	public DateTime getReminderDateToAdd() {
 		return this.reminderDateToAdd;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return taskRelated;
+	}
 }

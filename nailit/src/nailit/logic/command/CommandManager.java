@@ -331,10 +331,14 @@ public class CommandManager {
 	}
 
 	
-
 	private Result createResultForUndoSuccessfully(Command commandToUndo) {
 		String commandSummary = commandToUndo.getCommandString();
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
+		Result resultToReturn = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
+		if (commandToUndo.getCommandType() != CommandType.ADD) {
+			Task taskGivenToGui = commandToUndo.getTaskRelated();
+			resultToReturn.setTaskToDisplay(taskGivenToGui);
+		}
+		return resultToReturn;
 	}
 
 	private void updateCurrentListAfterUndo(Command commandToUndo) {

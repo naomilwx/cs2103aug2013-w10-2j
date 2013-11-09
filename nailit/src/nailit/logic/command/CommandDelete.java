@@ -195,4 +195,9 @@ public class CommandDelete extends Command{
 	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return taskToRemove;
+	}
 }
