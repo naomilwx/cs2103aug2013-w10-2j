@@ -19,7 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
-public class CommandBar extends JPanel {
+public class CommandBar extends JPanel implements Resizable{
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
 	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
 	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 3;
@@ -56,14 +56,14 @@ public class CommandBar extends JPanel {
 	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
 		createConfigureAndAddInputField();
-		resizeToFitMainContainer(containerWidth, containerHeight);
+		resizeToFitContainer(containerWidth, containerHeight);
 		this.setBorder(COMMAND_FRAME_BORDER);
 		this.setLayout(null);
 	}
 	
 	//set position and size of command frame and bar based on main container. 
 	//NOTE: height is independent of main window
-	protected void resizeToFitMainContainer(int containerWidth, int containerHeight){
+	public void resizeToFitContainer(int containerWidth, int containerHeight){
 		storeMainContainerDimensions(containerWidth, containerHeight);
 		adjustFrameWidth();
 		adjustCommandBarWidth();
@@ -113,7 +113,7 @@ public class CommandBar extends JPanel {
 	}
 	private void textBarResizeAction(){
 		commandFrameAndBarDynamicResize();
-		GUIBoss.resizeMainDisplayArea();
+		GUIBoss.handleCommandBarResizeEvent();
 		revalidate();
 	}
 	
@@ -186,7 +186,7 @@ public class CommandBar extends JPanel {
 				int keyCode = keyStroke.getKeyCode();
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineOfTextFromPos();
-					GUIBoss.resizeMainDisplayArea();
+					GUIBoss.handleCommandBarResizeEvent();
 				}else if(keyCode == KeyEvent.VK_F1){
 					GUIBoss.displayFullHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
