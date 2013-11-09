@@ -51,7 +51,9 @@ public class HistoryWindow extends ExtendedFadableWindow{
 	}
 	protected void displayHistoryList(Vector<Vector <String>> list, boolean fadeOut){
 		displayHistoryList(list);
-		setVisible(true);
+		if(!isVisible()){
+			setVisible(true);
+		}
 		if(fadeOut){
 			startFadeOutTimer();
 		}
