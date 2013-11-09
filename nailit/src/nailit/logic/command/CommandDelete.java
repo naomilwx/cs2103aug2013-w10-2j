@@ -51,7 +51,7 @@ public class CommandDelete extends Command{
 	}
 
 	@Override
-	public Result executeCommand() throws Exception {
+	public Result executeCommand() throws NoTaskFoundException, FileCorruptionException {
 		taskToDeleteDisplayID = getTaskDisplayID();
 		try {
 			if (isExistToDeleteTaskInTaskList()) {
@@ -62,7 +62,7 @@ public class CommandDelete extends Command{
 				createCommandSummaryForDeletingNotExistingTaskInTaskList();
 				return executedResult;
 			}
-		} catch (Exception e) {
+		} catch (NoTaskFoundException e) {
 			isDeleteSuccessfully = false;
 			createResultObjectForNotExistingTask();
 			createCommandSummaryForDeletingNotExistingTask();
