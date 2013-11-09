@@ -358,7 +358,7 @@ public class GUIManager {
 			Task task = result.getTaskToDisplay();
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
-						+" " + "description " + task.getDescription());
+						+", " + "description, " + task.getDescription());
 			}
 		}
 	}
@@ -374,7 +374,7 @@ public class GUIManager {
 			Task task = result.getTaskToDisplay();
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
-						+" " + "name " + task.getName());
+						+", " + "name, " + task.getName());
 			}
 		}
 	}
