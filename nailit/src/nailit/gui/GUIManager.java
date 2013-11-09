@@ -384,12 +384,26 @@ public class GUIManager {
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
+	protected void executeTriggeredTaskDelete(){
+		setFocusOnCommandBar();
+		int displayID = displayArea.getTaskTableSelectedRowID();
+		if(displayID >= 1){
+			executeTriggeredTaskDelete(displayID);
+		}
+	}
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
 		try {
 			Result delCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DELETE, taskDisplayID);
 			displayCommandFeedback(delCommandResult);
 		} catch (Exception e) {
 			e.printStackTrace(); //TODO:
+		}
+	}
+	protected void executeTriggeredTaskDisplay(){
+		setFocusOnCommandBar();
+		int displayID = displayArea.getTaskTableSelectedRowID();
+		if(displayID >= 1){
+			executeTriggeredTaskDisplay(displayID);
 		}
 	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
