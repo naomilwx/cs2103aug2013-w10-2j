@@ -183,4 +183,9 @@ public class CommandDeleteReminder extends Command {
 	public DateTime getReminderDateDeleted() {
 		return reminderDateDeleted;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return taskRelated;
+	}
 }

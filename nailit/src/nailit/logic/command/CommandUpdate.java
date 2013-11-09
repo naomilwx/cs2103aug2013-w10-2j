@@ -294,4 +294,9 @@ public class CommandUpdate extends Command{
 	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return updatedTask;
+	}
 }

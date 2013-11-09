@@ -3,6 +3,7 @@ package nailit.logic.command;
 //@author A0105789R
 
 import nailit.common.Result;
+import nailit.common.Task;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
@@ -56,5 +57,11 @@ public class CommandExit extends Command{
 	@Override
 	public boolean isRedoSuccessfully() {
 		return false;
+	}
+
+	@Override
+	public Task getTaskRelated() {
+		// nothing to do
+		return null;
 	}
 }
