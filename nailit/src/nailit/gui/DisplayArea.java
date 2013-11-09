@@ -242,6 +242,10 @@ public class DisplayArea extends JLayeredPane {
 			public void mouseEntered(MouseEvent event){
 				timer.stop();
 			}
+			@Override
+			public void mouseExited(MouseEvent event){
+				timer.restart();
+			}
 		});
 		timer.addActionListener(new ActionListener(){
 			int originalOpacity = GUIUtilities.getComponentOpacity(component);
