@@ -436,8 +436,14 @@ public class CommandManager {
 
 	private Result createResultForRndoSuccessfully(Command commandToRedo) {
 		String commandSummary = commandToRedo.getCommandString();
-		return new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
-						commandSummary + " successfully.", null, currentTaskList, null);
+		Result resultReturnedToGui = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
+				commandSummary + " successfully.", null, currentTaskList, null);
+		Task taskReturnedToGui = commandToRedo.getTaskRelated();
+		resultReturnedToGui.setTaskToDisplay(taskReturnedToGui);
+		if(commandToRedo.getCommandType() == CommandType.DELETE) {
+			resultReturnedToGui.setDeleteStatus(true);
+		}
+		return resultReturnedToGui;
 	}
 
 	private void updateCurrentListAfterRedo(Command commandToRedo) {
