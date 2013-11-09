@@ -33,7 +33,8 @@ public class CommandBar extends JPanel {
 	private static final int WINDOW_RIGHT_BUFFER = GUIManager.WINDOW_RIGHT_BUFFER;
 	@SuppressWarnings("unused")
 	private static final int WINDOW_BOTTOM_BUFFER = GUIManager.WINDOW_BOTTOM_BUFFER;
-	private static final Font COMMANDBAR_FONT = new Font("HelveticaNeue_Lt.tff", Font.PLAIN, 18);
+	protected static final String DEFAULT_COMMANDBAR_FONT = "HelveticaNeue";
+	private static final Font COMMANDBAR_FONT = new Font(DEFAULT_COMMANDBAR_FONT, Font.PLAIN, 20);
 	private static final LineBorder COMMAND_FRAME_BORDER  = new LineBorder(GUIManager.BORDER_COLOR);
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
@@ -209,6 +210,7 @@ public class CommandBar extends JPanel {
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
 					GUIBoss.removeTaskDisplay();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
+					resetKeys();
 					GUIBoss.displayCommandSyantaxHelpWindow();
 					GUIBoss.setFocusOnHelpWindow();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
@@ -245,7 +247,7 @@ public class CommandBar extends JPanel {
 	protected String getUserInput(){
 		return textBar.getText();
 	}
-	//Methods to manipulate the text in the user input JTextField
+	//Methods to manipulate the text in the user input JTextArea
 	protected void clearUserInput(){
 		textBar.setText(COMMANDBAR_EMPTY_DISPLAY);
 		return;
