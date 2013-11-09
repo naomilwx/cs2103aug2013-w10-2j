@@ -183,7 +183,10 @@ public class GUIManager {
 	protected void restoreMainWindowSize(){
 		mainWindow.restoreDefaultWindow();
 	}
-	protected int getCommandBarHeight(){
+	protected int getHelpWindowOverlayTopOffset(){
+		return commandBar.getFrameHeight();
+	}
+	protected int getDisplayAreaHeightOffset(){
 		return commandBar.getFrameHeight();
 	}
 	public void enableGlobalKeyListener(){
