@@ -120,4 +120,9 @@ public class CommandAdd extends Command{
 		taskPassedToStorer.setID(taskId);
 		return taskPassedToStorer;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return taskPassedToStorer;
+	}
 }

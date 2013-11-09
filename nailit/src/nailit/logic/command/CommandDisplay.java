@@ -230,4 +230,9 @@ public class CommandDisplay extends Command{
 	public boolean isRedoSuccessfully() {
 		return false;
 	}
+
+	@Override
+	public Task getTaskRelated() {
+		return taskRetrieved;
+	}
 }
