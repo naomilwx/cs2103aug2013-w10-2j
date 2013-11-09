@@ -13,15 +13,8 @@ import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
 
 public class CommandDelete extends Command{
-	private Task taskToRemove;
-	private boolean deleteSuccessfully;
 	
-	private int taskToDeleteDisplayID;
-	
-	// task list, in which the task is to delete
-	private Vector<Task> taskList;
-	
-
+	// static final variables
 	private static final String SUCCESS_MSG = "Task: %1s has been successfully deleted.";
 	
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. " +
@@ -31,17 +24,24 @@ public class CommandDelete extends Command{
 																			"exist in the current task list. " +
 																			"Cannot delete non-existant task.";
 	
-	private static final String EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL = "Display ID in the parserResult " +
-																			"instance is null.";
-	
 	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_STORAGE = "This is a delete command, " +
 																							"but the to-delete task does not " +
 																							"exist in the storage.";
 	
 	private static final String COMMAND_SUMMARY_FOR_DELETING_TASK_NOT_EXISTING_IN_TASK_LIST = "This is a delete command, but " +
 																							"the to-delete task does not exist in " +
+	
 																							"the task list.";
 	
+	// private fields
+	private Task taskToRemove;
+	private boolean isDeleteSuccessfully;
+	private int taskToDeleteDisplayID;
+	
+	// task list, in which the task is to delete
+	private Vector<Task> taskList;
+	
+	// constructor
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
 		commandType = CommandType.DELETE;
@@ -53,31 +53,25 @@ public class CommandDelete extends Command{
 	@Override
 	public Result executeCommand() throws Exception {
 		taskToDeleteDisplayID = getTaskDisplayID();
-		// if displayID is TASKID_NULL, throw exception
-		if(taskToDeleteDisplayID == 0) { // 0 means no display ID but the original one. later need change
-			throw new Exception(EXCEPTION_MESSAGE_FOR_DISPLAY_ID_IS_NULL);
-		} else {
-			try {
-				if(isExistToDeleteTaskInTaskList()) {
-					removeTheTaskOnStorage(); // inside the method, taskToRemove is defined
-				} else {
-					deleteSuccessfully = false;
-					createResultObjectForTaskToDeleteNotExistingInTaskList();
-					createCommandSummaryForDeletingNotExistingTaskInTaskList();
-					return executedResult;
-				}
-				
-			} catch(Exception e) {
-				deleteSuccessfully = false;
-				createResultObjectForNotExistingTask();
-				createCommandSummaryForDeletingNotExistingTask();
+		try {
+			if (isExistToDeleteTaskInTaskList()) {
+				removeTheTaskOnStorage(); // inside the method, taskToRemove is defined
+			} else {
+				isDeleteSuccessfully = false;
+				createResultObjectForTaskToDeleteNotExistingInTaskList();
+				createCommandSummaryForDeletingNotExistingTaskInTaskList();
 				return executedResult;
 			}
-			deleteSuccessfully = true;
-			createResultObject();
-			createCommandSummary();
+		} catch (Exception e) {
+			isDeleteSuccessfully = false;
+			createResultObjectForNotExistingTask();
+			createCommandSummaryForDeletingNotExistingTask();
 			return executedResult;
 		}
+		isDeleteSuccessfully = true;
+		createResultObject();
+		createCommandSummary();
+		return executedResult;
 	}
 
 	public int getTaskDisplayID() {
@@ -128,24 +122,6 @@ public class CommandDelete extends Command{
 		if(taskToRemove.getName() != null) {
 			commandSummary = commandSummary + taskToRemove.toString();
 		} 
-		
-//		if(taskToRemove.getStartTime() != null) {
-//			commandSummary = commandSummary + " Start time: " + 
-//		taskToRemove.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//		} 
-//		
-//		if(taskToRemove.getEndTime() != null) {
-//			commandSummary = commandSummary + " End time: " + 
-//		taskToRemove.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//		} 
-		
-//		if(taskToRemove.getTag() != null) {
-//			commandSummary = commandSummary + " Tag: " + taskToRemove.getTag() + "\n";
-//		} 
-//		
-//		if(taskToRemove.getPriority() != null) {
-//			commandSummary = commandSummary + " Priority: " + taskToRemove.getPriority() + "\n";
-//		} 
 	}
 
 	private void removeTheTaskOnStorage() throws NoTaskFoundException,
@@ -167,7 +143,7 @@ public class CommandDelete extends Command{
 	}
 
 	public boolean deleteSuccess() {
-		return deleteSuccessfully;
+		return isDeleteSuccessfully;
 	}
 
 	public CommandType getCommandType() {
@@ -219,6 +195,4 @@ public class CommandDelete extends Command{
 	public boolean isRedoSuccessfully() {
 		return isRedoSuccess;
 	}
-	
-	
 }

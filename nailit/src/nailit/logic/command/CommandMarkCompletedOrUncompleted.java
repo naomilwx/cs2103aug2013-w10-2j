@@ -4,7 +4,6 @@ package nailit.logic.command;
 
 import java.util.Vector;
 import org.joda.time.DateTime;
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -12,7 +11,7 @@ import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
 public class CommandMarkCompletedOrUncompleted extends Command{
-	
+	// static final fields
 	private static final String NOTIFICATION_STRING_FOR_MARK_COMPLETED_SUCCESS = "Marked %1s " +
 																				"as completed.";
 	
@@ -25,6 +24,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 																					"the task does not exist " +
 																					"in the storage.";
 
+	// private fields
 	// isCompleted marks whether the task related has already been completed
 	// this helps the undo and redo double check
 	private boolean isSuccess;
@@ -34,20 +34,14 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 	
 	
 	private Vector<Task> taskList;
-	
 	private int displayID;
-	
 	private Task taskRelated;
-	
-	
-	
-	
 	private boolean isCommandMarkAsCompleted;
-	
 	
 	// the description, used to future undo and redo
 	private DateTime taskReminderDate;
 
+	// constructor
 	public CommandMarkCompletedOrUncompleted(ParserResult resultInstance,
 			StorageManager storerToUse, Vector<Task> currentTaskList, boolean isMarkAsCompleted) {
 		super(resultInstance, storerToUse);
@@ -85,35 +79,9 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 		if(isCommandMarkAsCompleted) {
 			commandSummary = "mark completed: ";
 			commandSummary += taskRelated.toString();
-//			if(taskRelated.getName() != null) {
-//				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
-//			} 
-//			
-//			if(taskRelated.getStartTime() != null) {
-//				commandSummary = commandSummary + " Start time: " + 
-//						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//			} 
-			
-//			if(taskRelated.getEndTime() != null) {
-//				commandSummary = commandSummary + " End time: " + 
-//						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//			} 
 		} else {
 			commandSummary = "mark uncompleted: ";
 			commandSummary += taskRelated.toString();
-//			if(taskRelated.getName() != null) {
-//				commandSummary = commandSummary + " Name: " + taskRelated.getName() + "\n";
-//			} 
-//			
-//			if(taskRelated.getStartTime() != null) {
-//				commandSummary = commandSummary + " Start time: " + 
-//						taskRelated.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//			} 
-//			
-//			if(taskRelated.getEndTime() != null) {
-//				commandSummary = commandSummary + " End time: " + 
-//						taskRelated.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT) + "\n";
-//			} 
 		}
 	}
 
