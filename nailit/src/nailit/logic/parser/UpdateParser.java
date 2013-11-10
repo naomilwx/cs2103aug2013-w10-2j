@@ -30,6 +30,7 @@ public class UpdateParser extends Parser {
 			listOfCommands[i] = listOfCommands[i].trim();
 		}
 		resultExecution.setTaskId(Integer.parseInt(listOfCommands[0]));
+		
 		if (listOfCommands[1].equalsIgnoreCase("name")){
 			String answer = "";
 			for (int i=2; i<listOfCommands.length; i++){
@@ -105,8 +106,10 @@ public class UpdateParser extends Parser {
 			}else{
 				resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}
+		}else 
+		{
+			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: Cannot identify which field you want to update");
 		}
-		System.out.println(resultExecution.getEndTime());
 		return resultExecution;
 	}
 }
