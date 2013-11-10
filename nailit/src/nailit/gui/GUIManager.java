@@ -45,28 +45,26 @@ import nailit.storage.FileCorruptionException;
 
 public class GUIManager {	
 	public static final String APPLICATION_NAME = "NailIt!";
+	protected static final String DEFAULT_FONT = "HelveticaNeue Light";
+	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
+	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
+	
 	protected static final Color BORDER_COLOR = Color.gray;
 	protected static final Color FOCUSED_BORDER_COLOR = Color.orange;
+	
 	protected static final int Y_BUFFER_HEIGHT = 7;
 	protected static final int X_BUFFER_WIDTH = 5;
 	protected static final int WINDOW_RIGHT_BUFFER = 12;
 	protected static final int WINDOW_BOTTOM_BUFFER = 32;
-	
-	protected static final String DEFAULT_FONT = "HelveticaNeue Light";
-	protected static final String DEFAULT_WINDOW_LOOKANDFEEL = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
-	protected static final String DEFAULT_WINDOW_LOOKANDFEEL_FALLBACK = "javax.swing.plaf.metal.MetalLookAndFeel";
-	
-	protected static final Point DEFAULT_COMPONENT_LOCATION = new Point(0, 0);
 	protected static final int HOME_WINDOW_WIDTH = 400;
 	protected static final int HISTORY_WINDOW_WIDTH = 400;
-	
 	protected static final int SCREEN_BOTTOM_BUFFER = 50;
 	protected static final Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize(); 
 	protected static final int MAIN_WINDOW_X_POS = (SCREEN_DIMENSION.width - MainWindow.WINDOW_WIDTH - HOME_WINDOW_WIDTH)/2;
 	protected static final int MAIN_WINDOW_Y_POS = Math.min(SCREEN_DIMENSION.height/2, 
 			SCREEN_DIMENSION.height - SCREEN_BOTTOM_BUFFER - MainWindow.WINDOW_HEIGHT);
 	
-	private static final String WELCOME_MESSAGE = "Welcome to NailIt!";
 	private static final String INVALID_COMMAND_ERROR_MESSAGE = "An error occured while executing your command. Check your command format";
 	private static final String FAIL_TO_LOAD_ICON_IN_SYSTEM_TRAY_ERROR = "Failed to load system tray icon";
 	private static final String FAIL_TO_OPEN_FONT_RESOURCE_ERROR = "Failed to open font file data";
@@ -77,6 +75,7 @@ public class GUIManager {
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
+	//table width constants
 	protected static final int ID_COLUMN_WIDTH = 45;
 	protected static final int NAME_COLUMN_WIDTH = 400;
 	protected static final int START_TIME_COLUMN_WIDTH = 130;
@@ -87,6 +86,7 @@ public class GUIManager {
 		{ID_COLUMN_WIDTH, START_TIME_COLUMN_WIDTH, END_TIME_COLUMN_WIDTH, NAME_COLUMN_WIDTH};
 	protected static final int TASK_NAME_COLUMN_NUMBER = 3;
 	
+	//table header constants
 	protected static final String ID_COL_NAME = "ID";
 	protected static final String TASK_NAME_COL_NAME = "Task Name";
 	protected static final String TASK_START_TIME_COL_NAME = "Start";
@@ -97,6 +97,7 @@ public class GUIManager {
 	
 	protected static Font DEFAULT_FONT_OBJECT;
 	
+	//GUI components
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
 	private DisplayArea displayArea;
@@ -104,10 +105,11 @@ public class GUIManager {
 	private HistoryWindow historyWindow;
 	private HelpWindow helpWindow;
 	
+	//reference to other components
 	private AppLauncher launcher;
 	private LogicManager logicExecutor;
-	private NailItGlobalKeyListener globalKeyListener;
 	private Logger logger;
+	private NailItGlobalKeyListener globalKeyListener;
 	
 	public GUIManager(final AppLauncher launcher){
 		try{
@@ -305,9 +307,7 @@ public class GUIManager {
 	protected boolean getMainWindowVisibility(){
 		return mainWindow.isVisible();
 	}
-	protected int getDisplayAreaHeight(){
-		return displayArea.getHeight();
-	}
+	
 	protected void displayCommandSyantaxHelpWindow(){
 		helpWindow.displaySyntaxForSupportedCommands();
 	}
@@ -358,17 +358,8 @@ public class GUIManager {
 		helpWindow.displayListOfAvailableCommands();
 		displayNotification(e.getMessage(), false);
 	}
-	private void displayCommandFeedback(Result executionResult){
-		clearUserInputAndCleanUpDisplay();
-		processAndDisplayExecutionResult(executionResult);
-		handleCommandBarResizeEvent();
-	}
-	private void clearUserInputAndCleanUpDisplay(){
-		commandBar.clearUserInput();
-		displayArea.cleanupDisplayArea();
-	}
 	
-	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
+	//functions to execute commands via keyboard shortcuts
 	protected void executeTriggeredTaskDelete(){
 		setFocusOnCommandBar();
 		int displayID = displayArea.getTaskTableSelectedRowID();
@@ -433,13 +424,7 @@ public class GUIManager {
 			}
 		}
 	}
-	//
-	protected void removeTaskDisplay(){
-		displayArea.removeTaskDisplay();
-	}
-	protected void removeDeletedTaskFromTaskListDisplay(){
-		displayArea.removeDeletedTasksFromTaskListTable();
-	}
+	//functions to handle display of feedback and execution result
 	protected void processAndDisplayExecutionResult(Result result){
 		if(result.getExitStatus()){
 			exit();
@@ -487,6 +472,21 @@ public class GUIManager {
 				break;
 		}
 	}
+	private void displayCommandFeedback(Result executionResult){
+		clearUserInputAndCleanUpDisplay();
+		processAndDisplayExecutionResult(executionResult);
+		handleCommandBarResizeEvent();
+	}
+	private void clearUserInputAndCleanUpDisplay(){
+		commandBar.clearUserInput();
+		displayArea.cleanupDisplayArea();
+	}
+	protected void removeTaskDisplay(){
+		displayArea.removeTaskDisplay();
+	}
+	protected void removeDeletedTaskFromTaskListDisplay(){
+		displayArea.removeDeletedTasksFromTaskListTable();
+	}
 	private void displayExecutionNotification(Result result){
 		String notificationStr = result.getPrintOut();
 		boolean isSuccess = result.getExecutionSuccess();
@@ -511,7 +511,7 @@ public class GUIManager {
 	protected void forceExit(){
 		launcher.forceExit();
 	}
-	
+	//functions to configure look and field of GUI
 	private void setWindowLookAndFeel() throws Exception{
 		try {
 			for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
