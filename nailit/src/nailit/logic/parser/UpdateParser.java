@@ -63,8 +63,14 @@ public class UpdateParser extends Parser {
 		}else if (listOfCommands[1].equalsIgnoreCase("tag")){
 			if (listOfCommands.length<=2){
 				resultExecution.setTagNull(true);
+			}else if (listOfCommands.length == 3){
+				if (Parser.isTag(listOfCommands[2])){
+					resultExecution.setTag(listOfCommands[2]);
+				}else{
+					throw new InvalidCommandFormatException("Wrong format: The string is not a correct tag format");
+				}
 			}else{
-				resultExecution.setTag(listOfCommands[2]);
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct tag format");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Start")){
 			String answer = "";
@@ -73,8 +79,10 @@ public class UpdateParser extends Parser {
 			}
 			if (answer == ""){
 				resultExecution.setStartTimeNull(true);
-			}else{
+			}else if (Parser.isDateTime(answer)){
 				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}else{
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("End")|| listOfCommands[1].equalsIgnoreCase("Due")){
 			String answer = "";
@@ -83,8 +91,10 @@ public class UpdateParser extends Parser {
 			}
 			if (answer == ""){
 				resultExecution.setEndTimeNull(true);
-			}else{
+			}else if (Parser.isDateTime(answer)){
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}else{
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Time")){
 			String answer = "";
@@ -101,9 +111,15 @@ public class UpdateParser extends Parser {
 		}else if (listOfCommands[1].equalsIgnoreCase("Priority")){
 			if (listOfCommands.length<=2){
 				resultExecution.setPriorityNull(true);
+			}else if (listOfCommands.length == 3){
+				if (Parser.isPriority(listOfCommands[2])){
+					resultExecution.isNullPriority();
+					resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[2].toUpperCase()));
+				}else{
+					throw new InvalidCommandFormatException("Wrong format: The string cannot represent priority");
+				}
 			}else{
-				resultExecution.isNullPriority();
-				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[2].toUpperCase()));
+				throw new InvalidCommandFormatException("Wrong format: The string cannot represent priority");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Reminder")){
 			String answer = "";
@@ -113,7 +129,11 @@ public class UpdateParser extends Parser {
 			if (answer == ""){
 				resultExecution.setReminderTimeNull(true);
 			}else{
-				resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+				if (Parser.isDateTime(answer)){
+					resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+				}else{
+					throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+				}
 			}
 		}else 
 		{
