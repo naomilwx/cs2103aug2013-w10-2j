@@ -19,7 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
-public class CommandBar extends JPanel {
+public class CommandBar extends JPanel implements Resizable{
 	protected static final String COMMANDBAR_EMPTY_DISPLAY = "";
 	private static final int COMMANDBAR_TEXT_HEIGHT = 30;
 	private static final int COMMANDBAR_TEXT_BUFFER_HEIGHT = 3;
@@ -56,14 +56,14 @@ public class CommandBar extends JPanel {
 	public CommandBar(final GUIManager GUIMain, int containerWidth, int containerHeight){
 		GUIBoss = GUIMain;
 		createConfigureAndAddInputField();
-		resizeToFitMainContainer(containerWidth, containerHeight);
+		resizeToFitContainer(containerWidth, containerHeight);
 		this.setBorder(COMMAND_FRAME_BORDER);
 		this.setLayout(null);
 	}
 	
 	//set position and size of command frame and bar based on main container. 
 	//NOTE: height is independent of main window
-	protected void resizeToFitMainContainer(int containerWidth, int containerHeight){
+	public void resizeToFitContainer(int containerWidth, int containerHeight){
 		storeMainContainerDimensions(containerWidth, containerHeight);
 		adjustFrameWidth();
 		adjustCommandBarWidth();
@@ -113,7 +113,7 @@ public class CommandBar extends JPanel {
 	}
 	private void textBarResizeAction(){
 		commandFrameAndBarDynamicResize();
-		GUIBoss.resizeMainDisplayArea();
+		GUIBoss.handleCommandBarResizeEvent();
 		revalidate();
 	}
 	
@@ -174,53 +174,20 @@ public class CommandBar extends JPanel {
 		});
 	}
 	private void addListenersToTextInputField(){
+		textBar.addKeyListener(GUIBoss.getMainWindowComponentBasicKeyListener());
 		textBar.addKeyListener(new KeyAdapter(){
 			private boolean ctrlPressed = false;
 			private boolean shiftDown = false;
-			private void resetKeys(){
-				ctrlPressed = false;
-				shiftDown = false;
-			}
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
 				int keyCode = keyStroke.getKeyCode();
 				if((ctrlPressed || shiftDown) && keyCode == KeyEvent.VK_ENTER){
 					addNewLineOfTextFromPos();
-					GUIBoss.resizeMainDisplayArea();
-				}else if(keyCode == KeyEvent.VK_F1){
-					GUIBoss.displayFullHelpWindow();
-					GUIBoss.setFocusOnHelpWindow();
+					GUIBoss.handleCommandBarResizeEvent();
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(keyCode == KeyEvent.VK_SHIFT){
 					shiftDown = true;
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
-					GUIBoss.reduceMainWindowSize();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
-					GUIBoss.restoreMainWindowSize();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
-					GUIBoss.toggleHomeWindow();
-					GUIBoss.setFocusOnCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
-					resetKeys();
-					GUIBoss.setVisible(false);
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
-					GUIBoss.toggleHistoryWindow();
-					GUIBoss.setFocusOnCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
-					GUIBoss.removeTaskDisplay();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
-					resetKeys();
-					GUIBoss.displayCommandSyantaxHelpWindow();
-					GUIBoss.setFocusOnHelpWindow();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
-					GUIBoss.loadExistingTaskNameInCommandBar();
-				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
-					GUIBoss.loadExistingTaskDescriptionInCommandBar();
-				}else if(keyCode == KeyEvent.VK_PAGE_UP){
-					GUIBoss.scrollToPrevPageInTaskTable();
-				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
-					GUIBoss.scrollToNextPageInTaskTable();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_UP){
 					GUIBoss.taskTableScollUp();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_DOWN){

@@ -24,7 +24,7 @@ public class OverAllTestUpdate {
 			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay();
 			String desc = TaskStub.getRandomString();
 			task.setDescription(desc);
-			Task updatedTask = logic.executeCommand("update " + taskID + " description "+ desc).getTaskToDisplay();
+			Task updatedTask = logic.executeCommand("update " + taskID + ", description, "+ desc).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -39,7 +39,7 @@ public class OverAllTestUpdate {
 			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay();
 			String tag = TaskStub.getRandomString();
 			task.setTag(tag);
-			Task updatedTask = logic.executeCommand("update " + taskID + " tag "+ tag).getTaskToDisplay();
+			Task updatedTask = logic.executeCommand("update " + taskID + ", tag ,"+ tag).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -57,7 +57,7 @@ public class OverAllTestUpdate {
 				rem = TaskStub.getRandomEndDate();
 			}
 			task.setReminder(rem);
-			Task updatedTask = logic.executeCommand("update " + taskID + " reminder "+ rem.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
+			Task updatedTask = logic.executeCommand("update " + taskID + ", reminder ,"+ rem.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -75,7 +75,7 @@ public class OverAllTestUpdate {
 				date = TaskStub.getRandomEndDate();
 			}
 			task.setEndTime(date);
-			Task updatedTask = logic.executeCommand("update " + taskID + " end "+ date.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
+			Task updatedTask = logic.executeCommand("update " + taskID + ", end, "+ date.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

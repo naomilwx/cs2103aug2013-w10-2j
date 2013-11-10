@@ -103,7 +103,6 @@ public class CommandDisplay extends Command{
 				// update the current task list as the list of all tasks
 				// and make the filter as all
 				cm.setCurrentList(vectorOfTasks);
-				cm.setCurrentFilterSearchAll();
 			}
 			
 		} catch(Exception e) {
