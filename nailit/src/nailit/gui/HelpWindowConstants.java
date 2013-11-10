@@ -84,24 +84,26 @@ public class HelpWindowConstants {
 		COMMAND_SYNTAX_LIST.put(CommandType.ADDREMINDER.toString(), addremCommandSyntax);
 		COMMAND_SYNTAX_LIST.put(CommandType.DELETEREMINDER.toString(), delremCommandSyntax);
 	}
-	
+	public static final HashMap<String, String> GLOBAL_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	static{
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + -", "Reduce Main Window Size");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + =", "Restore Main Window Size");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + N", "Put highlighted task's name in command bar");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + D", "Put highlighted task's description in command bar");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + H", "Toggle Home Window");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + ,", "Toggle Main Window");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + J", "Toggle History Window");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + W", "Hide Task Details Display");
+		GLOBAL_KEYBOARD_COMMANDS.put("Ctrl + /", "Display Help Window For all KeyBoard Commands");
+	}
 	public static final HashMap<String, String> COMMANDBAR_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Down", "Scroll to next page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Page Up", "Scroll to previous page in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Up", "Scroll to next task in task list");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Down", "Scroll to previous task in task list");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + -", "Reduce Main Window Size");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + =", "Restore Main Window Size");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + N", "Put highlighted task's name in command bar");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + D", "Put highlighted task's description in command bar");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + H", "Toggle Home Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + ,", "Toggle Main Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + J", "Toggle History Window");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + W", "Hide Task Details Display");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + Enter or Shift+Enter", "Add new line in command bar");
 		COMMANDBAR_KEYBOARD_COMMANDS.put("Tab", "Set Focus on Display Area");
-		COMMANDBAR_KEYBOARD_COMMANDS.put("Ctrl + /", "Display Help Window For all KeyBoard Commands");
 	}
 	public static final HashMap<String, String> DISPLAYAREA_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
@@ -115,20 +117,19 @@ public class HelpWindowConstants {
 		TASKTABLE_KEYBOARD_COMMANDS.put("Up", "Scrollup");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Enter", "Display Highlighted Task");
 		TASKTABLE_KEYBOARD_COMMANDS.put("Del", "Delete Highlighted Task");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl + N", "Put highlighted task's name in command bar");
-		TASKTABLE_KEYBOARD_COMMANDS.put("Ctrl + D", "Put highlighted task's description in command bar");
 	}
-	public static final HashMap<String, String> HELPWINDOW_KEYBOARD_COMMANDS = new HashMap<String, String>();
+	public static final HashMap<String, String> EXTENDED_KEYBOARD_COMMANDS = new HashMap<String, String>();
 	static{
-		HELPWINDOW_KEYBOARD_COMMANDS.put("ESC", "Close Help Window");
+		EXTENDED_KEYBOARD_COMMANDS.put("ESC", "Hide Extra Window");
 	}
 	
 	public static final HashMap<String, HashMap<String, String>> ALL_KEYBOARD_COMMANDS = new HashMap<String, HashMap<String, String>>();
 	static{
+		ALL_KEYBOARD_COMMANDS.put("Main Window Global Keyboard Shortcuts", GLOBAL_KEYBOARD_COMMANDS);
 		ALL_KEYBOARD_COMMANDS.put("Command Bar Keyboard Shortcuts", COMMANDBAR_KEYBOARD_COMMANDS);
 		ALL_KEYBOARD_COMMANDS.put("Display Area Keyboard Shortcuts", DISPLAYAREA_KEYBOARD_COMMANDS);
 		ALL_KEYBOARD_COMMANDS.put("Task Table Keyboard Shortcuts", TASKTABLE_KEYBOARD_COMMANDS);
-		ALL_KEYBOARD_COMMANDS.put("Help Window Keyboard Shortcuts", HELPWINDOW_KEYBOARD_COMMANDS);
+		ALL_KEYBOARD_COMMANDS.put("Help Window Keyboard Shortcuts", EXTENDED_KEYBOARD_COMMANDS);
 	}
 	public static String generateListOfSupportedCommands(){
 		String list = "<center><b>Supported Commands</b><br>";

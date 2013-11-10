@@ -23,7 +23,7 @@ public class HomeWindow extends ExtendedWindow{
 	private static final String UNDONE_TASK_HEADER = "";
 	public static final String TASK_SINGLE_CONCISE_DATE = "<p>[%1s, %2s]</p>";
 	public static final String TODAYS_DEADLINE_DISPLAY = "<p>[TODAY, %1s]</p>";
-	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "<p>[%1s,<br>"
+	public static final String ONE_DAY_EVENT_DATE_DISPLAY = "<p>[%1s:<br>"
 															+ "%2s - %3s]</p>";
 	public static final String EVENT_DATE_DISPLAY = "<p>[%1s  %2s - <br> %3s %4s]</p>";
 	
