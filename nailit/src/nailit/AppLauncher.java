@@ -29,10 +29,8 @@ public class AppLauncher {
 			FileHandler logFileHandler = new FileHandler(LOG_FILE);
 			appLog.addHandler(logFileHandler);
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

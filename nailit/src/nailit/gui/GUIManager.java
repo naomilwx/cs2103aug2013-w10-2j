@@ -36,7 +36,6 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.FontUIResource;
 
-import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
@@ -340,22 +339,6 @@ public class GUIManager {
 			executionResult = logicExecutor.executeCommand(input);
 			assert executionResult != null;
 			displayCommandFeedback(executionResult);
-		}catch(Error err){
-			String notificationStr = err.getMessage();
-			if(notificationStr == null){
-				notificationStr = "";
-				err.printStackTrace(); //TODO:
-			}
-			if(!notificationStr.isEmpty()){
-				//temp code to change after better exception handling in parser is implemented
-				if(notificationStr.equals("Unrecognized command type")){
-					helpWindow.displayListOfAvailableCommands();
-				}
-				//end of temp code
-				notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + notificationStr;
-				displayNotification(notificationStr, false);
-			}
-			err.printStackTrace();
 		}catch(InvalidCommandFormatException e){
 			handleInvalidCommandFormatExeception(e);
 		}catch(InvalidCommandTypeException e){

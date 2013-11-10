@@ -28,7 +28,7 @@ public class HelpWindowConstants {
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>], [field name], [updated details]"};
 	public static final String[] UPDATE_DATE_RANGE = {"<b>Update Event Date Range</b>", "<em>update</em> [<em>ID</em>], date, from [start date] to [end date]"};//TODO:
 	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task Reminder</b>", "<em>update</em> [<em>ID</em>], reminder, [new reminder date]"};
-	public static final String[] UPDATE_ACCEPTABLE_FIELDS = {"<b>Acceptable Update Fields Names</b>", "name | start | end | due | date | reminder | description | priority"}; //TODO:
+	public static final String[] UPDATE_ACCEPTABLE_FIELDS = {"<b>Acceptable Update Fields Names</b>", "name | start | end | due | date | reminder | description | tag | priority"}; //TODO:
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};

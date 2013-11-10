@@ -93,7 +93,7 @@ public abstract class Parser {
 		}
 	}
 	public static boolean isTag(String p){
-		if (p.charAt(0)=='#' && p.charAt(p.length()-1)=='#'){
+		if (p.length() > 0 && p.charAt(0)=='#' && p.charAt(p.length()-1)=='#'){
 			return true;
 		}else{
 			return false;
