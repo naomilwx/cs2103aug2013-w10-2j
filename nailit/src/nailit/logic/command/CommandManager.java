@@ -333,7 +333,7 @@ public class CommandManager {
 	
 	private Result createResultForUndoSuccessfully(Command commandToUndo) {
 		String commandSummary = commandToUndo.getCommandString();
-		Result resultToReturn = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Undo " + commandSummary +  " successfully.", null, currentTaskList, null);
+		Result resultToReturn = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Successfully UNDO " + commandSummary, null, currentTaskList, null);
 		if (commandToUndo.getCommandType() != CommandType.ADD) {
 			Task taskGivenToGui = commandToUndo.getTaskRelated();
 			resultToReturn.setTaskToDisplay(taskGivenToGui);
@@ -436,8 +436,8 @@ public class CommandManager {
 
 	private Result createResultForRndoSuccessfully(Command commandToRedo) {
 		String commandSummary = commandToRedo.getCommandString();
-		Result resultReturnedToGui = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Redo " + 
-				commandSummary + " successfully.", null, currentTaskList, null);
+		Result resultReturnedToGui = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, "Successfully REDO " + 
+				commandSummary, null, currentTaskList, null);
 		Task taskReturnedToGui = commandToRedo.getTaskRelated();
 		resultReturnedToGui.setTaskToDisplay(taskReturnedToGui);
 		if(commandToRedo.getCommandType() == CommandType.DELETE) {
