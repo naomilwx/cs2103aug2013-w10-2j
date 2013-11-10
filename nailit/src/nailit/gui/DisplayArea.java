@@ -191,7 +191,10 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	}
 	//Functions to control visibility of popupPane
 	protected void hideNotifications(){
-		popupPane.setVisible(false);
+		if(popupPane.isVisible()){
+			popupPane.setVisible(false);
+			fadeOutTimer.stop();
+		}
 	}
 	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
