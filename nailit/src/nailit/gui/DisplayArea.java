@@ -64,9 +64,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		adjustDisplayAreaPos();
 		configureDisplayArea();
 		initialiseLayers();
-		notificationArea = new NotificationArea(getWidth());
-		addPopup(notificationArea);
-		hideNotifications();
+		initialiseNotificationDisplay();
 	}
 	
 	private void configureDisplayArea(){
@@ -75,7 +73,11 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		setDisplayAreaSizeAndPos();
 		this.setOpaque(true);
 	}
-	
+	private void initialiseNotificationDisplay(){
+		notificationArea = new NotificationArea(getWidth());
+		addPopup(notificationArea);
+		hideNotifications();
+	}
 	protected void cleanupDisplayArea(){
 		hideNotifications();
 		removeDeletedTasksFromTaskListTable();
