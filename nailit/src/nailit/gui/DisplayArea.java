@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.Callable;
@@ -19,7 +21,7 @@ import nailit.common.Result;
 import nailit.common.Task;
 
 @SuppressWarnings("serial")
-public class DisplayArea extends JLayeredPane {
+public class DisplayArea extends JLayeredPane implements Resizable{
 	private static final Color DISPLAYAREA_DEFAULT_BACKGROUND_COLOR = Color.white;
 	private static final int Y_BUFFER_HEIGHT = GUIManager.Y_BUFFER_HEIGHT;
 	private static final int X_BUFFER_WIDTH = GUIManager.X_BUFFER_WIDTH;
@@ -40,6 +42,7 @@ public class DisplayArea extends JLayeredPane {
 	private GUIManager GUIBoss;
 	private DisplayPane defaultDisplayPane;
 	private JPanel popupPane;
+	private NotificationArea notificationArea;
 	
 	private int displayWidth;
 	private int displayHeight;
@@ -61,6 +64,7 @@ public class DisplayArea extends JLayeredPane {
 		adjustDisplayAreaPos();
 		configureDisplayArea();
 		initialiseLayers();
+		initialiseNotificationDisplay();
 	}
 	
 	private void configureDisplayArea(){
@@ -69,7 +73,16 @@ public class DisplayArea extends JLayeredPane {
 		setDisplayAreaSizeAndPos();
 		this.setOpaque(true);
 	}
-	
+	private void initialiseNotificationDisplay(){
+		notificationArea = new NotificationArea(getWidth());
+		addPopup(notificationArea);
+		hideNotifications();
+	}
+	protected void cleanupDisplayArea(){
+		hideNotifications();
+		removeDeletedTasksFromTaskListTable();
+		removeTaskDisplay(); //TODO:
+	}
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
 	 * the result of user commands are displayed
@@ -82,7 +95,7 @@ public class DisplayArea extends JLayeredPane {
 	private void initialiseDefaultPane(){
 		defaultPaneWidth = displayWidth;
 		defaultPaneHeight = displayHeight;
-		defaultDisplayPane = new DisplayPane(GUIBoss);
+		defaultDisplayPane = new DisplayPane(this);
 		setLayerToDefaultSettings(defaultDisplayPane);
 		add(defaultDisplayPane,JLayeredPane.DEFAULT_LAYER);
 	}
@@ -122,10 +135,10 @@ public class DisplayArea extends JLayeredPane {
 		fadeOutTimer.stop();
 	}
 	//Start of functions to resize and reposition DisplayArea and its constituent layers 
-	protected void resizeDisplayToFitMainContainer(int containerWidth, int containerHeight){
+	public void resizeToFitContainer(int containerWidth, int containerHeight){
 		this.containerHeight = containerHeight;
 		displayWidth = containerWidth - X_BUFFER_WIDTH - WINDOW_RIGHT_BUFFER;
-		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getCommandBarHeight());
+		dynamicallyResizeAndRepositionDisplayArea(GUIBoss.getDisplayAreaHeightOffset());
 	}
 	//adjust display height based on available space
 	private void adjustDisplayHeight(int additionalOffset){
@@ -166,11 +179,20 @@ public class DisplayArea extends JLayeredPane {
 		revalidate();
 	}
 	//End of functions to resize and reposition DisplayArea and its consitutient layers
-	protected void hideNotificationsPane(){
-		popupPane.setVisible(false);
+	//notification area
+	protected void displayNotification(String notificationStr, boolean isSuccess){
+		notificationArea.displayNotification(notificationStr, isSuccess);
+		showNotificationsPane();
 	}
 	
+	protected void displayNotificationAndForceExit(String notificationStr){
+		notificationArea.displayNotification(notificationStr, false);
+		showNotificationsPaneAndForceExit();
+	}
 	//Functions to control visibility of popupPane
+	protected void hideNotifications(){
+		popupPane.setVisible(false);
+	}
 	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
@@ -237,8 +259,21 @@ public class DisplayArea extends JLayeredPane {
 		});
 		timer.restart();
 	}
-	
-	//
+	protected KeyAdapter getTriggeredCommandKeyListener(){
+		KeyAdapter triggeredCommandKeyEventListener = new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					GUIBoss.executeTriggeredTaskDisplay();
+				}else if(keyCode == KeyEvent.VK_DELETE){
+					GUIBoss.executeTriggeredTaskDelete();
+				}
+			}
+		};
+		return triggeredCommandKeyEventListener;
+	}
+	//acts as facade between GUIManager and components displayed in DisplayArea
 	protected void removeTaskDisplay(){
 		defaultDisplayPane.removeTaskDisplay();
 	}
@@ -265,5 +300,11 @@ public class DisplayArea extends JLayeredPane {
 	}
 	protected void displayExecutionResultDisplay(Result result){
 		defaultDisplayPane.displayExecutionResultDisplay(result);
+	}
+	protected void setDefaultFocus(){
+		GUIBoss.setFocusOnCommandBar();
+	}
+	protected KeyAdapter getBasicKeyListener(){
+		return GUIBoss.getMainWindowComponentBasicKeyListener();
 	}
 }

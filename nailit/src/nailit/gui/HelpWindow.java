@@ -114,7 +114,7 @@ public class HelpWindow extends ExtendedFadableWindow{
 				+ formatDisplayForSupportedCommandsSyntax();
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
-		int yposOffset = GUIBoss.getCommandBarHeight();
+		int yposOffset = GUIBoss.getHelpWindowOverlayTopOffset();
 		adjustAndshowHelpWindow(yposOffset, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}
@@ -123,7 +123,7 @@ public class HelpWindow extends ExtendedFadableWindow{
 							+ formatDisplayForSupportedCommandsSyntax();
 		String display = formatStringforDisplay(displayText);
 		displayFormattedText(display);
-		int yposOffset = GUIBoss.getCommandBarHeight();
+		int yposOffset = GUIBoss.getHelpWindowOverlayTopOffset();
 		adjustAndshowHelpWindow(yposOffset, FULL_WINDOW_HEIGHT);
 		GUIUtilities.scrollDisplayToTop((TextDisplay) displayPane);
 	}

@@ -58,13 +58,22 @@ public class MainWindow extends JFrame {
 	protected void transformIntoReducedWindow(){
 		this.setSize(WINDOW_WIDTH, REDUCED_WINDOW_HEIGHT);
 		this.setAlwaysOnTop(true);
+		resizeDisplayedComponents();
 	}
 	protected void restoreDefaultWindow(){
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setAlwaysOnTop(false);
+		resizeDisplayedComponents();
 	}
 	protected void addItem(Component component) {
 		contentPane.add(component);
+	}
+	private void resizeDisplayedComponents(){
+		for(Component component: contentPane.getComponents()){
+			if(component instanceof Resizable){
+				((Resizable) component).resizeToFitContainer(getWidth(), getHeight());
+			}
+		}
 	}
 	
 }

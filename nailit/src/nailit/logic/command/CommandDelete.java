@@ -3,7 +3,9 @@ package nailit.logic.command;
 //@author A0105789R
 
 import java.util.Vector;
+import java.util.logging.Logger;
 
+import nailit.AppLauncher;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.CommandType;
@@ -41,6 +43,8 @@ public class CommandDelete extends Command{
 	// task list, in which the task is to delete
 	private Vector<Task> taskList;
 	
+	private Logger logger;
+	
 	// constructor
 	public CommandDelete(ParserResult resultInstance, StorageManager storerToUse, Vector<Task> taskList) {
 		super(resultInstance, storerToUse);
@@ -48,10 +52,11 @@ public class CommandDelete extends Command{
 		this.taskList = taskList;
 		isUndoSuccess = false;
 		isRedoSuccess = false;
+		logger = AppLauncher.getLogger();
 	}
 
 	@Override
-	public Result executeCommand() throws Exception {
+	public Result executeCommand() throws NoTaskFoundException, FileCorruptionException {
 		taskToDeleteDisplayID = getTaskDisplayID();
 		try {
 			if (isExistToDeleteTaskInTaskList()) {
@@ -62,7 +67,8 @@ public class CommandDelete extends Command{
 				createCommandSummaryForDeletingNotExistingTaskInTaskList();
 				return executedResult;
 			}
-		} catch (Exception e) {
+		} catch (NoTaskFoundException e) {
+			logger.info("Task not found in the storage.");
 			isDeleteSuccessfully = false;
 			createResultObjectForNotExistingTask();
 			createCommandSummaryForDeletingNotExistingTask();

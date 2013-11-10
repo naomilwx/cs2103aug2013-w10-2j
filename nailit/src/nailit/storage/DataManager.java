@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import nailit.common.NIConstants;
-import nailit.common.Reminder;
+
 import nailit.common.Task;
 import nailit.storage.NoTaskFoundException;
 

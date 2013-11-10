@@ -561,9 +561,9 @@ public class CommandManager {
 		currentTaskList = vectorOfTasks;
 	}
 
-	public void setCurrentFilterSearchAll() {
-		filterContentForCurrentTaskList.setIsSearchAll(true);
-	}
+//	public void setCurrentFilterSearchAll() {
+//		filterContentForCurrentTaskList.setIsSearchAll(true);
+//	}
 	
 	//@author A0091372H
 	public Vector<Task> getTasksHappeningOnDay(DateTime date){

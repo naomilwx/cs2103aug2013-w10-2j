@@ -23,10 +23,11 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
@@ -100,7 +101,6 @@ public class GUIManager {
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
 	private DisplayArea displayArea;
-	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
 	private HistoryWindow historyWindow;
 	private HelpWindow helpWindow;
@@ -165,30 +165,82 @@ public class GUIManager {
 	}
 	private void initialiseAndConfigureDisplayArea(){
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight(), commandBar.getHeight());
-		notificationArea = new NotificationArea(displayArea.getWidth());
-		displayArea.addPopup(notificationArea);
-		displayArea.hideNotificationsPane();
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.addItem(commandBar);
 		mainWindow.addItem(displayArea);
 	}
-	protected void resizeMainDisplayArea(){
+	protected void handleCommandBarResizeEvent(){
 		displayArea.dynamicallyResizeAndRepositionDisplayArea(commandBar.getHeight());
 	}
 	protected void reduceMainWindowSize(){
 		mainWindow.transformIntoReducedWindow();
-		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 		displayArea.removeTaskDisplay();
-		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 	protected void restoreMainWindowSize(){
 		mainWindow.restoreDefaultWindow();
-		commandBar.resizeToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
-		displayArea.resizeDisplayToFitMainContainer(mainWindow.getWidth(), mainWindow.getHeight());
 	}
-	protected int getCommandBarHeight(){
+	protected int getHelpWindowOverlayTopOffset(){
 		return commandBar.getFrameHeight();
+	}
+	protected int getDisplayAreaHeightOffset(){
+		return commandBar.getFrameHeight();
+	}
+	protected KeyAdapter getMainWindowComponentBasicKeyListener(){
+		KeyAdapter listener = new KeyAdapter(){
+			private boolean ctrlPressed = false;
+
+			private void reset(){
+				ctrlPressed = false;
+			}
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_F1){
+					displayFullHelpWindow();
+					setFocusOnHelpWindow();
+				}else if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = true;
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
+					reduceMainWindowSize();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
+					restoreMainWindowSize();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+					toggleHomeWindow();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
+					reset();
+					setVisible(false);
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
+					toggleHistoryWindow();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
+					removeTaskDisplay();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
+					reset();
+					displayCommandSyantaxHelpWindow();
+					setFocusOnHelpWindow();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					loadExistingTaskNameInCommandBar();
+					setFocusOnCommandBar();
+				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
+					loadExistingTaskDescriptionInCommandBar();
+					setFocusOnCommandBar();
+				}else if(keyCode == KeyEvent.VK_PAGE_UP){
+					scrollToPrevPageInTaskTable();
+				}else if(keyCode == KeyEvent.VK_PAGE_DOWN){
+					scrollToNextPageInTaskTable();
+				}
+			}
+			@Override
+			public void keyReleased(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_CONTROL){
+					ctrlPressed = false;
+				}
+			}
+		};
+		return listener;
 	}
 	public void enableGlobalKeyListener(){
 //		if(!globalKeyListener.isEnabled()){
@@ -318,22 +370,34 @@ public class GUIManager {
 	private void displayCommandFeedback(Result executionResult){
 		clearUserInputAndCleanUpDisplay();
 		processAndDisplayExecutionResult(executionResult);
-		resizeMainDisplayArea();
+		handleCommandBarResizeEvent();
 	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
-		displayArea.hideNotificationsPane();
-		displayArea.removeDeletedTasksFromTaskListTable();
-		displayArea.removeTaskDisplay(); //TODO:
+		displayArea.cleanupDisplayArea();
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
+	protected void executeTriggeredTaskDelete(){
+		setFocusOnCommandBar();
+		int displayID = displayArea.getTaskTableSelectedRowID();
+		if(displayID >= 1){
+			executeTriggeredTaskDelete(displayID);
+		}
+	}
 	protected void executeTriggeredTaskDelete(int taskDisplayID) {
 		try {
 			Result delCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DELETE, taskDisplayID);
 			displayCommandFeedback(delCommandResult);
 		} catch (Exception e) {
 			e.printStackTrace(); //TODO:
+		}
+	}
+	protected void executeTriggeredTaskDisplay(){
+		setFocusOnCommandBar();
+		int displayID = displayArea.getTaskTableSelectedRowID();
+		if(displayID >= 1){
+			executeTriggeredTaskDisplay(displayID);
 		}
 	}
 	protected Result executeTriggeredTaskDisplay(int taskDisplayID){
@@ -358,7 +422,7 @@ public class GUIManager {
 			Task task = result.getTaskToDisplay();
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
-						+" " + "description " + task.getDescription());
+						+", " + "description, " + task.getDescription());
 			}
 		}
 	}
@@ -374,7 +438,7 @@ public class GUIManager {
 			Task task = result.getTaskToDisplay();
 			if(task != null){
 				commandBar.setUserInput(CommandType.UPDATE.toString() +" "+ taskDisplayID
-						+" " + "name " + task.getName());
+						+", " + "name, " + task.getName());
 			}
 		}
 	}
@@ -438,17 +502,15 @@ public class GUIManager {
 		if(!notificationStr.isEmpty()){
 			displayNotification(notificationStr, isSuccess);
 		}else{
-			displayArea.hideNotificationsPane();
+			displayArea.hideNotifications();
 		}
 	}
 	private void displayNotification(String notificationStr, boolean isSuccess){
-		notificationArea.displayNotification(notificationStr, isSuccess);
-		displayArea.showNotificationsPane();
+		displayArea.displayNotification(notificationStr, isSuccess);
 	}
 	
 	private void displayNotificationAndForceExit(String notificationStr){
-		notificationArea.displayNotification(notificationStr, false);
-		displayArea.showNotificationsPaneAndForceExit();
+		displayArea.displayNotificationAndForceExit(notificationStr);
 	}
 	
 	private void exit(){
