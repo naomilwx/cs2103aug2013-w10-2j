@@ -26,14 +26,10 @@ public class LogicManager{
 	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
 		parserInstance.passCommand(OriginalCommand);
+
+		ParserResult parserResultInstance = parserInstance.execute();
+		executeCommandResult = commandInstance.executeCommand(parserResultInstance);
 		
-		try{
-			ParserResult parserResultInstance = parserInstance.execute();
-			executeCommandResult = commandInstance.executeCommand(parserResultInstance);
-		} catch (InvalidCommandFormatException e) {
-			System.out.println("wrong format");
-			e.printStackTrace();
-		}
 		return  executeCommandResult;
 	}
 	
