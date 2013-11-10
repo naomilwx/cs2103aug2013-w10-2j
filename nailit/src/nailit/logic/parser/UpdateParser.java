@@ -73,8 +73,10 @@ public class UpdateParser extends Parser {
 			}
 			if (answer == ""){
 				resultExecution.setStartTimeNull(true);
-			}else{
+			}else if (Parser.isDateTime(answer)){
 				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}else{
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("End")|| listOfCommands[1].equalsIgnoreCase("Due")){
 			String answer = "";
@@ -83,8 +85,10 @@ public class UpdateParser extends Parser {
 			}
 			if (answer == ""){
 				resultExecution.setEndTimeNull(true);
-			}else{
+			}else if (Parser.isDateTime(answer)){
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
+			}else{
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Time")){
 			String answer = "";
@@ -101,7 +105,7 @@ public class UpdateParser extends Parser {
 		}else if (listOfCommands[1].equalsIgnoreCase("Priority")){
 			if (listOfCommands.length<=2){
 				resultExecution.setPriorityNull(true);
-			}else{
+			}else if (){
 				resultExecution.isNullPriority();
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[2].toUpperCase()));
 			}
