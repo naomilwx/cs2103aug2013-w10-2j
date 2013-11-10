@@ -99,4 +99,11 @@ public abstract class Parser {
 			return false;
 		}
 	}
+	
+	public static boolean isPriority(String p){
+		if (p.equalsIgnoreCase("low") || p.equals("medium") || p.equals("high")){
+			return true;
+		}
+		return false;
+	}
 }
