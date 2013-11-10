@@ -19,7 +19,7 @@ private String userCommand;
 		
 		resultExecution.setCommand(CommandType.COMPLETE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.COMPLETE,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.COMPLETE,"Wrong Format: Cannot set an empth task to be completed, please specify your task name");
 		}
 		
 		if (Parser.isNumber(userCommand)){

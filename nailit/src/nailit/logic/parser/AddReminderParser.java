@@ -21,7 +21,7 @@ public class AddReminderParser extends Parser{
 		
 		resultExecution.setCommand(CommandType.ADDREMINDER);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: Cannot add reminder an empth task, please specify your task name");
 		}
 		
 		boolean isContainsId = false;

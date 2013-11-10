@@ -19,7 +19,7 @@ public class DeleteParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DELETE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.DELETE,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.DELETE,"Wrong Format: Cannot delete an empth task, please specify your task name");
 		}
 		
 		if (Parser.isNumber(userCommand)){

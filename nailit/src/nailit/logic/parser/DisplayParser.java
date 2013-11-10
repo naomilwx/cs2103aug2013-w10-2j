@@ -22,7 +22,7 @@ public class DisplayParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DISPLAY);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: Cannot display an empth task, please specify your task name");
 		}
 		
 		if (listOfCommands[0].equalsIgnoreCase("ALL")){
