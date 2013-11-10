@@ -73,8 +73,8 @@ public class GUIManager {
 	private static final String FAIL_TO_OPEN_FONT_RESOURCE_ERROR = "Failed to open font file data";
 	private static final String FONT_FORMAT_ERROR = "Problem encountered when reading font format file";
 	
-//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
-	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png"); //TODO: change when compiling
+	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
+//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png"); //TODO: change when compiling
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
