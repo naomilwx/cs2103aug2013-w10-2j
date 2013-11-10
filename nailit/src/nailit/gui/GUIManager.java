@@ -482,7 +482,7 @@ public class GUIManager {
 		historyWindow.displayHistoryList(result.getHistoryList(), true);
 	}
 	private void handleExecutionResultDisplay(Result result){
-		displayArea.displayExecutionResultDisplay(result);
+		displayArea.displayExecutionResult(result);
 	}
 	protected void displayExecutionResult(Result result){
 		displayExecutionNotification(result);
