@@ -373,7 +373,7 @@ public class Task {
 	public String toString(){
 		String output = formatNameAndTag() +" ";
 		if(!isFloatingTask()){
-			output += formatDateDetails() + "\n";
+			output += formatDateDetails();
 		}
 		
 		return output;

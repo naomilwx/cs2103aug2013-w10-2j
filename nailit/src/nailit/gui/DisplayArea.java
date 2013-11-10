@@ -298,8 +298,8 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	protected void displayTaskList(Result result){
 		defaultDisplayPane.displayTaskList(result);
 	}
-	protected void displayExecutionResultDisplay(Result result){
-		defaultDisplayPane.displayExecutionResultDisplay(result);
+	protected void displayExecutionResult(Result result){
+		defaultDisplayPane.displayExecutionResult(result);
 	}
 	protected void setDefaultFocus(){
 		GUIBoss.setFocusOnCommandBar();

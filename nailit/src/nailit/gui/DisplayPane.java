@@ -125,7 +125,7 @@ public class DisplayPane extends JPanel{
 		addKeyListenerToTaskTable();
 		addContent(taskTable);
 	}
-	protected void displayExecutionResultDisplay(Result result){
+	protected void displayExecutionResult(Result result){
 		int currDisplayTask = lastDisplayedTaskID;
 		displayTaskList(result);
 		Task taskDisp = result.getTaskToDisplay();

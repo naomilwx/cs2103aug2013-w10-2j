@@ -2,6 +2,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.MouseListener;
 
 import javax.swing.border.LineBorder;
@@ -18,18 +19,21 @@ public class NotificationArea extends TextDisplay{
 	}
 	
 	protected void displayNotification(String notification, boolean isSuccess){
+		configureBorderColor(isSuccess);
+		displayText(notification);
+		GUIUtilities.scrollDisplayToTop(this);
+	}
+	@Override
+	public void addMouseListener(MouseListener listener){
+		textPane.addMouseListener(listener);
+	}
+	private void configureBorderColor(boolean isSuccess){
 		Color displayColor;
 		if(isSuccess){
 			displayColor = SUCCESS_COLOR;
 		}else{
 			displayColor = FAILURE_COLOR;
 		}
-		
 		setBorder(new LineBorder(displayColor, NOTIFICATION_BORDER_WIDTH));
-		displayText(notification);
-	}
-	@Override
-	public void addMouseListener(MouseListener listener){
-		textPane.addMouseListener(listener);
 	}
 }
