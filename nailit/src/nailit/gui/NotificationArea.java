@@ -2,6 +2,7 @@
 package nailit.gui;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.MouseListener;
 
 import javax.swing.border.LineBorder;
