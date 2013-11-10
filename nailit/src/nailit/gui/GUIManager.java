@@ -253,6 +253,8 @@ public class GUIManager {
 	public void setVisible(boolean isVisible){
 		if(!isVisible){
 			enableGlobalKeyListener();
+			historyWindow.setVisible(false);
+			helpWindow.setVisible(false);
 		}else{
 			setFocusOnCommandBar();
 		}
