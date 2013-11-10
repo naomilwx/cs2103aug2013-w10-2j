@@ -29,7 +29,16 @@ public class UpdateParser extends Parser {
 		for (int i=0; i<listOfCommands.length; i++){
 			listOfCommands[i] = listOfCommands[i].trim();
 		}
-		resultExecution.setTaskId(Integer.parseInt(listOfCommands[0]));
+		
+		if (Parser.isNumber(listOfCommands[0])){
+			resultExecution.setTaskId(Integer.parseInt(listOfCommands[0]));
+		}else{
+			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: Cannot identify the task ID");
+		}
+		
+		if (listOfCommands.length == 1){
+			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: The modified information cannot be null");
+		}
 		
 		if (listOfCommands[1].equalsIgnoreCase("name")){
 			String answer = "";
