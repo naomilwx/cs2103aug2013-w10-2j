@@ -101,7 +101,7 @@ public class GUIManager {
 	private MainWindow mainWindow;
 	private CommandBar commandBar;
 	private DisplayArea displayArea;
-	private NotificationArea notificationArea;
+//	private NotificationArea notificationArea;
 	private HomeWindow homeWindow;
 	private HistoryWindow historyWindow;
 	private HelpWindow helpWindow;
@@ -166,9 +166,9 @@ public class GUIManager {
 	}
 	private void initialiseAndConfigureDisplayArea(){
 		displayArea = new DisplayArea(this, mainWindow.getWidth(), mainWindow.getHeight(), commandBar.getHeight());
-		notificationArea = new NotificationArea(displayArea.getWidth());
-		displayArea.addPopup(notificationArea);
-		displayArea.hideNotificationsPane();
+//		notificationArea = new NotificationArea(displayArea.getWidth());
+//		displayArea.addPopup(notificationArea);
+//		displayArea.hideNotificationsPane();
 	}
 	private void loadComponentsUntoMainFrame(){
 		mainWindow.addItem(commandBar);
@@ -512,13 +512,15 @@ public class GUIManager {
 		}
 	}
 	private void displayNotification(String notificationStr, boolean isSuccess){
-		notificationArea.displayNotification(notificationStr, isSuccess);
-		displayArea.showNotificationsPane();
+//		notificationArea.displayNotification(notificationStr, isSuccess);
+//		displayArea.showNotificationsPane();
+		displayArea.displayNotification(notificationStr, isSuccess);
 	}
 	
 	private void displayNotificationAndForceExit(String notificationStr){
-		notificationArea.displayNotification(notificationStr, false);
-		displayArea.showNotificationsPaneAndForceExit();
+//		notificationArea.displayNotification(notificationStr, false);
+//		displayArea.showNotificationsPaneAndForceExit();
+		displayArea.displayNotificationAndForceExit(notificationStr);
 	}
 	
 	private void exit(){

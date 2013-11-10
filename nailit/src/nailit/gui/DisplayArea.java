@@ -40,6 +40,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	private GUIManager GUIBoss;
 	private DisplayPane defaultDisplayPane;
 	private JPanel popupPane;
+	private NotificationArea notificationArea;
 	
 	private int displayWidth;
 	private int displayHeight;
@@ -61,6 +62,9 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		adjustDisplayAreaPos();
 		configureDisplayArea();
 		initialiseLayers();
+		notificationArea = new NotificationArea(getWidth());
+		addPopup(notificationArea);
+		hideNotificationsPane();
 	}
 	
 	private void configureDisplayArea(){
@@ -169,7 +173,16 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	protected void hideNotificationsPane(){
 		popupPane.setVisible(false);
 	}
+	//notification area
+	protected void displayNotification(String notificationStr, boolean isSuccess){
+		notificationArea.displayNotification(notificationStr, isSuccess);
+		showNotificationsPane();
+	}
 	
+	protected void displayNotificationAndForceExit(String notificationStr){
+		notificationArea.displayNotification(notificationStr, false);
+		showNotificationsPaneAndForceExit();
+	}
 	//Functions to control visibility of popupPane
 	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
