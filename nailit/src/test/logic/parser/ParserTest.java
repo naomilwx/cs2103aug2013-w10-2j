@@ -1,6 +1,6 @@
 package test.logic.parser;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import nailit.logic.parser.Parser;
 import nailit.common.NIConstants;
 
@@ -45,6 +45,13 @@ public class ParserTest {
 	{
 		assertEquals(expected, Parser.numberOfTime(command));
 	}
-	
-	
+	@Test
+	public void testIsValidString(){
+		assertTrue(Parser.isValidString(""));
+		assertTrue(Parser.isValidString("$hello%"));
+		assertTrue(Parser.isValidString("$ %"));
+		assertTrue(Parser.isValidString("%$"));
+		assertFalse(Parser.isValidString(NIConstants.HARDDISK_FIELD_SPLITTER));
+		assertFalse(Parser.isValidString("hello, "+NIConstants.HARDDISK_FIELD_SPLITTER + "world"));
+	}
 }

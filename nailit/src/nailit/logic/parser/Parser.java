@@ -1,10 +1,15 @@
 package nailit.logic.parser;
 
 //@author A0105559B
+import nailit.common.NIConstants;
 import nailit.logic.ParserResult;
+
 import org.joda.time.DateTime;
+
 import com.joestelmach.natty.DateGroup;
+
 import java.util.List;
+
 import nailit.logic.exception.InvalidCommandFormatException;
 
 public abstract class Parser {
@@ -98,5 +103,8 @@ public abstract class Parser {
 		}else{
 			return false;
 		}
+	}
+	public static boolean isValidString(String p){
+		return (!p.contains(NIConstants.HARDDISK_FIELD_SPLITTER));
 	}
 }
