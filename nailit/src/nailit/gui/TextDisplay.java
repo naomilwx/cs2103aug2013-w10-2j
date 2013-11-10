@@ -11,7 +11,6 @@ import javax.swing.text.html.HTMLEditorKit;
 @SuppressWarnings("serial")
 public class TextDisplay extends ScrollableFocusableDisplay{
 	protected JTextPane textPane;
-	private int preferredHeight;
 	
 	public TextDisplay(int width, int height){
 		configureMainFrame(width, height);
@@ -19,15 +18,18 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 	}
 	
 	private void createAndConfigureTextPane(){
-		preferredHeight = containerHeight;
 		textPane = new JTextPane();
 		textPane.setEditable(false);
-		textPane.setPreferredSize(new Dimension(containerWidth, preferredHeight));
-		textPane.setSize(containerWidth, preferredHeight);
+		setTextPaneDimensions(containerWidth, containerHeight);
 		textPane.addFocusListener(super.displayFocusListener);
 		setViewportView(textPane);
 	}
-	
+	private void setTextPaneDimensions(int width, int height){
+		if(textPane != null){
+			textPane.setPreferredSize(new Dimension(width, height));
+			textPane.setSize(width, height);
+		}
+	}
 	protected void displayText(String text){
 		centeriseTextDisplay();
 		textPane.setText(text);
@@ -42,5 +44,10 @@ public class TextDisplay extends ScrollableFocusableDisplay{
 		SimpleAttributeSet textAttribute = new SimpleAttributeSet();
 		StyleConstants.setAlignment(textAttribute, StyleConstants.ALIGN_CENTER);
 		textPane.setParagraphAttributes(textAttribute, true);
+	}
+	@Override
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		setTextPaneDimensions(width, height);
 	}
 }

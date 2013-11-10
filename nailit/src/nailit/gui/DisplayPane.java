@@ -23,6 +23,10 @@ public class DisplayPane extends JPanel{
 	private TextDisplay textDisplay;
 	private int lastDisplayedTaskID = Task.TASKID_NULL;
 	
+	private int textDisplayWidthParam;
+	private int textDisplayHeightParam;
+	private int taskTableWidthParam;
+	private int taskTableHeightParam;
 	
 	public DisplayPane(final DisplayArea display){
 		displayMain = display;
@@ -120,8 +124,13 @@ public class DisplayPane extends JPanel{
 	private void displayTaskListInTaskTable(Vector<Task>  tasks, Task task){
 		taskTable.displayTaskList(tasks, task);
 	}
+	private void setTaskTableDimensionParams(){
+		taskTableWidthParam = getWidth();
+		taskTableHeightParam = getHeight();
+	}
 	private void createAndConfigureTaskTable(){
-		taskTable = new TaskTable(getWidth(), getHeight());
+		setTaskTableDimensionParams();
+		taskTable = new TaskTable(taskTableWidthParam, taskTableHeightParam);
 		addKeyListenerToTaskTable();
 		addContent(taskTable);
 	}
@@ -157,10 +166,13 @@ public class DisplayPane extends JPanel{
 		textDisplay.displayHTMLFormattedText(details);
 		GUIUtilities.scrollDisplayToTop(textDisplay);
 	}
+	private void setTextDisplayDimensionParams(){
+		textDisplayWidthParam = getWidth();
+		textDisplayHeightParam = getHeight();
+	}
 	private void createAndConfigureNewTextDisplay(){
-		int textDisplayWidth = getWidth();
-		int textDisplayHeight = getHeight();
-		textDisplay = new TextDisplay(textDisplayWidth, textDisplayHeight);
+		setTextDisplayDimensionParams();
+		textDisplay = new TextDisplay(textDisplayWidthParam, textDisplayHeightParam);
 		addContent(textDisplay, 0);
 	}
 	private void removeExistingTextDisplay(){
@@ -217,6 +229,18 @@ public class DisplayPane extends JPanel{
 			return taskTable.getSelectedRowDisplayID();
 		}else{
 			return -1;
+		}
+	}
+	@Override
+	public void setSize(int width, int height){
+		super.setSize(width, height);
+		setTextDisplayDimensionParams();
+		if(textDisplay != null){
+			textDisplay.setSize(textDisplayWidthParam, textDisplayHeightParam);
+		}
+		setTaskTableDimensionParams();
+		if(taskTable != null){
+			taskTable.setSize(taskTableWidthParam, taskTableHeightParam);
 		}
 	}
 }
