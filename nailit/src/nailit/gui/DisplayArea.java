@@ -81,7 +81,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	protected void cleanupDisplayArea(){
 		hideNotifications();
 		removeDeletedTasksFromTaskListTable();
-		removeTaskDisplay(); //TODO:
+		removeTaskDisplay();
 	}
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
@@ -259,20 +259,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		});
 		timer.restart();
 	}
-	protected KeyAdapter getTriggeredCommandKeyListener(){
-		KeyAdapter triggeredCommandKeyEventListener = new KeyAdapter(){
-			@Override
-			public void keyPressed(KeyEvent keyStroke){
-				int keyCode = keyStroke.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
-					GUIBoss.executeTriggeredTaskDisplay();
-				}else if(keyCode == KeyEvent.VK_DELETE){
-					GUIBoss.executeTriggeredTaskDelete();
-				}
-			}
-		};
-		return triggeredCommandKeyEventListener;
-	}
+	
 	//acts as facade between GUIManager and components displayed in DisplayArea
 	protected void removeTaskDisplay(){
 		defaultDisplayPane.removeTaskDisplay();
@@ -306,5 +293,19 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	}
 	protected KeyAdapter getBasicKeyListener(){
 		return GUIBoss.getMainWindowComponentBasicKeyListener();
+	}
+	protected KeyAdapter getTriggeredCommandKeyListener(){
+		KeyAdapter triggeredCommandKeyEventListener = new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					GUIBoss.executeTriggeredTaskDisplay();
+				}else if(keyCode == KeyEvent.VK_DELETE){
+					GUIBoss.executeTriggeredTaskDelete();
+				}
+			}
+		};
+		return triggeredCommandKeyEventListener;
 	}
 }
