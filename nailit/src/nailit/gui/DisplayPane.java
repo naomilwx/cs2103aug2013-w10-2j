@@ -18,14 +18,14 @@ import nailit.gui.renderer.TaskDetailsFormatter;
 public class DisplayPane extends JPanel{
 	private static final int NULL_FOCUS = -1;
 	
-	private GUIManager GUIBoss;
+	private DisplayArea displayMain;
 	private TaskTable taskTable;
 	private TextDisplay textDisplay;
 	private int lastDisplayedTaskID = Task.TASKID_NULL;
 	
 	
-	public DisplayPane(final GUIManager GUIMain){
-		GUIBoss = GUIMain;
+	public DisplayPane(final DisplayArea display){
+		displayMain = display;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setFocusable(true);
 		addFocusListener(displayPaneFocusListener);
@@ -50,7 +50,7 @@ public class DisplayPane extends JPanel{
 				ctrlPressed = false;
 				displayPaneSetFocusHandler();
 			}else if(keyCode == KeyEvent.VK_ESCAPE){
-				GUIBoss.setFocusOnCommandBar();
+				displayMain.setDefaultFocus();
 			}
 		}
 		@Override
@@ -74,7 +74,7 @@ public class DisplayPane extends JPanel{
 		Component[] components = getComponents();
 		if(components.length == 0){
 			currentFocusElement = NULL_FOCUS;
-			GUIBoss.setFocusOnCommandBar();
+			displayMain.setDefaultFocus();
 		}else{
 			if(components.length <= nextFocusElement){
 				nextFocusElement = 0;
@@ -86,13 +86,13 @@ public class DisplayPane extends JPanel{
 	
 	private void addContent(Component component){
 		component.addKeyListener(keyEventListener);
-		component.addKeyListener(GUIBoss.getMainWindowComponentBasicKeyListener());
+		component.addKeyListener(displayMain.getBasicKeyListener());
 		component.setFocusTraversalKeysEnabled(false);
 		add(component);
 	}
 	private void addContent(Component component, int pos){
 		component.addKeyListener(keyEventListener);
-		component.addKeyListener(GUIBoss.getMainWindowComponentBasicKeyListener());
+		component.addKeyListener(displayMain.getBasicKeyListener());
 		component.setFocusTraversalKeysEnabled(false);
 		add(component, pos);
 	}
@@ -208,19 +208,9 @@ public class DisplayPane extends JPanel{
 		}
 	}
 	private void addKeyListenerToTaskTable(){
-		KeyAdapter taskTableKeyEventListener = new KeyAdapter(){
-			@Override
-			public void keyPressed(KeyEvent keyStroke){
-				int keyCode = keyStroke.getKeyCode();
-				if(keyCode == KeyEvent.VK_ENTER){
-					GUIBoss.executeTriggeredTaskDisplay();
-				}else if(keyCode == KeyEvent.VK_DELETE){
-					GUIBoss.executeTriggeredTaskDelete();
-				}
-			}
-		};
+		KeyAdapter taskTableKeyEventListener = displayMain.keyTriggeredCommandKeyListener();
 		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
-		taskTable.addKeyListenerToTable(GUIBoss.getMainWindowComponentBasicKeyListener());
+		taskTable.addKeyListenerToTable(displayMain.getBasicKeyListener());
 	}
 	protected int getTaskTableSelectedRowID(){
 		if(taskTable != null){

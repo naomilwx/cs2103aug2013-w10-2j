@@ -378,9 +378,7 @@ public class GUIManager {
 	}
 	private void clearUserInputAndCleanUpDisplay(){
 		commandBar.clearUserInput();
-		displayArea.hideNotificationsPane();
-		displayArea.removeDeletedTasksFromTaskListTable();
-		displayArea.removeTaskDisplay(); //TODO:
+		displayArea.cleanupDisplayArea();
 	}
 	
 	//functions to execute commands via keyboard shortcuts. may be refactored as a separate unit later
@@ -508,7 +506,7 @@ public class GUIManager {
 		if(!notificationStr.isEmpty()){
 			displayNotification(notificationStr, isSuccess);
 		}else{
-			displayArea.hideNotificationsPane();
+			displayArea.hideNotifications();
 		}
 	}
 	private void displayNotification(String notificationStr, boolean isSuccess){
