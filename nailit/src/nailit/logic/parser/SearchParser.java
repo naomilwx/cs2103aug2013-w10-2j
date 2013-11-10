@@ -5,6 +5,7 @@ import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.logic.exception.InvalidCommandFormatException;
 
 public class SearchParser extends Parser {
 
@@ -16,11 +17,14 @@ public class SearchParser extends Parser {
 	}
 	
 	@Override
-	public ParserResult execute(){
+	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		resultExecution.setCommand(CommandType.SEARCH);
+		if (userCommand.equals("")){
+			throw new InvalidCommandFormatException(CommandType.SEARCH,"Wrong Format: Cannot search an empth task");
+		}
 		
 		for (int i=0; i<listOfCommands.length; i++)
 		{

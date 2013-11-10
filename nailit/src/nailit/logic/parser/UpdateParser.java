@@ -5,6 +5,7 @@ import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.logic.exception.InvalidCommandFormatException;
 
 public class UpdateParser extends Parser {
 
@@ -16,10 +17,13 @@ public class UpdateParser extends Parser {
 	}
 	
 	@Override
-	public ParserResult execute(){
+	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
 		
 		resultExecution.setCommand(CommandType.UPDATE);
+		if (userCommand.equals("")){
+			throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot add an empth task, please specify your task name");
+		}
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
 		for (int i=0; i<listOfCommands.length; i++){
@@ -32,7 +36,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+ " ";
 			}
 			if (answer == ""){
-				resultExecution.setName(null);
+				throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot update name to be null");
 			} else{
 				resultExecution.setName(answer.substring(0, answer.length()-1));
 			}

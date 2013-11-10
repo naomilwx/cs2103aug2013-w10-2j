@@ -4,6 +4,7 @@ package nailit.logic.parser;
 import nailit.common.NIConstants;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.logic.exception.InvalidCommandFormatException;
 
 public class DisplayParser extends Parser {
 	
@@ -15,11 +16,14 @@ public class DisplayParser extends Parser {
 	}
 	
 	@Override
-	public ParserResult execute(){
+	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 	
 		resultExecution.setCommand(CommandType.DISPLAY);
+		if (userCommand.equals("")){
+			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: Cannot add an empth task, please specify your task name");
+		}
 		
 		if (listOfCommands[0].equalsIgnoreCase("ALL")){
 			resultExecution.setDisplayAll(true);
@@ -34,7 +38,7 @@ public class DisplayParser extends Parser {
 		}else if (Parser.isDateTime(userCommand)){
 			resultExecution.setEndTime(Parser.retrieveDateTime(userCommand));
 		}else{
-			System.out.println("Wrong Format");
+			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: The string cannot be identified.");
 		}
 		
 		return resultExecution;
