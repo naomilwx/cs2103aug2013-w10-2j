@@ -357,16 +357,24 @@ public class GUIManager {
 			}
 			err.printStackTrace();
 		}catch(InvalidCommandFormatException e){
-			helpWindow.displaySyntaxForCommandType(e.getCommandType());
+			handleInvalidCommandFormatExeception(e);
 		}catch(InvalidCommandTypeException e){
-			helpWindow.displayListOfAvailableCommands();
+			handleInvalidCommandTypeException(e);
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
 			e.printStackTrace(); //TODO:
 		}
 		return executionResult;
 	}
-	
+	private void handleInvalidCommandFormatExeception(InvalidCommandFormatException e){
+		helpWindow.displaySyntaxForCommandType(e.getCommandType());
+		String notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + e.getMessage();
+		displayNotification(notificationStr, false);
+	}
+	private void handleInvalidCommandTypeException(InvalidCommandTypeException e){
+		helpWindow.displayListOfAvailableCommands();
+		displayNotification(e.getMessage(), false);
+	}
 	private void displayCommandFeedback(Result executionResult){
 		clearUserInputAndCleanUpDisplay();
 		processAndDisplayExecutionResult(executionResult);
