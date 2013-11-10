@@ -350,7 +350,9 @@ public class GUIManager {
 		return executionResult;
 	}
 	private void handleInvalidCommandFormatExeception(InvalidCommandFormatException e){
-		helpWindow.displaySyntaxForCommandType(e.getCommandType());
+		if(e.getCommandType() != null){
+			helpWindow.displaySyntaxForCommandType(e.getCommandType());
+		}
 		String notificationStr = INVALID_COMMAND_ERROR_MESSAGE + "\n " + e.getMessage();
 		displayNotification(notificationStr, false);
 	}
