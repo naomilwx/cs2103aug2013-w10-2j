@@ -22,7 +22,7 @@ public class UpdateParser extends Parser {
 		
 		resultExecution.setCommand(CommandType.UPDATE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot update an empth task, please specify your task name");
 		}
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		

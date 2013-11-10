@@ -19,7 +19,7 @@ public class DeleteReminderParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DELETEREMINDER);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.DELETEREMINDER,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.DELETEREMINDER,"Wrong Format: Cannot delete reminder an empth task, please specify your task name");
 		}
 		
 		if (Parser.isNumber(userCommand)){
