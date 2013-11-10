@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.Callable;
@@ -64,7 +66,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		initialiseLayers();
 		notificationArea = new NotificationArea(getWidth());
 		addPopup(notificationArea);
-		hideNotificationsPane();
+		hideNotifications();
 	}
 	
 	private void configureDisplayArea(){
@@ -74,6 +76,11 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		this.setOpaque(true);
 	}
 	
+	protected void cleanupDisplayArea(){
+		hideNotifications();
+		removeDeletedTasksFromTaskListTable();
+		removeTaskDisplay(); //TODO:
+	}
 	/**
 	 * DisplayArea has 2 layers - the popup layer where the notifications are displayed and the default layer where 
 	 * the result of user commands are displayed
@@ -86,7 +93,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	private void initialiseDefaultPane(){
 		defaultPaneWidth = displayWidth;
 		defaultPaneHeight = displayHeight;
-		defaultDisplayPane = new DisplayPane(GUIBoss);
+		defaultDisplayPane = new DisplayPane(this);
 		setLayerToDefaultSettings(defaultDisplayPane);
 		add(defaultDisplayPane,JLayeredPane.DEFAULT_LAYER);
 	}
@@ -170,7 +177,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		revalidate();
 	}
 	//End of functions to resize and reposition DisplayArea and its consitutient layers
-	protected void hideNotificationsPane(){
+	protected void hideNotifications(){
 		popupPane.setVisible(false);
 	}
 	//notification area
@@ -250,7 +257,20 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		});
 		timer.restart();
 	}
-	
+	protected KeyAdapter keyTriggeredCommandKeyListener(){
+		KeyAdapter triggeredCommandKeyEventListener = new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent keyStroke){
+				int keyCode = keyStroke.getKeyCode();
+				if(keyCode == KeyEvent.VK_ENTER){
+					GUIBoss.executeTriggeredTaskDisplay();
+				}else if(keyCode == KeyEvent.VK_DELETE){
+					GUIBoss.executeTriggeredTaskDelete();
+				}
+			}
+		};
+		return triggeredCommandKeyEventListener;
+	}
 	//
 	protected void removeTaskDisplay(){
 		defaultDisplayPane.removeTaskDisplay();
@@ -278,5 +298,11 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 	}
 	protected void displayExecutionResultDisplay(Result result){
 		defaultDisplayPane.displayExecutionResultDisplay(result);
+	}
+	protected void setDefaultFocus(){
+		GUIBoss.setFocusOnCommandBar();
+	}
+	protected KeyAdapter getBasicKeyListener(){
+		return GUIBoss.getMainWindowComponentBasicKeyListener();
 	}
 }
