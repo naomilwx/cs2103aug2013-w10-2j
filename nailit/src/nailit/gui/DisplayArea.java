@@ -179,9 +179,6 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		revalidate();
 	}
 	//End of functions to resize and reposition DisplayArea and its consitutient layers
-	protected void hideNotifications(){
-		popupPane.setVisible(false);
-	}
 	//notification area
 	protected void displayNotification(String notificationStr, boolean isSuccess){
 		notificationArea.displayNotification(notificationStr, isSuccess);
@@ -193,6 +190,9 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		showNotificationsPaneAndForceExit();
 	}
 	//Functions to control visibility of popupPane
+	protected void hideNotifications(){
+		popupPane.setVisible(false);
+	}
 	protected void showNotificationsPane(){
 		popupPane.setVisible(true);
 		fadeOutComponentAndPerformActionOnComplete(popupPane.getComponent(0), fadeOutTimer, TIMER_DELAY, 
@@ -259,7 +259,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		});
 		timer.restart();
 	}
-	protected KeyAdapter keyTriggeredCommandKeyListener(){
+	protected KeyAdapter getTriggeredCommandKeyListener(){
 		KeyAdapter triggeredCommandKeyEventListener = new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent keyStroke){
@@ -273,7 +273,7 @@ public class DisplayArea extends JLayeredPane implements Resizable{
 		};
 		return triggeredCommandKeyEventListener;
 	}
-	//
+	//acts as facade between GUIManager and components displayed in DisplayArea
 	protected void removeTaskDisplay(){
 		defaultDisplayPane.removeTaskDisplay();
 	}

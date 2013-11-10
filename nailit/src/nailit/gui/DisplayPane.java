@@ -208,7 +208,7 @@ public class DisplayPane extends JPanel{
 		}
 	}
 	private void addKeyListenerToTaskTable(){
-		KeyAdapter taskTableKeyEventListener = displayMain.keyTriggeredCommandKeyListener();
+		KeyAdapter taskTableKeyEventListener = displayMain.getTriggeredCommandKeyListener();
 		taskTable.addKeyListenerToTable(taskTableKeyEventListener);
 		taskTable.addKeyListenerToTable(displayMain.getBasicKeyListener());
 	}
