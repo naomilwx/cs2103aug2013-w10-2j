@@ -121,7 +121,7 @@ public class GUIManager {
 			createComponentsAndAddToMainFrame();
 			initialiseExtendedWindows();
 			showInSystemTray(this);
-//			globalKeyListener = new NailItGlobalKeyListener(this);
+			globalKeyListener = new NailItGlobalKeyListener(this);
 			logicExecutor = new LogicManager();
 			showDefaultDisplayAndReminders();
 		}catch(FileCorruptionException e){
@@ -244,9 +244,9 @@ public class GUIManager {
 		return listener;
 	}
 	public void enableGlobalKeyListener(){
-//		if(!globalKeyListener.isEnabled()){
-//			globalKeyListener.registerGlobalKeyHook();
-//		}
+		if(!globalKeyListener.isEnabled()){
+			globalKeyListener.registerGlobalKeyHook();
+		}
 	}
 	
 	//functions to manipulate visiblitiy of GUI Components

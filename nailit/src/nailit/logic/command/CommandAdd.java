@@ -24,7 +24,7 @@ public class CommandAdd extends Command{
 	private String taskDescription;
 	
 	// final static fields
-	private static final String SUCCESS_MSG = "Task: %1s has been successfully added";
+	private static final String SUCCESS_MSG = "Successfully ADD: %1s";
 	
 	// constructor
 	public CommandAdd(ParserResult resultInstance, StorageManager storerToUse) {

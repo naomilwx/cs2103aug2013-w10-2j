@@ -17,7 +17,7 @@ import nailit.storage.StorageManager;
 public class CommandDelete extends Command{
 	
 	// static final variables
-	private static final String SUCCESS_MSG = "Task: %1s has been successfully deleted.";
+	private static final String SUCCESS_MSG = "Successfully DELETE: %1s";
 	
 	private static final String FEEDBACK_FOR_NOT_EXISTING_TASK = "Task [ID %1d] not found. " +
 																"Cannot delete non-existant task.";

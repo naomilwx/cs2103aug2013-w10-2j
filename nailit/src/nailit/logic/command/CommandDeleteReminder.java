@@ -93,7 +93,7 @@ public class CommandDeleteReminder extends Command {
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "Deleted reminder for " + taskRelated.toString();
+		commandSummary = "Delete reminder for " + taskRelated.toString();
 	}
 
 	private void createResult() {

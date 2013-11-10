@@ -129,7 +129,7 @@ public class CommandUpdate extends Command{
 	}
 
 	private void createCommandSummary() {
-		commandSummary = "Update " + taskRetrieved.getName() + ": " + updatedContent;
+		commandSummary = "UPDATE " + taskRetrieved.getName() + ": " + updatedContent;
 	}
 
 	private void createResultObject() {
