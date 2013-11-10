@@ -21,12 +21,14 @@ public class HelpWindowConstants {
 		+ "|&ensp [start], [end] &ensp"
 		+ "|&ensp <em>from</em> [start] <em>to</em> [end]", 
 		DATE_SYNTAX_LABEL};
+	
 	public static final int COMMAND_DESC_POS = 0;
 	public static final int COMMAND_SYNTAX_POS = 1;
 	public static final String[] ADD_SYNTAX = {"<b>Add Task</b>", "<em>add</em> [<em>name</em>], [date], #[tag]#, [priority], ([description])"};
 	public static final String[] UPDATE_SYNTAX = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>], [field name], [updated details]"};
-	public static final String[] UPDATE_DATE_RANGE = {"<b>Update Task</b>", "<em>update</em> [<em>ID</em>], date, from [start date] to [end date]"};//TODO:
+	public static final String[] UPDATE_DATE_RANGE = {"<b>Update Event Date Range</b>", "<em>update</em> [<em>ID</em>], date, from [start date] to [end date]"};//TODO:
 	public static final String[] UPDATE_REMINDER_SYNTAX = {"<b>Update Task Reminder</b>", "<em>update</em> [<em>ID</em>], reminder, [new reminder date]"};
+	public static final String[] UPDATE_ACCEPTABLE_FIELDS = {"<b>Acceptable Update Fields Names</b>", "name | start | end | due | date | reminder | description | priority"}; //TODO:
 	public static final String[] DELETE_SYNTAX = {"<b>Delete Task</b>", "<em>delete</em> [<em>ID</em>]"};
 	public static final String[] DISPLAY_SYNTAX = {"<b>Display all tasks</b>", "<em>display all</em>"};
 	public static final String[] DISPLAY_TASK_SYNTAX = {"<b>Display Task Details</b>", "<em>display</em> [<em>ID</em>]"};
@@ -46,8 +48,9 @@ public class HelpWindowConstants {
 		addCommandSyntax.add(ADD_SYNTAX);
 		addCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> updateCommandSyntax = new Vector<String[]>();
+		updateCommandSyntax.add(UPDATE_ACCEPTABLE_FIELDS);
 		updateCommandSyntax.add(UPDATE_SYNTAX);
-//		updateCommandSyntax.add(UPDATE_DATE_RANGE); //TODO:
+		updateCommandSyntax.add(UPDATE_DATE_RANGE);
 		updateCommandSyntax.add(UPDATE_REMINDER_SYNTAX);
 		updateCommandSyntax.add(ACCEPTABLE_DATE_SYNTAX);
 		Vector<String[]> deleteCommandSyntax = new Vector<String[]>();
