@@ -23,6 +23,10 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 																					"does not exist in the display task list; " +
 																					"the task does not exist " +
 																					"in the storage.";
+	
+	private static final String NOTIFICATION_STRING_FOR_UNCOMPLETE_NOT_COMPLETED_TASK = "Task is already marked as uncompleted.";
+	
+	private static final String NOTIFICATION_STRING_FOR_COMPLETE_COMPLETED_TASK = "Task is already marked as completed.";
 
 	// private fields
 	// isCompleted marks whether the task related has already been completed
@@ -66,13 +70,49 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 		if(isValidDisplayID()) { // also set the displayID
 			setTaskRelated(); // also set the task description
 			setTaskID();
-			markAsCompletedOrUncompleted();
-			createExecutedResult();
-			createCommandSummary(); // only need to create command summary for success
+			if(isInvalidCommandComplete()) {
+				createResultForCompleteCompletedTask();
+			} else if(isInvalidCommandUncomplete()) {
+				createResultForUncompleteNotCompletedTask();
+			} else {
+				markAsCompletedOrUncompleted();
+				createExecutedResult();
+				createCommandSummary(); // only need to create command summary for success
+			}
 		} else {
 			createResultForFailure(); 
 		}
 		return executedResult;
+	}
+
+	private void createResultForUncompleteNotCompletedTask() {
+		String notificationStr = NOTIFICATION_STRING_FOR_UNCOMPLETE_NOT_COMPLETED_TASK;
+		executedResult = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
+	}
+
+	private void createResultForCompleteCompletedTask() {
+		String notificationStr = NOTIFICATION_STRING_FOR_COMPLETE_COMPLETED_TASK;
+		executedResult = new Result(false, false, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
+	}
+
+	private boolean isInvalidCommandUncomplete() {
+		if(isCommandMarkAsCompleted) {
+			return false;
+		} else if(!taskRelated.isCompleted()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean isInvalidCommandComplete() {
+		if(!isCommandMarkAsCompleted) {
+			return false;
+		} else if(taskRelated.isCompleted()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void createCommandSummary() {
