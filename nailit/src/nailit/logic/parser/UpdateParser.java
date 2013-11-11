@@ -96,7 +96,7 @@ public class UpdateParser extends Parser {
 			}else{
 				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format or consists reserved string");
 			}
-		}else if (listOfCommands[1].equalsIgnoreCase("Time")){
+		}else if (listOfCommands[1].equalsIgnoreCase("Date")){
 			String answer = "";
 			for (int i=2; i<listOfCommands.length; i++){
 				answer += listOfCommands[i]+" ";
