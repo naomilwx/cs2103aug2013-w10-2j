@@ -243,7 +243,7 @@ public class GUIManager {
 		return listener;
 	}
 	public void enableGlobalKeyListener(){
-		if(!globalKeyListener.isEnabled()){
+		if(globalKeyListener!=null && !globalKeyListener.isEnabled()){
 			globalKeyListener.registerGlobalKeyHook();
 		}
 	}

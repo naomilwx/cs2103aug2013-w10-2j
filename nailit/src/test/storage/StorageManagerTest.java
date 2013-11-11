@@ -105,71 +105,8 @@ public class StorageManagerTest {
 		
 	}
 	
-//	@Test
-//		public void integrateTest() throws FileCorruptionException, NoTaskFoundException {
-//			sto = new StorageManager();
-//			sto.clear();
-//			Task task1 = new Task("first task");
-//			Task task2 = new Task("second task");
-//			testAddCommand("" +
-//					"1,first task,null,null,1,,,0,null\n" +
-//					"",1,task1);
-//			testAddCommand("" +
-//					"1,first task,null,null,1,,,0,null\n" +
-//					"2,second task,null,null,1,,,0,null\n" +
-//					"",2,task2);
-//			Task task3 = new Task(2,"third task",new DateTime("2013-02-03"),new DateTime("2013-03-03"),TaskPriority.MEDIUM,"school stuff","desc",true);
-//			testAddCommand("" +
-//					"1,first task,null,null,1,,,0,null\n" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",2,task3);
-//	//		Task task4 = new Task(-2,"nonsense task",null,null,TaskPriority.MEDIUM,"school stuff","desc",true);
-//	//		testAddCommand("",task4);
-//			FilterObject fo = new FilterObject("first",null,null,null,null,null);
-//			testFilterCommand("" +
-//					"1,first task,null,null,1,,,0,null\n" +
-//					"",fo);
-//			FilterObject fo1 = new FilterObject(null,new DateTime("2013-02-02"),null,null,null,null);
-//			testFilterCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",fo1);
-//			FilterObject fo2 = new FilterObject(null,new DateTime("2013-02-02"),null,"school",null,null);
-//			testFilterCommand("",fo2);
-//			FilterObject fo3 = new FilterObject(null,new DateTime("2013-02-02"),null,"school stuff",null,null);
-//			testFilterCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",fo3);
-//			FilterObject fo4 = new FilterObject("task",null,null,null,null,null);
-//			testFilterCommand("" +
-//					"1,first task,null,null,1,,,0,null\n" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",fo4);
-//			testRemoveCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",1);
-//			Task task6 = new Task(Task.TASKID_NULL,"testForUndo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
-//			testAddCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"3,testForUndo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-//					"",3,task6);
-//			testUndoAddCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"",3);
-//			Task task7 = new Task(Task.TASKID_NULL,"Add New Task After Undo",new DateTime("1992-02-10"),null,TaskPriority.HIGH,"social","something should have assertions here!",false);
-//			testAddCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-//					"",3,task7);
-//			Task task8 = new Task(Task.TASKID_NULL,"test for add new task",new DateTime("2013-01-02"),null,TaskPriority.LOW,"school","no more description",false);
-//			testAddCommand("" +
-//					"2,third task,2013-02-03T00:00:00.000+08:00,2013-03-03T00:00:00.000+08:00,1,school stuff,desc,1,null\n" +
-//					"3,Add New Task After Undo,1992-02-10T00:00:00.000+08:00,null,2,social,something should have assertions here!,0,null\n" +
-//					"4,test for add new task,2013-01-02T00:00:00.000+08:00,null,0,school,no more description,0,null\n" +
-//					"",4,task8);
-//	
-//		}
 
-	@Test//TODO: 
+	@Test 
 	public void filterTest() throws FileCorruptionException{
 		sto = new StorageManager();
 		sto.clear();
@@ -275,13 +212,6 @@ public class StorageManagerTest {
 		Task task18 = new Task(Task.TASKID_NULL,"CS3230R",null,new DateTime("2013-11-07"),TaskPriority.HIGH,"Research","Be well-prepared",false,new DateTime("2013-02-14"));
 		Task task19 = new Task(Task.TASKID_NULL,"You tiao",null,new DateTime("2013-12-04"),TaskPriority.HIGH,"Meal","Be Hungry",false,new DateTime("2013-02-14"));
 		Task task20 = new Task(Task.TASKID_NULL,"Zongzi",null,new DateTime("2013-12-04"),TaskPriority.HIGH,"fake Cs","fake CS task",false,new DateTime("2013-02-14"));
-//		
-//		Task task1 = new Task(Task.TASKID_NULL,"CS2103 REVIEW",new DateTime("201"),new DateTime("2013-02-15"),TaskPriority.HIGH,"Exam preparation","Be well prepared",false,new DateTime("2013-02-10"));
-//		Task task2 = new Task(Task.TASKID_NULL,"CS2101 Presentation",null,new DateTime("2013-11-07"),TaskPriority.HIGH,"Project","Be confident",false,new DateTime("2013-11-02"));
-//		Task task3 = new Task(Task.TASKID_NULL,"CS2105 Project 3",null,new DateTime("2013-11-08"),TaskPriority.MEDIUM,"School","Be brave",false,new DateTime("2013-11-10"));
-//		Task task4 = new Task(Task.TASKID_NULL,"CS3230 Project 2",null,new DateTime("2103-11-08"),TaskPriority.HIGH,"Assignment","BE Smart",false,new DateTime("2013-10-31"));
-//		Task task5 = new Task(Task.TASKID_NULL,"CS3230 Report Submission",new DateTime("2013-11-08"),new DateTime("2013-11-27"),TaskPriority.MEDIUM,"Exam preparation","Be something",false,new DateTime("2013-12-02"));
-//		Task task6 = new Task(Task.TASKID_NULL,"CS2309 Presentation",null,new DateTime("2013-11-11"),TaskPriority.HIGH,"Project","Be confident",false,new DateTime("2013-11-02"));
 
 		sto.add(task1);
 		sto.add(task2);
@@ -320,18 +250,17 @@ public class StorageManagerTest {
 		String startDate;
 		if(task.getStartTime() == null){
 			startDate = null;
-		}
-		else{
+		}else{
 			startDate = task.getStartTime().toString();
 		}
 		
 		String endDate;
 		if(task.getEndTime() == null){
 			endDate = null;
-		}
-		else{
+		}else{
 			endDate = task.getEndTime().toString();
 		}
+		
 		String desc = task.getDescription();
 		String tag = task.getTag();
 		

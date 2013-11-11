@@ -1,16 +1,14 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.command.CommandManager;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -22,8 +20,6 @@ public class RedoAfterUndoAfterUpdate {
 	private static ParserResult parserResultUpdate = createPR(CommandType.UPDATE, "task2", 
 			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1); // since the task ID should be 1
-	
-
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
@@ -40,19 +36,9 @@ public class RedoAfterUndoAfterUpdate {
 				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 				createDateTime(2013, 1, 9, 1, 0), false, 0); // only the command type matter
 	
-	// create the expected result
-			// create task objs
-	private static Task task1 = createTask("task1", 
-					"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
-					createDateTime(2013, 1, 2, 1, 0), 1);
-			
-			
 	private static Task task2 = createTask("task2", 
 					"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 					createDateTime(2013, 4, 2, 1, 0), 1);
-	
-	
-	
 	
 	@Test
 	public void testUndoAfterUpdate() throws Exception {
@@ -73,10 +59,7 @@ public class RedoAfterUndoAfterUpdate {
 				"Redo successfully.", null, currentTaskList, null);
 		
 		testTwoResultObj(resultOfRedo, expectedResult);
-		
 	}
-	
-	
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
 			String tag, TaskPriority priority, DateTime st, DateTime et, boolean isDisplayAll, int id) {
@@ -114,5 +97,4 @@ public class RedoAfterUndoAfterUpdate {
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
-
 }

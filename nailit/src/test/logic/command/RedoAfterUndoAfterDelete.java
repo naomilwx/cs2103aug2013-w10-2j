@@ -1,15 +1,14 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -30,13 +29,10 @@ public class RedoAfterUndoAfterDelete {
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), false, 2); // delete the last one, which is task 2
 	
-	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
-	
-	
 	
 	// undo parserResult
 	private static ParserResult parserResultUndo = createPR(CommandType.UNDO, "task3", 
@@ -50,26 +46,17 @@ public class RedoAfterUndoAfterDelete {
 	
 	
 	// create the expected result
-			// create task objs
+	// create task objects
 	private static Task task1 = createTask("task1", 
 					"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 					createDateTime(2013, 1, 2, 1, 0), 1);
 			
-			
 	private static Task task2 = createTask("task2", 
 					"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 					createDateTime(2013, 4, 2, 1, 0), 2);
-	
-	private static Task task3 = createTask("task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-			createDateTime(2013, 1, 9, 1, 0), 3);
-	
-	
-	
-	
+
 	@Test
 	public void testRedoAfterUndoAfterAdd() throws Exception {
-		
 		// execute
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
@@ -89,7 +76,6 @@ public class RedoAfterUndoAfterDelete {
 				"Redo successfully.", null, currentTaskList, null);
 		
 		testTwoResultObj(resultOfRedo, expectedResult);
-		
 	}
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
@@ -128,6 +114,4 @@ public class RedoAfterUndoAfterDelete {
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
-
-
 }
