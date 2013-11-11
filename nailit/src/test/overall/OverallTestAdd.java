@@ -28,13 +28,7 @@ public class OverallTestAdd {
 			e.printStackTrace();
 		}
 	}
-//	@Test
-	public void run() throws Exception{
-		testEvent1();
-		testEvent2();
-		testFloatingAdd();
-		testTaskAdd();
-	}
+	
 	@Test
 	public void testEvent1() throws Exception {
 		Task expectedTask = new TaskStub(TaskStub.GENERATE_EVENT);

@@ -32,17 +32,16 @@ public class OverAllTestUpdate {
 			e.printStackTrace();
 		}
 	}
-//	@Test
+	@Test
 	public void testUpdateTag(){
 		int taskID = gen.nextInt(totalTasksNum) + 1;
 		try {
 			Task task = displayAllAndGetTaskToTest(taskID);
-			String tag = TaskStub.getRandomString();
+			String tag = "#" + TaskStub.getRandomString() + "#";
 			task.setTag(tag);
 			Task updatedTask = logic.executeCommand("update " + taskID + ", tag ,"+ tag).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -59,7 +58,6 @@ public class OverAllTestUpdate {
 			Task updatedTask = logic.executeCommand("update " + taskID + ", reminder ,"+ rem.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
