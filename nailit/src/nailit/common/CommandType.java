@@ -33,8 +33,7 @@ public enum CommandType {
 				answer = type;
 			}
 		}
-		
-		System.out.println(answer.toString());
+
 		return answer;
 	}
 }
