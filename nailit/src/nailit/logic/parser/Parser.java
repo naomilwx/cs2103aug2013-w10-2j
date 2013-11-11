@@ -26,22 +26,32 @@ public abstract class Parser {
 		return result;
 	}
 	
-	public static DateTime retrieveDateTimeFirst (String p){
+	public static DateTime retrieveDateTimeFirst (String p) throws InvalidCommandFormatException{
 		DateTime result;
 		
-		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
-		result = new DateTime(resultDateGroup.getDates().get(0));
-	
-		return result;
+		if (Parser.isDateTime(p)){
+			DateGroup resultDateGroup = nattyParser.parse(p).get(0);
+			result = new DateTime(resultDateGroup.getDates().get(0));
+			return result;
+		}else{
+			throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+		}
 	}
 	
-	public static DateTime retrieveDateTimeSecond (String p){
+	public static DateTime retrieveDateTimeSecond (String p) throws InvalidCommandFormatException{
 		DateTime result;
 		
-		DateGroup resultDateGroup = nattyParser.parse(p).get(0);
-		result = new DateTime(resultDateGroup.getDates().get(1));
-	
-		return result;
+		if (Parser.isDateTime(p)){
+			DateGroup resultDateGroup = nattyParser.parse(p).get(0);
+			if (resultDateGroup.getDates().size()==2){
+				result = new DateTime(resultDateGroup.getDates().get(1));
+				return result;
+			}else{
+				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+			}
+		}else{
+			throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+		}
 	}
 	
 	public static int numberOfTime(String p){		
@@ -67,6 +77,10 @@ public abstract class Parser {
 	}
 	
 	public static boolean isDateTime(String p){
+		if(p.matches(NIConstants.HARDDISK_FIELD_SPLITTER)){
+			return false;
+		}
+		
 		List<DateGroup> parseResult = nattyParser.parse(p);
 		
 		p = p.trim();
