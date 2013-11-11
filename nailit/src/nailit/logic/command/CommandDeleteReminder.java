@@ -3,11 +3,13 @@ package nailit.logic.command;
 //@author A0105789R
 
 import java.util.Vector;
+
 import org.joda.time.DateTime;
+
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.StorageManager;
 
