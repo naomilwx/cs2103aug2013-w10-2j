@@ -6,7 +6,6 @@ import nailit.common.CommandType;
 import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.logic.parser.ParserManager;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import test.logic.command.CommandTest;
@@ -15,7 +14,7 @@ import test.logic.command.CommandTest;
 public class ParserManagerTest {
 	@Test
 	public void test() throws InvalidCommandFormatException, InvalidCommandTypeException{
-		DateTime expectedDate = new DateTime(2013,9,11,00,00);
+		//DateTime expectedDate = new DateTime(2013,9,11,00,00);
 		testManager(CommandType.DELETE,"Delete 12");
 	}
 	
