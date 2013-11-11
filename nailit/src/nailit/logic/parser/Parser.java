@@ -67,6 +67,10 @@ public abstract class Parser {
 	}
 	
 	public static boolean isDateTime(String p){
+		if(p.matches(NIConstants.HARDDISK_FIELD_SPLITTER)){
+			return false;
+		}
+		
 		List<DateGroup> parseResult = nattyParser.parse(p);
 		
 		p = p.trim();
