@@ -15,14 +15,20 @@ import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
  
 /**
+ * StorageManager class is the control unit of the Storage Component. It takes charge of CRUD (create,
+ * read, update and delete) as well as filtering as the bottom level of the software. As a control unit,
+ * it gets data and store data not by itself, but by DataManager and FileManager.
  * @author a0105683e
  * */
 public class StorageManager {
-	private FileManager taskFile;
-	private DataManager inMemory;
 	private final String TASK_PATH = "database.txt";
+	
 	private int nextValidIDWhenSessionStarts;
 	private HashMap<Integer,Task> originalTaskList;
+
+	private FileManager taskFile;
+	private DataManager inMemory;
+	
 	/**
 	 * Constructor
 	 * @throws FileCorruptionException 
@@ -33,7 +39,15 @@ public class StorageManager {
 		inMemory = new DataManager(nextValidIDWhenSessionStarts, originalTaskList);
 	}
 	
+	/***************************
+	 * Public Methods
+	 ***************************/
 	
+	/**
+	 * add or update a task. Whether is is add or update depends whether the
+	 * task is added before.
+	 * @param task
+	 * */
 	public int add(Task task){
 		if(task == null){
 			return Task.TASKID_NULL;
@@ -48,7 +62,15 @@ public class StorageManager {
 		return ID;
 	}
 
-
+	
+	/**
+	 * remove a task permanently both from in memory and hardDisk
+	 * @param ID			indicates which task to remove
+	 * @param isUndoAdd 	indicates whether this function is called because 
+	 * undo add so that the system will know whether to release task ID to maintain
+	 * the consistency.
+	 * @throws NoTaskFoundException
+	 * */
 	public Task remove(int ID,boolean isUndoAdd) throws NoTaskFoundException{
 		
 		Task task = inMemory.remove(ID);
@@ -59,11 +81,16 @@ public class StorageManager {
 		if(isUndoAdd){
 			releaseID(ID);
 		}
+		
 		saveToFile(taskFile);
 		return task;
 	}
 
-
+	/**
+	 * retrieve the copy of the task with the specific ID from memory
+	 * @param ID
+	 * @throws NoTaskFoundException
+	 * */
 	public Task retrieve(int ID) throws NoTaskFoundException{
 		Task task = inMemory.retrieve(ID);
 		
@@ -71,29 +98,31 @@ public class StorageManager {
 			throw new NoTaskFoundException("The task cannot be found");
 		}
 		
-		return task;
+		return task.copy();
 	}
 	
+	/**
+	 * filter out a vector of tasks that satisfy the criteria
+	 * @param ftobj			a filter object which contains the criteria information
+	 * */
 	public Vector<Task> filter(FilterObject ftobj){
 		
 		if(ftobj == null){
 			return new Vector<Task>();
 		}
 		
-		Vector<Task> taskList = retrieveAll();
-		Vector<Task> filteredTaskList = new Vector<Task>();
+		Vector<Task> tasks = retrieveAll();
+		Vector<Task> filteredTasks = new Vector<Task>();
 		
-		for(int i=0;i<taskList.size();i++){
-			Task task = taskList.get(i);
-			if(task.getID()==20){
-				int j=222;
-			}
+		for(int i=0;i<tasks.size();i++){
+			Task task = tasks.get(i);
+			
 			if(matchTask(task,ftobj)){
-				filteredTaskList.add(taskList.get(i));
+				filteredTasks.add(tasks.get(i));
 			}
 		}
 		
-		return filteredTaskList;
+		return filteredTasks;
 	}
 
 
@@ -103,28 +132,30 @@ public class StorageManager {
 		saveToFile(taskFile);		
 	}
 
-
+	/**
+	 * This method will return back a vector of tasks which should be reminded today
+	 * */
 	public Vector<Task> getReminderListForToday(){
-		Vector<Task> v = new Vector<Task>();
+		Vector<Task> tasks = new Vector<Task>();
 		
 		HashMap<Integer,Task> taskList = getTaskInMemory();
 		
 		Set<Integer> keys = taskList.keySet();
 		
-		Iterator<Integer> iterator = keys.iterator();
+		Iterator<Integer> i = keys.iterator();
 		
-		while(iterator.hasNext()){
+		while(i.hasNext()){
 			
-			int key = iterator.next();
+			int key = i.next();
 			
 			Task task = taskList.get(key).copy();
 			
 			if(haveReminder(task)&&isReminderForToday(task)){
-				v.add(task);
+				tasks.add(task);
 			}
 		}
 	
-		return v;
+		return tasks;
 	}
 
 
@@ -132,9 +163,24 @@ public class StorageManager {
 		
 		HashMap<Integer,Task> hashTable = inMemory.getTaskList();
 		
-		return toTaskVector(hashTable);
+		return changeHashTableToTaskVector(hashTable);
 	}
 	
+	
+	
+	
+	
+	/***************************
+	 * Private Methods
+	 ***************************/
+	
+	
+	
+	/**
+	 * This method is used to interpret the string-form file contents into task-object-form
+	 * @param fileContents
+	 * @throws FileCorruptionException 
+	 * */
 	private void interpretTaskFileContents(Vector<String> fileContents) throws FileCorruptionException{
 		originalTaskList = new HashMap<Integer,Task>();
 		try{
@@ -146,27 +192,29 @@ public class StorageManager {
 			
 			for(int i=1;i<fileContents.size();i++){
 				String taskString = fileContents.get(i);
-				Task task = stringToTask(taskString);
+				Task task = changeStringToTask(taskString);
 				originalTaskList.put(task.getID(), task);
 			}
 	
-		}
-		catch(Exception e){
+		}catch(Exception e){
 			throw new FileCorruptionException("The file " + TASK_PATH +" is corrupted");
 		}
 				
 	}
 
-
+	
+	/**
+	 * @param file			The file to be written
+	 * */
 	private void prepareWritingContents(FileManager file){
 		
 		Vector<String> dataList = new Vector<String>();
 	
-		HashMap<Integer,Task> taskList = inMemory.getTaskList();
+		HashMap<Integer,Task> tasks = inMemory.getTaskList();
 	
 		dataList.add(""+inMemory.getNextValidID());
 		
-		taskListToStringVector(taskList,dataList);
+		changeHashTableToStringVector(tasks,dataList);
 		
 		taskFile.setDataListForWriting(dataList);
 		
@@ -183,28 +231,28 @@ public class StorageManager {
 	}
 
 
-	private Vector<Task> toTaskVector(HashMap<Integer,Task> hashTable){
+	private Vector<Task> changeHashTableToTaskVector(HashMap<Integer,Task> hashTable){
 		
-		Vector<Task> taskList = new Vector<Task>();
+		Vector<Task> tasks = new Vector<Task>();
 		
 		Set<Integer> keys = hashTable.keySet();
 		
-		Iterator<Integer> iterator = keys.iterator();
+		Iterator<Integer> i = keys.iterator();
 		
-		while(iterator.hasNext()){
+		while(i.hasNext()){
 			
-			int key = iterator.next();
+			int key = i.next();
 			
 			Task task = hashTable.get(key).copy();
 			
-			taskList.add(task);
+			tasks.add(task);
 		}
-		return taskList;
+		return tasks;
 	
 	}
 
 
-	private Task stringToTask(String taskString) throws Exception{
+	private Task changeStringToTask(String taskString) throws Exception{
 		String[] result = taskString.split("\\" + NIConstants.HARDDISK_FIELD_SPLITTER);
 		
 		int task_ID = Integer.parseInt(result[0]);
@@ -241,15 +289,15 @@ public class StorageManager {
 	}
 
 
-	private void taskListToStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
+	private void changeHashTableToStringVector(HashMap<Integer,Task> hashTable,Vector<String> dataList){
 		
 		Set<Integer> keys = hashTable.keySet();
 		
-		Iterator<Integer> iterator = keys.iterator();
+		Iterator<Integer> i = keys.iterator();
 		
-		while(iterator.hasNext()){
+		while(i.hasNext()){
 			
-			int key = iterator.next();
+			int key = i.next();
 			
 			Task task = hashTable.get(key);
 			
@@ -263,7 +311,10 @@ public class StorageManager {
 		return task == null;
 	}
 
-
+	/**
+	 * This method will only release those task which is added by last operations
+	 * @param ID
+	 * */
 	private void releaseID(int ID){
 		int nextValidID = inMemory.getNextValidID();
 		if(isJustAdded(ID,nextValidID)){
@@ -282,21 +333,21 @@ public class StorageManager {
 	}
 
 
-	/**
-	 * Private Methods
-	 * */
 	private boolean isReminderForToday(Task task){
 		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
 		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
 		DateTime reminder = task.getReminder();
 		return reminder.compareTo(endOfToday)<=0;
 	}
+	
 	private HashMap<Integer,Task> getTaskInMemory(){
 		return inMemory.getTaskList();
 	}
+	
 	private boolean matchTask(Task task, FilterObject ftobj){
 		
 		boolean nameTagMatch = nameTagMatching(task,ftobj);
+		
 		if(nameNotMatch(task,ftobj)&&!nameTagMatch){
 			return false;
 		}
@@ -318,10 +369,16 @@ public class StorageManager {
 		
 		return true;
 	}
-
+	
+	/**
+	 * This method is used to filter out those tag fits to the name field criteria
+	 * @param task
+	 * @param ftobj
+	 * */
 	private boolean nameNotMatch(Task task, FilterObject ftobj){
 		return (!isNameEmpty(ftobj)&&!task.getName().toLowerCase().contains(ftobj.getName().toLowerCase()));
 	}
+	
 	private boolean nameTagMatching(Task task,FilterObject ftobj){
 		if(isTagEmpty(ftobj)){
 			if(!isNameEmpty(ftobj)){
@@ -332,11 +389,11 @@ public class StorageManager {
 		}
 		return false;
 	}
+	
 	private boolean priorityNotMatch(Task task,FilterObject ftobj){
 		return !isPriorityEmpty(ftobj)&&!task.getPriority().equals(ftobj.getPriority());//TODO: check whether the enum has the right the equal function
 	}
 	
-
 	private boolean tagNotMatch(Task task,FilterObject ftobj){		
 		return !isTagEmpty(ftobj)&&!task.getTag().toLowerCase().contains(ftobj.getTag().toLowerCase());		
 	}
@@ -344,8 +401,7 @@ public class StorageManager {
 	private boolean completeStatusNotMatch(Task task,FilterObject ftobj){
 		return !isCompleteStatusEmpty(ftobj)&&task.checkCompletedOrOver() != ftobj.isCompleted();
 	}
-	
-	
+		
 	private boolean TimeNotMatch(Task task,FilterObject ftobj){
 		DateTime start = ftobj.getStartTime();
 		DateTime end = ftobj.getEndTime();
@@ -353,41 +409,23 @@ public class StorageManager {
 		return !task.isInDateRange(start,end);
 	}
 
-
 	private boolean isTagEmpty(FilterObject ftobj){
 		return ftobj.getTag() == null;
 	}
-
 
 	private boolean isPriorityEmpty(FilterObject ftobj){
 		return ftobj.getPriority() == null;
 	}
 
-
 	private boolean isNameEmpty (FilterObject ftobj){
 		return ftobj.getName() == null;
 	}
-
 
 	private boolean isCompleteStatusEmpty(FilterObject ftobj){
 		return ftobj.isCompleted() == null;
 	}
 
-
 	private boolean isEmptyFile(Vector<String> fileContents){
 		return fileContents.size() == 0;
-	}
-
-
-	public static void main(String[] args) throws FileCorruptionException{
-		String s = "";
-		String[] results = s.split("\\,");
-		String str = null;
-//		System.out.println(str == null);
-//		System.out.print(results[0]);
-		StorageManager sto =new StorageManager();
-		Task task1 = new Task("frist task");
-		Task task2 = new Task("second task");
-		sto.getReminderListForToday();
 	}
 }

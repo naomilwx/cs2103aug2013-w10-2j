@@ -16,6 +16,7 @@ import nailit.storage.FileCorruptionException;
 
 import org.joda.time.DateTime;
 /**
+ * FileManager class is used to read and write data directly from and to the file 
  * @author a0105683e
  * */
 public class FileManager {
@@ -27,6 +28,7 @@ public class FileManager {
 	
 	/**
 	 * Constructor 
+	 * @param path 
 	 * @throws FileCorruptionException 
 	 * */
 	public FileManager(String path) throws FileCorruptionException{
@@ -34,16 +36,17 @@ public class FileManager {
 		readFile();
 	}
 	
-	/**
+	
+	/***************************
 	 * Public Methods
-	 * */
-	public void add(String stringToBeStored){
-		dataListForWriting.add(stringToBeStored);
-	}
+	 ***************************/
+	
+	
 	
 	public void writingProcessInit(){
 		dataListForWriting = new Vector<String>();
 	}
+	
 	public void save(){
 		try {
 			writer = new BufferedWriter(new FileWriter(path));
@@ -55,7 +58,6 @@ public class FileManager {
 			}
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -74,9 +76,12 @@ public class FileManager {
 	}
 	
 	
-/***************************
- * Private Methods
- ***************************/
+	/***************************
+	 * Private Methods
+	 ***************************/
+	
+	
+	
 	/**
 	 * readFile
 	 * @throws FileCorruptionException
@@ -134,7 +139,6 @@ public class FileManager {
 		try {
 			reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

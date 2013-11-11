@@ -1,19 +1,16 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.command.CommandManager;
-import nailit.storage.FileCorruptionException;
 
 public class RedoAfterUndoAfterAdd {
 	
@@ -49,11 +46,10 @@ public class RedoAfterUndoAfterAdd {
 		
 		
 		// create the expected result
-				// create task objs
+		// create task objects
 		private static Task task1 = createTask("task1", 
 						"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 						createDateTime(2013, 1, 2, 1, 0), 1);
-				
 				
 		private static Task task2 = createTask("task2", 
 						"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
@@ -63,12 +59,8 @@ public class RedoAfterUndoAfterAdd {
 				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 				createDateTime(2013, 1, 9, 1, 0), 3);
 		
-		
-		
-		
 		@Test
 		public void testRedoAfterUndoAfterAdd() throws Exception {
-			
 			// execute
 			CommandManagerStub cm = new CommandManagerStub();
 			cm.executeCommand(parserResultAdd1);
@@ -88,7 +80,6 @@ public class RedoAfterUndoAfterAdd {
 					"Redo successfully.", null, currentTaskList, null);
 			
 			testTwoResultObj(resultOfRedo, expectedResult);
-			
 		}
 		
 		private static ParserResult createPR(CommandType commandType, String name, 

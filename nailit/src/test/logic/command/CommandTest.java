@@ -1,16 +1,15 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.*;
-
 import java.util.Vector;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.command.CommandManager;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -19,7 +18,6 @@ public class CommandTest {
 	
 	private final String SuccessMsg = "The new task is added successfully, the Task ID for it is: ";
 	private final String UnsuccessfulFeedback = "Sorry, there is no such task record in the storage, please check and try again.";
-	private final String FeedbackForNotExistingTask = "The to-delete task does not exist in the storage."; 
 
 	
 	private final DateTime startTime = new DateTime(2013, 10, 9, 10, 0);
@@ -37,16 +35,6 @@ public class CommandTest {
 		testTwoResultObj(resultObjOfCommandAdd, expectedResultObj);
 	}
 	
-//	@Test
-	public void testCommandDelete() throws Exception { //TODO:Implement working test
-		CommandManager cm = new CommandManagerStub();
-		ParserResult prForCommandDelete = createParserResult(CommandType.DELETE);
-		prForCommandDelete.setTaskId(123);
-		Result resultObjOfCommandDelete = cm.executeCommand(prForCommandDelete);
-
-		Result expectedResultObj = new Result(false, true, Result.NOTIFICATION_DISPLAY, FeedbackForNotExistingTask);
-		testTwoResultObj(resultObjOfCommandDelete, expectedResultObj);
-	}
 	
 	@Test
 	public void testCommandUpdateNotExistingTask() throws Exception {
