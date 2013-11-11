@@ -6,9 +6,9 @@ import java.util.Random;
 import org.junit.Test;
 
 import test.common.TaskStub;
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.Task;
-import nailit.logic.CommandType;
 import nailit.logic.LogicManager;
 
 public class OverAllTestDelete {

@@ -6,9 +6,9 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import nailit.AppLauncher;
+import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;

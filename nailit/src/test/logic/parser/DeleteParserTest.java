@@ -6,16 +6,17 @@ import org.junit.experimental.categories.Category;
 
 import test.logic.command.CommandTest;
 import static org.junit.Assert.*;
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
+import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.AddParser;
 import nailit.logic.parser.DeleteParser;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 @Category(CommandTest.class)
 public class DeleteParserTest {
 	@Test
-	public void test(){
+	public void test() throws InvalidCommandFormatException{
 		ParserResult expectedDelete = new ParserResult();
 		
 		expectedDelete.setTaskId(12);
@@ -26,12 +27,12 @@ public class DeleteParserTest {
 		
 	}
 	
-	private void testExecute (int expected, String command){
+	private void testExecute (int expected, String command) throws InvalidCommandFormatException{
 		DeleteParser testDelete = new DeleteParser(command);
 		assertEquals(expected,testDelete.execute().getTaskID());
 	}
 	
-	private void testExecuteCommandType (String expected, String command){
+	private void testExecuteCommandType (String expected, String command) throws InvalidCommandFormatException{
 		DeleteParser testDelete = new DeleteParser(command);
 		assertEquals(expected,testDelete.execute().getCommand().toString());
 	}

@@ -13,12 +13,11 @@ import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
- 
+//@author a0105683e
 /**
  * StorageManager class is the control unit of the Storage Component. It takes charge of CRUD (create,
  * read, update and delete) as well as filtering as the bottom level of the software. As a control unit,
  * it gets data and store data not by itself, but by DataManager and FileManager.
- * @author a0105683e
  * */
 public class StorageManager {
 	private final String TASK_PATH = "database.txt";

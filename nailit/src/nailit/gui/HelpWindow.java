@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.Vector;
 
-import nailit.logic.CommandType;
+import nailit.common.CommandType;
 
 @SuppressWarnings("serial")
 public class HelpWindow extends ExtendedFadableWindow{

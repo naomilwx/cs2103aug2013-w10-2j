@@ -1,4 +1,5 @@
 package nailit.storage;
+//@author a0105683e
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,9 +11,9 @@ import java.util.Vector;
 
 import nailit.storage.FileCorruptionException;
 
+
 /**
  * FileManager class is used to read and write data directly from and to the file 
- * @author a0105683e
  * */
 public class FileManager {
 	private Vector<String> dataListForReading;
@@ -35,11 +36,6 @@ public class FileManager {
 	/***************************
 	 * Public Methods
 	 ***************************/
-	
-	
-	public void add(String taskStirng){
-		dataListForWriting.add(taskStirng);
-	}
 	
 	public void writingProcessInit(){
 		dataListForWriting = new Vector<String>();

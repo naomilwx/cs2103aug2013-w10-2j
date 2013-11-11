@@ -3,8 +3,8 @@ package nailit.gui;
 import java.util.HashMap;
 import java.util.Vector;
 
-import nailit.logic.CommandType;
-
+import nailit.common.CommandType;
+//class containing print outs for help window
 public class HelpWindowConstants {
 	public static final String TEXT_DISPLAY_STYLE = "<head><style type = \"text/css\">"
 			+ "em {font-weight: bold; }"

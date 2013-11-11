@@ -6,17 +6,18 @@ import org.junit.experimental.categories.Category;
 
 import test.logic.command.CommandTest;
 import static org.junit.Assert.*;
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
+import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.AddParser;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 
 @Category(ParserTest.class)
 public class AddParserTest {
 
 		@Test
-		public void test(){
+		public void test() throws InvalidCommandFormatException{
 			ParserResult expectedAdd = new ParserResult();
 			ParserResult expectedAdd2 = new ParserResult();
 			
@@ -46,32 +47,32 @@ public class AddParserTest {
 			
 		}
 		
-		private void testExecuteName (String expected, String command){
+		private void testExecuteName (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getName());
 		}
 		
-		private void testExecuteCommandType (String expected, String command){
+		private void testExecuteCommandType (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getCommand().toString());
 		}
 		
-		private void testExecuteTaskPriority (String expected, String command){
+		private void testExecuteTaskPriority (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getPriority().toString());
 		}
 		
-		private void testExecuteTag (String expected, String command){
+		private void testExecuteTag (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getTag());
 		}
 		
-		private void testExecuteStartTime (String expected, String command){
+		private void testExecuteStartTime (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		}
 		
-		private void testExecuteEndTime (String expected, String command){
+		private void testExecuteEndTime (String expected, String command) throws InvalidCommandFormatException{
 			AddParser testAdd = new AddParser(command);
 			assertEquals(expected,testAdd.execute().getEndTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		}
