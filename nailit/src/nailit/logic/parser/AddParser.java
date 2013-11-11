@@ -1,6 +1,7 @@
 package nailit.logic.parser;
 
 // @author A0105559B
+// This is the parser for add commands
 
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -21,12 +22,13 @@ public class AddParser extends Parser {
 	@Override
 	public ParserResult execute() throws InvalidCommandFormatException {
 		ParserResult resultExecution = new ParserResult();
-		
+		// Set commandType
 		resultExecution.setCommand(CommandType.ADD);
+		// Input string cannot be null
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.ADD,"Wrong Format: Cannot add an empth task, please specify your task name");
 		}
-		
+		// Set Description
 		int startIndex = -1, endIndex = 0;
 		startIndex = userCommand.indexOf('(');
 		if (startIndex!=-1){
@@ -57,14 +59,17 @@ public class AddParser extends Parser {
 			
 			userCommand += temp;
 		}
-
+		// Split the string using comma
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommands.length; i++) {
 			listOfCommands[i] = listOfCommands[i].trim();
+			// Check whether the string represents priority
 			if (TaskPriority.isTaskPriority(listOfCommands[i])) {
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[i].toUpperCase()));
+			// Check whether the string represents tag
 			}else if (Parser.isTag(listOfCommands[i])) {
 				resultExecution.setTag(listOfCommands[i]);
+			// Check whether the string represents start time or end time
 			}else if (Parser.isDateTime(listOfCommands[i])) {
 				if (resultExecution.getStartTime() == null) {
 					if (Parser.numberOfTime(listOfCommands[i]) == 2) {
@@ -76,11 +81,12 @@ public class AddParser extends Parser {
 				} else { 
 					resultExecution.setEndTime(Parser.retrieveDateTime(listOfCommands[i]));
 				}
+			// Set name of the task
 			} else{ 
 				name+= listOfCommands[i]+" ";
 			}
 		}
-
+		// The name of the task cannot be null
 		if (name.equals("")){
 			throw new InvalidCommandFormatException (CommandType.ADD,"Wrong format: The task name cannot be null");
 		}
