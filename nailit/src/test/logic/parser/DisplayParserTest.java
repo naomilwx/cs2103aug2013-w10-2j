@@ -23,12 +23,29 @@ public class DisplayParserTest {
 		testExecuteIsDisplayAll(true,"ALL");
 		testExecuteTaskID(12, "12");
 		testExecuteEndTime(expectedDisplay.getEndTime().toString(NIConstants.DISPLAY_DATE_FORMAT), "sep 11 2013");
-		
+		testExecuteIsDisplayHistory(true, "HISTORY");
+		testExecuteIsDisplayComplete(true, "COMPLETE");
+		testExecuteIsDisplayUncomplete(true, "UNCOMPLETE");
 	}
 	
 	private void testExecuteIsDisplayAll (boolean expected, String command) throws InvalidCommandFormatException{
 		DisplayParser testDisplay = new DisplayParser(command);
 		assertEquals(expected,testDisplay.execute().isDisplayAll());
+	}
+	
+	private void testExecuteIsDisplayHistory (boolean expected, String command) throws InvalidCommandFormatException{
+		DisplayParser testDisplay = new DisplayParser(command);
+		assertEquals(expected,testDisplay.execute().isDisplayHistory());
+	}
+	
+	private void testExecuteIsDisplayComplete (boolean expected, String command) throws InvalidCommandFormatException{
+		DisplayParser testDisplay = new DisplayParser(command);
+		assertEquals(expected,testDisplay.execute().isDisplayComplete());
+	}
+	
+	private void testExecuteIsDisplayUncomplete (boolean expected, String command) throws InvalidCommandFormatException{
+		DisplayParser testDisplay = new DisplayParser(command);
+		assertEquals(expected,testDisplay.execute().isDisplayUncomplete());
 	}
 	
 	private void testExecuteTaskID (int expected, String command) throws InvalidCommandFormatException{
