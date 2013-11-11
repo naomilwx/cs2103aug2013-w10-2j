@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import org.junit.Test;
+
+import test.overall.OverallTestSuite;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -90,7 +92,7 @@ public class CommandUpdateTest {
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
 		assertEquals(expected.getTaskList(), result.getTaskList());
-		assertEquals(expected.getTaskToDisplay(), result.getTaskToDisplay());
+		OverallTestSuite.compareTasksAttributes(expected.getTaskToDisplay(), result.getTaskToDisplay());
 	}
 	
 }
