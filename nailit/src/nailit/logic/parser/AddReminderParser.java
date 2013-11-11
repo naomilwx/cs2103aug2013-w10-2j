@@ -1,6 +1,8 @@
 package nailit.logic.parser;
 
-//@author A0105559B
+// @author A0105559B
+// This is the parser for addReminder command
+
 import nailit.common.NIConstants;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
@@ -18,8 +20,9 @@ public class AddReminderParser extends Parser{
 	@Override
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
-		
+		//Set the commandType
 		resultExecution.setCommand(CommandType.ADDREMINDER);
+		//Input string cannot be null
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: Cannot add reminder an empth task, please specify your task name");
 		}
@@ -36,6 +39,7 @@ public class AddReminderParser extends Parser{
 				resultExecution.setReminderTime(Parser.retrieveDateTime(listOfCommands[i]));
 			} 
 		}
+		// If the string 
 		if (!isContainsId){
 			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: The ID should be specified");
 		}
