@@ -80,17 +80,15 @@ public class OverAllTestUpdate {
 			e.printStackTrace();
 		}
 	}
-	//TODO:
-	public void completeTask(){
-		
-	}
-//	@Test
-	public void completedTaskUpdate(){
+	
+	@Test
+	public void testcompleteTaskandUpdate(){
 		try{
+			completeTask();
 			Result completeTasksResult= logic.executeCommand(CommandType.DISPLAY + " complete");
 			Vector<Task> tasks = completeTasksResult.getTaskList();
 			int taskID = gen.nextInt(tasks.size()) + 1;
-			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay();
+			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay().copy();
 			task.setPriority(TaskPriority.LOW);
 			Task updatedTask = logic.executeCommand("update " + taskID+",priority, "+TaskPriority.LOW.toString()).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
@@ -98,10 +96,26 @@ public class OverAllTestUpdate {
 			e.printStackTrace();
 		}
 	}
+	
+	public void completeTask(){
+		try {
+			Result uncompleteTasksResult = logic.executeCommand(CommandType.DISPLAY + " uncomplete");
+			Vector<Task> tasks = uncompleteTasksResult.getTaskList();
+			int taskID = 1;
+			if(!tasks.isEmpty()){
+				Task task = tasks.get(taskID - 1).copy(); 
+				task.setCompleted(true);
+				Task completedTask = logic.executeCommand("complete "+taskID).getTaskToDisplay();
+				OverallTestSuite.compareTasksAttributes(task, completedTask);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	private Task displayAllAndGetTaskToTest(int taskID){
 		try {
 			logic.executeCommand(CommandType.DISPLAY + " all");
-			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay();
+			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay().copy();
 			return task;
 		} catch (Exception e) {
 			e.printStackTrace();
