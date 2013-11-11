@@ -15,14 +15,20 @@ import nailit.storage.FileCorruptionException;
 import nailit.storage.NoTaskFoundException;
  
 /**
+ * StorageManager class is the control unit of the Storage Component. It takes charge of CRUD (create,
+ * read, update and delete) as well as filtering as the bottom level of the software. As a control unit,
+ * it gets data and store data not by itself, but by DataManager and FileManager.
  * @author a0105683e
  * */
 public class StorageManager {
-	private FileManager taskFile;
-	private DataManager inMemory;
 	private final String TASK_PATH = "database.txt";
+	
 	private int nextValidIDWhenSessionStarts;
 	private HashMap<Integer,Task> originalTaskList;
+
+	private FileManager taskFile;
+	private DataManager inMemory;
+	
 	/**
 	 * Constructor
 	 * @throws FileCorruptionException 
@@ -33,7 +39,15 @@ public class StorageManager {
 		inMemory = new DataManager(nextValidIDWhenSessionStarts, originalTaskList);
 	}
 	
+	/***************************
+	 * Public Methods
+	 ***************************/
 	
+	/**
+	 * add or update a task. Whether is is add or update depends whether the
+	 * task is added before.
+	 * @param task
+	 * */
 	public int add(Task task){
 		if(task == null){
 			return Task.TASKID_NULL;
@@ -48,7 +62,15 @@ public class StorageManager {
 		return ID;
 	}
 
-
+	
+	/**
+	 * remove a task permanently both from in memory and hardDisk
+	 * @param ID			indicates which task to remove
+	 * @param isUndoAdd 	indicates whether this function is called because 
+	 * undo add so that the system will know whether to release task ID to maintain
+	 * the consistency.
+	 * @throws NoTaskFoundException
+	 * */
 	public Task remove(int ID,boolean isUndoAdd) throws NoTaskFoundException{
 		
 		Task task = inMemory.remove(ID);
@@ -64,7 +86,11 @@ public class StorageManager {
 		return task;
 	}
 
-
+	/**
+	 * retrieve the copy of the task with the specific ID from memory
+	 * @param ID
+	 * @throws NoTaskFoundException
+	 * */
 	public Task retrieve(int ID) throws NoTaskFoundException{
 		Task task = inMemory.retrieve(ID);
 		
@@ -75,6 +101,10 @@ public class StorageManager {
 		return task.copy();
 	}
 	
+	/**
+	 * filter out a vector of tasks that satisfy the criteria
+	 * @param ftobj			a filter object which contains the criteria information
+	 * */
 	public Vector<Task> filter(FilterObject ftobj){
 		
 		if(ftobj == null){
@@ -102,7 +132,9 @@ public class StorageManager {
 		saveToFile(taskFile);		
 	}
 
-
+	/**
+	 * This method will return back a vector of tasks which should be reminded today
+	 * */
 	public Vector<Task> getReminderListForToday(){
 		Vector<Task> tasks = new Vector<Task>();
 		
@@ -134,6 +166,21 @@ public class StorageManager {
 		return changeHashTableToTaskVector(hashTable);
 	}
 	
+	
+	
+	
+	
+	/***************************
+	 * Private Methods
+	 ***************************/
+	
+	
+	
+	/**
+	 * This method is used to interpret the string-form file contents into task-object-form
+	 * @param fileContents
+	 * @throws FileCorruptionException 
+	 * */
 	private void interpretTaskFileContents(Vector<String> fileContents) throws FileCorruptionException{
 		originalTaskList = new HashMap<Integer,Task>();
 		try{
@@ -155,7 +202,10 @@ public class StorageManager {
 				
 	}
 
-
+	
+	/**
+	 * @param file			The file to be written
+	 * */
 	private void prepareWritingContents(FileManager file){
 		
 		Vector<String> dataList = new Vector<String>();
@@ -261,7 +311,10 @@ public class StorageManager {
 		return task == null;
 	}
 
-
+	/**
+	 * This method will only release those task which is added by last operations
+	 * @param ID
+	 * */
 	private void releaseID(int ID){
 		int nextValidID = inMemory.getNextValidID();
 		if(isJustAdded(ID,nextValidID)){
@@ -280,18 +333,17 @@ public class StorageManager {
 	}
 
 
-	/**
-	 * Private Methods
-	 * */
 	private boolean isReminderForToday(Task task){
 		DateTime startOfToday = DateTime.now().withTimeAtStartOfDay();
 		DateTime endOfToday = startOfToday.minusDays(-1).minusMillis(1);
 		DateTime reminder = task.getReminder();
 		return reminder.compareTo(endOfToday)<=0;
 	}
+	
 	private HashMap<Integer,Task> getTaskInMemory(){
 		return inMemory.getTaskList();
 	}
+	
 	private boolean matchTask(Task task, FilterObject ftobj){
 		
 		boolean nameTagMatch = nameTagMatching(task,ftobj);
@@ -317,7 +369,12 @@ public class StorageManager {
 		
 		return true;
 	}
-
+	
+	/**
+	 * This method is used to filter out those tag fits to the name field criteria
+	 * @param task
+	 * @param ftobj
+	 * */
 	private boolean nameNotMatch(Task task, FilterObject ftobj){
 		return (!isNameEmpty(ftobj)&&!task.getName().toLowerCase().contains(ftobj.getName().toLowerCase()));
 	}
