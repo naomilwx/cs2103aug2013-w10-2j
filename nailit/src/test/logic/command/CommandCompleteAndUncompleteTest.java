@@ -6,37 +6,31 @@ import static org.junit.Assert.assertEquals;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-@Category(CommandTest.class)
-public class UndoAfterAddTest {
 
+public class CommandCompleteAndUncompleteTest {
+	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
 			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0);
-	
-	private static ParserResult parserResultAdd2 = createPR(CommandType.ADD, "task2", 
+
+	private static ParserResult parserResultComplete = createPR(CommandType.COMPLETE, "task2", 
 			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
-			createDateTime(2013, 4, 2, 1, 0), false, 0);
+			createDateTime(2013, 4, 2, 1, 0), false, 1);
 	
-	private static ParserResult parserResultAdd3 = createPR(CommandType.ADD, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-			createDateTime(2013, 1, 9, 1, 0), false, 0);
+	private static ParserResult parserResultUncomplete = createPR(CommandType.UNCOMPLETE, "task2", 
+			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			createDateTime(2013, 4, 2, 1, 0), false, 1);
 	
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
-
-	// undo parserResult
-	private static ParserResult parserResultUndo = createPR(CommandType.UNDO, "task3", 
-				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-				createDateTime(2013, 1, 9, 1, 0), false, 0); // only the command type matter
 	
 	// create the expected result
 	// create task objects
@@ -44,31 +38,39 @@ public class UndoAfterAddTest {
 					"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 					createDateTime(2013, 1, 2, 1, 0), 1);
 	
-	/*
-	 * This test tests using use cases: add->add->add->displayAll->undo->undo
-	 * */
 	@Test
-	public void testUndoAfterAdd() throws Exception {
-		
-		// execute
-		// undo twice
+	public void testComplete() throws Exception {
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
-		cm.executeCommand(parserResultAdd2);
-		cm.executeCommand(parserResultAdd3);
 		cm.executeCommand(parserResultDisplayAll);
-		cm.executeCommand(parserResultUndo);
-		Result resultOfUndo = cm.executeCommand(parserResultUndo);
+		Result resultOfAdd = cm.executeCommand(parserResultComplete);
 		Vector<Task> currentTaskList = new Vector<Task>();
+		task1.setCompleted(true);
 		currentTaskList.add(task1);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
-				"Undo successfully.", null, currentTaskList, null);
+				"", task1, currentTaskList, null);
 		
-		testTwoResultObj(resultOfUndo, expectedResult);
-		
+		testTwoResultObj(resultOfAdd, expectedResult);
 	}
 	
+	@Test
+	public void testUncomplete() throws Exception {
+		CommandManagerStub cm = new CommandManagerStub();
+		cm.executeCommand(parserResultAdd1);
+		cm.executeCommand(parserResultDisplayAll);
+		cm.executeCommand(parserResultComplete);
+		Result resultOfAdd = cm.executeCommand(parserResultUncomplete);
+		Vector<Task> currentTaskList = new Vector<Task>();
+		task1.setCompleted(false);
+		currentTaskList.add(task1);
+
+		Result expectedResult = new Result(false, true,
+				Result.EXECUTION_RESULT_DISPLAY, "", task1, currentTaskList,
+				null);
+
+		testTwoResultObj(resultOfAdd, expectedResult);
+	}
 	
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
@@ -106,6 +108,7 @@ public class UndoAfterAddTest {
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
 		assertEquals(expected.getTaskList(), result.getTaskList());
+		assertEquals(expected.getTaskToDisplay(), result.getTaskToDisplay());
 	}
-
+	
 }
