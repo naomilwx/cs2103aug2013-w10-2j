@@ -373,7 +373,6 @@ public class TaskTest {
 		assertTrue(event.isAtSameEndTime(eventCopy));
 		assertTrue(event.equals(eventCopy));
 		assertEquals(event.toString(),eventCopy.toString());
-		assertTrue(event.isClone(eventCopy));
 		
 		Task task = new Task("task");
 		task.setID(2);
@@ -386,6 +385,5 @@ public class TaskTest {
 		assertTrue(task.isAtSameEndTime(taskCopy));
 		assertTrue(task.equals(taskCopy));
 		assertEquals(task.toString(),taskCopy.toString());
-		assertTrue(task.isClone(taskCopy));
 	}
 }
