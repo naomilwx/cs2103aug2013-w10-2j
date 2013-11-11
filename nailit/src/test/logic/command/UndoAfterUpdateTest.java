@@ -15,28 +15,30 @@ import nailit.logic.ParserResult;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
+import test.overall.OverallTestSuite;
 @Category(CommandTest.class)
 public class UndoAfterUpdateTest {
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
-			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
+			"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0);
 	
 	private static ParserResult parserResultAdd2 = createPR(CommandType.ADD, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 0);
 	
 	private static ParserResult parserResultUpdate = createPR(CommandType.UPDATE, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1); // since the task ID should be 1
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
+			"study", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
 	
 	// undo parserResult
 	private static ParserResult parserResultUndo = createPR(CommandType.UNDO, "task3", 
-				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
+				"study", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 				createDateTime(2013, 1, 9, 1, 0), false, 0); // only the command type matter
 	
 	// create the expected result
@@ -101,6 +103,6 @@ public class UndoAfterUpdateTest {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-		assertEquals(expected.getTaskList(), result.getTaskList());
+		OverallTestSuite.compareTasksAttributes(expected.getTaskList().get(0), result.getTaskList().get(0));
 	}
 }

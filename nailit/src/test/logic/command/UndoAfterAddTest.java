@@ -3,13 +3,10 @@ package test.logic.command;
 //@author A0105789R
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
