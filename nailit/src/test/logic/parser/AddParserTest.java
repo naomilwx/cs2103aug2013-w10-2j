@@ -1,10 +1,9 @@
 package test.logic.parser;
+//@author A0105559B
 
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import test.logic.command.CommandTest;
 import static org.junit.Assert.*;
 import nailit.common.CommandType;
 import nailit.common.NIConstants;
@@ -25,23 +24,25 @@ public class AddParserTest {
 			expectedAdd.setName("CSAssignment");
 			expectedAdd.setCommand(CommandType.ADD);
 			expectedAdd.setPriority(TaskPriority.LOW);
-			expectedAdd.setStartTime(new DateTime(2013,9,11,00,00));
-			expectedAdd.setEndTime(new DateTime(2013,9,12,00,00));
+			expectedAdd.setEndTime(new DateTime(2013,9,11,00,00));
 			expectedAdd.setTag("#study#");
+			expectedAdd.setDescription("this is description");
 			
-			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, 11 Sep 2013, LOW");
-			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW");
-			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW");
-			testExecuteTag(expectedAdd.getTag(),"CSAssignment,#study#, at 11 Sep 2013, LOW");
-			testExecuteStartTime(expectedAdd.getStartTime().toString(NIConstants.DISPLAY_DATE_FORMAT),"CSAssignment,#study#, 11 Sep 2013, LOW");
-			
+			testExecuteName(expectedAdd.getName(),"CSAssignment,#study#, 11 Sep 2013, LOW, (this is description)");
+			testExecuteCommandType(expectedAdd.getCommand().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW, (this is description)");
+			testExecuteTaskPriority(expectedAdd.getPriority().toString(),"CSAssignment,#study#, 11 Sep 2013, LOW, (this is description)");
+			testExecuteTag(expectedAdd.getTag(),"CSAssignment,#study#, at 11 Sep 2013, LOW, (this is description)");
+			testExecuteEndTime(expectedAdd.getEndTime().toString(NIConstants.DISPLAY_DATE_FORMAT),"CSAssignment,#study#, 11 Sep 2013, LOW, (this is description)");
+			testExecuteDescription(expectedAdd.getDescription(),"CSAssignment,#study#, 11 Sep 2013, LOW, (this is description)");
+		
 			// this is the test for special cases(boundary case) for "from .. to .."
-			expectedAdd.setName("CSAssignment");
-			expectedAdd.setCommand(CommandType.ADD);
-			expectedAdd.setPriority(TaskPriority.LOW);
-			expectedAdd.setStartTime(expectedStartDate = new DateTime(2013,9,11,00,00));
-			expectedAdd.setEndTime(expectedEndDate = new DateTime(2013,9,12,00,00));
-			expectedAdd.setTag("#study#");
+			expectedAdd2.setName("CSAssignment");
+			expectedAdd2.setCommand(CommandType.ADD);
+			expectedAdd2.setPriority(TaskPriority.LOW);
+			expectedAdd2.setStartTime(new DateTime(2013,9,11,00,00));
+			expectedAdd2.setEndTime(new DateTime(2013,9,12,00,00));
+			expectedAdd2.setTag("#study#");
+			
 			testExecuteName(expectedAdd2.getName(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
 			testExecuteCommandType(expectedAdd2.getCommand().toString(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
 			testExecuteTaskPriority(expectedAdd2.getPriority().toString(),"CSAssignment,#study#, from 11 Sep 2013 to 12 Sep 2013, LOW");
@@ -81,4 +82,8 @@ public class AddParserTest {
 			assertEquals(expected,testAdd.execute().getEndTime().toString(NIConstants.DISPLAY_DATE_FORMAT));
 		}
 
+		private void testExecuteDescription (String expected, String command) throws InvalidCommandFormatException{
+			AddParser testAdd = new AddParser(command);
+			assertEquals(expected,testAdd.execute().getDescription());
+		}
 }

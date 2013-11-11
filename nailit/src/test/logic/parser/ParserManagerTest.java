@@ -1,16 +1,16 @@
 package test.logic.parser;
+//@author A0105559B
 
 import static org.junit.Assert.assertEquals;
 import nailit.common.CommandType;
 import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.logic.parser.ParserManager;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import test.logic.command.CommandTest;
+
 @Category(CommandTest.class)
 public class ParserManagerTest {
 	@Test
