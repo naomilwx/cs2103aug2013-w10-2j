@@ -1,6 +1,7 @@
 package nailit.logic.parser;
 
 //@author A0105559B
+import nailit.common.NIConstants;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.exception.InvalidCommandFormatException;
@@ -23,6 +24,9 @@ public class ParserManager {
 		CommandType commandType = determineCommandType(commandTypeString);
 		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
 		commandToExecute = commandToExecute.trim();
+		if (commandToExecute.contains(NIConstants.HARDDISK_FIELD_SPLITTER)){
+			throw new InvalidCommandFormatException(ParserExceptionConstants.RESERVE_WORD_CLASH);
+		}
 		switch (commandType) {
 		case ADD:
 			AddParser addParserManager = new AddParser(commandToExecute);
@@ -67,7 +71,7 @@ public class ParserManager {
 			ExitParser exitParserManager = new ExitParser();
 			return exitParserManager.execute();
 		default:
-			throw new InvalidCommandTypeException("This is an invalid command");
+			throw new InvalidCommandTypeException(ParserExceptionConstants.INVLID_COMMAND);
 		}
 	}
 	
@@ -78,7 +82,7 @@ public class ParserManager {
 	
 	private static CommandType determineCommandType(String commandTypeString) throws InvalidCommandTypeException {
 		if (commandTypeString == null){
-			throw new InvalidCommandTypeException("Command type string cannot be null!");
+			throw new InvalidCommandTypeException(ParserExceptionConstants.EMPTY_COMMAND_TYPE);
 		}
 		if (CommandType.isCommandType(commandTypeString)){
 			return CommandType.valueOf(commandTypeString.toUpperCase());
