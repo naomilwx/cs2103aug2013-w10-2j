@@ -1,12 +1,11 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -33,23 +32,14 @@ public class CommandUpdateTest {
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
 	
 	// create the expected result
-			// create task objs
-			
+	// create task objects
 			
 	private static Task task2 = createTask("task2", 
 					"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 					createDateTime(2013, 4, 2, 1, 0), 1);
 	
-	
-	
-	/*
-	 * This test tests using use cases: add->add->add->displayAll->undo->undo
-	 * */
 	@Test
 	public void testAdd() throws Exception {
-		
-		// execute
-		// undo twice
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultComplete);
@@ -63,10 +53,7 @@ public class CommandUpdateTest {
 				"", task2, currentTaskList, null);
 		
 		testTwoResultObj(resultOfUpdate, expectedResult);
-		
 	}
-	
-	
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
 			String tag, TaskPriority priority, DateTime st, DateTime et, boolean isDisplayAll, int id) {
@@ -102,7 +89,6 @@ public class CommandUpdateTest {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-//		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 		assertEquals(expected.getTaskToDisplay(), result.getTaskToDisplay());
 	}
