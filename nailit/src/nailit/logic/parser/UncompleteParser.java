@@ -16,12 +16,13 @@ private String userCommand;
 	@Override
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
+		// Set the commandType
 		resultExecution.setCommand(CommandType.UNCOMPLETE);
-		
+		// Check whether the input string is empty
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.UNCOMPLETE,ParserExceptionConstants.EMPTY_INPUT_STRING_UNCOMPLETE);
 		}
-		
+		// Check whether the input string contains ID
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 
