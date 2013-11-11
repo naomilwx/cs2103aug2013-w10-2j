@@ -17,7 +17,7 @@ public class LogicManagerStub extends LogicManager{
 	private Task task = new Task("New Task Test", startTime, null, "#test", TaskPriority.HIGH);
 	private Vector<Task> taskList = new Vector<Task>();
 	private Result res = new Result();
-	private Vector<Vector<String>> historyList = new Vector<Vector<String>>();
+	//private Vector<Vector<String>> historyList = new Vector<Vector<String>>();
 	Vector<String> history1 = new Vector<String>();
 	Vector<String> history2 = new Vector<String>();
 	public LogicManagerStub() throws FileCorruptionException{
