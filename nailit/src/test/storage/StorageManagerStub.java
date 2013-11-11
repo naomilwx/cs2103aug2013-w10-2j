@@ -3,12 +3,9 @@ package test.storage;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
-
-import nailit.common.CommandType;
 import nailit.common.FilterObject;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
-import nailit.logic.ParserResult;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 
