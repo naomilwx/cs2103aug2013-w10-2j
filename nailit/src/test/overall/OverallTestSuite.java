@@ -10,7 +10,6 @@ import nailit.common.NIConstants;
 import nailit.common.Task;
 
 import org.joda.time.DateTime;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -19,11 +18,12 @@ import org.junit.runners.Suite;
 	StorageManagerTest.class,
 	TaskTest.class,
 	TaskTest.class,
-//	ParserTest.class,
+	ParserTest.class,
 	CommandTest.class,
 	OverallTestAdd.class,
 	OverAllTestUpdate.class,
 	OverAllTestDelete.class,
+	ExceptionsTest.class,
 })
 
 public class OverallTestSuite {
