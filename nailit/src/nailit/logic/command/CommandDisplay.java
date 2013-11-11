@@ -4,9 +4,7 @@ package nailit.logic.command;
 
 import java.util.Iterator;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
-
 import nailit.common.CommandType;
 import nailit.common.FilterObject;
 import nailit.common.NIConstants;

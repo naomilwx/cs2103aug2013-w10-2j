@@ -75,6 +75,4 @@ public class ComparatorForTwoTaskObj implements Comparator<Task>{
 			return 1;
 		}
 	}
-
-
 }
