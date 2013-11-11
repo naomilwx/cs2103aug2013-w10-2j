@@ -393,11 +393,12 @@ public class Task {
 			return false;
 		}
 	}
+	 
+	//@author a0105683e
 
 	/**
 	 * This method is used to change a task into the harddisk format, which
 	 * is a string
-	 * @author a0105683e
 	 * */
 	public String changeToDiskFormat(){
 		int priority = this.getPriority().getPriorityCode();
