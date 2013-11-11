@@ -1,7 +1,7 @@
 // @author A0091372H
 package nailit.logic.exception;
 
-import nailit.logic.CommandType;
+import nailit.common.CommandType;
 
 public class InvalidCommandFormatException extends Exception{
 	private static final long serialVersionUID = 3932983929823056218L;

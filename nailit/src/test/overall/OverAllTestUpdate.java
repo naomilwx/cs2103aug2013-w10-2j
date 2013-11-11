@@ -3,11 +3,11 @@ package test.overall;
 import java.util.Random;
 import java.util.Vector;
 
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
-import nailit.logic.CommandType;
 import nailit.logic.LogicManager;
 
 import org.joda.time.DateTime;

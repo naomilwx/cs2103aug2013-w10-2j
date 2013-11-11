@@ -1,7 +1,7 @@
 package nailit.logic.parser;
 
 //@author A0105559B
-import nailit.logic.CommandType;
+import nailit.common.CommandType;
 import nailit.logic.ParserResult;
 
 public class RedoParser extends Parser {

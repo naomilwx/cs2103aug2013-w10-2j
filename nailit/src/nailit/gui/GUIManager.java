@@ -3,7 +3,6 @@ package nailit.gui;
 
 import nailit.AppLauncher;
 import nailit.NailItGlobalKeyListener;
-import nailit.logic.CommandType;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
@@ -36,6 +35,7 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.FontUIResource;
 
+import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.logic.LogicManager;
