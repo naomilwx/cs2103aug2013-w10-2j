@@ -4,7 +4,6 @@ package nailit.logic.command;
 
 import java.util.Vector;
 import java.util.logging.Logger;
-
 import nailit.AppLauncher;
 import nailit.common.CommandType;
 import nailit.common.Result;

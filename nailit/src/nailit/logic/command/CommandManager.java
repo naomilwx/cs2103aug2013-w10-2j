@@ -6,9 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 import java.util.Vector;
-
 import org.joda.time.DateTime;
-
 import nailit.common.CommandType;
 import nailit.common.FilterObject;
 import nailit.common.Result;
@@ -563,9 +561,6 @@ public class CommandManager {
 		currentTaskList = vectorOfTasks;
 	}
 
-//	public void setCurrentFilterSearchAll() {
-//		filterContentForCurrentTaskList.setIsSearchAll(true);
-//	}
 	
 	//@author A0091372H
 	public Vector<Task> getTasksHappeningOnDay(DateTime date){
