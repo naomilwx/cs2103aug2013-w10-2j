@@ -42,7 +42,7 @@ public class AddReminderParser extends Parser{
 		}
 		// If the string does not contain ID, it will throw wrong form
 		if (!isContainsId){
-			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: The ID should be specified");
+			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,ParserExceptionConstants.NO_TASK_ID);
 		}
 		return resultExecution;
 	}

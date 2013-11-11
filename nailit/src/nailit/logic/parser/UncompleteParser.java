@@ -19,13 +19,13 @@ private String userCommand;
 		resultExecution.setCommand(CommandType.UNCOMPLETE);
 		
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.UNCOMPLETE,"Wrong Format: Cannot set an empth task to be uncompleted, please specify the task ID");
+			throw new InvalidCommandFormatException(CommandType.UNCOMPLETE,ParserExceptionConstants.EMPTY_INPUT_STRING_UNCOMPLETE);
 		}
 		
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 
-			throw new InvalidCommandFormatException(CommandType.UNCOMPLETE, "Wrong Format: The string cannot represent a task");
+			throw new InvalidCommandFormatException(CommandType.UNCOMPLETE, ParserExceptionConstants.NO_TASK_ID);
 		}
 		return resultExecution;
 	}
