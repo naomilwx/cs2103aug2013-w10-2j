@@ -16,22 +16,22 @@ import nailit.logic.ParserResult;
 public class CommandAddAndDeleteReminderTest {
 	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
-			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
+			"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0, null);
 
 	
 	private static ParserResult parserResultAddReminder = createPR(CommandType.ADDREMINDER, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1, createDateTime(2013, 2, 2, 1, 0));
 	
 	private static ParserResult parserResultDeleteReminder = createPR(CommandType.DELETEREMINDER, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1, null);
 	
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
+			"study", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0, null);
 	
 	@Test
