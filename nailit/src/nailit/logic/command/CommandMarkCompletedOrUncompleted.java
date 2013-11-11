@@ -167,6 +167,7 @@ public class CommandMarkCompletedOrUncompleted extends Command{
 			notificationStr = String.format(NOTIFICATION_STRING_FOR_MARK_UNCOMPLETED_SUCCESS, taskRelated.getName());
 		}
 		executedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, notificationStr);
+		executedResult.setTaskToDisplay(taskRelated);
 	}
 
 	private void setTaskID() {

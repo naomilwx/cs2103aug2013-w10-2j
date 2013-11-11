@@ -239,6 +239,7 @@ public class CommandUpdate extends Command{
 		}
 		
 		updatedTask.setID(taskRetrieved.getID());
+		updatedTask.setCompleted(taskRetrieved.isCompleted());
 	}
 
 	private void retrieveTheTask() {
