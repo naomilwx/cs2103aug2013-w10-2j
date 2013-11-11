@@ -35,7 +35,6 @@ public class AddReminderParser extends Parser{
 			if (Parser.isNumber(listOfCommands[i])){
 				isContainsId = true;
 				resultExecution.setTaskId(Integer.parseInt(listOfCommands[i]));
-				System.out.println(listOfCommands[i]);
 			}else if (Parser.isDateTime(listOfCommands[i])) {
 				resultExecution.setReminderTime(Parser.retrieveDateTime(listOfCommands[i]));
 			} 
