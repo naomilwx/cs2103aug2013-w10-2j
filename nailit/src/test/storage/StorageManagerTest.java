@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 import java.util.Vector;
 
 import nailit.common.FilterObject;
-import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.storage.FileCorruptionException;

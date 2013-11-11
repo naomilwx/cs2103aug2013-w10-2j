@@ -2,19 +2,14 @@ package nailit.storage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Vector;
-import nailit.common.NIConstants;
-import nailit.common.TaskPriority;
-import nailit.common.Task;
+
 import nailit.storage.FileCorruptionException;
 
-import org.joda.time.DateTime;
 /**
  * FileManager class is used to read and write data directly from and to the file 
  * @author a0105683e
