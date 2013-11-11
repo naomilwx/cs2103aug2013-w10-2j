@@ -34,6 +34,8 @@ import java.util.logging.Logger;
 
 import javax.swing.plaf.FontUIResource;
 
+import org.jnativehook.NativeHookException;
+
 import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -69,8 +71,8 @@ public class GUIManager {
 	private static final String FAIL_TO_OPEN_FONT_RESOURCE_ERROR = "Failed to open font file data";
 	private static final String FONT_FORMAT_ERROR = "Problem encountered when reading font format file";
 	
-	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
-//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png"); //TODO: change when compiling
+//	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/resources/todo.png");
+	private static final URL TRAY_ICON_IMG_PATH = GUIManager.class.getResource("/todo.png"); //TODO: change when compiling
 	private static final ImageIcon TRAY_ICON_IMG = new ImageIcon(TRAY_ICON_IMG_PATH);
 	private static final String NAILIT_TRAY_TOOLTIP_TEXT = "NailIt!";
 	
@@ -126,8 +128,17 @@ public class GUIManager {
 		}catch(FileCorruptionException e){
 			logger.info("Storage file corrupted.");
 			displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
+		}catch(NativeHookException ex){
+			try{
+				logicExecutor = new LogicManager();
+				showDefaultDisplayAndReminders();
+			}catch(FileCorruptionException e){
+				logger.info("Storage file corrupted.");
+				displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
+			}
 		}catch(Exception e){
 			logger.info(e.getMessage());
+			displayNotificationAndForceExit("An unexpected error occured. NailIt will shutdown.");
 		}
 	}
 
@@ -201,28 +212,35 @@ public class GUIManager {
 				}else if(keyCode == KeyEvent.VK_CONTROL){
 					ctrlPressed = true;
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_MINUS){
+					reset();
 					reduceMainWindowSize();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_EQUALS){
+					reset();
 					restoreMainWindowSize();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_H){
+					reset();
 					toggleHomeWindow();
 					setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_COMMA){
 					reset();
 					setVisible(false);
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_J){
+					reset();
 					toggleHistoryWindow();
 					setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_W){
+					reset();
 					removeTaskDisplay();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_SLASH){
 					reset();
 					displayCommandSyantaxHelpWindow();
 					setFocusOnHelpWindow();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_N){
+					reset();
 					loadExistingTaskNameInCommandBar();
 					setFocusOnCommandBar();
 				}else if(ctrlPressed && keyCode == KeyEvent.VK_D){
+					reset();
 					loadExistingTaskDescriptionInCommandBar();
 					setFocusOnCommandBar();
 				}else if(keyCode == KeyEvent.VK_PAGE_UP){
