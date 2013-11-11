@@ -1,20 +1,17 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.command.CommandManager;
-import nailit.storage.FileCorruptionException;
 @Category(CommandTest.class)
 public class UndoAfterAddTest {
 
@@ -35,28 +32,17 @@ public class UndoAfterAddTest {
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
-	
-	private static ParserResult parserResultDelete = createPR(CommandType.DELETE, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
-			createDateTime(2013, 1, 9, 1, 0), false, 2);
-	
+
 	// undo parserResult
 	private static ParserResult parserResultUndo = createPR(CommandType.UNDO, "task3", 
 				"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 				createDateTime(2013, 1, 9, 1, 0), false, 0); // only the command type matter
 	
 	// create the expected result
-			// create task objs
+	// create task objects
 	private static Task task1 = createTask("task1", 
 					"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 					createDateTime(2013, 1, 2, 1, 0), 1);
-			
-			
-	private static Task task2 = createTask("task2", 
-					"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
-					createDateTime(2013, 4, 2, 1, 0), 2);
-	
-	
 	
 	/*
 	 * This test tests using use cases: add->add->add->displayAll->undo->undo
@@ -75,7 +61,6 @@ public class UndoAfterAddTest {
 		Result resultOfUndo = cm.executeCommand(parserResultUndo);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
-//		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.EXECUTION_RESULT_DISPLAY, 
 				"Undo successfully.", null, currentTaskList, null);
@@ -120,7 +105,6 @@ public class UndoAfterAddTest {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-//		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
 

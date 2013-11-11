@@ -1,15 +1,14 @@
 package test.logic.command;
 
+//@author A0105789R
+
 import static org.junit.Assert.assertEquals;
-
 import java.util.Vector;
-
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -27,8 +26,6 @@ public class UndoAfterUpdateTest {
 			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1); // since the task ID should be 1
 	
-
-	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
 			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
@@ -45,16 +42,6 @@ public class UndoAfterUpdateTest {
 					"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 					createDateTime(2013, 1, 2, 1, 0), 1);
 			
-			
-	private static Task task2 = createTask("task2", 
-					"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
-					createDateTime(2013, 4, 2, 1, 0), 2);
-	
-	
-	
-	/*
-	 * This test tests using use cases: add->add->displayAll->update->undo->undo
-	 * */
 	@Test
 	public void testUndoAfterUpdate() throws Exception {
 		
@@ -76,8 +63,6 @@ public class UndoAfterUpdateTest {
 		testTwoResultObj(resultOfUndo, expectedResult);
 		
 	}
-	
-	
 	
 	private static ParserResult createPR(CommandType commandType, String name, 
 			String tag, TaskPriority priority, DateTime st, DateTime et, boolean isDisplayAll, int id) {
@@ -113,8 +98,6 @@ public class UndoAfterUpdateTest {
 		assertEquals(expected.getExitStatus(), result.getExitStatus());
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
-//		assertEquals(expected.getPrintOut(), result.getPrintOut());
 		assertEquals(expected.getTaskList(), result.getTaskList());
 	}
-
 }
