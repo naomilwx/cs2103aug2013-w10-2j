@@ -1,7 +1,6 @@
 //@author A0091372H
 package test.overall;
 
-import static org.junit.Assert.*;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -9,8 +8,6 @@ import nailit.logic.LogicManager;
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
 
-import org.joda.time.DateTime;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
