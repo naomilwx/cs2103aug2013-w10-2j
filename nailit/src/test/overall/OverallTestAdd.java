@@ -28,7 +28,6 @@ public class OverallTestAdd {
 			logic = new LogicManager();
 			count = 0;
 		} catch (FileCorruptionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -76,7 +75,6 @@ public class OverallTestAdd {
 					+expectedTask.getName();
 			executeAddAndCheckResult(expectedTask, commandString);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -123,7 +121,6 @@ public class OverallTestAdd {
 			Task addedTask = addResult.getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(expectedTask, addedTask);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

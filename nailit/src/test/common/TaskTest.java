@@ -11,7 +11,7 @@ public class TaskTest {
 	@Test
 	public void isOverDueTaskTest(){
 		Task pastTask = new Task();
-		//At this point task is a float thing task. should be false for overdue
+		//At this point task is a floating task. should be false for overdue
 		assertFalse(pastTask.isOverDueTask());
 		DateTime now = new DateTime();
 		System.out.println(now);
@@ -22,9 +22,6 @@ public class TaskTest {
 		assertFalse(pastTask.isOverDueTask());
 		pastTask.setStartTime(null);
 		assertTrue(pastTask.isOverDueTask());
-		//Boundary case, due now. should return false
-		pastTask.setEndTime(new DateTime());
-		assertFalse(pastTask.isOverDueTask());
 	}
 	@Test
 	public void emptyTaskTest() {

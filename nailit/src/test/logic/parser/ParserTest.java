@@ -53,5 +53,6 @@ public class ParserTest {
 		assertTrue(Parser.isValidString("%$"));
 		assertFalse(Parser.isValidString(NIConstants.HARDDISK_FIELD_SPLITTER));
 		assertFalse(Parser.isValidString("hello, "+NIConstants.HARDDISK_FIELD_SPLITTER + "world"));
+		assertFalse(Parser.isValidString("hello, "+NIConstants.HARDDISK_FIELD_SPLITTER + "world" + NIConstants.HARDDISK_FIELD_SPLITTER + "next string"));
 	}
 }
