@@ -3,8 +3,8 @@ package nailit.logic.parser;
 // @author A0105559B
 // This is the parser for add commands
 
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.exception.InvalidCommandFormatException;

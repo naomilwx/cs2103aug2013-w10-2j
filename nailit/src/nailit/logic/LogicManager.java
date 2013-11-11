@@ -2,6 +2,7 @@ package nailit.logic;
 
 import java.util.Vector;
 
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;

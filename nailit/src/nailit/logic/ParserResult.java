@@ -2,6 +2,8 @@ package nailit.logic;
 
 // @author A0105559B
 import org.joda.time.DateTime;
+
+import nailit.common.CommandType;
 import nailit.common.TaskPriority;
 
 public class ParserResult{

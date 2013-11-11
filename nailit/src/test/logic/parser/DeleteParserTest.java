@@ -6,12 +6,12 @@ import org.junit.experimental.categories.Category;
 
 import test.logic.command.CommandTest;
 import static org.junit.Assert.*;
+import nailit.common.CommandType;
 import nailit.common.NIConstants;
 import nailit.common.TaskPriority;
 import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.AddParser;
 import nailit.logic.parser.DeleteParser;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 @Category(CommandTest.class)
 public class DeleteParserTest {
