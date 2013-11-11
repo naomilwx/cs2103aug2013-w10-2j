@@ -13,6 +13,8 @@ import nailit.logic.command.CommandManager;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
+import test.overall.OverallTestSuite;
 @Category(CommandTest.class)
 public class CommandTest {
 	
@@ -105,7 +107,6 @@ public class CommandTest {
 		assertEquals(resultObjOfCommandAdd.getExitStatus(), expectedResultObj.getExitStatus());
 		assertEquals(resultObjOfCommandAdd.getExecutionSuccess(), expectedResultObj.getExecutionSuccess());
 		assertEquals(resultObjOfCommandAdd.getDisplayType(), expectedResultObj.getDisplayType());
-		assertEquals(resultObjOfCommandAdd.getTaskToDisplay(), expectedResultObj.getTaskToDisplay());
 	}
 	
 	private ParserResult createParserResult(CommandType commandType, String taskName, DateTime startTime, 

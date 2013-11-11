@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Vector;
 import org.joda.time.DateTime;
 import org.junit.Test;
+
+import test.overall.OverallTestSuite;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
@@ -15,21 +17,21 @@ import nailit.logic.ParserResult;
 public class CommandCompleteAndUncompleteTest {
 	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
-			"stuty", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
+			"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
 			createDateTime(2013, 1, 2, 1, 0), false, 0);
 
 	private static ParserResult parserResultComplete = createPR(CommandType.COMPLETE, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1);
 	
 	private static ParserResult parserResultUncomplete = createPR(CommandType.UNCOMPLETE, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1);
 	
 	
 	// display all parserResult
 	private static ParserResult parserResultDisplayAll = createPR(CommandType.DISPLAY, "task3", 
-			"stuty", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
+			"study", TaskPriority.HIGH, createDateTime(2013, 1, 8, 5, 0), 
 			createDateTime(2013, 1, 9, 1, 0), true, 0);
 	
 	// create the expected result
@@ -108,7 +110,7 @@ public class CommandCompleteAndUncompleteTest {
 		assertEquals(expected.getExecutionSuccess(), result.getExecutionSuccess());
 		assertEquals(expected.getDisplayType(), result.getDisplayType());
 		assertEquals(expected.getTaskList(), result.getTaskList());
-		assertEquals(expected.getTaskToDisplay(), result.getTaskToDisplay());
+		OverallTestSuite.compareTasksAttributes(expected.getTaskToDisplay(), result.getTaskToDisplay());
 	}
 	
 }
