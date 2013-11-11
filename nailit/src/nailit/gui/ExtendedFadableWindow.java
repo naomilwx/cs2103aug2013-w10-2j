@@ -65,10 +65,10 @@ public class ExtendedFadableWindow extends ExtendedWindow{
 				nextOpacity -= opacityStep;
 				if(nextOpacity <= NO_OPACITY){
 					fadeOutTimer.stop();
-//					setOpacity(FULL_OPACITY);
+					setOpacity(FULL_OPACITY);
 					setVisible(false);
 				}else{
-//					setOpacity(nextOpacity);
+					setOpacity(nextOpacity);
 				}
 			}
 		});

@@ -36,6 +36,7 @@ public class CommandBar extends JPanel implements Resizable{
 	protected static final String DEFAULT_COMMANDBAR_FONT = "HelveticaNeue";
 	private static final Font COMMANDBAR_FONT = new Font(DEFAULT_COMMANDBAR_FONT, Font.PLAIN, 20);
 	private static final LineBorder COMMAND_FRAME_BORDER  = new LineBorder(GUIManager.BORDER_COLOR);
+	
 	//reference to main GUI container class so CommandBar can have access to the methods there
 	private GUIManager GUIBoss;
 	private JScrollPane textBarWrapper;
@@ -107,7 +108,6 @@ public class CommandBar extends JPanel implements Resizable{
 	private void commandFrameAndBarDynamicResize(){
 		adjustCommandBarHeight();
 		adjustFrameHeight();
-//		adjustFramePos();
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 	}
