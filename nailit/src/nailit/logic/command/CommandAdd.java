@@ -36,15 +36,12 @@ public class CommandAdd extends Command{
 
 	@Override
 	public Result executeCommand() {
-		System.out.println("execute");
 		getContentFromParserResult();
 		createTaskObject();
 		taskId = storer.add(taskPassedToStorer);
 		taskPassedToStorer.setID(taskId);
 		createResultObject();
 		createCommandSummary();
-		System.out.println(taskId);
-		
 		return executedResult;
 	}
 
@@ -106,7 +103,7 @@ public class CommandAdd extends Command{
 	@Override
 	public void redo() {
 		taskPassedToStorer.setIDToNull();  
-		storer.add(taskPassedToStorer); // will the storer redo a delete here?
+		storer.add(taskPassedToStorer);
 		this.isRedoSuccess = true;
 		this.isUndoSuccess = false;
 	}
