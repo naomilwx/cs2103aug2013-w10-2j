@@ -20,12 +20,17 @@ public class ParserManager {
 	}
 
 	public ParserResult execute() throws InvalidCommandFormatException, InvalidCommandTypeException{
+		// retrieve the first word of the input string
 		String commandTypeString = getFirstWord(commandToExecute);
+		// determine the command type
 		CommandType commandType = determineCommandType(commandTypeString);
+		// remove the first word in the input string
 		commandToExecute = removeFirstWord(commandToExecute);
+		// check whether the string contains reserved string
 		if (commandToExecute.contains(NIConstants.HARDDISK_FIELD_SPLITTER)){
 			throw new InvalidCommandFormatException(ParserExceptionConstants.RESERVE_WORD_CLASH);
 		}
+		// create different classes for different commands
 		switch (commandType) {
 		case ADD:
 			AddParser addParserManager = new AddParser(commandToExecute);
@@ -43,9 +48,6 @@ public class ParserManager {
 			DisplayParser displayParserManager = new DisplayParser(commandToExecute);
 			return displayParserManager.execute();
 		case REDO:
-			if (commandToExecute.equalsIgnoreCase("REDO")){
-				commandToExecute = "";
-			}
 			RedoParser redoParserManager = new RedoParser(commandToExecute);
 			return redoParserManager.execute();
 		case SEARCH:
@@ -55,9 +57,6 @@ public class ParserManager {
 			UncompleteParser uncompleteParserManager = new UncompleteParser(commandToExecute);
 			return uncompleteParserManager.execute();
 		case UNDO:
-			if (commandToExecute.equalsIgnoreCase("UNDO")){
-				commandToExecute = "";
-			}
 			UndoParser undoParserManager = new UndoParser(commandToExecute);
 			return undoParserManager.execute();
 		case UPDATE:

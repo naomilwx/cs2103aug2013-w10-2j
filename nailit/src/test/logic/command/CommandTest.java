@@ -5,19 +5,15 @@ package test.logic.command;
 import static org.junit.Assert.*;
 
 import java.util.Vector;
-
 import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
 import nailit.logic.command.CommandManager;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import test.overall.OverallTestSuite;
 @Category(CommandTest.class)
 public class CommandTest {
 	

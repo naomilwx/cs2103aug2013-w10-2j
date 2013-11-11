@@ -2,7 +2,6 @@ package test.logic.parser;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import test.logic.command.CommandTest;
 import static org.junit.Assert.*;
 import nailit.common.CommandType;

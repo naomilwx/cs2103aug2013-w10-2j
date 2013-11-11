@@ -9,7 +9,7 @@ public class ExitParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-	
+		// Set the commandType
 		resultExecution.setCommand(CommandType.EXIT);
 		
 		return resultExecution;
