@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import test.overall.OverallTestSuite;
+
 import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -27,7 +28,7 @@ public class CommandUpdateTest {
 			createDateTime(2013, 4, 2, 1, 0), false, 1); // since the task ID should be 1
 	
 	private static ParserResult parserResultComplete = createPR(CommandType.COMPLETE, "task2", 
-			"stuty", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
+			"study", TaskPriority.MEDIUM, createDateTime(2013, 3, 3, 1, 0), 
 			createDateTime(2013, 4, 2, 1, 0), false, 1);
 	
 	// display all parserResult
