@@ -26,7 +26,7 @@ public class AddParser extends Parser {
 		resultExecution.setCommand(CommandType.ADD);
 		// Input string cannot be null
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.ADD,"Wrong Format: Cannot add an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.ADD,ParserExceptionConstants.EMPTY_INPUT_STRING_ADD);
 		}
 		// Set Description
 		int startIndex = -1, endIndex = 0;
@@ -38,7 +38,7 @@ public class AddParser extends Parser {
 				}
 			}
 			if (endIndex == 0){
-				throw new InvalidCommandFormatException (CommandType.ADD,"Wrong Format: Bracket is not matched");
+				throw new InvalidCommandFormatException (CommandType.ADD,ParserExceptionConstants.BRACKET_UNMATCHED);
 			}
 			
 			resultExecution.setDescription(userCommand.substring(startIndex+1, endIndex));
@@ -88,7 +88,7 @@ public class AddParser extends Parser {
 		}
 		// The name of the task cannot be null
 		if (name.equals("")){
-			throw new InvalidCommandFormatException (CommandType.ADD,"Wrong format: The task name cannot be null");
+			throw new InvalidCommandFormatException (CommandType.ADD,ParserExceptionConstants.NO_NAME);
 		}
 		name = name.substring(0,name.length()-1);
 		resultExecution.setName(name);
