@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
+//class with position configured according to MainWindow and can fadeout after some time
 public class ExtendedFadableWindow extends ExtendedWindow{
 	protected static final int TIMER_INTERVAL = 250;
 	protected static final int TIMER_DELAY = 10000; //amount of time before item starts fading out

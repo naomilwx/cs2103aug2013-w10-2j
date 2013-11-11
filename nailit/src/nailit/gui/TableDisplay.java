@@ -35,17 +35,17 @@ public abstract class TableDisplay extends ScrollableFocusableDisplay{
 	protected static final int QUICK_SCROLLDOWN_OFFSET = 6;
 	protected static final int QUICK_SCROLLUP_OFFSET = -6;
 	protected static final int TABLE_DISPLAY_DEFAULT_POS = 0;
-	
-	protected int containerHeight;
-	protected int containerWidth;
 
 	protected JTable table;
 	protected Vector<Vector<String>> tableRows;
 	protected DefaultTableModel tableModel;
 	protected Vector<String> tableHeaderLabel;
+	
 	protected TableDisplay selfRef = this; //for AbstractAction
 	
 	protected int noOfCols;
+	protected int containerHeight;
+	protected int containerWidth;
 
 	//listeners
 	

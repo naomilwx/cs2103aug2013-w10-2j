@@ -2,6 +2,7 @@
 package nailit;
 
 import java.awt.EventQueue;
+import java.util.logging.Logger;
 
 import nailit.gui.GUIManager;
 
@@ -9,15 +10,17 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-
+//configurations for global key listener hook
 public class NailItGlobalKeyListener implements NativeKeyListener{
 	private GUIManager GUI;
 	private boolean ctrlKeyDown = false;
 	private boolean isEnabled;
+	private Logger logger;
 	
 	public NailItGlobalKeyListener(GUIManager theGUI){
 		GUI = theGUI;
 		initialiseGlobalListener();
+		logger = AppLauncher.getLogger();
 	}
 	public boolean isEnabled(){
 		return isEnabled;
@@ -70,6 +73,7 @@ public class NailItGlobalKeyListener implements NativeKeyListener{
 	    } catch (NativeHookException ex) {
 	            System.err.println("There was a problem registering the native hook.");
 	            System.err.println(ex.getMessage());
+	            logger.info(ex.getMessage());
 	    }
 	}
 }

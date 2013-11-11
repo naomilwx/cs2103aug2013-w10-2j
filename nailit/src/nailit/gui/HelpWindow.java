@@ -168,7 +168,7 @@ public class HelpWindow extends ExtendedFadableWindow{
 	}
 	private void adjustAndshowHelpWindow(int yPosOffset, int height){
 		adjustHelpWindowHeight(height);
-		setOpacity(FULL_OPACITY); //temporarily commented out. only works on java 7
+		setOpacity(FULL_OPACITY); 
 		setVisible(true);
 		adjustHelpWindowLocation(yPosOffset);
 	}

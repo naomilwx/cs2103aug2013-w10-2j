@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
+//JScrollPane where borders are highlighted if focus gained
 public abstract class ScrollableFocusableDisplay extends JScrollPane{
 	protected int containerWidth;
 	protected int containerHeight;

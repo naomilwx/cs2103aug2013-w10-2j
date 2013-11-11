@@ -21,7 +21,7 @@ public class DisplayPane extends JPanel{
 	private DisplayArea displayMain;
 	private TaskTable taskTable;
 	private TextDisplay textDisplay;
-	private int lastDisplayedTaskID = Task.TASKID_NULL;
+	private int lastDisplayedTaskID = Task.TASKID_NULL; //(storage) task ID of last displayed task
 	
 	private int textDisplayWidthParam;
 	private int textDisplayHeightParam;

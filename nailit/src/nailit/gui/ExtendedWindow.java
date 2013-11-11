@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 
 
 @SuppressWarnings("serial")
+//class with position configured according to MainWindow
 public class ExtendedWindow extends JFrame{
 	protected static final int EXTENDED_WINDOW_HEIGHT = MainWindow.WINDOW_HEIGHT;
 	protected static final int EXTENDED_WINDOW_BORDER_WIDTH = 3;

@@ -7,6 +7,7 @@ import nailit.common.Task;
 import nailit.common.TaskPriority;
 
 @SuppressWarnings("serial")
+//Format display in Name field of task table
 public class TaskNameDisplayRenderer extends DefaultTableCellRenderer{
 	private static final String cellStyle = "<head><style type = \"text/css\">" 
 			+ "p.name {font-size: 14px;}"

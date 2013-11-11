@@ -55,11 +55,13 @@ public class MainWindow extends JFrame {
 		this.setTitle(GUIManager.APPLICATION_NAME);
 		this.setResizable(false);
 	}
+	
 	protected void transformIntoReducedWindow(){
 		this.setSize(WINDOW_WIDTH, REDUCED_WINDOW_HEIGHT);
 		this.setAlwaysOnTop(true);
 		resizeDisplayedComponents();
 	}
+	//restore window to default size
 	protected void restoreDefaultWindow(){
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setAlwaysOnTop(false);
@@ -68,6 +70,7 @@ public class MainWindow extends JFrame {
 	protected void addItem(Component component) {
 		contentPane.add(component);
 	}
+	//resize displayed components. components must implement Resizable to be resized.
 	private void resizeDisplayedComponents(){
 		for(Component component: contentPane.getComponents()){
 			if(component instanceof Resizable){

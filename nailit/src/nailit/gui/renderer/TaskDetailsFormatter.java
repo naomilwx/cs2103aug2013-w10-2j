@@ -4,7 +4,7 @@ package nailit.gui.renderer;
 import nailit.common.NIConstants;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
-
+//format details for task display
 public class TaskDetailsFormatter {
 	private static final String HIGH_PRIORITY_CODE = "&nbsp &#x25B2 &#x25B2 &#x25B2";
 	private static final String MED_PRIORITY_CODE = "&nbsp &#x25B2 &#x25B2";

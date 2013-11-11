@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import nailit.gui.GUIManager;
 
 @SuppressWarnings("serial")
+//Render for Task Display ID
 public class IDDisplayRenderer  extends DefaultTableCellRenderer{
 	public IDDisplayRenderer(){
 		setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
