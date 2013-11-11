@@ -35,6 +35,7 @@ public class OverallTestSuite {
 		assertEquals(expectedTask.getPriority(), resultingTask.getPriority());
 		assertEquals(expectedTask.getTag(), resultingTask.getTag());
 		assertEquals(expectedTask.getDescription(), resultingTask.getDescription());
+		assertEquals(expectedTask.isCompleted(), resultingTask.isCompleted());
 		assertTrue(checkDateTimeEquals(expectedTask.getReminder(), resultingTask.getReminder()));
 	}
 	public static boolean checkDateTimeEquals(DateTime date1, DateTime date2){
