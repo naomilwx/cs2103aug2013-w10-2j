@@ -28,6 +28,7 @@ public class AddReminderParser extends Parser{
 		}
 		
 		boolean isContainsId = false;
+		// Split the string using comma
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommands.length; i++) {
 			listOfCommands[i] = listOfCommands[i].trim();
