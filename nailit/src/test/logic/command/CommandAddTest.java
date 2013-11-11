@@ -12,8 +12,6 @@ import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
-import nailit.logic.command.CommandManager;
-import nailit.storage.FileCorruptionException;
 
 
 public class CommandAddTest {
@@ -55,15 +53,15 @@ public class CommandAddTest {
 		CommandManagerStub cm = new CommandManagerStub();
 		cm.executeCommand(parserResultAdd1);
 		cm.executeCommand(parserResultAdd2);
-		Result resultOfUndo = cm.executeCommand(parserResultDisplayAll);
+		Result resultOfAdd = cm.executeCommand(parserResultDisplayAll);
 		Vector<Task> currentTaskList = new Vector<Task>();
 		currentTaskList.add(task1);
 		currentTaskList.add(task2);
 		
 		Result expectedResult = new Result(false, true, Result.LIST_DISPLAY, 
-				"Undo successfully.", null, currentTaskList, null);
+				"", null, currentTaskList, null);
 		
-		testTwoResultObj(resultOfUndo, expectedResult);
+		testTwoResultObj(resultOfAdd, expectedResult);
 		
 	}
 	
