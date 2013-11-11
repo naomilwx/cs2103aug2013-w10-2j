@@ -394,7 +394,11 @@ public class Task {
 		}
 	}
 
-	// @author a0105683e
+	/**
+	 * This method is used to change a task into the harddisk format, which
+	 * is a string
+	 * @author a0105683e
+	 * */
 	public String changeToDiskFormat(){
 		int priority = this.getPriority().getPriorityCode();
 		assert(isValidPriority(priority));
@@ -403,16 +407,14 @@ public class Task {
 		String startDate;
 		if(this.getStartTime() == null){
 			startDate = null;
-		}
-		else{
+		}else{
 			startDate = this.getStartTime().toString();
 		}
 		
 		String endDate;
 		if(this.getEndTime() == null){
 			endDate = null;
-		}
-		else{
+		}else{
 			endDate = this.getEndTime().toString();
 		}
 		String desc = this.getDescription();
@@ -436,8 +438,7 @@ public class Task {
 	private int parseCompleteStatus(boolean complete){
 		if(complete){
 			return COMPLETED_IN_HARDDISK;
-		}
-		else{
+		}else{
 			return INCOMPLETE_IN_HARDDISK;
 		}
 	}
