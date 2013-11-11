@@ -393,14 +393,7 @@ public class Task {
 			return false;
 		}
 	}
-	public boolean isClone(Object otherTask){
-		if(this.equals(otherTask)){
-			String otherTaskString = otherTask.toString();
-			return otherTaskString.equals(this.toString());
-		}else{
-			return false;
-		}
-	}
+
 	// @author a0105683e
 	public String changeToDiskFormat(){
 		int priority = this.getPriority().getPriorityCode();
