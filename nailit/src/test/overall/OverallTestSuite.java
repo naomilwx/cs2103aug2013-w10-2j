@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 	StorageManagerTest.class,
 	TaskTest.class,
 	TaskTest.class,
-	ParserTest.class,
+//	ParserTest.class,
 	CommandTest.class,
 	OverallTestAdd.class,
 	OverAllTestUpdate.class,
