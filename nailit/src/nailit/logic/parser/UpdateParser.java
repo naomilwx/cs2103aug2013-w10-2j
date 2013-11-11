@@ -22,7 +22,7 @@ public class UpdateParser extends Parser {
 		
 		resultExecution.setCommand(CommandType.UPDATE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot update an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.EMPTY_INPUT_STRING_UPDATE);
 		}
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		
@@ -33,11 +33,11 @@ public class UpdateParser extends Parser {
 		if (Parser.isNumber(listOfCommands[0])){
 			resultExecution.setTaskId(Integer.parseInt(listOfCommands[0]));
 		}else{
-			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: Cannot identify the task ID");
+			throw new InvalidCommandFormatException(CommandType.UPDATE, ParserExceptionConstants.NO_TASK_ID);
 		}
 		
 		if (listOfCommands.length == 1){
-			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: The modified information cannot be null");
+			throw new InvalidCommandFormatException(CommandType.UPDATE, ParserExceptionConstants.INVALID_STRING);
 		}
 		
 		if (listOfCommands[1].equalsIgnoreCase("name")){
@@ -46,7 +46,7 @@ public class UpdateParser extends Parser {
 				answer += listOfCommands[i]+ " ";
 			}
 			if (answer == ""){
-				throw new InvalidCommandFormatException(CommandType.UPDATE,"Wrong Format: Cannot update name to be null");
+				throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.NO_NAME);
 			} else{
 				resultExecution.setName(answer.substring(0, answer.length()-1));
 			}
@@ -67,10 +67,10 @@ public class UpdateParser extends Parser {
 				if (Parser.isTag(listOfCommands[2])){
 					resultExecution.setTag(listOfCommands[2]);
 				}else{
-					throw new InvalidCommandFormatException("Wrong format: The string is not a correct tag format");
+					throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.WRONG_TAG_FORMAT);
 				}
 			}else{
-				throw new InvalidCommandFormatException("Wrong format: The string is not a correct tag format");
+				throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.WRONG_TAG_FORMAT);
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Start")){
 			String answer = "";
@@ -82,7 +82,7 @@ public class UpdateParser extends Parser {
 			}else if (Parser.isDateTime(answer)){
 				resultExecution.setStartTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}else{
-				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format or consists resevered string");
+				throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.WRONG_TIME_FORMAT);
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("End")|| listOfCommands[1].equalsIgnoreCase("Due")){
 			String answer = "";
@@ -94,7 +94,7 @@ public class UpdateParser extends Parser {
 			}else if (Parser.isDateTime(answer)){
 				resultExecution.setEndTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 			}else{
-				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format or consists reserved string");
+				throw new InvalidCommandFormatException(CommandType.UPDATE,ParserExceptionConstants.WRONG_TIME_FORMAT);
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Date")){
 			String answer = "";
@@ -116,10 +116,10 @@ public class UpdateParser extends Parser {
 					resultExecution.isNullPriority();
 					resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[2].toUpperCase()));
 				}else{
-					throw new InvalidCommandFormatException("Wrong format: The string cannot represent priority");
+					throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_PRIORITY_FORMAT);
 				}
 			}else{
-				throw new InvalidCommandFormatException("Wrong format: The string cannot represent priority");
+				throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_PRIORITY_FORMAT);
 			}
 		}else if (listOfCommands[1].equalsIgnoreCase("Reminder")){
 			String answer = "";
@@ -132,11 +132,11 @@ public class UpdateParser extends Parser {
 				if (Parser.isDateTime(answer)){
 					resultExecution.setReminderTime(Parser.retrieveDateTime(answer.substring(0, answer.length()-1)));
 				}else{
-					throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+					throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 				}
 			}
 		}else{
-			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: Cannot identify which field you want to update");
+			throw new InvalidCommandFormatException(CommandType.UPDATE, ParserExceptionConstants.WRONG_TIME_FORMAT);
 		}
 		return resultExecution;
 	}

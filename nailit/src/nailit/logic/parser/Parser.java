@@ -34,7 +34,7 @@ public abstract class Parser {
 			result = new DateTime(resultDateGroup.getDates().get(0));
 			return result;
 		}else{
-			throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+			throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 		}
 	}
 	
@@ -47,10 +47,10 @@ public abstract class Parser {
 				result = new DateTime(resultDateGroup.getDates().get(1));
 				return result;
 			}else{
-				throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+				throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 			}
 		}else{
-			throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
+			throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 		}
 	}
 	

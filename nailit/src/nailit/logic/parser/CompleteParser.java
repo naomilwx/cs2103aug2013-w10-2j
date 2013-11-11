@@ -19,13 +19,13 @@ private String userCommand;
 		
 		resultExecution.setCommand(CommandType.COMPLETE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.COMPLETE,"Wrong Format: Cannot set an empth task to be completed, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.COMPLETE,ParserExceptionConstants.EMPTY_INPUT_STRING_COMPLETE);
 		}
 		
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 
-			throw new InvalidCommandFormatException(CommandType.COMPLETE,"Wrong Format: the ID should be specified");
+			throw new InvalidCommandFormatException(CommandType.COMPLETE,ParserExceptionConstants.NO_TASK_ID);
 		}
 		return resultExecution;
 	}

@@ -22,7 +22,7 @@ public class DisplayParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DISPLAY);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: Cannot display an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.DISPLAY,ParserExceptionConstants.EMPTY_INPUT_STRING_DISPLAY);
 		}
 		
 		if (listOfCommands[0].equalsIgnoreCase("ALL")){
@@ -38,7 +38,7 @@ public class DisplayParser extends Parser {
 		}else if (Parser.isDateTime(userCommand)){
 			resultExecution.setEndTime(Parser.retrieveDateTime(userCommand));
 		}else{
-			throw new InvalidCommandFormatException(CommandType.DISPLAY,"Wrong Format: The string cannot be identified.");
+			throw new InvalidCommandFormatException(CommandType.DISPLAY,ParserExceptionConstants.INVALID_STRING);
 		}
 		
 		return resultExecution;

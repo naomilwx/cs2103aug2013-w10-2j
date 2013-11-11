@@ -19,13 +19,13 @@ public class DeleteParser extends Parser {
 	
 		resultExecution.setCommand(CommandType.DELETE);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.DELETE,"Wrong Format: Cannot delete an empth task, please specify your task name");
+			throw new InvalidCommandFormatException(CommandType.DELETE,ParserExceptionConstants.EMPTY_INPUT_STRING_DELETE);
 		}
 		
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 
-			throw new InvalidCommandFormatException(CommandType.DELETE,"Wrong Format: the ID should be specified");
+			throw new InvalidCommandFormatException(CommandType.DELETE,ParserExceptionConstants.NO_TASK_ID);
 		}
 		
 		return resultExecution;

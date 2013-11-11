@@ -23,7 +23,7 @@ public class SearchParser extends Parser {
 		
 		resultExecution.setCommand(CommandType.SEARCH);
 		if (userCommand.equals("")){
-			throw new InvalidCommandFormatException(CommandType.SEARCH,"Wrong Format: Cannot search an empth task");
+			throw new InvalidCommandFormatException(CommandType.SEARCH,ParserExceptionConstants.EMPTY_INPUT_STRING_SEARCH);
 		}
 		
 		for (int i=0; i<listOfCommands.length; i++)
