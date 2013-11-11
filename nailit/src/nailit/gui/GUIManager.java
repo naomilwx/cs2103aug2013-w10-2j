@@ -128,8 +128,7 @@ public class GUIManager {
 			logger.info("Storage file corrupted.");
 			displayNotificationAndForceExit("File corrupted. Delete NailIt's storage file and restart NailIt");
 		}catch(Exception e){
-			//TODO:
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 	}
 
@@ -347,7 +346,7 @@ public class GUIManager {
 			handleInvalidCommandTypeException(e);
 		}catch(Exception e){
 			displayNotification(INVALID_COMMAND_ERROR_MESSAGE, false);
-			e.printStackTrace(); //TODO:
+			logger.info(e.getMessage());
 		}
 		return executionResult;
 	}
@@ -376,7 +375,7 @@ public class GUIManager {
 			Result delCommandResult = logicExecutor.executeDirectIDCommand(CommandType.DELETE, taskDisplayID);
 			displayCommandFeedback(delCommandResult);
 		} catch (Exception e) {
-			e.printStackTrace(); //TODO:
+			logger.info(e.getMessage());
 		}
 	}
 	protected void executeTriggeredTaskDisplay(){
@@ -392,7 +391,8 @@ public class GUIManager {
 			displayCommandFeedback(displayCommandResult);
 			return displayCommandResult;
 		} catch (Exception e) {
-			e.printStackTrace(); //TODO:
+			e.printStackTrace();
+			logger.info(e.getMessage());
 			return null;
 		}
 	}
