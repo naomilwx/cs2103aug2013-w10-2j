@@ -1,8 +1,9 @@
 package nailit.storage;
+//@author a0105683e
+
 /**
  * DataManager class is used to store the data in memory, i.e. store the data
  * passed from the hardDisk as well as the changes made in the upper layers
- * @author a0105683e
  * */
 import java.util.HashMap;
 
