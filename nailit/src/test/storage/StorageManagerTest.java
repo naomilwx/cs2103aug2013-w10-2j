@@ -42,9 +42,7 @@ public class StorageManagerTest {
 		Task task4 = new Task("fourth task");
 		task4.setID(-2);
 		testAddCommand("The ID -2 is out of the range",-2,task4);
-		
-		//TODO: test for MAXIMUN
-		
+				
 		/**
 		 * Test with valid ID
 		 */
