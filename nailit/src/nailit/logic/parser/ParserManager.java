@@ -90,7 +90,7 @@ public class ParserManager {
 	}
 	
 	private static CommandType determineCommandType(String commandTypeString) throws InvalidCommandTypeException {
-		if (commandTypeString == null){
+		if (commandTypeString == null || commandTypeString.isEmpty()){
 			throw new InvalidCommandTypeException(ParserExceptionConstants.EMPTY_COMMAND_TYPE);
 		}
 		if (CommandType.isCommandType(commandTypeString)){
