@@ -14,8 +14,18 @@ import test.logic.command.CommandTest;
 public class ParserManagerTest {
 	@Test
 	public void test() throws InvalidCommandFormatException, InvalidCommandTypeException{
-		//DateTime expectedDate = new DateTime(2013,9,11,00,00);
+		testManager(CommandType.ADD,"Add task");
+		testManager(CommandType.ADDREMINDER,"Addreminder 12, today");
+		testManager(CommandType.COMPLETE,"Complete 12");
 		testManager(CommandType.DELETE,"Delete 12");
+		testManager(CommandType.DELETEREMINDER,"Deletereminder 12");
+		testManager(CommandType.DISPLAY,"Display 12");
+		testManager(CommandType.EXIT,"Exit");
+		testManager(CommandType.REDO,"REDO");
+		testManager(CommandType.SEARCH,"SEARCH TODAY");
+		testManager(CommandType.UNCOMPLETE,"Uncomplete 12");
+		testManager(CommandType.UNDO,"UNDO");
+		testManager(CommandType.UPDATE,"UPDATE 1, name, taskname");
 	}
 	
 	private void testManager (CommandType expected, String command) throws InvalidCommandFormatException, InvalidCommandTypeException{
