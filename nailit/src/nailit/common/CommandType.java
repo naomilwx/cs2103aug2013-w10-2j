@@ -1,4 +1,4 @@
-package nailit.logic;
+package nailit.common;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,7 +1,7 @@
 package test.logic.parser;
 
 import static org.junit.Assert.assertEquals;
-import nailit.logic.CommandType;
+import nailit.common.CommandType;
 import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.logic.parser.ParserManager;

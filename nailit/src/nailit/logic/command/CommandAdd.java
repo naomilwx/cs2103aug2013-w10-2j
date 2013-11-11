@@ -3,10 +3,11 @@ package nailit.logic.command;
 //@author A0105789R
 
 import org.joda.time.DateTime;
+
+import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.TaskPriority;
 import nailit.common.Task;
-import nailit.logic.CommandType;
 import nailit.logic.ParserResult;
 import nailit.storage.NoTaskFoundException;
 import nailit.storage.StorageManager;
