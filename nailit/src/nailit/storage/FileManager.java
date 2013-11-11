@@ -42,6 +42,9 @@ public class FileManager {
 	 ***************************/
 	
 	
+	public void add(String taskStirng){
+		dataListForWriting.add(taskStirng);
+	}
 	
 	public void writingProcessInit(){
 		dataListForWriting = new Vector<String>();
