@@ -3,14 +3,9 @@ package test.storage;
 
 import java.util.HashMap;
 import java.util.Vector;
-
-import org.joda.time.DateTime;
-
 import nailit.storage.FileCorruptionException;
 import nailit.storage.StorageManager;
-import nailit.common.FilterObject;
 import nailit.common.Task;
-import nailit.common.TaskPriority;
 
 public class StorageManagerFuncStub extends StorageManager {
 	private HashMap<Integer, Task> taskMap = new HashMap<Integer, Task>();
