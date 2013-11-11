@@ -1,5 +1,6 @@
 package nailit.logic.parser;
 
+// @author A0105559B
 public class ParserExceptionConstants {
 	public static final String EMPTY_COMMAND_TYPE = "Wrong Format: Your input string cannot be empty";
 	public static final String INVLID_COMMAND = "Wrong Format: This is an invalid command";

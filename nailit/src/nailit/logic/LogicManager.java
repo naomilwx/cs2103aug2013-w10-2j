@@ -11,7 +11,6 @@ import nailit.logic.command.CommandManager;
 import nailit.logic.parser.ParserManager;
 import nailit.storage.FileCorruptionException;
 
-
 public class LogicManager{
 	
 	private ParserManager parserInstance;
@@ -23,6 +22,7 @@ public class LogicManager{
 	}
 	
 	// @author A0105559B
+	//API to parse and execute commands
 	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
 		parserInstance.passCommand(OriginalCommand);

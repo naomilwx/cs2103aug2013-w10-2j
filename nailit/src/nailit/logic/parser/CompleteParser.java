@@ -1,6 +1,6 @@
 package nailit.logic.parser;
 
-//@author A0105559B
+// @author A0105559B
 import nailit.common.CommandType;
 import nailit.logic.ParserResult;
 import nailit.logic.exception.InvalidCommandFormatException;
