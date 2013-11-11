@@ -90,6 +90,7 @@ public class AddParser extends Parser {
 		if (name.equals("")){
 			throw new InvalidCommandFormatException (CommandType.ADD,"Wrong format: The task name cannot be null");
 		}
+		name = name.substring(0,name.length()-1);
 		resultExecution.setName(name);
 		
 		if (!resultExecution.isNullStartTime() && resultExecution.isNullEndTime()){

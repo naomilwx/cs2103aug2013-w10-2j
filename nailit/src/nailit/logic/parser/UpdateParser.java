@@ -53,7 +53,7 @@ public class UpdateParser extends Parser {
 		}else if (listOfCommands[1].equalsIgnoreCase("description")){
 			String answer = "";
 			for (int i=2; i<listOfCommands.length; i++){
-				answer += listOfCommands[i]+ " ";
+				answer += listOfCommands[i]+ ",";
 			}
 			if (answer == ""){
 				resultExecution.setDescriptionNull(true);
@@ -135,8 +135,7 @@ public class UpdateParser extends Parser {
 					throw new InvalidCommandFormatException("Wrong format: The string is not a correct time format");
 				}
 			}
-		}else 
-		{
+		}else{
 			throw new InvalidCommandFormatException(CommandType.UPDATE, "Wrong Format: Cannot identify which field you want to update");
 		}
 		return resultExecution;
