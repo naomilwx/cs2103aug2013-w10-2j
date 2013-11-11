@@ -28,6 +28,7 @@ public class AddReminderParser extends Parser{
 		}
 		
 		boolean isContainsId = false;
+		// Split the string using comma
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
 		for (int i=0; i<listOfCommands.length; i++) {
 			listOfCommands[i] = listOfCommands[i].trim();
@@ -39,7 +40,7 @@ public class AddReminderParser extends Parser{
 				resultExecution.setReminderTime(Parser.retrieveDateTime(listOfCommands[i]));
 			} 
 		}
-		// If the string 
+		// If the string does not contain ID, it will throw wrong form
 		if (!isContainsId){
 			throw new InvalidCommandFormatException(CommandType.ADDREMINDER,"Wrong Format: The ID should be specified");
 		}
