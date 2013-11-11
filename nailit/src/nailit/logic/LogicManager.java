@@ -7,7 +7,6 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.Utilities;
 import nailit.logic.command.CommandManager;
-import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.ParserManager;
 import nailit.storage.FileCorruptionException;
 

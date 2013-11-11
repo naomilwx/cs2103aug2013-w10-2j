@@ -22,8 +22,7 @@ public class ParserManager {
 	public ParserResult execute() throws InvalidCommandFormatException, InvalidCommandTypeException{
 		String commandTypeString = getFirstWord(commandToExecute);
 		CommandType commandType = determineCommandType(commandTypeString);
-		commandToExecute = commandToExecute.substring(commandToExecute.trim().indexOf(' ')+1);
-		commandToExecute = commandToExecute.trim();
+		commandToExecute = removeFirstWord(commandToExecute);
 		if (commandToExecute.contains(NIConstants.HARDDISK_FIELD_SPLITTER)){
 			throw new InvalidCommandFormatException(ParserExceptionConstants.RESERVE_WORD_CLASH);
 		}
@@ -78,6 +77,16 @@ public class ParserManager {
 	private static String getFirstWord(String userCommand) {
 		String commandTypeString = userCommand.trim().split("\\s+")[0];
 		return commandTypeString;
+	}
+	
+	private static String removeFirstWord(String userCommand){
+		if (userCommand.trim().indexOf(' ') != -1){
+			userCommand = userCommand.substring(userCommand.trim().indexOf(' ')+1);
+			userCommand = userCommand.trim();
+			return userCommand;
+		}else{
+			return "";
+		}
 	}
 	
 	private static CommandType determineCommandType(String commandTypeString) throws InvalidCommandTypeException {
