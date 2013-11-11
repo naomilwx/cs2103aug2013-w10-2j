@@ -1,9 +1,8 @@
 package nailit.common;
 
 import org.joda.time.DateTime;
-/**
- * @author A0105683E
- * */
+// @author a0105683e
+
 public class FilterObject {
 	private String  name;
 	private DateTime startTime;
