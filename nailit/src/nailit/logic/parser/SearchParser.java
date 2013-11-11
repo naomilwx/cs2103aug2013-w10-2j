@@ -20,8 +20,9 @@ public class SearchParser extends Parser {
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
-		
+		// Set the commandType
 		resultExecution.setCommand(CommandType.SEARCH);
+		// Check whether the input string is empty
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.SEARCH,ParserExceptionConstants.EMPTY_INPUT_STRING_SEARCH);
 		}
@@ -29,11 +30,13 @@ public class SearchParser extends Parser {
 		for (int i=0; i<listOfCommands.length; i++)
 		{
 			listOfCommands[i] = listOfCommands[i].trim();
-			System.out.println(listOfCommands[i]);
+			// search for priority
 			if (TaskPriority.isTaskPriority(listOfCommands[i])){
 				resultExecution.setPriority(TaskPriority.valueOf(listOfCommands[i].toUpperCase()));
+			// search for tag
 			}else if (Parser.isTag(listOfCommands[i])){
 				resultExecution.setTag(listOfCommands[i]);
+			// search for time
 			}else if (Parser.isDateTime(listOfCommands[i])){
 				if (resultExecution.getStartTime() == null){
 					if (Parser.numberOfTime(listOfCommands[i]) == 2){

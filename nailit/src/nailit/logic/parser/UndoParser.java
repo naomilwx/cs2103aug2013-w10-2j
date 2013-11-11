@@ -15,7 +15,7 @@ public class UndoParser extends Parser {
 	@Override
 	public ParserResult execute(){
 		ParserResult resultExecution = new ParserResult();
-		
+		// Set the commandType
 		resultExecution.setCommand(CommandType.UNDO);
 		if (userCommand.equalsIgnoreCase("")){
 			resultExecution.setTaskId(-1);
