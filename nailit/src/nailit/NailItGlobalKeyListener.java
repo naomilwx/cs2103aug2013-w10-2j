@@ -17,10 +17,10 @@ public class NailItGlobalKeyListener implements NativeKeyListener{
 	private boolean isEnabled;
 	private Logger logger;
 	
-	public NailItGlobalKeyListener(GUIManager theGUI){
+	public NailItGlobalKeyListener(GUIManager theGUI) throws NativeHookException{
 		GUI = theGUI;
-		initialiseGlobalListener();
 		logger = AppLauncher.getLogger();
+		initialiseGlobalListener();
 	}
 	public boolean isEnabled(){
 		return isEnabled;
@@ -67,13 +67,14 @@ public class NailItGlobalKeyListener implements NativeKeyListener{
 	        isEnabled = false;
 	}
 	
-	public void initialiseGlobalListener(){
+	public void initialiseGlobalListener() throws NativeHookException{
 		try {
             GlobalScreen.registerNativeHook();
 	    } catch (NativeHookException ex) {
 	            System.err.println("There was a problem registering the native hook.");
 	            System.err.println(ex.getMessage());
 	            logger.info(ex.getMessage());
+	            throw ex;
 	    }
 	}
 }

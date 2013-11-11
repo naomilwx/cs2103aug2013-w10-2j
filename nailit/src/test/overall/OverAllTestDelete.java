@@ -28,7 +28,6 @@ public class OverAllTestDelete {
 			Task deletedTask = logic.executeCommand("delete " + taskID).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, deletedTask);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -46,7 +45,6 @@ public class OverAllTestDelete {
 			Task addedTask = logic.executeCommand(commandString).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(expectedTask, addedTask);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
