@@ -97,7 +97,6 @@ public abstract class Parser {
 				return false;
 			}else{
 				DateGroup date = parseResult.get(0);
-				System.out.println("test  "+ date.getText());
 				return date.getText().equalsIgnoreCase(p);
 			}
 		}
