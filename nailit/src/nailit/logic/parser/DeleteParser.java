@@ -16,12 +16,13 @@ public class DeleteParser extends Parser {
 	@Override
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
-	
+		// Set the commandType
 		resultExecution.setCommand(CommandType.DELETE);
+		// Check whether the input string is empty
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.DELETE,ParserExceptionConstants.EMPTY_INPUT_STRING_DELETE);
 		}
-		
+		// Check whether the input string contains ID
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 

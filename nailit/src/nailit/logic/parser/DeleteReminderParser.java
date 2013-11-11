@@ -16,12 +16,13 @@ public class DeleteReminderParser extends Parser {
 	@Override
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
-	
+		// Set the commandType
 		resultExecution.setCommand(CommandType.DELETEREMINDER);
+		// Check whether the input string is empty
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.DELETEREMINDER,ParserExceptionConstants.EMPTY_INPUT_STRING_DELETEREMINDER);
 		}
-		
+		// Check whether the input string contains ID
 		if (Parser.isNumber(userCommand)){
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else{ 

@@ -19,8 +19,9 @@ public class DisplayParser extends Parser {
 	public ParserResult execute() throws InvalidCommandFormatException{
 		ParserResult resultExecution = new ParserResult();
 		listOfCommands = userCommand.split(NIConstants.NORMAL_FIELD_SPLITTER);
-	
+		// Set the commandType
 		resultExecution.setCommand(CommandType.DISPLAY);
+		// Check whether the input string is empty
 		if (userCommand.equals("")){
 			throw new InvalidCommandFormatException(CommandType.DISPLAY,ParserExceptionConstants.EMPTY_INPUT_STRING_DISPLAY);
 		}
@@ -37,6 +38,7 @@ public class DisplayParser extends Parser {
 			resultExecution.setTaskId(Integer.parseInt(userCommand));
 		}else if (Parser.isDateTime(userCommand)){
 			resultExecution.setEndTime(Parser.retrieveDateTime(userCommand));
+		// the input command is invalid or cannot be identified
 		}else{
 			throw new InvalidCommandFormatException(CommandType.DISPLAY,ParserExceptionConstants.INVALID_STRING);
 		}

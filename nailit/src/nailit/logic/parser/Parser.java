@@ -16,7 +16,7 @@ public abstract class Parser {
 	public static com.joestelmach.natty.Parser nattyParser = new com.joestelmach.natty.Parser();
 	
 	public abstract ParserResult execute() throws InvalidCommandFormatException;
-	
+	// retrieve the date and time in the string
 	public static DateTime retrieveDateTime (String p){
 		DateTime result;
 		
@@ -25,7 +25,7 @@ public abstract class Parser {
 	
 		return result;
 	}
-	
+	// retrieve the first time the string represents
 	public static DateTime retrieveDateTimeFirst (String p) throws InvalidCommandFormatException{
 		DateTime result;
 		
@@ -37,7 +37,7 @@ public abstract class Parser {
 			throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 		}
 	}
-	
+	// retrieve the second time the string represents
 	public static DateTime retrieveDateTimeSecond (String p) throws InvalidCommandFormatException{
 		DateTime result;
 		
@@ -53,7 +53,7 @@ public abstract class Parser {
 			throw new InvalidCommandFormatException(ParserExceptionConstants.WRONG_TIME_FORMAT);
 		}
 	}
-	
+	// retrieve the number of time in the string
 	public static int numberOfTime(String p){		
 		DateGroup resultDateGroup;
 		int answer;
@@ -64,6 +64,7 @@ public abstract class Parser {
 		return answer;
 	}
 	
+	// check whether the string represents task ID
 	public static boolean isTaskID(String p){
 		for (int i=0; i<p.length(); i++){
 			if ((p.charAt(i)<48) || (p.charAt(i)>57)){
@@ -75,7 +76,7 @@ public abstract class Parser {
 		}
 		return true;
 	}
-	
+	// check whether the string represents date and time
 	public static boolean isDateTime(String p){
 		if(p.matches(NIConstants.HARDDISK_FIELD_SPLITTER)){
 			return false;
@@ -102,6 +103,7 @@ public abstract class Parser {
 		}
 	}
 	
+	// check whether the string represent a number
 	public static boolean isNumber(String p){
 		if(p.isEmpty()){
 			return false;
@@ -110,6 +112,8 @@ public abstract class Parser {
 			return p.matches(numRegex);
 		}
 	}
+	
+	// check whether the string represent a tag
 	public static boolean isTag(String p){
 		if (p.length() > 0 && p.charAt(0)=='#' && p.charAt(p.length()-1)=='#'){
 			return true;
@@ -118,7 +122,7 @@ public abstract class Parser {
 		}
 	}
 
-	
+	// check whether the string represent a priority
 	public static boolean isPriority(String p){
 		if (p.equalsIgnoreCase("low") || p.equals("medium") || p.equals("high")){
 			return true;
@@ -126,6 +130,7 @@ public abstract class Parser {
 		return false;
 	}
 	
+	// check whether the string is valid
 	public static boolean isValidString(String p){
 		return (!p.contains(NIConstants.HARDDISK_FIELD_SPLITTER));
 	}
