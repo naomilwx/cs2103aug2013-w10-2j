@@ -144,7 +144,7 @@ public class UpdateParser extends Parser {
 				}
 			}
 		}else{
-			throw new InvalidCommandFormatException(CommandType.UPDATE, ParserExceptionConstants.WRONG_TIME_FORMAT);
+			throw new InvalidCommandFormatException(CommandType.UPDATE, ParserExceptionConstants.INVALID_STRING);
 		}
 		return resultExecution;
 	}
