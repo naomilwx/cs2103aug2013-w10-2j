@@ -3,6 +3,7 @@ package test.logic.command;
 //@author A0105789R
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import java.util.Vector;
@@ -11,13 +12,11 @@ import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
-
 import nailit.logic.ParserResult;
 
 import org.joda.time.DateTime;
 
 import test.overall.OverallTestSuite;
-
 
 public class RedoAfterUndoAfterDelete {
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 

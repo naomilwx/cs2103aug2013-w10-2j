@@ -10,7 +10,6 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import test.overall.OverallTestSuite;
-
 import nailit.common.CommandType;
 import nailit.common.Result;
 import nailit.common.Task;

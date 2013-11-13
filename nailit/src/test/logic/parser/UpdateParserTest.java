@@ -4,7 +4,7 @@ package test.logic.parser;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.logic.command.CommandTest;
+import test.logic.command.AllCommandTest;
 import static org.junit.Assert.*;
 import nailit.common.CommandType;
 import nailit.common.NIConstants;
@@ -13,7 +13,7 @@ import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.UpdateParser;
 import nailit.logic.ParserResult;
 
-@Category(CommandTest.class)
+@Category(AllCommandTest.class)
 public class UpdateParserTest {
 	@Test
 	public void test() throws InvalidCommandFormatException{
