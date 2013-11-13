@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import test.overall.OverallTestSuite;
 
@@ -19,7 +18,6 @@ import nailit.common.TaskPriority;
 
 import nailit.logic.ParserResult;
 
-@Category(CommandTest.class)
 public class UndoAfterAddTest {
 
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 

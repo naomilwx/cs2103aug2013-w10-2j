@@ -1,9 +1,10 @@
 //@author A0091372H
 package test.overall;
 
+import test.common.TaskPriorityTest;
 import test.common.TaskTest;
-import test.logic.command.CommandTest;
-import test.logic.parser.ParserTest;
+import test.logic.command.AllCommandTest;
+import test.logic.parser.AllParserTest;
 import test.storage.StorageManagerTest;
 import static org.junit.Assert.*;
 import nailit.common.NIConstants;
@@ -13,13 +14,14 @@ import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	TaskTest.class,
+	TaskPriorityTest.class,
+	AllCommandTest.class,
+	AllParserTest.class,
 	StorageManagerTest.class,
-	TaskTest.class,
-	TaskTest.class,
-	ParserTest.class,
-	CommandTest.class,
 	OverallTestAdd.class,
 	OverAllTestUpdate.class,
 	OverAllTestDelete.class,

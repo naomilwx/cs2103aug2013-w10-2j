@@ -13,7 +13,7 @@ import nailit.common.Result;
 import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
 
-public class CommandAddAndDeleteReminderTest {
+public class CommandAddAndDeleteReminderTest{
 	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
 			"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 

@@ -9,11 +9,12 @@ import nailit.common.Result;
 import nailit.common.Task;
 import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
+
 import test.overall.OverallTestSuite;
-@Category(CommandTest.class)
+
 public class UndoAfterDeleteTest {
 	
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 

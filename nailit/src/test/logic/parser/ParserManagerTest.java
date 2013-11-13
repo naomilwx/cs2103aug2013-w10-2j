@@ -8,9 +8,9 @@ import nailit.logic.exception.InvalidCommandTypeException;
 import nailit.logic.parser.ParserManager;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import test.logic.command.CommandTest;
+import test.logic.command.AllCommandTest;
 
-@Category(CommandTest.class)
+@Category(AllCommandTest.class)
 public class ParserManagerTest {
 	@Test
 	public void test() throws InvalidCommandFormatException, InvalidCommandTypeException{

@@ -11,9 +11,8 @@ import nailit.common.TaskPriority;
 import nailit.logic.ParserResult;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import test.overall.OverallTestSuite;
-@Category(CommandTest.class)
+
 public class UndoAfterUpdateTest {
 	private static ParserResult parserResultAdd1 = createPR(CommandType.ADD, "task1", 
 			"study", TaskPriority.LOW, createDateTime(2013, 1, 1, 1, 0), 
