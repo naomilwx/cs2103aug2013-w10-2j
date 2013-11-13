@@ -1,4 +1,5 @@
 package test.overall;
+import static org.junit.Assert.fail;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -17,10 +18,11 @@ public class ExceptionsTest{
 	public static LogicManager logic;
 	public static String INVALID_COMMAND_TYPE_STRING = "hello";
 	@BeforeClass
-	public static void clearStorageAndInitialise(){
+	public static void initialise(){
 		try {
 			logic = new LogicManager();
 		} catch (FileCorruptionException e) {
+			fail("storage file corrupted");
 			e.printStackTrace();
 		}
 	}

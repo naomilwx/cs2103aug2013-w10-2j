@@ -1,6 +1,8 @@
 //@author A0091372H
 package test.overall;
 
+import static org.junit.Assert.fail;
+
 import java.util.Random;
 
 import org.junit.Test;
@@ -28,6 +30,7 @@ public class OverAllTestDelete {
 			Task deletedTask = logic.executeCommand("delete " + taskID).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, deletedTask);
 		} catch (Exception e) {
+			fail("delete failed");
 			e.printStackTrace();
 		}
 	}
@@ -45,6 +48,7 @@ public class OverAllTestDelete {
 			Task addedTask = logic.executeCommand(commandString).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(expectedTask, addedTask);
 		} catch (Exception e) {
+			fail("add after delete failed");
 			e.printStackTrace();
 		}
 		

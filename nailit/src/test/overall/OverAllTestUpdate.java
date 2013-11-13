@@ -1,5 +1,7 @@
 package test.overall;
 
+import static org.junit.Assert.fail;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -29,6 +31,7 @@ public class OverAllTestUpdate {
 			Task updatedTask = logic.executeCommand("update " + taskID + ", description, "+ desc).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
+			fail("update description failed");
 			e.printStackTrace();
 		}
 	}
@@ -42,6 +45,7 @@ public class OverAllTestUpdate {
 			Task updatedTask = logic.executeCommand("update " + taskID + ", tag ,"+ tag).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
+			fail("update tag failed");
 			e.printStackTrace();
 		}
 	}
@@ -58,6 +62,7 @@ public class OverAllTestUpdate {
 			Task updatedTask = logic.executeCommand("update " + taskID + ", reminder ,"+ rem.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
+			fail("update reminder failed");
 			e.printStackTrace();
 		}
 	}
@@ -75,6 +80,7 @@ public class OverAllTestUpdate {
 			updatedTask = logic.executeCommand("update " + taskID + ", end, "+ date.toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		} catch (Exception e) {
+			fail("Update due date failed");
 			e.printStackTrace();
 		}
 	}
@@ -91,6 +97,7 @@ public class OverAllTestUpdate {
 			Task updatedTask = logic.executeCommand("update " + taskID+",priority, "+TaskPriority.LOW.toString()).getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(task, updatedTask);
 		}catch (Exception e){
+			fail("update after complete task failed");
 			e.printStackTrace();
 		}
 	}
@@ -107,6 +114,7 @@ public class OverAllTestUpdate {
 				OverallTestSuite.compareTasksAttributes(task, completedTask);
 			}
 		} catch (Exception e) {
+			fail("complete task failed");
 			e.printStackTrace();
 		}
 	}
@@ -116,6 +124,7 @@ public class OverAllTestUpdate {
 			Task task = logic.executeDirectIDCommand(CommandType.DISPLAY, taskID).getTaskToDisplay().copy();
 			return task;
 		} catch (Exception e) {
+			fail("no tasks");
 			e.printStackTrace();
 			return null;
 		}
