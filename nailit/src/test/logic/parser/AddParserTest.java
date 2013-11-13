@@ -3,7 +3,6 @@ package test.logic.parser;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import static org.junit.Assert.*;
 import nailit.common.CommandType;
 import nailit.common.NIConstants;
@@ -12,7 +11,6 @@ import nailit.logic.exception.InvalidCommandFormatException;
 import nailit.logic.parser.AddParser;
 import nailit.logic.ParserResult;
 
-@Category(ParserTest.class)
 public class AddParserTest {
 
 		@Test

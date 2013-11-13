@@ -1,5 +1,7 @@
 package test.storage;
 
+//@author a0105683e
+
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -45,14 +47,5 @@ public class StorageManagerStub extends StorageManager{
 	
 	@Override
 	public void clear(){}
-	// for testing throw exception
-//	public Task retrieve(int taskID) throws Exception {
-//		throw new Exception();
-//	}
-//	
-//	public Task remove(int taskID) throws Exception {
-//		throw new Exception();
-//	}
-	
 	
 }
