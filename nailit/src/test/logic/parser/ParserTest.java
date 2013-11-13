@@ -7,9 +7,7 @@ import nailit.common.NIConstants;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
-@Category(ParserTest.class)
 public class ParserTest {
 	@Test
 	public void test(){
