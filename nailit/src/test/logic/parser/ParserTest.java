@@ -1,6 +1,6 @@
 package test.logic.parser;
 
-// @author A0105559B
+//@author A0105559B
 import static org.junit.Assert.*;
 import nailit.logic.parser.Parser;
 import nailit.common.NIConstants;
