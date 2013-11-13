@@ -68,7 +68,6 @@ public class CommandBar extends JPanel implements Resizable{
 		storeMainContainerDimensions(containerWidth, containerHeight);
 		adjustFrameWidth();
 		adjustCommandBarWidth();
-//		adjustFramePos();
 		setCommandFramePosAndSize();
 		textBarWrapper.setSize(commandBarWidth, commandBarHeight);
 	}

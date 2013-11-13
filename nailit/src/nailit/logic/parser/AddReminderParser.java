@@ -1,6 +1,6 @@
 package nailit.logic.parser;
 
-// @author A0105559B
+//@author A0105559B
 // This is the parser for addReminder command
 
 import nailit.common.CommandType;

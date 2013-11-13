@@ -21,7 +21,7 @@ public class LogicManager{
 		commandInstance = new CommandManager();
 	}
 	
-	// @author A0105559B
+	//@author A0105559B
 	//API to parse and execute commands
 	public Result executeCommand(String OriginalCommand) throws Exception{
 		Result executeCommandResult = new Result();
@@ -54,7 +54,7 @@ public class LogicManager{
 		return Utilities.filterAndSortTaskList(reminders);
 	}
 	
-	// @author A0105789R 
+	//@author A0105789R 
 	// api for giving command list, undoable and redoable
 	public Vector<Vector<String>> getCommandList() {
 		Vector<Vector<String>> commandList = new Vector<Vector<String>>();
