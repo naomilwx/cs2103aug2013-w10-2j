@@ -1,6 +1,8 @@
 //@author A0091372H
 package test.overall;
 
+import static org.junit.Assert.fail;
+
 import nailit.common.NIConstants;
 import nailit.common.Result;
 import nailit.common.Task;
@@ -30,14 +32,19 @@ public class OverallTestAdd {
 	}
 	
 	@Test
-	public void testEvent1() throws Exception {
-		Task expectedTask = new TaskStub(TaskStub.GENERATE_EVENT);
-		String commandString = "add "+ expectedTask.getName() +"," 
-				+expectedTask.getPriority() + "," 
-				+expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
-				+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+ ","
-				+expectedTask.getTag();
-		executeAddAndCheckResult(expectedTask, commandString);
+	public void testEvent1() {
+		try{
+			Task expectedTask = new TaskStub(TaskStub.GENERATE_EVENT);
+			String commandString = "add "+ expectedTask.getName() +"," 
+					+expectedTask.getPriority() + "," 
+					+expectedTask.getStartTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+","
+					+expectedTask.getEndTime().toString(NIConstants.DISPLAY_FULL_DATETIME_FORMAT)+ ","
+					+expectedTask.getTag();
+			executeAddAndCheckResult(expectedTask, commandString);
+		}catch(Exception e){
+			fail("Event add failed");
+			e.printStackTrace();
+		}
 	}
 	@Test
 	public void testEvent2() {
@@ -52,6 +59,7 @@ public class OverallTestAdd {
 		
 			executeAddAndCheckResult(expectedTask, commandString);
 		}catch(Exception e){
+			fail("Event add failed");
 			e.printStackTrace();
 		}
 	}
@@ -66,6 +74,7 @@ public class OverallTestAdd {
 					+expectedTask.getName();
 			executeAddAndCheckResult(expectedTask, commandString);
 		} catch (Exception e) {
+			fail("Floating add failed");
 			e.printStackTrace();
 		}
 		
@@ -82,6 +91,7 @@ public class OverallTestAdd {
 					+expectedTask.getName();
 			executeAddAndCheckResult(expectedTask, commandString);
 		} catch (Exception e) {
+			fail("Deadline task add failed");
 			e.printStackTrace();
 		}
 	}
@@ -99,22 +109,18 @@ public class OverallTestAdd {
 					+expectedTask.getName();
 			executeAddAndCheckResult(expectedTask, commandString);
 		} catch (Exception e) {
+			fail("description add task failed");
 			e.printStackTrace();
 		}
 			
 	}
-	public void executeAddAndCheckResult(Task expectedTask, String commandString){
-		try {
+	public void executeAddAndCheckResult(Task expectedTask, String commandString) throws Exception{
 			count += 1;
 			expectedTask.setID(count);
 			Result addResult;
 			addResult = logic.executeCommand(commandString);
 			Task addedTask = addResult.getTaskToDisplay();
 			OverallTestSuite.compareTasksAttributes(expectedTask, addedTask);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 }
